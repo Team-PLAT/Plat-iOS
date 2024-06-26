@@ -6,3 +6,4 @@
 - Issue : `[FEAT] 메인 뷰 UI 구현`
 - PR : `[PR/#33] 메인 뷰 UI 구현`
 - Merge : `[MERGE/#33] -> develop`
+- branch test
