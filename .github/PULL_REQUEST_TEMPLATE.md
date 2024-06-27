@@ -1,4 +1,4 @@
-- 🚪 CLOSED #
+close #
 
 ## *⛳️ Work Description*
 -
