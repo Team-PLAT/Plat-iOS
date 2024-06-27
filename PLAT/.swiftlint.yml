@@ -1,1 +1,23 @@
+# 실행에서 제외할 Rule
+disabled_rules:
+- trailing_whitespace # 후행 공백
+- line_length # 줄 길이 제한
+- todo # TO-DO 주석 경고
+- file_length # 파일 길이 제한
+- function_body_length # 함수 길이 제한
+- type_body_length # 타입 길이 제한
+- cyclomatic_complexity # 함수 복잡성 제한
+- function_parameter_count # 함수 파라미터 개수 제한
+- large_tuple # 튜플 개수 제한
 
+# 기본 룰은 아니지만 추가적으로 설정한 Rule
+opt_in_rules:
+- empty_count # array.count == 0 제한
+- force_unwrapping # 강제 언래핑 제한
+
+# 검사 과정에서 무시할 파일 경로
+excluded:
+- Carthage
+- Pods
+- Sources/ExcludedFolder
+- Sources/ExcludedFile.swift
