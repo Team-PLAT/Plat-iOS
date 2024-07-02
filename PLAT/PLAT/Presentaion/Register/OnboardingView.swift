@@ -9,8 +9,6 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    @Environment(LoginUseCase.self) private var loginUseCase
-    
     var body: some View {
         Text("OnboardingView")
     }
