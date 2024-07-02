@@ -12,7 +12,7 @@
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
 		793278102C2D014600F433F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780F2C2D014600F433F5 /* Preview Assets.xcassets */; };
 		820836772C34001D00F6D0CF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* LoginService.swift */; };
-		820836792C34002D00F6D0CF /* Entitiy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Entitiy.swift */; };
+		820836792C34002D00F6D0CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* User.swift */; };
 		8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* LoginUseCase.swift */; };
 		8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367E2C34012E00F6D0CF /* LoginServiceInterface.swift */; };
 		820836812C34030C00F6D0CF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836802C34030C00F6D0CF /* LoginView.swift */; };
@@ -22,6 +22,13 @@
 		820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836882C3403DD00F6D0CF /* AccountSettingsView.swift */; };
 		8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208368C2C34043700F6D0CF /* StreamAccountSettingsView.swift */; };
 		8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208368E2C34044800F6D0CF /* AboutPlatSettingsView.swift */; };
+		820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */; };
+		820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */; };
+		820836952C34050000F6D0CF /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836942C34050000F6D0CF /* UserUseCase.swift */; };
+		820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836962C3405B000F6D0CF /* UserServiceInterface.swift */; };
+		820836992C34064400F6D0CF /* StreamAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836982C34064400F6D0CF /* StreamAccount.swift */; };
+		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
+		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +39,7 @@
 		7932780C2C2D014600F433F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7932780F2C2D014600F433F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
-		820836782C34002D00F6D0CF /* Entitiy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entitiy.swift; sourceTree = "<group>"; };
+		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		8208367E2C34012E00F6D0CF /* LoginServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceInterface.swift; sourceTree = "<group>"; };
 		820836802C34030C00F6D0CF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -42,6 +49,13 @@
 		820836882C3403DD00F6D0CF /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		8208368C2C34043700F6D0CF /* StreamAccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccountSettingsView.swift; sourceTree = "<group>"; };
 		8208368E2C34044800F6D0CF /* AboutPlatSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPlatSettingsView.swift; sourceTree = "<group>"; };
+		820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccountUseCase.swift; sourceTree = "<group>"; };
+		820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccountServiceInterface.swift; sourceTree = "<group>"; };
+		820836942C34050000F6D0CF /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
+		820836962C3405B000F6D0CF /* UserServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceInterface.swift; sourceTree = "<group>"; };
+		820836982C34064400F6D0CF /* StreamAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccount.swift; sourceTree = "<group>"; };
+		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
+		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,7 +136,8 @@
 		820836732C33FFF500F6D0CF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				820836782C34002D00F6D0CF /* Entitiy.swift */,
+				820836782C34002D00F6D0CF /* User.swift */,
+				820836982C34064400F6D0CF /* StreamAccount.swift */,
 				8208367A2C34003D00F6D0CF /* UseCase */,
 				8208367D2C34010200F6D0CF /* Interface */,
 			);
@@ -141,6 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				8208367B2C34005400F6D0CF /* LoginUseCase.swift */,
+				820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */,
+				820836942C34050000F6D0CF /* UserUseCase.swift */,
+				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -149,6 +167,9 @@
 			isa = PBXGroup;
 			children = (
 				8208367E2C34012E00F6D0CF /* LoginServiceInterface.swift */,
+				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
+				820836962C3405B000F6D0CF /* UserServiceInterface.swift */,
+				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -253,16 +274,23 @@
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
+				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
+				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
+				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
-				820836792C34002D00F6D0CF /* Entitiy.swift in Sources */,
+				820836792C34002D00F6D0CF /* User.swift in Sources */,
+				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
+				820836992C34064400F6D0CF /* StreamAccount.swift in Sources */,
 				820836772C34001D00F6D0CF /* LoginService.swift in Sources */,
 				8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */,
+				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
+				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

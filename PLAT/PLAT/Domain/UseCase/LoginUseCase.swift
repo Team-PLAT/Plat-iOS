@@ -11,9 +11,20 @@ import Foundation
 final class LoginUseCase {
     
     private(set) var loginService: LoginServiceInterface
+    private(set) var state: State
     
     init(loginService: LoginServiceInterface) {
         self.loginService = loginService
+        self.state = State()
+    }
+}
+
+// MARK: - State
+
+extension LoginUseCase {
+    
+    struct State {
+        
     }
 }
 
