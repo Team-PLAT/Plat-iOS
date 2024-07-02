@@ -136,8 +136,7 @@
 		820836732C33FFF500F6D0CF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				820836782C34002D00F6D0CF /* User.swift */,
-				820836982C34064400F6D0CF /* StreamAccount.swift */,
+				8208369E2C3409E200F6D0CF /* Entity */,
 				8208367A2C34003D00F6D0CF /* UseCase */,
 				8208367D2C34010200F6D0CF /* Interface */,
 			);
@@ -194,6 +193,15 @@
 				8208368E2C34044800F6D0CF /* AboutPlatSettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		8208369E2C3409E200F6D0CF /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				820836782C34002D00F6D0CF /* User.swift */,
+				820836982C34064400F6D0CF /* StreamAccount.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
