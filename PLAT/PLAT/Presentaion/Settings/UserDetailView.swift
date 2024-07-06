@@ -15,7 +15,7 @@ struct UserDetailView: View {
         NavigationStack {
             VStack {
                 ProfileImageView()
-                Spacer()
+                SettingListView()
             }
             .navigationTitle("내 계정")
             .navigationBarTitleDisplayMode(.inline)
@@ -72,6 +72,18 @@ private struct ProfileImageView: View {
         }
     }
 }
+
+// MARK: - SettingListView
+
+private struct SettingListView: View {
+    var body: some View {
+        VStack {
+            
+        }
+    }
+}
+
+
 
 #Preview {
     UserDetailView(userUseCase: UserUseCase(userService: StubUserService()))
