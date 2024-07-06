@@ -19,6 +19,4 @@ struct StubUserService: UserServiceInterface {
     func updateNickname() {
         print(#function)
     }
-    
-    
 }

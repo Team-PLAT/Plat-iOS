@@ -14,8 +14,12 @@ struct UserDetailView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Spacer()
+                    .frame(height: 24)
                 ProfileImageView()
+                    .padding(.bottom, 56)
                 SettingListView()
+                Spacer()
             }
             .navigationTitle("내 계정")
             .navigationBarTitleDisplayMode(.inline)
@@ -76,14 +80,35 @@ private struct ProfileImageView: View {
 // MARK: - SettingListView
 
 private struct SettingListView: View {
+    
+    @Environment(UserUseCase.self) private var userUseCase
+    
+    var accountSection: [ListSection.Info] {
+        [.init(
+            title: "닉네임",
+            content: userUseCase.state.user.nickname,
+            tapAction: {}
+        ),
+         .init(
+            title: "계정 설정",
+            tapAction: {}
+         )
+        ]
+    }
+    
+    var infoSection: [ListSection.Info] {
+        [.init(title: "About PLAT", tapAction: {}),
+         .init(title: "지원", icon: "rectangle.portrait.and.arrow.right", tapAction: {})
+        ]
+    }
+    
     var body: some View {
-        VStack {
-            
+        VStack(spacing: 42) {
+            ListSection(infoList: accountSection)
+            ListSection(infoList: infoSection)
         }
     }
 }
-
-
 
 #Preview {
     UserDetailView(userUseCase: UserUseCase(userService: StubUserService()))

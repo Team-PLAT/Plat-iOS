@@ -41,7 +41,7 @@ struct ListSection: View {
                 id: \.offset
             ) { index, info in
                 ListCell(info: info)
-                if index != infoList.endIndex {
+                if index != infoList.endIndex.advanced(by: -1) {
                     Rectangle()
                         .frame(height: 1)
                         .foregroundStyle(.gray9)
