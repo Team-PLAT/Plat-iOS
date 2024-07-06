@@ -22,7 +22,7 @@ struct MainView: View {
                     case .playlist:
                         Text("PlaylistView")
                     case .account:
-                        UserDetailView()
+                        UserDetailView(userUseCase: UserUseCase(userService: StubUserService()))
                     }
                 }
                 .tag(tab)
