@@ -19,7 +19,7 @@ struct UserDetailView: View {
             }
             .navigationTitle("내 계정")
             .navigationBarTitleDisplayMode(.inline)
-            .background(.platBlack)
+            .background(.platBackground)
         }
         .ignoresSafeArea()
         .environment(userUseCase)
