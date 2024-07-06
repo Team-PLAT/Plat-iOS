@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
+		51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */; };
+		51F4333F2C3411D500FAFD14 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */; };
+		51F433402C3411D500FAFD14 /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433372C3411D400FAFD14 /* Pretendard-ExtraBold.ttf */; };
+		51F433412C3411D500FAFD14 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433382C3411D400FAFD14 /* Pretendard-Medium.ttf */; };
+		51F433422C3411D500FAFD14 /* Pretendard-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433392C3411D500FAFD14 /* Pretendard-Black.ttf */; };
+		51F433432C3411D500FAFD14 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333A2C3411D500FAFD14 /* Pretendard-Thin.ttf */; };
+		51F433442C3411D500FAFD14 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333B2C3411D500FAFD14 /* Pretendard-Bold.ttf */; };
+		51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */; };
+		51F433462C3411D500FAFD14 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */; };
+		51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */; };
 		793278092C2D014500F433F5 /* PLATApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793278082C2D014500F433F5 /* PLATApp.swift */; };
 		7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7932780A2C2D014500F433F5 /* OnboardingView.swift */; };
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
@@ -33,6 +44,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
+		51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
+		51F433372C3411D400FAFD14 /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
+		51F433382C3411D400FAFD14 /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
+		51F433392C3411D500FAFD14 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
+		51F4333A2C3411D500FAFD14 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		51F4333B2C3411D500FAFD14 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
+		51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
+		51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
+		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+PretendardFont.swift"; sourceTree = "<group>"; };
 		793278052C2D014500F433F5 /* PLAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		793278082C2D014500F433F5 /* PLATApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLATApp.swift; sourceTree = "<group>"; };
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -70,6 +93,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51F433332C34115900FAFD14 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				51F433342C34116500FAFD14 /* Pretendard */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		51F433342C34116500FAFD14 /* Pretendard */ = {
+			isa = PBXGroup;
+			children = (
+				51F433392C3411D500FAFD14 /* Pretendard-Black.ttf */,
+				51F4333B2C3411D500FAFD14 /* Pretendard-Bold.ttf */,
+				51F433372C3411D400FAFD14 /* Pretendard-ExtraBold.ttf */,
+				51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */,
+				51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */,
+				51F433382C3411D400FAFD14 /* Pretendard-Medium.ttf */,
+				51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */,
+				51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */,
+				51F4333A2C3411D500FAFD14 /* Pretendard-Thin.ttf */,
+			);
+			path = Pretendard;
+			sourceTree = "<group>";
+		};
+		51F433482C34138600FAFD14 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		793277FC2C2D014500F433F5 = {
 			isa = PBXGroup;
 			children = (
@@ -90,10 +145,12 @@
 		793278072C2D014500F433F5 /* PLAT */ = {
 			isa = PBXGroup;
 			children = (
+				51F433472C3411ED00FAFD14 /* Info.plist */,
 				820836702C33FFAE00F6D0CF /* App */,
 				820836732C33FFF500F6D0CF /* Domain */,
 				820836742C33FFFC00F6D0CF /* Data */,
 				820836712C33FFD000F6D0CF /* Presentaion */,
+				51F433482C34138600FAFD14 /* Helper */,
 				820836722C33FFDA00F6D0CF /* Resource */,
 				7932780E2C2D014600F433F5 /* Preview Content */,
 			);
@@ -128,7 +185,9 @@
 		820836722C33FFDA00F6D0CF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				51F433332C34115900FAFD14 /* Fonts */,
 				7932780C2C2D014600F433F5 /* Assets.xcassets */,
+				51F433312C340DB200FAFD14 /* Colors.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -266,9 +325,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51F433412C3411D500FAFD14 /* Pretendard-Medium.ttf in Resources */,
+				51F433402C3411D500FAFD14 /* Pretendard-ExtraBold.ttf in Resources */,
+				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
+				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
+				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
+				51F4333F2C3411D500FAFD14 /* Pretendard-ExtraLight.ttf in Resources */,
+				51F433432C3411D500FAFD14 /* Pretendard-Thin.ttf in Resources */,
+				51F433462C3411D500FAFD14 /* Pretendard-Light.ttf in Resources */,
 				793278102C2D014600F433F5 /* Preview Assets.xcassets in Resources */,
 				7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */,
+				51F433422C3411D500FAFD14 /* Pretendard-Black.ttf in Resources */,
+				51F433442C3411D500FAFD14 /* Pretendard-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +359,7 @@
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
 				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
+				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				820836792C34002D00F6D0CF /* User.swift in Sources */,
@@ -439,14 +509,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = 6UR3X5MRY6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PLAT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -468,14 +540,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = 6UR3X5MRY6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PLAT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
