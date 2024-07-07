@@ -86,9 +86,11 @@ private struct SettingListView: View {
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(InfoUseCase.self) private var infoUseCase
     
+    @State private var isNicknameSettingsViewPresented = false
+    
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
-            // TODO: NicknameSettingsView로 이동
+            isNicknameSettingsViewPresented.toggle()
         }
     }
     
@@ -114,6 +116,9 @@ private struct SettingListView: View {
         VStack(spacing: 42) {
             ListSection(infoList: [nicknameInfo, accountSettingsInfo])
             ListSection(infoList: [aboutPlatInfo, supportInfo])
+        }
+        .navigationDestination(isPresented: $isNicknameSettingsViewPresented) { NicknameSettingsView(nicknameText: "")
+                .toolbarRole(.editor)
         }
     }
 }

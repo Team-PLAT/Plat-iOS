@@ -18,6 +18,7 @@ struct NicknameSettingsView: View {
                 .font(.Head.head4)
                 .padding(.horizontal, 25)
                 .padding(.bottom, 12)
+                .padding(.top, 24)
             
             PlatTextField(
                 text: $nicknameText,
@@ -29,6 +30,14 @@ struct NicknameSettingsView: View {
             
             NicknameGuide()
                 .padding(.horizontal, 24)
+            
+            Spacer()
+            
+            ActionButton(state: .enabled, title: "변경완료") {
+                userUseCase.updateNickname()
+            }
+            .padding(.horizontal, 18)
+            .padding(.bottom, 48)
         }
         .navigationTitle("닉네임 변경")
         .navigationBarTitleDisplayMode(.inline)
