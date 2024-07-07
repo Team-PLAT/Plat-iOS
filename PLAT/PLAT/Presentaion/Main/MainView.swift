@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     
+    @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
+    @State private var userUseCase: UserUseCase = .init(userService: StubUserService())
     @State private var selectedTab: Tab = .map
     
     var body: some View {
@@ -22,7 +24,10 @@ struct MainView: View {
                     case .playlist:
                         Text("PlaylistView")
                     case .account:
-                        UserDetailView(userUseCase: UserUseCase(userService: StubUserService()))
+                        UserDetailView(
+                            userUseCase: $userUseCase,
+                            infoUseCase: $infoUseCase
+                        )
                     }
                 }
                 .tag(tab)

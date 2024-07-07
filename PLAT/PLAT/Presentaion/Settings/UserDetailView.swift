@@ -9,7 +9,8 @@ import SwiftUI
 
 struct UserDetailView: View {
     
-    @State private(set) var userUseCase: UserUseCase
+    @Binding private(set) var userUseCase: UserUseCase
+    @Binding private(set) var infoUseCase: InfoUseCase
     
     var body: some View {
         NavigationStack {
@@ -27,6 +28,7 @@ struct UserDetailView: View {
         }
         .ignoresSafeArea()
         .environment(userUseCase)
+        .environment(infoUseCase)
     }
 }
 
@@ -82,34 +84,43 @@ private struct ProfileImageView: View {
 private struct SettingListView: View {
     
     @Environment(UserUseCase.self) private var userUseCase
+    @Environment(InfoUseCase.self) private var infoUseCase
     
-    var accountSection: [ListSection.Info] {
-        [.init(
-            title: "닉네임",
-            content: userUseCase.state.user.nickname,
-            tapAction: {}
-        ),
-         .init(
-            title: "계정 설정",
-            tapAction: {}
-         )
-        ]
+    var nicknameInfo: ListSection.Info {
+        return ListSection.Info(title: "닉네임") {
+            // TODO: NicknameSettingsView로 이동
+        }
     }
     
-    var infoSection: [ListSection.Info] {
-        [.init(title: "About PLAT", tapAction: {}),
-         .init(title: "지원", icon: "rectangle.portrait.and.arrow.right", tapAction: {})
-        ]
+    var accountSettingsInfo: ListSection.Info {
+        return ListSection.Info(title: "계정설정") {
+            // TODO: AccountSettingsView로 이동
+        }
     }
     
+    var aboutPlatInfo: ListSection.Info {
+        return ListSection.Info(title: "About PLAT") {
+            // TODO: AboutPlatSettingsView로 이동
+        }
+    }
+    
+    var supportInfo: ListSection.Info {
+        .init(title: "지원", icon: "rectangle.portrait.and.arrow.right") {
+            infoUseCase.checkSupport()
+        }
+    }
+
     var body: some View {
         VStack(spacing: 42) {
-            ListSection(infoList: accountSection)
-            ListSection(infoList: infoSection)
+            ListSection(infoList: [nicknameInfo, accountSettingsInfo])
+            ListSection(infoList: [aboutPlatInfo, supportInfo])
         }
     }
 }
 
 #Preview {
-    UserDetailView(userUseCase: UserUseCase(userService: StubUserService()))
+    UserDetailView(
+        userUseCase: .constant(PreviewHelper.mockUserUseCase),
+        infoUseCase: .constant(PreviewHelper.mockInfoUseCase)
+    )
 }
