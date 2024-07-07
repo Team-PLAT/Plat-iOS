@@ -27,6 +27,7 @@ struct UserDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(.platBackground)
         }
+        .tint(.white)
         .ignoresSafeArea()
         .environment(userUseCase)
         .environment(infoUseCase)
@@ -90,6 +91,7 @@ private struct SettingListView: View {
     
     @State private var isNicknameSettingsViewPresented = false
     @State private var isAccountSettingsViewPresented = false
+    @State private var isAboutPlatSettingsViewPresented = false
     
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
@@ -105,7 +107,7 @@ private struct SettingListView: View {
     
     var aboutPlatInfo: ListSection.Info {
         return ListSection.Info(title: "About PLAT") {
-            // TODO: AboutPlatSettingsView로 이동
+            isAboutPlatSettingsViewPresented.toggle()
         }
     }
     
@@ -122,9 +124,14 @@ private struct SettingListView: View {
         }
         .navigationDestination(isPresented: $isNicknameSettingsViewPresented) { NicknameSettingsView(nicknameText: "")
                 .toolbarRole(.editor)
+                .toolbar(.hidden, for: .tabBar)
         }
         .navigationDestination(isPresented: $isAccountSettingsViewPresented) {
             AccountSettingsView()
+                .toolbarRole(.editor)
+        }
+        .navigationDestination(isPresented: $isAboutPlatSettingsViewPresented) {
+            AboutPlatSettingsView()
                 .toolbarRole(.editor)
         }
     }

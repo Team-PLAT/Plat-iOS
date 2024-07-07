@@ -28,7 +28,6 @@ struct AccountSettingsView: View {
     var accountDeletion: ListSection.Info {
         return ListSection.Info(title: "계정 탈퇴") {
             // TODO: 계정탈퇴 alert
-
         }
     }
     
