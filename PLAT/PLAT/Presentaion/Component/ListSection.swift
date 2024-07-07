@@ -14,6 +14,7 @@ struct ListSection: View {
         let title: String
         let content: String
         let icon: String
+        var streamAccount: StreamAccount?
         var isDestructive: Bool
         var tapAction: () -> Void
         
@@ -21,12 +22,14 @@ struct ListSection: View {
             title: String,
             content: String = "",
             icon: String = "chevron.right",
+            streamAccount: StreamAccount? = nil,
             isDestructive: Bool = false,
             tapAction: @escaping () -> Void
         ) {
             self.title = title
             self.content = content
             self.icon = icon
+            self.streamAccount = streamAccount
             self.isDestructive = isDestructive
             self.tapAction = tapAction
         }
@@ -73,9 +76,15 @@ private struct ListCell: View {
                 
                 Spacer()
                 
-                Text(info.content)
-                    .font(.Body.body5)
-                    .foregroundStyle(.white)
+                if let streamAccount = info.streamAccount {
+                    Image(streamAccount.icon)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                } else {
+                    Text(info.content)
+                        .font(.Body.body5)
+                        .foregroundStyle(.white)
+                }
                 
                 Image(systemName: info.icon)
                     .foregroundStyle(.gray7)
@@ -90,7 +99,8 @@ private struct ListCell: View {
     ListSection(
         infoList: [
             .init(title: "닉네임", content: "IPSUM_LOREM", tapAction: {}),
-            .init(title: "계정 설정", tapAction: {})
+            .init(title: "계정 설정", tapAction: {}),
+            .init(title: "연동된 스트리밍 계정", streamAccount: .appleMusic, tapAction: {})
         ]
     )
 }

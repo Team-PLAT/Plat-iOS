@@ -10,4 +10,11 @@ import SwiftUI
 enum StreamAccount {
     case appleMusic
     case spotify
+    
+    var icon: ImageResource {
+        switch self {
+        case .appleMusic: return .appleMusic
+        case .spotify: return .spotify
+        }
+    }
 }
