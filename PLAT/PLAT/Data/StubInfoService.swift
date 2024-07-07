@@ -19,6 +19,4 @@ struct StubInfoService: InfoServiceInterface {
     func checkSupport() {
         print(#function)
     }
-    
-    
 }
