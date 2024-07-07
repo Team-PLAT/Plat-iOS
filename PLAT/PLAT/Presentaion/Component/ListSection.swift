@@ -72,7 +72,7 @@ private struct ListCell: View {
             HStack {
                 Text(info.title)
                     .font(.Body.body2)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(info.isDestructive ? .red : .white)
                 
                 Spacer()
                 

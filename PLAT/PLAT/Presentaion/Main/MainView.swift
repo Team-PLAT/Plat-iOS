@@ -11,6 +11,7 @@ struct MainView: View {
     
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     @State private var userUseCase: UserUseCase = .init(userService: StubUserService())
+    @State private var streamAccountUseCase: StreamAccountUseCase = .init(streamAccountService: StubStreamAccountService())
     @State private var selectedTab: Tab = .map
     
     var body: some View {
@@ -26,7 +27,8 @@ struct MainView: View {
                     case .account:
                         UserDetailView(
                             userUseCase: $userUseCase,
-                            infoUseCase: $infoUseCase
+                            infoUseCase: $infoUseCase,
+                            streamAccountUseCase: $streamAccountUseCase
                         )
                     }
                 }

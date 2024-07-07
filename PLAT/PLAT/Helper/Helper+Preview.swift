@@ -10,4 +10,5 @@ import Foundation
 enum PreviewHelper {
     static let mockUserUseCase = UserUseCase(userService: StubUserService())
     static let mockInfoUseCase = InfoUseCase(infoService: StubInfoService())
+    static let mockStreamAccountUseCase = StreamAccountUseCase(streamAccountService: StubStreamAccountService())
 }

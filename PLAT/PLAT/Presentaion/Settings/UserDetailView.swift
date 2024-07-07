@@ -11,6 +11,7 @@ struct UserDetailView: View {
     
     @Binding private(set) var userUseCase: UserUseCase
     @Binding private(set) var infoUseCase: InfoUseCase
+    @Binding private(set) var streamAccountUseCase: StreamAccountUseCase
     
     var body: some View {
         NavigationStack {
@@ -29,6 +30,7 @@ struct UserDetailView: View {
         .ignoresSafeArea()
         .environment(userUseCase)
         .environment(infoUseCase)
+        .environment(streamAccountUseCase)
     }
 }
 
@@ -87,6 +89,7 @@ private struct SettingListView: View {
     @Environment(InfoUseCase.self) private var infoUseCase
     
     @State private var isNicknameSettingsViewPresented = false
+    @State private var isAccountSettingsViewPresented = false
     
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
@@ -96,7 +99,7 @@ private struct SettingListView: View {
     
     var accountSettingsInfo: ListSection.Info {
         return ListSection.Info(title: "계정설정") {
-            // TODO: AccountSettingsView로 이동
+            isAccountSettingsViewPresented.toggle()
         }
     }
     
@@ -120,12 +123,17 @@ private struct SettingListView: View {
         .navigationDestination(isPresented: $isNicknameSettingsViewPresented) { NicknameSettingsView(nicknameText: "")
                 .toolbarRole(.editor)
         }
+        .navigationDestination(isPresented: $isAccountSettingsViewPresented) {
+            AccountSettingsView()
+                .toolbarRole(.editor)
+        }
     }
 }
 
 #Preview {
     UserDetailView(
         userUseCase: .constant(PreviewHelper.mockUserUseCase),
-        infoUseCase: .constant(PreviewHelper.mockInfoUseCase)
+        infoUseCase: .constant(PreviewHelper.mockInfoUseCase), 
+        streamAccountUseCase: .constant(PreviewHelper.mockStreamAccountUseCase)
     )
 }
