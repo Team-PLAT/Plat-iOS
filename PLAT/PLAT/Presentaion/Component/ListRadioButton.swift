@@ -41,6 +41,7 @@ struct ListRadioButton: View {
         .onTapGesture {
             tapAction()
         }
+        .disabled(isSelected)
     }
 }
 
