@@ -9,29 +9,25 @@ import SwiftUI
 
 struct UserDetailView: View {
     
-    @Binding private(set) var userUseCase: UserUseCase
-    @Binding private(set) var infoUseCase: InfoUseCase
-    @Binding private(set) var streamAccountUseCase: StreamAccountUseCase
+    @Environment(UserUseCase.self) private var userUseCase: UserUseCase
+    @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
+    @Environment(StreamAccountUseCase.self) private var streamAccountUseCase: StreamAccountUseCase
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Spacer()
-                    .frame(height: 24)
-                ProfileImageView()
-                    .padding(.bottom, 56)
-                SettingListView()
-                Spacer()
-            }
-            .navigationTitle("내 계정")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(.platBackground)
+        VStack {
+            Text("내 계정")
+                .font(.Head.head5)
+                .foregroundStyle(.white)
+                .padding(.top, 8)
+                .padding(.bottom, 24)
+            
+            ProfileImageView()
+                .padding(.bottom, 56)
+            SettingListView()
+            Spacer()
         }
+        .background(.platBackground)
         .tint(.white)
-        .ignoresSafeArea()
-        .environment(userUseCase)
-        .environment(infoUseCase)
-        .environment(streamAccountUseCase)
     }
 }
 
@@ -118,13 +114,14 @@ private struct SettingListView: View {
     }
 
     var body: some View {
-        VStack(spacing: 42) {
-            ListSection(infoList: [nicknameInfo, accountSettingsInfo])
-            ListSection(infoList: [aboutPlatInfo, supportInfo])
+        Group {
+            VStack(spacing: 42) {
+                ListSection(infoList: [nicknameInfo, accountSettingsInfo])
+                ListSection(infoList: [aboutPlatInfo, supportInfo])
+            }
         }
         .navigationDestination(isPresented: $isNicknameSettingsViewPresented) { NicknameSettingsView(nicknameText: "")
                 .toolbarRole(.editor)
-                .toolbar(.hidden, for: .tabBar)
         }
         .navigationDestination(isPresented: $isAccountSettingsViewPresented) {
             AccountSettingsView()
@@ -138,9 +135,8 @@ private struct SettingListView: View {
 }
 
 #Preview {
-    UserDetailView(
-        userUseCase: .constant(PreviewHelper.mockUserUseCase),
-        infoUseCase: .constant(PreviewHelper.mockInfoUseCase), 
-        streamAccountUseCase: .constant(PreviewHelper.mockStreamAccountUseCase)
-    )
+    UserDetailView()
+        .environment(PreviewHelper.mockUserUseCase)
+        .environment(PreviewHelper.mockInfoUseCase)
+        .environment(PreviewHelper.mockStreamAccountUseCase)
 }

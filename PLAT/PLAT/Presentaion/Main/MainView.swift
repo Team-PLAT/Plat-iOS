@@ -15,34 +15,32 @@ struct MainView: View {
     @State private var selectedTab: Tab = .map
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(Tab.allCases) { tab in
-                Group {
-                    switch tab {
-                    case .map: Text("MapView")
-                    case .feed:
-                        Text("FeedView")
-                    case .playlist:
-                        Text("PlaylistView")
-                    case .account:
-                        UserDetailView(
-                            userUseCase: $userUseCase,
-                            infoUseCase: $infoUseCase,
-                            streamAccountUseCase: $streamAccountUseCase
-                        )
+        NavigationStack {
+            TabView(selection: $selectedTab) {
+                ForEach(Tab.allCases) { tab in
+                    Group {
+                        switch tab {
+                        case .map: Text("MapView")
+                        case .feed: Text("FeedView")
+                        case .playlist: Text("PlaylistView")
+                        case .account: UserDetailView()
+                        }
                     }
-                }
-                .tag(tab)
-                .tabItem {
-                    VStack {
-                        Image(systemName: tab.icon)
-                        Text(tab.title)
-                            .font(.Caption.caption2)
+                    .tag(tab)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: tab.icon)
+                            Text(tab.title)
+                                .font(.Caption.caption2)
+                        }
                     }
                 }
             }
+            .tint(.platPurple)
         }
-        .tint(.platPurple)
+        .environment(userUseCase)
+        .environment(infoUseCase)
+        .environment(streamAccountUseCase)
     }
 }
 
