@@ -50,7 +50,7 @@ private struct ProfileImageView: View {
                 
                 CameraButton()
                     .padding(.trailing, -10)
-                    .padding(.bottom)
+                    .padding(.bottom, -5)
             }
         }
     }
@@ -59,7 +59,7 @@ private struct ProfileImageView: View {
         var body: some View {
             ZStack {
                 Circle()
-                    .foregroundStyle(.platBlack)
+                    .foregroundStyle(.platBackground)
                     .frame(width: 58, height: 58)
                 
                 Circle()
