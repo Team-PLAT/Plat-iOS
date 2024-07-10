@@ -26,11 +26,14 @@ struct SignUpView: View {
                 .padding(.bottom, 34)
                 .padding(.trailing, 158)
             
+            Spacer()
+            
             Image("headphone")
                 .resizable()
                 .frame(width: 270, height: 270)
                 .padding(.bottom, 68)
             
+            Spacer()
             
             AppleSignUpButton()
             
@@ -45,7 +48,7 @@ struct SignUpView: View {
             
             SwitchSignInView()
             
-        }.background(.black)
+        }.background(.platBackground)
     }
 }
 
@@ -92,7 +95,7 @@ struct AppleSignUpButton: View {
                 }
             }
         ).signInWithAppleButtonStyle(.white)
-            .frame(width: 358, height: 54)
+            .frame(height: 54)
             .cornerRadius(8)
     }
 }
@@ -129,9 +132,13 @@ struct SignInView: View {
                 .padding(.bottom, 30)
                 .padding(.trailing, 222)
             
+            Spacer()
+            
             Image("")
                 .frame(width: 270, height: 270)
                 .padding(.bottom, 82)
+            
+            Spacer()
             
             AppleContinueButton()
                 .padding(.bottom, 62)
@@ -142,7 +149,7 @@ struct SignInView: View {
                 .background(.white)
             
             SwitchSignUpView()
-        }.background(.black)
+        }.background(.platBackground)
     }
 }
 
@@ -163,7 +170,7 @@ struct AppleContinueButton: View {
                 }
             }
         ).signInWithAppleButtonStyle(.white)
-            .frame(width: 357, height: 54)
+            .frame(height: 54)
             .cornerRadius(10)
     }
 }
@@ -180,7 +187,7 @@ struct SwitchSignUpView: View {
                 .frame(width: 1, height: 15)
                 .background(.white)
             
-            Text("회원가입하기")
+            Text("회원가입하기") // AuthType 변경
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
         }
@@ -198,7 +205,7 @@ struct LoginView: View {
                 SignInView()
             }
         }
-        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" ) //navigation 정리할 때 이전 뷰에서 처리
+        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" ) // navigation 정리할 때 이전 뷰에서 처리
         .navigationBarTitleDisplayMode(.inline)
         .tint(.white)
     }
