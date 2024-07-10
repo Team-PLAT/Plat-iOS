@@ -11,7 +11,8 @@ import SwiftUI
 struct PLATApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+//            MainView()
+            LoginView()
         }
     }
 }
