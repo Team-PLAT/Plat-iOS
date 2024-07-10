@@ -82,6 +82,7 @@ private struct ProfileImageView: View {
 
 private struct SettingListView: View {
     
+    @Environment(PathModel.self) var pathModel
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(InfoUseCase.self) private var infoUseCase
     
@@ -91,19 +92,19 @@ private struct SettingListView: View {
     
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
-            isNicknameSettingsViewPresented.toggle()
+            pathModel.paths.append(.nicknameSettingsView)
         }
     }
     
     var accountSettingsInfo: ListSection.Info {
         return ListSection.Info(title: "계정설정") {
-            isAccountSettingsViewPresented.toggle()
+            pathModel.paths.append(.accountSettingsView)
         }
     }
     
     var aboutPlatInfo: ListSection.Info {
         return ListSection.Info(title: "About PLAT") {
-            isAboutPlatSettingsViewPresented.toggle()
+            pathModel.paths.append(.aboutPlatSettingsView)
         }
     }
     
@@ -112,24 +113,11 @@ private struct SettingListView: View {
             infoUseCase.checkSupport()
         }
     }
-
+    
     var body: some View {
-        Group {
-            VStack(spacing: 42) {
-                ListSection(infoList: [nicknameInfo, accountSettingsInfo])
-                ListSection(infoList: [aboutPlatInfo, supportInfo])
-            }
-        }
-        .navigationDestination(isPresented: $isNicknameSettingsViewPresented) { NicknameSettingsView(nicknameText: "")
-                .toolbarRole(.editor)
-        }
-        .navigationDestination(isPresented: $isAccountSettingsViewPresented) {
-            AccountSettingsView()
-                .toolbarRole(.editor)
-        }
-        .navigationDestination(isPresented: $isAboutPlatSettingsViewPresented) {
-            AboutPlatSettingsView()
-                .toolbarRole(.editor)
+        VStack(spacing: 42) {
+            ListSection(infoList: [nicknameInfo, accountSettingsInfo])
+            ListSection(infoList: [aboutPlatInfo, supportInfo])
         }
     }
 }
@@ -139,4 +127,5 @@ private struct SettingListView: View {
         .environment(PreviewHelper.mockUserUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PreviewHelper.mockStreamAccountUseCase)
+        .environment(PathModel())
 }
