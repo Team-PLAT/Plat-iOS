@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-enum StreamAccount {
-    case appleMusic
-    case spotify
+enum StreamAccount: String {
+    case appleMusic = "Apple Music"
+    case spotify = "Spotify"
+    
+    var icon: ImageResource {
+        switch self {
+        case .appleMusic: return .appleMusic
+        case .spotify: return .spotify
+        }
+    }
 }

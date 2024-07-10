@@ -22,6 +22,17 @@
 		7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7932780A2C2D014500F433F5 /* OnboardingView.swift */; };
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
 		793278102C2D014600F433F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780F2C2D014600F433F5 /* Preview Assets.xcassets */; };
+		793509BF2C39324A0098B073 /* StubUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793509BE2C39324A0098B073 /* StubUserService.swift */; };
+		793509C22C393BA40098B073 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793509C12C393BA40098B073 /* ListSection.swift */; };
+		7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465992C3A5C2400F6DC2D /* Helper+Preview.swift */; };
+		7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */; };
+		7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659D2C3A649600F6DC2D /* PlatTextField.swift */; };
+		796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */; };
+		796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 796465A12C3A79BD00F6DC2D /* Icons.xcassets */; };
+		796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */; };
+		796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465A52C3A82A200F6DC2D /* ListRadioButton.swift */; };
+		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
+		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
 		820836772C34001D00F6D0CF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* LoginService.swift */; };
 		820836792C34002D00F6D0CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* User.swift */; };
 		8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* LoginUseCase.swift */; };
@@ -61,6 +72,17 @@
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7932780C2C2D014600F433F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7932780F2C2D014600F433F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		793509BE2C39324A0098B073 /* StubUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubUserService.swift; sourceTree = "<group>"; };
+		793509C12C393BA40098B073 /* ListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
+		796465992C3A5C2400F6DC2D /* Helper+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Preview.swift"; sourceTree = "<group>"; };
+		7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubInfoService.swift; sourceTree = "<group>"; };
+		7964659D2C3A649600F6DC2D /* PlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatTextField.swift; sourceTree = "<group>"; };
+		7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		796465A12C3A79BD00F6DC2D /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubStreamAccountService.swift; sourceTree = "<group>"; };
+		796465A52C3A82A200F6DC2D /* ListRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRadioButton.swift; sourceTree = "<group>"; };
+		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -121,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */,
+				796465992C3A5C2400F6DC2D /* Helper+Preview.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -165,6 +188,25 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		793509C02C393B4F0098B073 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				793509C12C393BA40098B073 /* ListSection.swift */,
+				7964659D2C3A649600F6DC2D /* PlatTextField.swift */,
+				7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */,
+				796465A52C3A82A200F6DC2D /* ListRadioButton.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		79A09D4C2C391B97006F14F4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				79A09D4D2C391BA2006F14F4 /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		820836702C33FFAE00F6D0CF /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +218,8 @@
 		820836712C33FFD000F6D0CF /* Presentaion */ = {
 			isa = PBXGroup;
 			children = (
+				793509C02C393B4F0098B073 /* Component */,
+				79A09D4C2C391B97006F14F4 /* Main */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
 			);
@@ -187,6 +231,7 @@
 			children = (
 				51F433332C34115900FAFD14 /* Fonts */,
 				7932780C2C2D014600F433F5 /* Assets.xcassets */,
+				796465A12C3A79BD00F6DC2D /* Icons.xcassets */,
 				51F433312C340DB200FAFD14 /* Colors.xcassets */,
 			);
 			path = Resource;
@@ -206,6 +251,9 @@
 			isa = PBXGroup;
 			children = (
 				820836762C34001D00F6D0CF /* LoginService.swift */,
+				793509BE2C39324A0098B073 /* StubUserService.swift */,
+				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
+				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -259,6 +307,7 @@
 			children = (
 				820836782C34002D00F6D0CF /* User.swift */,
 				820836982C34064400F6D0CF /* StreamAccount.swift */,
+				79A09D4F2C391C4A006F14F4 /* Tab.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -327,6 +376,7 @@
 			files = (
 				51F433412C3411D500FAFD14 /* Pretendard-Medium.ttf in Resources */,
 				51F433402C3411D500FAFD14 /* Pretendard-ExtraBold.ttf in Resources */,
+				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
@@ -353,22 +403,32 @@
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
+				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
+				793509BF2C39324A0098B073 /* StubUserService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
+				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
 				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
+				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
+				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				820836792C34002D00F6D0CF /* User.swift in Sources */,
+				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
+				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,
+				79A09D502C391C4A006F14F4 /* Tab.swift in Sources */,
 				820836992C34064400F6D0CF /* StreamAccount.swift in Sources */,
 				820836772C34001D00F6D0CF /* LoginService.swift in Sources */,
 				8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */,
+				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
+				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,22 +569,24 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 6UR3X5MRY6;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TeamPLAT.PLAT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -540,22 +602,24 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 6UR3X5MRY6;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TeamPLAT.PLAT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

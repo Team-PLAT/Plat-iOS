@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct AboutPlatSettingsView: View {
+    
+    @Environment(InfoUseCase.self) private var infoUseCase
+    
+    var privacyPolicyInfo: ListSection.Info {
+        return ListSection.Info(title: "개인정보 보호 정책", icon: "rectangle.portrait.and.arrow.right") {
+            infoUseCase.checkPrivacyPolicy()
+        }
+    }
+    
+    var termsOfServiceInfo: ListSection.Info {
+        return ListSection.Info(title: "서비스 이용 약관", icon: "rectangle.portrait.and.arrow.right") {
+            infoUseCase.checkTermsOfService()
+        }
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ListSection(infoList: [privacyPolicyInfo, termsOfServiceInfo])
+            Spacer()
+        }
+        .padding(.top, 24)
+        .navigationTitle("About PLAT")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(.platBackground)
     }
 }
 
 #Preview {
     AboutPlatSettingsView()
+        .environment(PreviewHelper.mockInfoUseCase)
 }
