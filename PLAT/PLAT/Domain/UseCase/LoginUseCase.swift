@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 @Observable
 final class LoginUseCase {
@@ -24,7 +25,8 @@ final class LoginUseCase {
 extension LoginUseCase {
     
     struct State {
-        
+//       var isSignIn: Result<Bool, Error>
+//       var isSignUp: Result<Bool, Error>
     }
 }
 
@@ -32,13 +34,13 @@ extension LoginUseCase {
 
 extension LoginUseCase {
     
-    /// 로그인하기
-    func signIn() {
-        loginService.signIn()
-    }
-    
-    /// 회원가입하기
-    func signUp() {
-        loginService.signUp()
-    }
+    /// 로그인 요청하기
+    func requestLogin() {
+            loginService.requestLogin(ASAuthorizationAppleIDProvider().createRequest())
+        }
+        
+    /// 로그인 결과 처리하기
+    func handleLogin(authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error> {
+            return loginService.handleLogin(authResult)
+        }
 }

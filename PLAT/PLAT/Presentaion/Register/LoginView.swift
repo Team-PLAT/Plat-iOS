@@ -13,6 +13,25 @@ enum AuthType {
     case signUp
 }
 
+struct LoginView: View {
+    @Environment(LoginUseCase.self) private var loginUseCase: LoginUseCase
+    
+    @State private var authType: AuthType = .signUp
+    
+    var body: some View {
+        NavigationStack {
+            if authType == .signUp {
+                SignUpView()
+            } else {
+                SignInView()
+            }
+        }
+        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" ) // navigation 정리할 때 이전 뷰에서 처리
+        .navigationBarTitleDisplayMode(.inline)
+        .tint(.white)
+    }
+}
+
 // MARK: - SignUpView
 struct SignUpView: View {
     var body: some View {
@@ -25,6 +44,7 @@ struct SignUpView: View {
                 .foregroundColor(.white)
                 .padding(.bottom, 34)
                 .padding(.trailing, 158)
+                .lineSpacing(5)
             
             Spacer()
             
@@ -79,24 +99,28 @@ struct PolicyNoticeText: View {
 }
 
 struct AppleSignUpButton: View {
+    @Environment(LoginUseCase.self) private var loginUseCase
+    
     var body: some View {
         SignInWithAppleButton(
             .signUp,
-            onRequest: { request in
-                request.requestedScopes = [.fullName, .email]
-            },
+            
+            onRequest: { _ in loginUseCase.requestLogin()},
             onCompletion: { result in
-                switch result {
-                case .success(let authorization):
-                    if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                    }
-                case .failure:
-                    print("Apple ID 로그인 실패")
+                let loginResult = loginUseCase.handleLogin(authResult: result)
+                switch loginResult {
+                case .success:
+//                    loginUseCase.state.isSignUp = true
+                    print("로그인 성공")
+                    
+                case .failure(let error):
+                    print("로그인 실패 \(error.localizedDescription)")
                 }
             }
         ).signInWithAppleButtonStyle(.white)
             .frame(height: 54)
             .cornerRadius(8)
+            .padding(.horizontal, 18)
     }
 }
 
@@ -131,8 +155,7 @@ struct SignInView: View {
                 .foregroundColor(.white)
                 .padding(.bottom, 30)
                 .padding(.trailing, 222)
-            
-            Spacer()
+                .lineSpacing(5)
             
             Image("")
                 .frame(width: 270, height: 270)
@@ -154,6 +177,8 @@ struct SignInView: View {
 }
 
 struct AppleContinueButton: View {
+    @Environment(LoginUseCase.self) private var loginUseCase
+    
     var body: some View {
         SignInWithAppleButton(
             .continue,
@@ -172,6 +197,7 @@ struct AppleContinueButton: View {
         ).signInWithAppleButtonStyle(.white)
             .frame(height: 54)
             .cornerRadius(10)
+            .padding(.horizontal, 18)
     }
 }
 
@@ -191,23 +217,6 @@ struct SwitchSignUpView: View {
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
         }
-    }
-}
-
-struct LoginView: View {
-    @State private var authType: AuthType = .signUp
-    
-    var body: some View {
-        NavigationStack {
-            if authType == .signUp {
-                SignUpView()
-            } else {
-                SignInView()
-            }
-        }
-        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" ) // navigation 정리할 때 이전 뷰에서 처리
-        .navigationBarTitleDisplayMode(.inline)
-        .tint(.white)
     }
 }
 
