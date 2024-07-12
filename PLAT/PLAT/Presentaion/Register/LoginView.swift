@@ -15,6 +15,7 @@ enum AuthType {
 
 struct LoginView: View {
     @Environment(LoginUseCase.self) private var loginUseCase: LoginUseCase
+    @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
     @State private var authType: AuthType = .signUp
     
@@ -33,7 +34,7 @@ struct LoginView: View {
 }
 
 // MARK: - SignUpView
-struct SignUpView: View {
+private struct SignUpView: View {
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -72,45 +73,18 @@ struct SignUpView: View {
     }
 }
 
-struct PolicyNoticeText: View {
-    var body: some View {
-        HStack(spacing: 0) {
-            Text("위의 버튼을 누름으로써, ")
-            Text("개인정보보호정책 ")
-                .overlay(
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.white), alignment: .bottom)
-            Text("및")
-        }.font(.Body.body4)
-            .foregroundColor(.white)
-        
-        HStack(spacing: 0) {
-            Text("서비스 이용약관")
-                .overlay(
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.white), alignment: .bottom)
-            
-            Text("에 동의하는 것입니다.")
-        }.font(.Body.body4)
-            .foregroundColor(.white)
-    }
-}
-
-struct AppleSignUpButton: View {
+private struct AppleSignUpButton: View {
     @Environment(LoginUseCase.self) private var loginUseCase
     
     var body: some View {
         SignInWithAppleButton(
             .signUp,
-            
             onRequest: { _ in loginUseCase.requestLogin()},
             onCompletion: { result in
                 let loginResult = loginUseCase.handleLogin(authResult: result)
                 switch loginResult {
                 case .success:
-//                    loginUseCase.state.isSignUp = true
+                    //                    loginUseCase.state.isSignUp = true
                     print("로그인 성공")
                     
                 case .failure(let error):
@@ -124,7 +98,41 @@ struct AppleSignUpButton: View {
     }
 }
 
-struct SwitchSignInView: View {
+private struct PolicyNoticeText: View {
+    @Environment(InfoUseCase.self) private var infoUseCase
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            Text("위의 버튼을 누름으로써, ")
+            Text("개인정보보호정책 ")
+                .overlay(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.white), alignment: .bottom)
+                .onTapGesture {
+                    infoUseCase.checkPrivacyPolicy()
+                }
+            Text("및")
+        }.font(.Body.body4)
+            .foregroundColor(.white)
+        
+        HStack(spacing: 0) {
+            Text("서비스 이용약관")
+                .overlay(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(.white), alignment: .bottom)
+                .onTapGesture {
+                    infoUseCase.checkTermsOfService()
+                }
+            
+            Text("에 동의하는 것입니다.")
+        }.font(.Body.body4)
+            .foregroundColor(.white)
+    }
+}
+
+private struct SwitchSignInView: View {
     var body: some View {
         HStack(spacing: 5) {
             Text("이미 계정이 있으신가요?")
@@ -144,7 +152,7 @@ struct SwitchSignInView: View {
 }
 
 // MARK: - SignInView
-struct SignInView: View {
+private struct SignInView: View {
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -182,26 +190,26 @@ struct AppleContinueButton: View {
     var body: some View {
         SignInWithAppleButton(
             .continue,
-            onRequest: { request in
-                request.requestedScopes = [.fullName, .email]
-            },
+            onRequest: { _ in loginUseCase.requestLogin()},
             onCompletion: { result in
-                switch result {
-                case .success(let authorization):
-                    if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                    }
-                case .failure:
-                    print("Apple ID 로그인 실패")
+                let loginResult = loginUseCase.handleLogin(authResult: result)
+                switch loginResult {
+                case .success:
+                    //                    loginUseCase.state.isSignUp = true
+                    print("로그인 성공")
+                    
+                case .failure(let error):
+                    print("로그인 실패 \(error.localizedDescription)")
                 }
             }
         ).signInWithAppleButtonStyle(.white)
             .frame(height: 54)
-            .cornerRadius(10)
+            .cornerRadius(8)
             .padding(.horizontal, 18)
     }
 }
 
-struct SwitchSignUpView: View {
+private struct SwitchSignUpView: View {
     var body: some View {
         HStack(spacing: 5) {
             Text("새로 가입하시나요?")
@@ -222,4 +230,7 @@ struct SwitchSignUpView: View {
 
 #Preview {
     LoginView()
+        .environment(PreviewHelper.mockLoginUseCase)
+        .environment(PreviewHelper.mockInfoUseCase)
+    
 }

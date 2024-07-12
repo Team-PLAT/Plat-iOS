@@ -25,22 +25,21 @@ final class LoginUseCase {
 extension LoginUseCase {
     
     struct State {
-//       var isSignIn: Result<Bool, Error>
-//       var isSignUp: Result<Bool, Error>
+        //       var isSignIn: Result<Bool, Error>
+        //       var isSignUp: Result<Bool, Error>
     }
 }
 
 // MARK: - UseCase Method
-
 extension LoginUseCase {
     
     /// 로그인 요청하기
     func requestLogin() {
-            loginService.requestLogin(ASAuthorizationAppleIDProvider().createRequest())
-        }
-        
+        loginService.requestLogin(ASAuthorizationAppleIDProvider().createRequest())
+    }
+    
     /// 로그인 결과 처리하기
     func handleLogin(authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error> {
-            return loginService.handleLogin(authResult)
-        }
+        return loginService.handleLogin(authResult)
+    }
 }

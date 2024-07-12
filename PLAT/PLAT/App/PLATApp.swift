@@ -11,12 +11,14 @@ import SwiftUI
 struct PLATApp: App {
     
     @State private var loginUseCase: LoginUseCase = .init(loginService: LoginService())
+    @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     
     var body: some Scene {
         WindowGroup {
 //            MainView()
             LoginView()
                 .environment(loginUseCase)
+                .environment(infoUseCase)
         }
     }
 }
