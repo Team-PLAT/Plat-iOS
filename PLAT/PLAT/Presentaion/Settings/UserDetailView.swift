@@ -86,10 +86,6 @@ private struct SettingListView: View {
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(InfoUseCase.self) private var infoUseCase
     
-    @State private var isNicknameSettingsViewPresented = false
-    @State private var isAccountSettingsViewPresented = false
-    @State private var isAboutPlatSettingsViewPresented = false
-    
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
             pathModel.paths.append(.nicknameSettingsView)

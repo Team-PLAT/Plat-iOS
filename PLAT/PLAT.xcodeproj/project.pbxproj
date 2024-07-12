@@ -33,6 +33,7 @@
 		796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465A52C3A82A200F6DC2D /* ListRadioButton.swift */; };
 		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
+		79B48AF72C413B5600A73CA0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* Path.swift */; };
 		820836772C34001D00F6D0CF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* LoginService.swift */; };
 		820836792C34002D00F6D0CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* User.swift */; };
 		8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* LoginUseCase.swift */; };
@@ -83,6 +84,7 @@
 		796465A52C3A82A200F6DC2D /* ListRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRadioButton.swift; sourceTree = "<group>"; };
 		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		79B48AF62C413B5600A73CA0 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -207,6 +209,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		79B48AF52C413B2B00A73CA0 /* Path */ = {
+			isa = PBXGroup;
+			children = (
+				79B48AF62C413B5600A73CA0 /* Path.swift */,
+			);
+			path = Path;
+			sourceTree = "<group>";
+		};
 		820836702C33FFAE00F6D0CF /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +250,7 @@
 		820836732C33FFF500F6D0CF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				79B48AF52C413B2B00A73CA0 /* Path */,
 				8208369E2C3409E200F6D0CF /* Entity */,
 				8208367A2C34003D00F6D0CF /* UseCase */,
 				8208367D2C34010200F6D0CF /* Interface */,
@@ -416,6 +427,7 @@
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
+				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				820836792C34002D00F6D0CF /* User.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,

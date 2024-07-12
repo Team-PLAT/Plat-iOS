@@ -7,18 +7,6 @@
 
 import SwiftUI
 
-enum Path: Hashable {
-    case nicknameSettingsView
-    case accountSettingsView
-    case streamAccountSettingsView
-    case aboutPlatSettingsView
-}
-
-@Observable
-final class PathModel {
-    var paths: [Path] = []
-}
-
 struct MainView: View {
     
     @State private var pathModel: PathModel = .init()
@@ -61,8 +49,10 @@ struct MainView: View {
                 case .aboutPlatSettingsView:
                     AboutPlatSettingsView()
                         .toolbarRole(.editor)
-                default:
-                    EmptyView()
+                case .streamAccountSettingsView:
+                    StreamAccountSettingsView()
+                        .toolbarRole(.editor)
+                    
                 }
             }
         }
