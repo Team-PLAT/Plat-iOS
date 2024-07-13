@@ -22,12 +22,12 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             if authType == .signUp {
-                SignUpView()
+                SignUpView(authType: $authType)
             } else {
-                SignInView()
+                SignInView(authType: $authType)
             }
         }
-        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" ) // navigation 정리할 때 이전 뷰에서 처리
+        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" )
         .navigationBarTitleDisplayMode(.inline)
         .tint(.white)
     }
@@ -35,6 +35,8 @@ struct LoginView: View {
 
 // MARK: - SignUpView
 private struct SignUpView: View {
+    @Binding var authType: AuthType
+    
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -67,7 +69,7 @@ private struct SignUpView: View {
                 .background(.white)
                 .padding(.bottom, 4)
             
-            SwitchSignInView()
+            SwitchSignInView(authType: $authType)
             
         }.background(.platBackground)
     }
@@ -84,8 +86,8 @@ private struct AppleSignUpButton: View {
                 let loginResult = loginUseCase.handleLogin(authResult: result)
                 switch loginResult {
                 case .success:
-                    //                    loginUseCase.state.isSignUp = true
                     print("로그인 성공")
+                    // 다음 뷰로 이동
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -133,6 +135,8 @@ private struct PolicyNoticeText: View {
 }
 
 private struct SwitchSignInView: View {
+    @Binding var authType: AuthType
+    
     var body: some View {
         HStack(spacing: 5) {
             Text("이미 계정이 있으신가요?")
@@ -147,12 +151,17 @@ private struct SwitchSignInView: View {
             Text("로그인하기") // AuthType 변경
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
+                .onTapGesture {
+                    self.authType = .signIn
+            }
         }
     }
 }
 
 // MARK: - SignInView
 private struct SignInView: View {
+    @Binding var authType: AuthType
+    
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -179,7 +188,7 @@ private struct SignInView: View {
                 .frame(width: 316, height: 1)
                 .background(.white)
             
-            SwitchSignUpView()
+            SwitchSignUpView(authType: $authType)
         }.background(.platBackground)
     }
 }
@@ -195,8 +204,8 @@ struct AppleContinueButton: View {
                 let loginResult = loginUseCase.handleLogin(authResult: result)
                 switch loginResult {
                 case .success:
-                    //                    loginUseCase.state.isSignUp = true
                     print("로그인 성공")
+                    // 다음 뷰로 이동
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -210,6 +219,8 @@ struct AppleContinueButton: View {
 }
 
 private struct SwitchSignUpView: View {
+    @Binding var authType: AuthType
+    
     var body: some View {
         HStack(spacing: 5) {
             Text("새로 가입하시나요?")
@@ -221,9 +232,12 @@ private struct SwitchSignUpView: View {
                 .frame(width: 1, height: 15)
                 .background(.white)
             
-            Text("회원가입하기") // AuthType 변경
+            Text("회원가입하기")
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
+                .onTapGesture {
+                    self.authType = .signUp
+                }
         }
     }
 }
