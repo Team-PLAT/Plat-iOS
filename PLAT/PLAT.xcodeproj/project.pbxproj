@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
 		51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */; };
 		51F4333F2C3411D500FAFD14 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */; };
@@ -109,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +331,9 @@
 				827A1DDE2C2D9B0D00C40046 /* PBXTargetDependency */,
 			);
 			name = PLAT;
+			packageProductDependencies = (
+				518B4EEF2C3EE27F005FF553 /* Lottie */,
+			);
 			productName = PLAT;
 			productReference = 793278052C2D014500F433F5 /* PLAT.app */;
 			productType = "com.apple.product-type.application";
@@ -359,6 +364,7 @@
 			mainGroup = 793277FC2C2D014500F433F5;
 			packageReferences = (
 				827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 793278062C2D014500F433F5 /* Products */;
 			projectDirPath = "";
@@ -651,6 +657,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
@@ -662,6 +676,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		518B4EEF2C3EE27F005FF553 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		827A1DDD2C2D9B0D00C40046 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
