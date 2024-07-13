@@ -77,7 +77,6 @@ struct SelectStreamAccountView: View {
 }
 
 // MARK: WhyConnectStreamAccountSheet
-
 private struct WhyConnectStreamAccountSheet: View {
     var body: some View {
         
