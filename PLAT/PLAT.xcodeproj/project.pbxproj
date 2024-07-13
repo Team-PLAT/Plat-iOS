@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
+		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
 		51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */; };
@@ -56,6 +58,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
+		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -118,6 +122,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51148CCA2C42F69D00365853 /* Lotties */ = {
+			isa = PBXGroup;
+			children = (
+				51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */,
+				51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */,
+			);
+			path = Lotties;
+			sourceTree = "<group>";
+		};
 		51F433332C34115900FAFD14 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +246,7 @@
 		820836722C33FFDA00F6D0CF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				51148CCA2C42F69D00365853 /* Lotties */,
 				51F433332C34115900FAFD14 /* Fonts */,
 				7932780C2C2D014600F433F5 /* Assets.xcassets */,
 				796465A12C3A79BD00F6DC2D /* Icons.xcassets */,
@@ -385,6 +399,7 @@
 				51F433412C3411D500FAFD14 /* Pretendard-Medium.ttf in Resources */,
 				51F433402C3411D500FAFD14 /* Pretendard-ExtraBold.ttf in Resources */,
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
+				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
@@ -393,6 +408,7 @@
 				51F433432C3411D500FAFD14 /* Pretendard-Thin.ttf in Resources */,
 				51F433462C3411D500FAFD14 /* Pretendard-Light.ttf in Resources */,
 				793278102C2D014600F433F5 /* Preview Assets.xcassets in Resources */,
+				51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */,
 				7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */,
 				51F433422C3411D500FAFD14 /* Pretendard-Black.ttf in Resources */,
 				51F433442C3411D500FAFD14 /* Pretendard-Bold.ttf in Resources */,
