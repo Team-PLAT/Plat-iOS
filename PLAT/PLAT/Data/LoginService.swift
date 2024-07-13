@@ -9,6 +9,8 @@ import Foundation
 import AuthenticationServices
 
 struct LoginService: LoginServiceInterface {
+    
+    /// 로그인 요청했을 때 호출
     func requestLogin(_ request: ASAuthorizationAppleIDRequest) {
         request.requestedScopes = [.fullName, .email]
     }

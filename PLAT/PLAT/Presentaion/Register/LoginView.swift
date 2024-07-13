@@ -148,7 +148,7 @@ private struct SwitchSignInView: View {
                 .frame(width: 0.8, height: 15)
                 .background(.white)
             
-            Text("로그인하기") // AuthType 변경
+            Text("로그인하기")
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
                 .onTapGesture {
