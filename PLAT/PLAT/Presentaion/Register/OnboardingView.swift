@@ -66,27 +66,6 @@ private struct LottieAnimationView: View {
     }
 }
 
-// MARK: - Text extension
-extension Text {
-    
-    init(_ textString: String, targetString: String, targetFont: Font) {
-        
-        var attributedString: AttributedString {
-
-            var attributedString = AttributedString(textString)
-            
-            if let target = attributedString.range(of: targetString) {
-                attributedString[target].font = targetFont
-            }
-            
-            return attributedString
-        }
-        
-        self.init(attributedString)
-    }
-
-}
-
 #Preview {
     OnboardingView()
 }

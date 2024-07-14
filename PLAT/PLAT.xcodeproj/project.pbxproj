@@ -10,6 +10,7 @@
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
+		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
 		51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */; };
 		51F4333F2C3411D500FAFD14 /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
+		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		51F433362C3411D400FAFD14 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */,
 				796465992C3A5C2400F6DC2D /* Helper+Preview.swift */,
+				51B4784F2C4379E00008EB37 /* Helper+Text.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				820836772C34001D00F6D0CF /* LoginService.swift in Sources */,
 				8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */,
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
+				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
