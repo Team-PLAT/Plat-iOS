@@ -9,13 +9,12 @@ import SwiftUI
 
 struct AccountSettingsView: View {
     
+    @Environment(PathModel.self) var pathModel
     @Environment(UserUseCase.self) private var userUseCase
-    
-    @State private var isStreamAccountSettingsViewPresented = false
     
     var connectedStreamAccountInfo: ListSection.Info {
         return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: userUseCase.state.user.streamAccount) {
-            isStreamAccountSettingsViewPresented.toggle()
+            pathModel.paths.append(.streamAccountSettingsView)
         }
     }
     
@@ -41,14 +40,11 @@ struct AccountSettingsView: View {
         .navigationTitle("계정 설정")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
-        .navigationDestination(isPresented: $isStreamAccountSettingsViewPresented) {
-            StreamAccountSettingsView()
-                .toolbarRole(.editor)
-        }
     }
 }
 
 #Preview {
     AccountSettingsView()
         .environment(PreviewHelper.mockUserUseCase)
+        .environment(PathModel())
 }

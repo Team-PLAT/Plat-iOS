@@ -9,13 +9,14 @@ import SwiftUI
 
 struct MainView: View {
     
+    @State private var pathModel: PathModel = .init()
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     @State private var userUseCase: UserUseCase = .init(userService: StubUserService())
     @State private var streamAccountUseCase: StreamAccountUseCase = .init(streamAccountService: StubStreamAccountService())
     @State private var selectedTab: Tab = .map
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $pathModel.paths) {
             TabView(selection: $selectedTab) {
                 ForEach(Tab.allCases) { tab in
                     Group {
@@ -37,7 +38,25 @@ struct MainView: View {
                 }
             }
             .tint(.platPurple)
+            .navigationDestination(for: Path.self) { path in
+                switch path {
+                case .nicknameSettingsView:
+                    NicknameSettingsView(nicknameText: "")
+                        .toolbarRole(.editor)
+                case .accountSettingsView:
+                    AccountSettingsView()
+                        .toolbarRole(.editor)
+                case .aboutPlatSettingsView:
+                    AboutPlatSettingsView()
+                        .toolbarRole(.editor)
+                case .streamAccountSettingsView:
+                    StreamAccountSettingsView()
+                        .toolbarRole(.editor)
+                    
+                }
+            }
         }
+        .environment(pathModel)
         .environment(userUseCase)
         .environment(infoUseCase)
         .environment(streamAccountUseCase)
