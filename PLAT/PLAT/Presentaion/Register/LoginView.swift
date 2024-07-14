@@ -66,7 +66,7 @@ private struct SignUpView: View {
             
             SwitchSignInView(authType: $authType)
             
-        }.background(.platBackground)
+        }.background(.black)
     }
 }
 
@@ -169,9 +169,11 @@ private struct SignInView: View {
                 .padding(.trailing, 222)
                 .lineSpacing(5)
             
-            Image("")
-                .frame(width: 270, height: 270)
-                .padding(.bottom, 82)
+            LottieAnimationView(lottieName: "plat_finger_animation_lottie", lottieSpeed: 1.5)
+            
+//            Image("")
+//                .frame(width: 270, height: 270)
+//                .padding(.bottom, 82)
             
             Spacer()
             
@@ -184,7 +186,7 @@ private struct SignInView: View {
                 .background(.white)
             
             SwitchSignUpView(authType: $authType)
-        }.background(.platBackground)
+        }.background(.black)
     }
 }
 
