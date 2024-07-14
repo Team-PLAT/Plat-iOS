@@ -69,6 +69,7 @@ struct SelectStreamAccountView: View {
             .padding(.horizontal, 108)
             .padding(.bottom)
         }
+        .foregroundStyle(.white)
         .background(.platBackground)
         .sheet(isPresented: $isSheetPresented, content: {
             WhyConnectStreamAccountSheet()
