@@ -8,11 +8,6 @@
 import SwiftUI
 import AuthenticationServices
 
-enum AuthType {
-    case signIn
-    case signUp
-}
-
 struct LoginView: View {
     @Environment(LoginUseCase.self) private var loginUseCase: LoginUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
@@ -51,7 +46,7 @@ private struct SignUpView: View {
             
             Spacer()
             
-            Image("headphone")
+            Image(.headphone)
                 .resizable()
                 .frame(width: 270, height: 270)
                 .padding(.bottom, 68)

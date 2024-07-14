@@ -56,6 +56,7 @@
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
+		DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDFAE332C43945600DE1EEB /* AuthType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
+		DFDFAE332C43945600DE1EEB /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +331,7 @@
 				820836782C34002D00F6D0CF /* User.swift */,
 				820836982C34064400F6D0CF /* StreamAccount.swift */,
 				79A09D4F2C391C4A006F14F4 /* Tab.swift */,
+				DFDFAE332C43945600DE1EEB /* AuthType.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
+				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 			);

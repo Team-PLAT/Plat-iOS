@@ -35,7 +35,7 @@ extension LoginUseCase {
     
     /// 로그인 요청하기
     func requestLogin() {
-        loginService.requestLogin(ASAuthorizationAppleIDProvider().createRequest())
+        loginService.requestLogin()
     }
     
     /// 로그인 결과 처리하기
