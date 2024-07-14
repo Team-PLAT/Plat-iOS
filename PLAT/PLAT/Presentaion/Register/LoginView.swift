@@ -12,19 +12,14 @@ struct LoginView: View {
     @Environment(LoginUseCase.self) private var loginUseCase: LoginUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
-    @State private var authType: AuthType = .signUp
+    @Binding var authType: AuthType
     
     var body: some View {
-        NavigationStack {
-            if authType == .signUp {
-                SignUpView(authType: $authType)
-            } else {
-                SignInView(authType: $authType)
-            }
+        if authType == .signUp {
+            SignUpView(authType: $authType)
+        } else {
+            SignInView(authType: $authType)
         }
-        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" )
-        .navigationBarTitleDisplayMode(.inline)
-        .tint(.white)
     }
 }
 
@@ -34,14 +29,13 @@ private struct SignUpView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            Spacer()
-                .frame(height: 28)
             
             Text("PLAT에 오신 것을 \n환영해요")
                 .font(.Head.head1)
                 .foregroundColor(.white)
                 .padding(.bottom, 34)
-                .padding(.trailing, 158)
+                .padding(.top, 22)
+                .padding(.trailing, 140)
                 .lineSpacing(5)
             
             Spacer()
@@ -72,6 +66,7 @@ private struct SignUpView: View {
 
 private struct AppleSignUpButton: View {
     @Environment(LoginUseCase.self) private var loginUseCase
+    @Environment(PathModel.self) var pathModel
     
     var body: some View {
         SignInWithAppleButton(
@@ -82,7 +77,7 @@ private struct AppleSignUpButton: View {
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
-                    // 다음 뷰로 이동
+                    pathModel.registerPaths.append(.selectStreamAccountView)
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -148,7 +143,7 @@ private struct SwitchSignInView: View {
                 .foregroundColor(.platPurple)
                 .onTapGesture {
                     self.authType = .signIn
-            }
+                }
         }
     }
 }
@@ -159,21 +154,18 @@ private struct SignInView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Spacer()
-                .frame(height: 24)
             
             Text("또 다시,\nLet's PLAT!")
                 .font(.Head.head1)
                 .foregroundColor(.white)
                 .padding(.bottom, 30)
-                .padding(.trailing, 222)
+                .padding(.top, 18)
+                .padding(.trailing, 206)
                 .lineSpacing(5)
             
-            LottieAnimationView(lottieName: "plat_finger_animation_lottie", lottieSpeed: 1.5)
+            Spacer()
             
-//            Image("")
-//                .frame(width: 270, height: 270)
-//                .padding(.bottom, 82)
+            LottieAnimationView(lottieName: "plat_finger_animation_lottie", lottieSpeed: 1.5)
             
             Spacer()
             
@@ -192,6 +184,7 @@ private struct SignInView: View {
 
 struct AppleContinueButton: View {
     @Environment(LoginUseCase.self) private var loginUseCase
+    @Environment(PathModel.self) var pathModel
     
     var body: some View {
         SignInWithAppleButton(
@@ -202,7 +195,7 @@ struct AppleContinueButton: View {
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
-                    // 다음 뷰로 이동
+                    pathModel.registerPaths.append(.selectStreamAccountView)
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -240,8 +233,9 @@ private struct SwitchSignUpView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(authType: .constant(.signUp))
         .environment(PreviewHelper.mockLoginUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
+        .environment(PathModel())
     
 }

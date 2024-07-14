@@ -20,14 +20,10 @@ struct SelectStreamAccountView: View {
     
     var body: some View {
         VStack {
-            
-            Text("스트리밍 계정 선택하기")
-                .font(.Head.head5)
-                .padding(.bottom, 32)
-            
             Text("사용하는 음악 플랫폼을\n선택해주세요")
                 .font(.Head.head2)
                 .padding(.trailing, 144)
+                .padding(.top, 32)
                 .padding(.bottom, 32)
             
             Group {
