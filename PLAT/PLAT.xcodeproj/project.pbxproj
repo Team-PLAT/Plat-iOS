@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
+		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
+		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				7964659D2C3A649600F6DC2D /* PlatTextField.swift */,
 				7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */,
 				796465A52C3A82A200F6DC2D /* ListRadioButton.swift */,
+				513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
+				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,

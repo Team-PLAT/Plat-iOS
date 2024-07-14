@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Lottie
 
 struct OnboardingView: View {
     
@@ -50,19 +49,6 @@ private struct LoginButton: View {
         }, label: {
             Text("로그인")
         })
-    }
-}
-
-// MARK: - LottieAnimationView
-private struct LottieAnimationView: View {
-    
-    let lottieName: String
-    let lottieSpeed: Double
-    
-    var body: some View {
-        LottieView(animation: .named(lottieName))
-            .looping()
-            .animationSpeed(lottieSpeed)
     }
 }
 
