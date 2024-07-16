@@ -24,6 +24,8 @@ struct ListRadioButton: View {
     var body: some View {
         HStack {
             Image(icon)
+                .resizable()
+                .frame(width: 24, height: 24)
                 .padding(.trailing, 10)
             ButtonTextView(title: title, content: content)
             Spacer()

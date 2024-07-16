@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 protocol LoginServiceInterface {
-    func signIn()
-    func signUp()
+    func requestLogin()
+    func handleLogin(_ authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error>
 }
