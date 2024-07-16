@@ -171,7 +171,7 @@ private struct SignInView: View {
             
             Spacer()
             
-            LottieAnimationView(lottieName: "plat_finger_animation_lottie", lottieSpeed: 1.5)
+            LottieAnimationView(lottieName: Lottie.finger, lottieSpeed: 1.5)
             
             Spacer()
             
