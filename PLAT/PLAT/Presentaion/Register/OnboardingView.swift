@@ -17,7 +17,7 @@ struct OnboardingView: View {
     var body: some View {
         NavigationStack(path: $pathModel.registerPaths) {
             VStack {
-                Image("plat")
+                Image(.imgPlat)
                     .resizable()
                     .frame(height: 20)
                     .padding(.top, 32)
