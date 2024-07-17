@@ -28,6 +28,14 @@ struct NicknameSettingsView: View {
             .padding(.horizontal, 18)
             .padding(.bottom, 16)
             
+//            if !userUseCase.state.isNicknameValidate {
+//                Text("이미 있는 닉네임이에요")
+//                    .font(.Caption.caption1)
+//                    .foregroundStyle(.red)
+//                    .padding(.horizontal, 24)
+//                    .padding(.bottom, 4)
+//            }
+            
             NicknameGuide()
                 .padding(.horizontal, 24)
             
@@ -42,6 +50,9 @@ struct NicknameSettingsView: View {
         .navigationTitle("닉네임 변경")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
+        .onChange(of: nicknameText) { _, text in
+            nicknameText = userUseCase.validateNickname(text: text)
+        }
     }
 }
 

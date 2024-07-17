@@ -41,4 +41,8 @@ extension UserUseCase {
     func updateNickname() {
         userProfileService.updateNickname()
     }
+    
+    func validateNickname(text: String) -> String {
+        return userProfileService.validateNickname(text: text)
+    }
 }

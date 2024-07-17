@@ -11,4 +11,5 @@ protocol UserProfileServiceInterface {
     func fetchUserInfo() -> User
     func updateProfileImage()
     func updateNickname()
+    func validateNickname(text: String) -> String
 }

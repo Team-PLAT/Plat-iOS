@@ -14,7 +14,7 @@ struct PLATApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            MainView()
         }
         .environment(authUseCase)
     }
