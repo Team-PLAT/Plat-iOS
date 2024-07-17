@@ -58,6 +58,7 @@
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
+		DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */; };
 		DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDFAE332C43945600DE1EEB /* AuthType.swift */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAccountService.swift; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
 		DFDFAE332C43945600DE1EEB /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -291,6 +293,7 @@
 				793509BE2C39324A0098B073 /* StubUserService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
+				DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				820836792C34002D00F6D0CF /* User.swift in Sources */,
+				DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,

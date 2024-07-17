@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import MusicKit
 
 protocol StreamAccountServiceInterface {
     func connect(streamAccount: StreamAccount)
+    func requestAppleMusic() async -> Bool
+//    func fetchAppleMusicSubscription(musicsubscription: MusicSubscription) async
 }

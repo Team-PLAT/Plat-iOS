@@ -5,10 +5,11 @@
 //  Created by 조우현 on 7/7/24.
 //
 
-import Foundation
+//import Foundation
+//
+//struct StubStreamAccountService: StreamAccountServiceInterface {
+//    func connect(streamAccount: StreamAccount) {
+//        print(#function)
+//    }
+//}
 
-struct StubStreamAccountService: StreamAccountServiceInterface {
-    func connect(streamAccount: StreamAccount) {
-        print(#function)
-    }
-}
