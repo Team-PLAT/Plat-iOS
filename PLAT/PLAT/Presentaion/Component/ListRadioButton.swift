@@ -36,12 +36,13 @@ struct ListRadioButton: View {
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity)
         .frame(height: 64)
+        .background(.platBackground)
+        .onTapGesture {
+            tapAction()
+        }
         .overlay {
             RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(isSelected ? .platPurple : .platBackground, lineWidth: 2)
-        }
-        .onTapGesture {
-            tapAction()
         }
         .disabled(isSelected)
     }

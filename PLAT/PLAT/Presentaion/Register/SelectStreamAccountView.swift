@@ -44,7 +44,7 @@ struct SelectStreamAccountView: View {
                     .foregroundStyle(.gray9)
             }
             .padding(.horizontal, 18)
-            .padding(.bottom, 32)
+            .padding(.bottom, 16)
             
             Spacer()
             
