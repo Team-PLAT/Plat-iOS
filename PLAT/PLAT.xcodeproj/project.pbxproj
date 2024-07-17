@@ -55,7 +55,7 @@
 		820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */; };
 		820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */; };
 		820836952C34050000F6D0CF /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836942C34050000F6D0CF /* UserUseCase.swift */; };
-		820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836962C3405B000F6D0CF /* UserServiceInterface.swift */; };
+		820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */; };
 		820836992C34064400F6D0CF /* StreamAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836982C34064400F6D0CF /* StreamAccount.swift */; };
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
@@ -114,7 +114,7 @@
 		820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccountUseCase.swift; sourceTree = "<group>"; };
 		820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccountServiceInterface.swift; sourceTree = "<group>"; };
 		820836942C34050000F6D0CF /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
-		820836962C3405B000F6D0CF /* UserServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceInterface.swift; sourceTree = "<group>"; };
+		820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileServiceInterface.swift; sourceTree = "<group>"; };
 		820836982C34064400F6D0CF /* StreamAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccount.swift; sourceTree = "<group>"; };
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 				8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */,
 				7944BB1B2C479FE600A92789 /* UserSessionServiceInterface.swift */,
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
-				820836962C3405B000F6D0CF /* UserServiceInterface.swift */,
+				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
 			);
 			path = Interface;
@@ -487,7 +487,7 @@
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
-				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
+				820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

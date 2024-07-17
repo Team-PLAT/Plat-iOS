@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StubUserService: UserServiceInterface {
+struct StubUserService: UserProfileServiceInterface {
     func fetchUserInfo() -> User {
         return User(nickname: "IPSUM_LOREM", profileImageUrl: "", streamAccount: .appleMusic)
     }
