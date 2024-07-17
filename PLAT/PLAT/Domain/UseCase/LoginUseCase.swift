@@ -25,12 +25,11 @@ final class LoginUseCase {
 extension LoginUseCase {
     
     struct State {
-        //       var isSignIn: Result<Bool, Error>
-        //       var isSignUp: Result<Bool, Error>
     }
 }
 
 // MARK: - UseCase Method
+
 extension LoginUseCase {
     
     /// 로그인 요청하기

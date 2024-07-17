@@ -17,7 +17,7 @@ struct OnboardingView: View {
     var body: some View {
         NavigationStack(path: $pathModel.registerPaths) {
             VStack {
-                Image("plat")
+                Image(.imgPlat)
                     .resizable()
                     .frame(height: 20)
                     .padding(.top, 32)
@@ -30,7 +30,7 @@ struct OnboardingView: View {
                     .padding(.leading, 24)
                     .padding(.trailing, 82)
                 
-                LottieAnimationView(lottieName: "plat_map_animation_lottie", lottieSpeed: 3)
+                LottieAnimationView(lottieName: Lottie.map, lottieSpeed: 3)
                 
                 ActionButton(state: .enabled, title: "시작하기") {
                     self.authType = .signUp
