@@ -28,12 +28,12 @@ struct SelectStreamAccountView: View {
             
             Group {
                 
-                ListRadioButton(state: .none, title: "\(StreamAccount.appleMusic.rawValue) 연결하기", content: "선택하면 \(StreamAccount.appleMusic.rawValue)과 연결돼요", icon: .appleMusic, isSelected: selectedState == .appleMusic) {
+                ListRadioButton(state: .none, title: "\(StreamAccount.appleMusic.rawValue) 연결하기", content: "선택하면 \(StreamAccount.appleMusic.rawValue)과 연결돼요", icon: .icnAppleMusic, isSelected: selectedState == .appleMusic) {
                     
                     selectedState = .appleMusic
                 }
                 
-                ListRadioButton(state: .none, title: "\(StreamAccount.spotify.rawValue) 연결하기", content: "선택하면 \(StreamAccount.spotify.rawValue)로 연결돼요", icon: .spotify, isSelected: selectedState == .spotify) {
+                ListRadioButton(state: .none, title: "\(StreamAccount.spotify.rawValue) 연결하기", content: "선택하면 \(StreamAccount.spotify.rawValue)로 연결돼요", icon: .icnSpotify, isSelected: selectedState == .spotify) {
                     
                     selectedState = .spotify
                 }

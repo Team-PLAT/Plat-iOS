@@ -105,7 +105,7 @@ private struct SettingListView: View {
     }
     
     var supportInfo: ListSection.Info {
-        .init(title: "지원", icon: "rectangle.portrait.and.arrow.right") {
+        .init(title: "지원", icon: .icnWeblink) {
             infoUseCase.checkSupport()
         }
     }

@@ -94,8 +94,8 @@ private struct RadioCircle: View {
 
 #Preview {
     VStack {
-        ListRadioButton(state: .radio, title: "Apple Music 연결됨", content: "Apple Music 스트리밍 계정과 연결되어 있어요", icon: .appleMusic, isSelected: true) {}
-        ListRadioButton(state: .radio, title: "Apple Music 연결됨", content: "Apple Music 스트리밍 계정과 연결되어 있어요", icon: .appleMusic) {}
-        ListRadioButton(state: .none, title: "Apple Music 연결됨", content: "Apple Music 스트리밍 계정과 연결되어 있어요", icon: .appleMusic) {}
+        ListRadioButton(state: .radio, title: "Apple Music 연결됨", content: "Apple Music 스트리밍 계정과 연결되어 있어요", icon: .icnAppleMusic, isSelected: true) {}
+        ListRadioButton(state: .radio, title: "Apple Music 연결됨", content: "Apple Music 스트리밍 계정과 연결되어 있어요", icon: .icnAppleMusic) {}
+        ListRadioButton(state: .none, title: "Apple Music 연결됨", content: "Apple Music 스트리밍 계정과 연결되어 있어요", icon: .icnAppleMusic) {}
     }
 }
