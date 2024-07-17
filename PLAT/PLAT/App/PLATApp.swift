@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct PLATApp: App {
+    
+    @State private var authUseCase: AuthUseCase = .init(authService: AppleLoginService(), userSessionService: StubUserSessionService())
+    
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            MainView()
         }
+        .environment(authUseCase)
     }
 }

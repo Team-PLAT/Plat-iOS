@@ -8,7 +8,7 @@
 import Foundation
 import AuthenticationServices
 
-struct LoginService: LoginServiceInterface {
+struct AppleLoginService: SocialLoginServiceInterface {
     
     /// 로그인 요청했을 때 호출
     func requestLogin() {

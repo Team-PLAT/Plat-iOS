@@ -9,7 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 struct LoginView: View {
-    @Environment(LoginUseCase.self) private var loginUseCase: LoginUseCase
+    @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
     @Binding var authType: AuthType
@@ -67,15 +67,15 @@ private struct SignUpView: View {
 }
 
 private struct AppleSignUpButton: View {
-    @Environment(LoginUseCase.self) private var loginUseCase
+    @Environment(AuthUseCase.self) private var authUseCase
     @Environment(PathModel.self) var pathModel
     
     var body: some View {
         SignInWithAppleButton(
             .signUp,
-            onRequest: { _ in loginUseCase.requestLogin()},
+            onRequest: { _ in authUseCase.requestLogin()},
             onCompletion: { result in
-                let loginResult = loginUseCase.handleLogin(authResult: result)
+                let loginResult = authUseCase.handleLogin(authResult: result)
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
@@ -190,15 +190,15 @@ private struct SignInView: View {
 }
 
 struct AppleContinueButton: View {
-    @Environment(LoginUseCase.self) private var loginUseCase
+    @Environment(AuthUseCase.self) private var authUseCase
     @Environment(PathModel.self) var pathModel
     
     var body: some View {
         SignInWithAppleButton(
             .continue,
-            onRequest: { _ in loginUseCase.requestLogin()},
+            onRequest: { _ in authUseCase.requestLogin()},
             onCompletion: { result in
-                let loginResult = loginUseCase.handleLogin(authResult: result)
+                let loginResult = authUseCase.handleLogin(authResult: result)
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
@@ -242,7 +242,7 @@ private struct SwitchSignUpView: View {
 
 #Preview {
     LoginView(authType: .constant(.signUp))
-        .environment(PreviewHelper.mockLoginUseCase)
+        .environment(PreviewHelper.mockAuthUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PathModel())
 }

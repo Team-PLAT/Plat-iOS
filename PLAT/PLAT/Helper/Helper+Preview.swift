@@ -11,5 +11,5 @@ enum PreviewHelper {
     static let mockUserUseCase = UserUseCase(userService: StubUserService())
     static let mockInfoUseCase = InfoUseCase(infoService: StubInfoService())
     static let mockStreamAccountUseCase = StreamAccountUseCase(streamAccountService: StubStreamAccountService())
-    static let mockLoginUseCase = LoginUseCase(loginService: LoginService())
+    static let mockAuthUseCase = AuthUseCase(authService: AppleLoginService(), userSessionService: StubUserSessionService())
 }

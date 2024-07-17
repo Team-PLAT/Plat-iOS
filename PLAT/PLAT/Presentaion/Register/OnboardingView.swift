@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @State private var loginUseCase: LoginUseCase = .init(loginService: LoginService())
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     
     @State private var pathModel: PathModel = .init()
@@ -53,15 +52,15 @@ struct OnboardingView: View {
                             .navigationBarTitleDisplayMode(.inline)
                             .toolbarRole(.editor)
                             .tint(.white)
-                            .environment(loginUseCase)
-                            .environment(infoUseCase)
                     case .selectStreamAccountView:
                         SelectStreamAccountView()
                             .navigationTitle("스트리밍 계정 선택하기")
                             .navigationBarBackButtonHidden()
                     }
                 }
-        } .environment(pathModel)
+        }
+        .environment(infoUseCase)
+        .environment(pathModel)
     }
 }
 
