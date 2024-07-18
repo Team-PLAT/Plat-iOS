@@ -61,7 +61,8 @@ struct OnboardingView: View {
                             .navigationBarBackButtonHidden()
                     }
                 }
-        } .environment(pathModel)
+        }
+        .environment(pathModel)
     }
 }
 
