@@ -73,12 +73,12 @@ private struct LoginButton: View {
     @Binding var authType: AuthType
     
     var body: some View {
-        Button(action: {
+        Button {
             self.authType = .signIn
             pathModel.registerPaths.append(.loginView)
-        }, label: {
+        } label:{
             Text("로그인")
-        })
+        }
     }
 }
 
