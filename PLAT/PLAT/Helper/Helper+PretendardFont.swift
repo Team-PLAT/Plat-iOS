@@ -8,6 +8,11 @@
 import SwiftUI
 
 extension Font {
+    enum Title {
+        static let title1: Font = .custom("Pretendard-ExtraBold", size: 34)
+        static let title2: Font = .custom("Pretendard-SemiBold", size: 28)
+    }
+    
     enum Head {
         static let head1: Font = .custom("Pretendard-SemiBold", size: 28)
         static let head2: Font = .custom("Pretendard-SemiBold", size: 24)
