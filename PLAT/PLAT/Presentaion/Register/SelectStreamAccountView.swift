@@ -54,7 +54,7 @@ struct SelectStreamAccountView: View {
                 .padding(.horizontal, 38)
                 .padding(.bottom)
             
-            Button{
+            Button {
                 isSheetPresented.toggle()
                 print("왜 스트리밍 계정을 연결하나요?")
             } label: {
@@ -67,7 +67,7 @@ struct SelectStreamAccountView: View {
         }
         .foregroundStyle(.white)
         .background(.platBackground)
-        .sheet(isPresented: $isSheetPresented){
+        .sheet(isPresented: $isSheetPresented) {
             WhyConnectStreamAccountSheet()
         }
     }

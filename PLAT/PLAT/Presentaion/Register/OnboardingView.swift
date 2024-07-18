@@ -76,7 +76,7 @@ private struct LoginButton: View {
         Button {
             self.authType = .signIn
             pathModel.registerPaths.append(.loginView)
-        } label:{
+        } label: {
             Text("로그인")
         }
     }
