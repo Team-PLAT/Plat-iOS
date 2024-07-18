@@ -66,6 +66,7 @@ struct OnboardingView: View {
 }
 
 // MARK: - LoginButton
+
 private struct LoginButton: View {
     @Environment(PathModel.self) var pathModel
     @Binding var authType: AuthType
