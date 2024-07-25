@@ -24,9 +24,9 @@ struct OnboardingView: View {
                     .padding(.horizontal, 162)
                     .padding(.bottom, 24)
                 
-                Text("Place에 맞는 음악을,\nPLAT으로\nPLAY.", targetString: "PLAT", targetFont: .Title.title1)
+                Text("Place에 맞는 음악을,\nPLAT으로\nPLAY.", targetString: "PLAT", targetFont: .CustomTitle.customTitle1)
                     .foregroundStyle(.white)
-                    .font(.Title.title2)
+                    .font(.CustomTitle.customTitle2)
                     .padding(.leading, 24)
                     .padding(.trailing, 82)
                 

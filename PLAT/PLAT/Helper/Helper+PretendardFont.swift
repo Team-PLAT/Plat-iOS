@@ -8,9 +8,9 @@
 import SwiftUI
 
 extension Font {
-    enum Title {
-        static let title1: Font = .custom("Pretendard-ExtraBold", size: 34)
-        static let title2: Font = .custom("Pretendard-SemiBold", size: 28)
+    enum CustomTitle {
+        static let customTitle1: Font = .custom("Pretendard-ExtraBold", size: 34)
+        static let customTitle2: Font = .custom("Pretendard-SemiBold", size: 28)
     }
     
     enum Head {
