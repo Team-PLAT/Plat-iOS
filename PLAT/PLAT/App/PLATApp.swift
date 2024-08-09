@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct PLATApp: App {
+    @StateObject private var viewModel = SpotifyViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            //          OnboardingView()
+            SpotifyView()
+                .environmentObject(viewModel)
+                .onOpenURL { url in
+                    print("App received URL: \(url)")
+                    viewModel.handleURL(url: url)
+                }
         }
     }
 }

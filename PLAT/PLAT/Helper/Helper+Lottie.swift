@@ -11,4 +11,3 @@ enum Lottie {
     static let finger: String = "plat_finger_animation_lottie"
     static let map: String = "plat_map_animation_lottie"
 }
-

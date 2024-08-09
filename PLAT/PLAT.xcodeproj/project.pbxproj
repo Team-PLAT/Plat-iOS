@@ -23,6 +23,10 @@
 		51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */; };
 		51F433462C3411D500FAFD14 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */; };
 		51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */; };
+		79202FE72C65FB5D001281F2 /* SpotifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79202FE62C65FB5D001281F2 /* SpotifyView.swift */; };
+		79202FEA2C660909001281F2 /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 79202FE92C660909001281F2 /* SpotifyiOS */; };
+		79202FEF2C660D10001281F2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79202FEE2C660D10001281F2 /* Constants.swift */; };
+		79202FF12C660D9D001281F2 /* SpotifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79202FF02C660D9D001281F2 /* SpotifyViewModel.swift */; };
 		793278092C2D014500F433F5 /* PLATApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793278082C2D014500F433F5 /* PLATApp.swift */; };
 		7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7932780A2C2D014500F433F5 /* OnboardingView.swift */; };
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
@@ -79,6 +83,10 @@
 		51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+PretendardFont.swift"; sourceTree = "<group>"; };
+		79202FE62C65FB5D001281F2 /* SpotifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyView.swift; sourceTree = "<group>"; };
+		79202FEB2C660AA3001281F2 /* PLAT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PLAT-Bridging-Header.h"; sourceTree = "<group>"; };
+		79202FEE2C660D10001281F2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		79202FF02C660D9D001281F2 /* SpotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyViewModel.swift; sourceTree = "<group>"; };
 		793278052C2D014500F433F5 /* PLAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		793278082C2D014500F433F5 /* PLATApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLATApp.swift; sourceTree = "<group>"; };
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */,
+				79202FEA2C660909001281F2 /* SpotifyiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +185,17 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		79202FE52C65FB48001281F2 /* Spotify Test */ = {
+			isa = PBXGroup;
+			children = (
+				79202FE62C65FB5D001281F2 /* SpotifyView.swift */,
+				79202FEB2C660AA3001281F2 /* PLAT-Bridging-Header.h */,
+				79202FEE2C660D10001281F2 /* Constants.swift */,
+				79202FF02C660D9D001281F2 /* SpotifyViewModel.swift */,
+			);
+			path = "Spotify Test";
+			sourceTree = "<group>";
+		};
 		793277FC2C2D014500F433F5 = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +216,7 @@
 		793278072C2D014500F433F5 /* PLAT */ = {
 			isa = PBXGroup;
 			children = (
+				79202FE52C65FB48001281F2 /* Spotify Test */,
 				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
 				51F433472C3411ED00FAFD14 /* Info.plist */,
 				820836702C33FFAE00F6D0CF /* App */,
@@ -372,6 +393,7 @@
 			name = PLAT;
 			packageProductDependencies = (
 				518B4EEF2C3EE27F005FF553 /* Lottie */,
+				79202FE92C660909001281F2 /* SpotifyiOS */,
 			);
 			productName = PLAT;
 			productReference = 793278052C2D014500F433F5 /* PLAT.app */;
@@ -389,6 +411,7 @@
 				TargetAttributes = {
 					793278042C2D014500F433F5 = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
@@ -404,6 +427,7 @@
 			packageReferences = (
 				827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				79202FE82C660909001281F2 /* XCRemoteSwiftPackageReference "ios-sdk" */,
 			);
 			productRefGroup = 793278062C2D014500F433F5 /* Products */;
 			projectDirPath = "";
@@ -446,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
+				79202FEF2C660D10001281F2 /* Constants.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
@@ -462,6 +487,7 @@
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
+				79202FF12C660D9D001281F2 /* SpotifyViewModel.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
@@ -480,6 +506,7 @@
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
+				79202FE72C65FB5D001281F2 /* SpotifyView.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -618,11 +645,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PLAT/PLAT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -639,9 +667,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seyeoncho.com.cabin.plat;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PLAT/Spotify Test/PLAT-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -652,11 +683,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PLAT/PLAT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -673,9 +705,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seyeoncho.com.cabin.plat;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PLAT/Spotify Test/PLAT-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -713,6 +747,14 @@
 				minimumVersion = 4.5.0;
 			};
 		};
+		79202FE82C660909001281F2 /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/spotify/ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
@@ -728,6 +770,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		79202FE92C660909001281F2 /* SpotifyiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79202FE82C660909001281F2 /* XCRemoteSwiftPackageReference "ios-sdk" */;
+			productName = SpotifyiOS;
 		};
 		827A1DDD2C2D9B0D00C40046 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
