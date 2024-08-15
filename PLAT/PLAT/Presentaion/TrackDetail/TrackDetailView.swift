@@ -33,7 +33,7 @@ struct TrackDetailView: View {
             MusicView()
             
             MusicControllerView()
-                .padding(.top, 16)
+                .padding(.top, 24)
             
             // TODO: CurrentDuration 수정
             MusicSeekBar(
@@ -42,6 +42,8 @@ struct TrackDetailView: View {
             )
             .padding(.horizontal, 16)
             .padding(.top, 36)
+            
+            MusicIndicator()
             
             Spacer()
         }
@@ -137,7 +139,9 @@ private struct AlbumImage: View {
                         )
                     )
             } else {
-                // TODO: 로딩 전 더미 이미지
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(width: 200, height: 200)
+                    .foregroundStyle(.gray9)
             }
         }
     }

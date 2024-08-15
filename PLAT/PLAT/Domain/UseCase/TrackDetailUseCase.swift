@@ -30,7 +30,8 @@ final class TrackDetailUseCase {
             place: Place(
                 name: "포항공과대학교",
                 address: "대한민국 경상북도 포항시 남구 지곡동"
-            )
+            ),
+            isPaused: false
         )
     }
 }
@@ -41,6 +42,7 @@ extension TrackDetailUseCase {
     
     struct State {
         var place: Place
+        var isPaused: Bool
     }
 }
 
@@ -48,4 +50,27 @@ extension TrackDetailUseCase {
 
 extension TrackDetailUseCase {
     
+    enum Effect {
+        case togglePlayback
+        case playPrevious
+        case playNext
+    }
+    
+    func effect(_ effect: Effect) {
+        switch effect {
+        case .togglePlayback:
+            if state.isPaused {
+                musicController.play()
+            } else {
+                musicController.pause()
+            }
+            state.isPaused.toggle()
+            
+        case .playPrevious:
+            musicController.previous()
+            
+        case .playNext:
+            musicController.next()
+        }
+    }
 }

@@ -11,12 +11,16 @@ import SwiftUI
 
 struct MusicIndicator: View {
     
-    let isPaused: Bool
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var isPaused: Bool {
+        trackDetailUseCase.state.isPaused
+    }
     
     var body: some View {
         HStack(spacing: 30) {
             Button {
-                // TODO: 이전 음악 재생
+                trackDetailUseCase.effect(.playPrevious)
             } label: {
                 Image(systemName: "backward.end.fill")
                     .resizable()
@@ -25,17 +29,16 @@ struct MusicIndicator: View {
             }
             
             Button {
-                // TODO: 일시정지 / 재생 토글
+                trackDetailUseCase.effect(.togglePlayback)
             } label: {
-                Image(systemName: isPaused 
-                      ? "play.fill" :  "pause.fill")
+                Image(systemName: isPaused ? "play.fill" : "pause.fill")
                     .resizable()
                     .scaledToFill()
                     .frame(width: 28, height: 28)
             }
             
             Button {
-                // TODO: 다음 음악 재생
+                trackDetailUseCase.effect(.playNext)
             } label: {
                 Image(systemName: "forward.end.fill")
                     .resizable()
@@ -50,5 +53,6 @@ struct MusicIndicator: View {
 // MARK: - Preview
 
 #Preview {
-    MusicIndicator(isPaused: false)
+    MusicIndicator()
+        .environment(PreviewHelper.mockTrackDetailUseCase)
 }
