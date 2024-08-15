@@ -58,6 +58,8 @@
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
+		82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailView.swift */; };
+		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
 		DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCB2C6C959F00D5252B /* Music.swift */; };
 		DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCD2C6C95FD00D5252B /* Location.swift */; };
@@ -119,6 +121,8 @@
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		82C06F532C6DD977000FEE3A /* TrackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailView.swift; sourceTree = "<group>"; };
+		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
 		DFD110D52C4644D500696FCB /* Helper+Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Lottie.swift"; sourceTree = "<group>"; };
 		DFDF9DCB2C6C959F00D5252B /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
+				82C06F522C6DD961000FEE3A /* TrackDetail */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
 			);
@@ -324,6 +329,7 @@
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserServiceInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
+				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -363,6 +369,14 @@
 				79A09D4F2C391C4A006F14F4 /* Tab.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		82C06F522C6DD961000FEE3A /* TrackDetail */ = {
+			isa = PBXGroup;
+			children = (
+				82C06F532C6DD977000FEE3A /* TrackDetailView.swift */,
+			);
+			path = TrackDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,6 +475,7 @@
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
+				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
@@ -493,6 +508,7 @@
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
+				82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
