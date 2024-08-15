@@ -10,11 +10,19 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
-    @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: MockDataBuilder.location.latitude, longitude: MockDataBuilder.location.longitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
+    @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(position: $position)
+            Map(position: $position) {
+                ForEach(MockDataBuilder.trackList.indices, id: \.self) { index in
+                    let track = MockDataBuilder.trackList[index]
+                    Annotation(track.music.title, coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
+                        CustomMarkerView(track: track)
+                    }
+                }
+            }
+            
             MapComponentsView()
         }
     }
@@ -34,6 +42,34 @@ func getMapVisibleCoordinates(mapView: MKMapView) {
     
     print("Top Left Coordinate: \(topLeftCoordinate.latitude), \(topLeftCoordinate.longitude)")
     print("Bottom Right Coordinate: \(bottomRightCoordinate.latitude), \(bottomRightCoordinate.longitude)")
+}
+
+// MARK: - CustomMarkerView
+
+private struct CustomMarkerView: View {
+    let track: Track
+    
+    var body: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.gray3)
+            .overlay {
+                AsyncImage(url: URL(string: track.music.albumImageUrl)) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 34, height: 34)
+                            .clipShape(Circle())
+                    } else {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(.gray3)
+                    }
+                }
+                
+            }
+    }
 }
 
 // MARK: - MapComponentsView
@@ -71,7 +107,7 @@ private struct MapButtonsView: View {
     var body: some View {
         VStack {
             Button {
-                // NotificationView로 이동
+                // TODO: notificationView로 이동
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
@@ -85,7 +121,7 @@ private struct MapButtonsView: View {
             Spacer()
             
             Button {
-                // TrackAppendView로 이동
+                // TODO: TrackAppendView로 이동(sheet)
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
@@ -98,7 +134,10 @@ private struct MapButtonsView: View {
             .padding(.bottom, 22)
             
             Button {
-                // 플레이리스트 만들기(Let's PLAT)
+                Task {
+                    let playlist = await trackMapUseCase.creatPlatPlaylist(currentLocation: MockDataBuilder.currentLocation)
+                    // TODO: PlatProcessingView로 이동
+                }
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
@@ -109,8 +148,7 @@ private struct MapButtonsView: View {
                             .foregroundStyle(.platPurple)
                             .padding(.bottom, 4)
                             .overlay {
-                                // 지도에 표시된 트랙수에 따라 유동적으로 변경
-                                Text("6")
+                                Text("\(MockDataBuilder.trackList.count)")
                                     .foregroundStyle(.platPurple)
                                     .font(.Body.body4)
                             }

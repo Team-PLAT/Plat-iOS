@@ -20,14 +20,21 @@ struct MockDataBuilder {
     
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
-        return Array(repeating: track, count: 6)
+        return zip(Array(repeating: music, count: 6), locationList).map { music, location in
+            Track(
+                music: music,
+                location: location,
+                platter: user,
+                createdDate: .now
+            )
+        }
     }
     
     /// Mock track 데이터를 반환합니다.
     static var track: Track {
         return Track(
             music: music,
-            location: location,
+            location: currentLocation,
             platter: user,
             createdDate: .now
         )
@@ -39,17 +46,29 @@ struct MockDataBuilder {
             isrc: "GBAYE0500605",
             title: "Fix you",
             artist: "ColdPlay",
-            albumImageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
+            albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
             duration: 365
         )
     }
     
-    /// Mock Location 데이터를 반환합니다.
-    static var location: Location {
+    /// Mock currentLocation 데이터를 반환합니다.
+    static var currentLocation: Location {
         return Location(
             latitude: 36.014077390156416,
             longitude: 129.3258820318646
         )
+    }
+    
+    /// Mock trackLocationList 데이터를 반환합니다.
+    static var locationList: [Location] {
+        return [
+            Location(latitude: 36.014077390156416, longitude: 129.3258820318646),
+            Location(latitude: 36.01564775556712, longitude: 129.32295876966293),
+            Location(latitude: 36.01867120920973, longitude: 129.32409007297255),
+            Location(latitude: 36.01695052119649, longitude: 129.3208232860788),
+            Location(latitude: 36.01317359607363, longitude: 129.32137789913355),
+            Location(latitude: 36.01269106639098, longitude: 129.32489032489292)
+        ]
     }
     
     /// Mock User 데이터를 반환합니다.

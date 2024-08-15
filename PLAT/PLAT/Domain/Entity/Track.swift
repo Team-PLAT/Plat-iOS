@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Track {
+struct Track: Identifiable {
+    let id = UUID()
     var music: Music
     var location: Location
     var platter: Platter

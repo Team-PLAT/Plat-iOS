@@ -10,7 +10,7 @@ import MapKit
 
 struct StubTrackMapService: TrackMapServiceInterface {
     func currentLocation() -> Location {
-        MockDataBuilder.location
+        MockDataBuilder.currentLocation
     }
     
     func fetchTrackList(currentLocation: Location) async -> [Track] {

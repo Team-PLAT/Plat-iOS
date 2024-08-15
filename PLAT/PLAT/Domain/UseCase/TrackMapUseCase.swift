@@ -16,7 +16,14 @@ final class TrackMapUseCase {
     
     init(trackMapService: TrackMapServiceInterface) {
         self.trackMapService = trackMapService
-        self.state = State()
+        self.state = State(trackList: [])
+        
+        Task {
+            let location = trackMapService.currentLocation()
+            let trackList = await trackMapService.fetchTrackList(currentLocation: location)
+            self.state.trackList = trackList
+            print(state.trackList)
+        }
     }
 }
 
@@ -25,7 +32,7 @@ final class TrackMapUseCase {
 extension TrackMapUseCase {
     
     struct State {
-        
+        var trackList: [Track]
     }
 }
 
@@ -39,8 +46,11 @@ extension TrackMapUseCase {
     }
     
     /// 서버에서 트랙 불러오기
-    func fetchTrackList(currentLocation: Location) async -> [Track] {
-        await trackMapService.fetchTrackList(currentLocation: currentLocation)
+    func fetchTrackList(currentLocation: Location) {
+        Task {
+            state.trackList = await trackMapService.fetchTrackList(currentLocation: currentLocation)
+            print(state.trackList)
+        }
     }
     
     /// 지도에 트랙별 핀 꽂기
@@ -50,6 +60,7 @@ extension TrackMapUseCase {
     
     /// 플레이리스트 생성하기
     func creatPlatPlaylist(currentLocation: Location) async -> Playlist {
-        await trackMapService.creatPlatPlaylist(currentLocation: currentLocation)
+        let playlist = await self.trackMapService.creatPlatPlaylist(currentLocation: currentLocation)
+        return playlist
     }
 }
