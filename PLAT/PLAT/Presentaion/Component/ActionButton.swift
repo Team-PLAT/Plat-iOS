@@ -30,7 +30,7 @@ struct ActionButton: View {
     
     let state: State
     let title: String
-    var tapAction: () -> Void
+    let tapAction: () -> Void
     
     var body: some View {
         Button {

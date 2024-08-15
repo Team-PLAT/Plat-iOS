@@ -9,6 +9,8 @@ disabled_rules:
 - cyclomatic_complexity # 함수 복잡성 제한
 - function_parameter_count # 함수 파라미터 개수 제한
 - large_tuple # 튜플 개수 제한
+- force_unwrapping # 강제 언래핑 제한
+- unused_optional_binding # 사용하지 않는 옵셔널 바인딩
 
 # 기본 룰은 아니지만 추가적으로 설정한 Rule
 opt_in_rules:
