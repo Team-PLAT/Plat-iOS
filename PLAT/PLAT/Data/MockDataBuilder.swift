@@ -20,7 +20,11 @@ struct MockDataBuilder {
             music: music,
             location: location,
             platter: user,
-            createdDate: .now
+            content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
+            imageUrl: "https://rtlimages.apple.com/cmc/dieter/store/16_9/R692.png?resize=672:378&output-format=jpg&output-quality=85&interpolation=progressive-bicubic",
+            createdDate: .now,
+            isLike: false,
+            isReported: false
         )
     }
     
@@ -47,7 +51,7 @@ struct MockDataBuilder {
     static var user: User {
         return User(
             nickname: "한톨",
-            profileImageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.blog.naver.com%2Fages9090%2F222856980599&psig=AOvVaw3p8QOpKdbZO6qL92s4cBPN&ust=1723793186854000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLie-ZW89ocDFQAAAAAdAAAAABAE",
+            profileImageUrl: "https://mblogthumb-phinf.pstatic.net/MjAyMjA4MjRfMTgy/MDAxNjYxMzIwNjIzODk5.OWc2z-YXeLFvyvYahPkySEAO2L4HtljLNqmL1y1D5l0g.jE14uKWjrHUYRNX7VfU95-PxStNktetch_hngxM3Q-Eg.JPEG.ages9090/KakaoTalk_20220824_140238973_17.jpg?type=w800",
             streamAccount: .spotify
         )
     }
@@ -56,7 +60,7 @@ struct MockDataBuilder {
     static var friend: Friend {
         return Friend(
             nickname: "페더",
-            profileImageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fko%2Fphotos%2Fai-%25EC%2583%259D%25EC%2584%25B1-%25EA%25B9%2583%25ED%2584%25B8-%25EA%25B5%25AC%25EB%25A6%2584-%25ED%2592%258D%25EA%25B2%25BD-7935605%2F&psig=AOvVaw3CQgwz72rTrjDpO_zr39w3&ust=1723793213672000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKD9sqO89ocDFQAAAAAdAAAAABAQ"
+            profileImageUrl: "https://p.turbosquid.com/ts-thumb/YS/jomAmS/ulZxDbeh/render01/jpg/1282179377/600x600/fit_q87/edab67ff7df50901ab9f109305d5a692b68477a7/render01.jpg"
         )
     }
 }

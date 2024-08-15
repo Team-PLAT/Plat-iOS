@@ -19,35 +19,50 @@ struct TrackDetailView: View {
         musicController: StubMusicController()
     )
     
+    @State private var isContentSheetPresented = false
+    
     private var music: Music {
         trackDetailUseCase.track.music
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            HeaderView()
-                .padding(.leading, 16)
+        ZStack {
+            VStack(spacing: 0) {
+                MusicView()
+                
+                MusicControllerView()
+                    .padding(.top, 24)
+                
+                // TODO: CurrentDuration 수정
+                MusicSeekBar(
+                    currentDuration: music.duration / 2,
+                    totalDuration: music.duration
+                )
+                .padding(.top, 36)
+                .padding(.horizontal, 16)
+                
+                MusicIndicator()
+                    .padding(.top, 16)
+            }
             
-            Spacer()
-            
-            MusicView()
-            
-            MusicControllerView()
-                .padding(.top, 24)
-            
-            // TODO: CurrentDuration 수정
-            MusicSeekBar(
-                currentDuration: music.duration / 2,
-                totalDuration: music.duration
-            )
-            .padding(.horizontal, 16)
-            .padding(.top, 36)
-            
-            MusicIndicator()
-            
-            Spacer()
+            VStack(spacing: 0) {
+                HeaderView()
+                    .padding(.leading, 16)
+                
+                Spacer()
+                
+                BottomView(isContentSheetPresented: $isContentSheetPresented)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 0)
+            }
         }
+        .background(.black.opacity(0.6))
         .environment(trackDetailUseCase)
+        .onTapGesture {
+            withAnimation(.easeInOut) {
+                isContentSheetPresented = false
+            }
+        }
     }
 }
 
@@ -59,7 +74,7 @@ private struct HeaderView: View {
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: -2) {
             HStack {
                 Image(.imgMarker)
                 
@@ -203,6 +218,113 @@ private struct MusicControllerCell: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 16, height: 16)
+            }
+        }
+    }
+}
+
+// MARK: - BottomView
+
+private struct BottomView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    @Binding private(set) var isContentSheetPresented: Bool
+    
+    private var content: String? {
+        let origin = trackDetailUseCase.track.content
+        if isContentSheetPresented {
+            return origin
+        } else {
+            return String(origin?.prefix(10) ?? "") + "..."
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if let content = content {
+                ProfileHeader()
+                ProfileContent(
+                    isContentSheetPresented: $isContentSheetPresented,
+                    content: content
+                )
+            } else {
+                EmptyView()
+            }
+        }
+    }
+}
+
+// MARK: - ProfileHeader
+
+private struct ProfileHeader: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var platter: Platter {
+        trackDetailUseCase.track.platter
+    }
+    
+    private var profileImageUrl: URL? {
+        let urlString = platter.profileImageUrl
+        return URL(string: urlString)
+    }
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            AsyncImage(url: profileImageUrl) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                } else {
+                    Circle()
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.gray9)
+                }
+            }
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Text(platter.nickname)
+                    .font(.Body.body2)
+                
+                Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
+                    .font(.Body.body5)
+                
+            }
+            .foregroundStyle(.white)
+            
+            Spacer()
+        }
+    }
+}
+
+// MARK: - ProfileContent
+
+private struct ProfileContent: View {
+    
+    @Binding private(set) var isContentSheetPresented: Bool
+    
+    let content: String
+    
+    var body: some View {
+        HStack {
+            Text(content)
+                .font(.Body.body5)
+                .foregroundStyle(.white)
+            
+            if !isContentSheetPresented {
+                Button {
+                    withAnimation(.easeInOut) {
+                        isContentSheetPresented.toggle()
+                    }
+                } label: {
+                    Text("더보기")
+                        .font(.Body.body5)
+                        .foregroundStyle(.platPurple)
+                }
             }
         }
     }
