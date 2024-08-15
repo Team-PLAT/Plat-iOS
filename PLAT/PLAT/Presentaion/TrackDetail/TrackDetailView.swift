@@ -20,7 +20,19 @@ struct TrackDetailView: View {
     )
     
     var body: some View {
-        Text("TrackDetailView")
+        VStack {
+            HeaderView()
+        }
+    }
+}
+
+// MARK: - HeaderView
+
+private struct HeaderView: View {
+    var body: some View {
+        HStack {
+            
+        }
     }
 }
 

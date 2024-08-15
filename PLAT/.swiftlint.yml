@@ -9,6 +9,7 @@ disabled_rules:
 - cyclomatic_complexity # 함수 복잡성 제한
 - function_parameter_count # 함수 파라미터 개수 제한
 - large_tuple # 튜플 개수 제한
+- unneeded_synthesized_initializer # 멤버와이즈 이니셜라이저 직접 구현 가능
 
 # 기본 룰은 아니지만 추가적으로 설정한 Rule
 opt_in_rules:
