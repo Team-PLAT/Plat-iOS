@@ -14,9 +14,9 @@ final class TrackMapUseCase {
     private(set) var trackMapService: TrackMapServiceInterface
     private(set) var state: State
     
-    init(trackMapService: TrackMapServiceInterface, state: State) {
+    init(trackMapService: TrackMapServiceInterface) {
         self.trackMapService = trackMapService
-        self.state = state
+        self.state = State()
     }
 }
 

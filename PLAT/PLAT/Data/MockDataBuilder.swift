@@ -9,6 +9,15 @@ import Foundation
 
 struct MockDataBuilder {
     
+    /// Mock playlist 데이터를 반환합니다.
+    static var playlist: Playlist {
+        return Playlist(
+            title: "지곡동에서의 PLAT",
+            imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
+            trackList: Array(repeating: track, count: 6)
+        )
+    }
+    
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
         return Array(repeating: track, count: 6)

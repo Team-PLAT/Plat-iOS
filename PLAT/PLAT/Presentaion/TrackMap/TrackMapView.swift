@@ -18,4 +18,5 @@ struct TrackMapView: View {
 
 #Preview {
     TrackMapView()
+        .environment(PreviewHelper.mockTrackMapUseCase)
 }
