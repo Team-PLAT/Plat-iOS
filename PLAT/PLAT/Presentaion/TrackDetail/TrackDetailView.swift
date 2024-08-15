@@ -20,9 +20,13 @@ struct TrackDetailView: View {
     )
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HeaderView()
-                .padding(.horizontal, 16)
+                .padding(.leading, 16)
+            
+            Spacer()
+            
+            MusicView()
             
             Spacer()
         }
@@ -34,10 +38,11 @@ struct TrackDetailView: View {
 
 private struct HeaderView: View {
     
+    @Environment(\.dismiss) private var dismiss
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Image(.imgMarker)
                 
@@ -55,7 +60,7 @@ private struct HeaderView: View {
                 Spacer()
                 
                 DismissButton {
-                    //
+                    dismiss()
                 }
             }
             
@@ -63,6 +68,62 @@ private struct HeaderView: View {
                 .font(.Body.body3)
                 .foregroundStyle(.white)
                 .padding(.leading, 24)
+        }
+    }
+}
+
+// MARK: - MusicView
+
+private struct MusicView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var music: Music {
+        trackDetailUseCase.track.music
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            AlbumImage()
+            
+            Text(music.title)
+                .font(.Head.head2)
+                .foregroundStyle(.white)
+                .padding(.top, 16)
+            
+            Text(music.artist)
+                .font(.Head.head5)
+                .foregroundStyle(.gray7)
+                .padding(.top, 4)
+        }
+    }
+}
+
+// MARK: - AlbumImage
+
+private struct AlbumImage: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var albumImageUrl: URL? {
+        URL(string: trackDetailUseCase.track.music.albumImageUrl)
+    }
+    
+    var body: some View {
+        AsyncImage(url: albumImageUrl) { phase in
+            if let image = phase.image {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 200, height: 200)
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: 12
+                        )
+                    )
+            } else {
+                // TODO: 로딩 전 더미 이미지
+            }
         }
     }
 }
