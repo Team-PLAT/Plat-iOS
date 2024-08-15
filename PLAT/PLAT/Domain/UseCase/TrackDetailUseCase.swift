@@ -25,7 +25,7 @@ final class TrackDetailUseCase {
         self.trackService = trackService
         self.musicController = musicController
         self.state = State(
-            
+            address: "포항공과대학교"
         )
     }
 }
@@ -35,7 +35,7 @@ final class TrackDetailUseCase {
 extension TrackDetailUseCase {
     
     struct State {
-        
+        var address: String
     }
 }
 
