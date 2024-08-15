@@ -9,10 +9,16 @@ import SwiftUI
 
 struct FeedView: View {
     var body: some View {
-        ScrollView {
-            FeedRowView()
+        VStack(alignment:.leading, spacing: 0) {
+            Image(.imgFeedlogo)
+                .padding(.leading, 18)
+                .padding(.bottom, 20)
+            ScrollView {
+                FeedRowView()
+                FeedRowView()
+                FeedRowView()
+            }
         }
-        
     }
 }
 
@@ -25,7 +31,7 @@ private struct FeedRowView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
-                    VStack(alignment:. leading, spacing: 2) {
+                    VStack(alignment: . leading, spacing: 2) {
                         FeedHeaderView()
                         FeedLocation()
                     }
@@ -47,8 +53,14 @@ private struct FeedRowView: View {
                     .padding(.bottom, 8)
                 
                 FeedActionView()
+                    .padding(.bottom, 18)
             }
         }
+        .padding(.top, 18)
+        
+        Rectangle()
+            .foregroundColor(.gray9)
+            .frame(width: 393, height: 2)
     }
 }
 
@@ -264,7 +276,7 @@ private struct FeedActionView: View {
                     // 좋아요 액션
                 }
             )
-            .padding(.trailing, 30)
+            .padding(.trailing, 31)
             
             FeedActionButton(
                 systemImage: "text.badge.plus",
@@ -272,7 +284,7 @@ private struct FeedActionView: View {
                     // 플리 추가 액션
                 }
             )
-            .padding(.trailing, 221)
+            .padding(.trailing, 220)
             
             FeedActionButton(
                 systemImage: "repeat",
@@ -280,6 +292,7 @@ private struct FeedActionView: View {
                     // 연속 재생 액션
                 }
             )
+            .padding(.trailing, 18)
         }
     }
 }
@@ -299,10 +312,11 @@ private struct FeedActionButton: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: 20, height: 20)
+                .foregroundStyle(.white)
         }
     }
 }
 
 #Preview {
-    FeedRowView()
+    FeedView()
 }
