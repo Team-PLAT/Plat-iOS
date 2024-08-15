@@ -51,6 +51,11 @@ extension TrackDetailUseCase {
 extension TrackDetailUseCase {
     
     enum Effect {
+        case likeTrack
+        case addToPlaylist
+        case repeatPlayback
+        case deleteTrack
+        case reportTrack
         case togglePlayback
         case playPrevious
         case playNext
@@ -58,6 +63,28 @@ extension TrackDetailUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
+        case .likeTrack:
+            // TODO: TrackId 업데이트
+            trackService.like(trackId: "")
+            
+        case .addToPlaylist:
+            // TODO: TrackId, PlaylistId 업데이트
+            trackService.addToPlaylist(
+                trackId: "",
+                playlistId: ""
+            )
+            
+        case .repeatPlayback:
+            musicController.repeatPlayback()
+            
+        case .deleteTrack:
+            // TODO: TrackId 업데이트
+            trackService.delete(trackId: "")
+            
+        case .reportTrack:
+            // TODO: TrackId 업데이트
+            trackService.report(trackId: "")
+            
         case .togglePlayback:
             if state.isPaused {
                 musicController.play()

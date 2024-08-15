@@ -165,33 +165,36 @@ private struct AlbumImage: View {
 // MARK: - MusicControllerView
 
 private struct MusicControllerView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
     var body: some View {
         HStack(spacing: 24) {
             MusicControllerCell(
                 systemImage: "heart",
                 tapAction: {
-                    
+                    trackDetailUseCase.effect(.likeTrack)
                 }
             )
             
             MusicControllerCell(
                 systemImage: "text.badge.plus",
                 tapAction: {
-                    
+                    trackDetailUseCase.effect(.addToPlaylist)
                 }
             )
             
             MusicControllerCell(
                 systemImage: "repeat",
                 tapAction: {
-                    
+                    trackDetailUseCase.effect(.repeatPlayback)
                 }
             )
             
             MusicControllerCell(
                 systemImage: "ellipsis.circle",
                 tapAction: {
-                    
+                    // TODO: 더보기 창 띄우기
                 }
             )
         }
@@ -333,5 +336,13 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView()
+    ZStack {
+        Image(.imgTestBackground)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 0)
+            .ignoresSafeArea()
+        
+        TrackDetailView()
+    }
 }
