@@ -22,6 +22,7 @@ struct TrackDetailView: View {
     var body: some View {
         VStack {
             HeaderView()
+                .padding(.horizontal, 16)
         }
         .environment(trackDetailUseCase)
     }
@@ -34,8 +35,31 @@ private struct HeaderView: View {
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     var body: some View {
-        HStack {
-            Image(.imgMarker)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Image(.imgMarker)
+                
+                Group {
+                    if let placeName = trackDetailUseCase.state.place.name {
+                        Text(placeName)
+                        
+                    } else {
+                        Text(trackDetailUseCase.state.place.address)
+                    }
+                }
+                .font(.Head.head2)
+                .foregroundStyle(.white)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.down")
+                    .fontWeight(.semibold)
+            }
+            
+            Text(trackDetailUseCase.state.place.address)
+                .font(.Body.body3)
+                .foregroundStyle(.white)
+                .padding(.leading, 24)
         }
     }
 }
