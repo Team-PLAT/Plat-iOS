@@ -23,6 +23,8 @@ struct TrackDetailView: View {
         VStack {
             HeaderView()
                 .padding(.horizontal, 16)
+            
+            Spacer()
         }
         .environment(trackDetailUseCase)
     }
@@ -52,8 +54,9 @@ private struct HeaderView: View {
                 
                 Spacer()
                 
-                Image(systemName: "chevron.down")
-                    .fontWeight(.semibold)
+                DismissButton {
+                    //
+                }
             }
             
             Text(trackDetailUseCase.state.place.address)
