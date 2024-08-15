@@ -23,6 +23,7 @@
 		51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */; };
 		51F433462C3411D500FAFD14 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */; };
 		51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */; };
+		790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790AF0692C6DD1640005FA9A /* TrackMapView.swift */; };
 		793278092C2D014500F433F5 /* PLATApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793278082C2D014500F433F5 /* PLATApp.swift */; };
 		7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7932780A2C2D014500F433F5 /* OnboardingView.swift */; };
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
@@ -39,6 +40,8 @@
 		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
 		79B48AF72C413B5600A73CA0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* Path.swift */; };
+		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
+		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
 		820836772C34001D00F6D0CF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* LoginService.swift */; };
 		820836792C34002D00F6D0CF /* Platter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Platter.swift */; };
 		8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* LoginUseCase.swift */; };
@@ -83,6 +86,7 @@
 		51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+PretendardFont.swift"; sourceTree = "<group>"; };
+		790AF0692C6DD1640005FA9A /* TrackMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapView.swift; sourceTree = "<group>"; };
 		793278052C2D014500F433F5 /* PLAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		793278082C2D014500F433F5 /* PLATApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLATApp.swift; sourceTree = "<group>"; };
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		79B48AF62C413B5600A73CA0 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
+		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* Platter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platter.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -184,6 +190,14 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		790AF0682C6DD13F0005FA9A /* TrackMap */ = {
+			isa = PBXGroup;
+			children = (
+				790AF0692C6DD1640005FA9A /* TrackMapView.swift */,
+			);
+			path = TrackMap;
+			sourceTree = "<group>";
+		};
 		793277FC2C2D014500F433F5 = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +280,7 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
+				790AF0682C6DD13F0005FA9A /* TrackMap */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
 			);
@@ -313,6 +328,7 @@
 				820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */,
 				820836942C34050000F6D0CF /* UserUseCase.swift */,
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
+				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -324,6 +340,7 @@
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserServiceInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
+				79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -485,10 +502,12 @@
 				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
+				79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,
 				79A09D502C391C4A006F14F4 /* Tab.swift in Sources */,
 				820836992C34064400F6D0CF /* StreamAccount.swift in Sources */,
 				820836772C34001D00F6D0CF /* LoginService.swift in Sources */,
+				79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */,
 				8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */,
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
@@ -497,6 +516,7 @@
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
+				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,7 +658,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -655,7 +675,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seyeoncho.com.cabin.plat;
+				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -672,7 +692,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -689,7 +709,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seyeoncho.com.cabin.plat;
+				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
