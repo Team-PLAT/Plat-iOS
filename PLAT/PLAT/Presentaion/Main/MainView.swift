@@ -21,7 +21,7 @@ struct MainView: View {
                 ForEach(Tab.allCases) { tab in
                     Group {
                         switch tab {
-                        case .map: Text("MapView")
+                        case .map: TrackMapView()
                         case .feed: Text("FeedView")
                         case .playlist: Text("PlaylistView")
                         case .account: UserDetailView()

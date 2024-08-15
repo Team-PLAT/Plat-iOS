@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+import MapKit
 
 @Observable
 final class TrackMapUseCase {
@@ -34,7 +34,7 @@ extension TrackMapUseCase {
 extension TrackMapUseCase {
     
     /// 현재위치 확인하기
-    func currentLocation() -> AnyPublisher<Location, Error> {
+    func currentLocation() -> Location {
         trackMapService.currentLocation()
     }
     

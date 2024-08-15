@@ -42,6 +42,7 @@
 		79B48AF72C413B5600A73CA0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* Path.swift */; };
 		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
 		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
+		79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51492C6DEA6600489507 /* StubTrackMapService.swift */; };
 		820836772C34001D00F6D0CF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* LoginService.swift */; };
 		820836792C34002D00F6D0CF /* Platter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Platter.swift */; };
 		8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* LoginUseCase.swift */; };
@@ -106,6 +107,7 @@
 		79B48AF62C413B5600A73CA0 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
 		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
+		79FC51492C6DEA6600489507 /* StubTrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackMapService.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* Platter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platter.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				793509BE2C39324A0098B073 /* StubUserService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
+				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
+				79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,

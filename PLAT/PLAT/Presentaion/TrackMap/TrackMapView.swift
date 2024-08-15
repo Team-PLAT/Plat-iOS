@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct TrackMapView: View {
+    @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Map()
     }
 }
 
