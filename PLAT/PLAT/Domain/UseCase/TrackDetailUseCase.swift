@@ -24,8 +24,13 @@ final class TrackDetailUseCase {
         self.track = track
         self.trackService = trackService
         self.musicController = musicController
+        
+        // TODO: 교체 예정
         self.state = State(
-            address: "포항공과대학교"
+            place: Place(
+                name: "포항공과대학교",
+                address: "대한민국 경상북도 포항시 남구 지곡동"
+            )
         )
     }
 }
@@ -35,7 +40,7 @@ final class TrackDetailUseCase {
 extension TrackDetailUseCase {
     
     struct State {
-        var address: String
+        var place: Place
     }
 }
 

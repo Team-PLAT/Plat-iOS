@@ -23,15 +23,19 @@ struct TrackDetailView: View {
         VStack {
             HeaderView()
         }
+        .environment(trackDetailUseCase)
     }
 }
 
 // MARK: - HeaderView
 
 private struct HeaderView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
     var body: some View {
         HStack {
-            
+            Image(.imgMarker)
         }
     }
 }
