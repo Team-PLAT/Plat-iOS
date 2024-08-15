@@ -28,6 +28,9 @@ struct TrackDetailView: View {
             
             MusicView()
             
+            MusicControllerView()
+                .padding(.top, 16)
+            
             Spacer()
         }
         .environment(trackDetailUseCase)
@@ -123,6 +126,67 @@ private struct AlbumImage: View {
                     )
             } else {
                 // TODO: 로딩 전 더미 이미지
+            }
+        }
+    }
+}
+
+// MARK: - MusicControllerView
+
+private struct MusicControllerView: View {
+    var body: some View {
+        HStack(spacing: 24) {
+            MusicControllerCell(
+                systemImage: "heart",
+                tapAction: {
+                    
+                }
+            )
+            
+            MusicControllerCell(
+                systemImage: "text.badge.plus",
+                tapAction: {
+                    
+                }
+            )
+            
+            MusicControllerCell(
+                systemImage: "repeat",
+                tapAction: {
+                    
+                }
+            )
+            
+            MusicControllerCell(
+                systemImage: "ellipsis.circle",
+                tapAction: {
+                    
+                }
+            )
+        }
+    }
+}
+
+// MARK: - MusicControllerCell
+
+private struct MusicControllerCell: View {
+    
+    let systemImage: String
+    let tapAction: () -> Void
+    
+    var body: some View {
+        Button {
+            tapAction()
+        } label: {
+            ZStack {
+                Circle()
+                    .frame(width: 36, height: 36)
+                    .foregroundStyle(.gray9)
+                
+                Image(systemName: systemImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 16, height: 16)
             }
         }
     }
