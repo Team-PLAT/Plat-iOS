@@ -19,6 +19,10 @@ struct TrackDetailView: View {
         musicController: StubMusicController()
     )
     
+    private var music: Music {
+        trackDetailUseCase.track.music
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             HeaderView()
@@ -30,6 +34,14 @@ struct TrackDetailView: View {
             
             MusicControllerView()
                 .padding(.top, 16)
+            
+            // TODO: CurrentDuration 수정
+            MusicSeekBar(
+                currentDuration: music.duration / 2,
+                totalDuration: music.duration
+            )
+            .padding(.horizontal, 16)
+            .padding(.top, 36)
             
             Spacer()
         }

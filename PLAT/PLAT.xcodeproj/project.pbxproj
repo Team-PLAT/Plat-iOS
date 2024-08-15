@@ -65,6 +65,7 @@
 		82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */; };
 		82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */; };
 		82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */; };
+		82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825152C6E30D00084D7E8 /* MusicIndicator.swift */; };
 		82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailView.swift */; };
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
@@ -137,6 +138,7 @@
 		82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSeekBar.swift; sourceTree = "<group>"; };
 		82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+StringFormatter.swift"; sourceTree = "<group>"; };
+		82A825152C6E30D00084D7E8 /* MusicIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicIndicator.swift; sourceTree = "<group>"; };
 		82C06F532C6DD977000FEE3A /* TrackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailView.swift; sourceTree = "<group>"; };
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */,
 				82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */,
 				82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */,
+				82A825152C6E30D00084D7E8 /* MusicIndicator.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
+				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
 				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
