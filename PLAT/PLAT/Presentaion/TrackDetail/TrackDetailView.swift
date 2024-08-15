@@ -7,11 +7,24 @@
 
 import SwiftUI
 
+// MARK: - TrackDetailView
+
 struct TrackDetailView: View {
+    
+    // TODO: 이후 상위에서 주입 받기
+    // TODO: Stub 객체 교체하기
+    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+        track: MockDataBuilder.track,
+        trackService: StubTrackService(),
+        musicController: StubMusicController()
+    )
+    
     var body: some View {
         Text("TrackDetailView")
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     TrackDetailView()
