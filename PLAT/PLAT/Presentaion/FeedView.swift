@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FeedView: View {
     var body: some View {
-        VStack(alignment:.leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             Image(.imgFeedlogo)
                 .padding(.leading, 18)
                 .padding(.bottom, 20)
@@ -19,7 +19,15 @@ struct FeedView: View {
                 FeedRowView()
             }
         }
+        .refreshable {
+            await refreshData()
+        }
     }
+}
+
+private func refreshData() async {
+    // TODO: fetch 한 값 불러오기
+    //    await
 }
 
 // MARK: - FeedRowView
@@ -38,8 +46,9 @@ private struct FeedRowView: View {
                     .padding(.trailing, 96)
                     
                     FeedActionButton(
-                        systemImage: "text.badge.plus",
+                        systemImage: "ellipsis.circle",
                         tapGesture: {
+                            // TODO: 디자인 반영
                             // 신고 알럿 창 띄우기
                         }
                     )
@@ -47,6 +56,9 @@ private struct FeedRowView: View {
                 .padding(.bottom, 8)
                 
                 FeedPlayer()
+                    .padding(.bottom, 6)
+                
+                FeedContentImage()
                     .padding(.bottom, 6)
                 
                 FeedContent(text: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세요 어쩌구 저쩌구... 이런 저런 글들을 올리겠지용 홍홍표정~ 더 보기를 눌렀을 때 작성한 글의 전문이 펼쳐져서 보일 수 있도록 하고싶어욧")
@@ -190,11 +202,32 @@ private struct FeedAlbumImage: View {
                 image
                     .resizable()
                     .scaledToFill()
+                
                     .frame(width: 56, height: 56)
             } else {
                 Rectangle()
                     .frame(width: 56, height: 56)
                     .foregroundStyle(.gray9)
+            }
+        }
+    }
+}
+
+// MARK: - FeedContentImage
+
+private struct FeedContentImage: View {
+    var body: some View {
+        
+        // TODO: trackDetailUseCase.track.imageUrl 변경
+        AsyncImage(url: URL(string: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651")) { phase in
+            if let image = phase.image {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .cornerRadius(14)
+                    .frame(width: 311, height: 311)
+            } else {
+                EmptyView()
             }
         }
     }
@@ -249,7 +282,7 @@ private struct FeedContent: View {
                     .foregroundColor(.white)
                     .lineLimit(2)
                     .background(calculateLimit())
-                    .frame(width: 271)
+                    .frame(width: 276)
                 
                 if isLimit == true {
                     Text("더 보기")
