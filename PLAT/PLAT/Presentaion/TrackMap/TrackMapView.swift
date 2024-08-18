@@ -18,7 +18,7 @@ struct TrackMapView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(position: $position) {
+            Map(position: $position, interactionModes: []) {
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: currentCoordinate.latitude, longitude: currentCoordinate.longitude)) {
                     CurrentLocationDotView()
                 }
@@ -29,6 +29,7 @@ struct TrackMapView: View {
                             .onTapGesture {
                                 selectedTrack = track
                                 showTrackDetail.toggle()
+                                print(track)
                                 // TODO: 해당 트랙의 정보를 담고있는 TrackDetailView로 이동
                             }
                     }
