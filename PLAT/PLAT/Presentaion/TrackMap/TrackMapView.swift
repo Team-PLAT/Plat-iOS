@@ -12,21 +12,18 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
+    @StateObject private var locationManager = LocationManager()
     
-    @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)))
-    @State private var currentCoordinate = CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude)
     @State private var selectedTrack: Track?
     @State private var showTrackDetail = false
     @State private var hasNotifications = false
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(position: $position, interactionModes: []) {
-                Annotation("", coordinate: CLLocationCoordinate2D(latitude: currentCoordinate.latitude, longitude: currentCoordinate.longitude)) {
-                    CurrentLocationDotView()
-                }
+            Map(position: $locationManager.position, interactionModes: []) {
+                UserAnnotation()
                 
-                ForEach(MockDataBuilder.trackList) { track in
+                ForEach(trackMapUseCase.state.trackList) { track in
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                         CustomMarkerView(track: track)
                             .onTapGesture {
@@ -36,8 +33,10 @@ struct TrackMapView: View {
                     }
                 }
                 
-                MapCircle(center: currentCoordinate, radius: CLLocationDistance(500))
-                    .foregroundStyle(.platDarkpurple.opacity(0.5))
+                if let location = locationManager.location {
+                    MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
+                        .foregroundStyle(.platDarkpurple.opacity(0.5))
+                }
             }
             
             if showTrackDetail == false {
@@ -54,6 +53,11 @@ struct TrackMapView: View {
         }
         .onChange(of: showTrackDetail) { newValue, _ in
             print("showTrackDetail changed: \(newValue)")
+        }
+        .onAppear {
+            if let location = locationManager.location {
+                trackMapUseCase.fetchTrackList(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+            }
         }
     }
 }
@@ -198,28 +202,6 @@ private struct MapButtonsView: View {
                             }
                     }
             }
-        }
-    }
-}
-
-// MARK: - CurrentLocationDotView
-
-struct CurrentLocationDotView: View {
-    var body: some View {
-        VStack(spacing: 3) {
-            Image(systemName: "triangle.fill")
-                .resizable()
-                .frame(width: 10, height: 10)
-                .foregroundStyle(.platPurple)
-            
-            Circle()
-                .frame(width: 16, height: 16)
-                .foregroundStyle(.gray3)
-                .overlay {
-                    Circle()
-                        .frame(width: 11, height: 11)
-                        .foregroundStyle(.platPurple)
-                }
         }
     }
 }
