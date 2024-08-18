@@ -8,6 +8,15 @@
 import SwiftUI
 
 struct FeedView: View {
+    
+    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+        track: MockDataBuilder.track,
+        trackService: StubTrackService(),
+        musicController: StubMusicController()
+    )
+    
+    @State private var isContentSheetPresented = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Image(.imgFeedlogo)
@@ -23,6 +32,7 @@ struct FeedView: View {
                 FeedRowView()
             }
         }
+        .environment(trackDetailUseCase)
         .refreshable {
             // TODO: fetch 한 값 불러오기
         }
@@ -61,7 +71,7 @@ private struct FeedRowView: View {
                 FeedContentImage()
                     .padding(.bottom, 6)
                 
-                FeedContentView(text: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세요 어쩌구 저쩌구... 이런 저런 글들을 올리겠지용 홍홍표정~ 더 보기를 눌렀을 때 작성한 글의 전문이 펼쳐져서 보일 수 있도록 하고싶어욧")
+                FeedContentView()
                     .padding(.bottom, 8)
                 
                 FeedActionView()
@@ -79,15 +89,25 @@ private struct FeedRowView: View {
 // MARK: - FeedProfileImage
 
 private struct FeedProfileImage: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var platter: Platter {
+        trackDetailUseCase.track.platter
+    }
+    
+    private var profileImageUrl: URL? {
+        URL(string: trackDetailUseCase.track.platter.profileImageUrl)
+    }
+    
     var body: some View {
-        
-        // TODO: trackDetailUseCase.track.platter.profileImageUrl 변경
-        AsyncImage(url: URL(string: " ")) { phase in
+        AsyncImage(url: profileImageUrl) { phase in
             if let image = phase.image {
                 image
                     .resizable()
                     .scaledToFill()
                     .frame(width: 40, height: 40)
+                    .clipShape(Circle())
             } else {
                 Circle()
                     .frame(width: 40, height: 40)
@@ -100,18 +120,23 @@ private struct FeedProfileImage: View {
 // MARK: - FeedHeaderView
 
 private struct FeedHeaderView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var platter: Platter {
+        trackDetailUseCase.track.platter
+    }
+    
     var body: some View {
         HStack(spacing: 8) {
-            // TODO: trackDetailUseCase.track.platter.nickname 변경
-            Text("LOREMIPSUM")
+            Text(platter.nickname)
                 .font(.Body.body2)
                 .foregroundStyle(.white)
             
             Circle()
                 .frame(width: 2, height: 2)
             
-            // TODO: trackDetailUseCase.track.createdDate.monthDayYearFormat 변경
-            Text("07/31/2024")
+            Text(trackDetailUseCase.track.createdDate.monthDayYearFormat)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
             
@@ -122,6 +147,9 @@ private struct FeedHeaderView: View {
 // MARK: - FeedLocationView
 
 private struct FeedLocationView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
     var body: some View {
         HStack(spacing: 4) {
             Image(.imgFeedloacation)
@@ -129,8 +157,8 @@ private struct FeedLocationView: View {
                 .scaledToFill()
                 .frame(width: 12, height: 16)
             
-            // TODO: trackDetailUseCase.state.place.address 에서 대한민국 경상북도 제거 후 변경
-            Text("포항시 남구 지곡동")
+            // TODO: 대한민국 경상북도 제거 후 변경
+            Text(trackDetailUseCase.state.place.address)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
             
@@ -141,7 +169,16 @@ private struct FeedLocationView: View {
 // MARK: - FeedPlayer
 
 private struct FeedPlayer: View {
-    @State private var isPlaying = false
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var music: Music {
+        trackDetailUseCase.track.music
+    }
+    
+    private var isPaused: Bool {
+        trackDetailUseCase.state.isPaused
+    }
     
     var body: some View {
         ZStack {
@@ -162,14 +199,12 @@ private struct FeedPlayer: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    // TODO: trackDetailUseCase.track.music.title 변경
-                    Text("2003")
+                    Text(music.title)
                         .font(.Body.body2)
                         .foregroundStyle(.white)
                         .frame(width: 145, alignment: .leading)
                     
-                    // TODO: trackDetailUseCase.track.music.artist 변경
-                    Text("김도언")
+                    Text(music.artist)
                         .font(.Body.body4)
                         .foregroundStyle(.gray7)
                         .frame(width: 87, alignment: .leading)
@@ -177,10 +212,9 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    isPlaying.toggle()
-                    // TODO: trackDetailUseCase.effect 변경
+                    trackDetailUseCase.effect(.togglePlayback)
                 } label: {
-                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                    Image(systemName: isPaused ? "play.fill" : "pause.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
@@ -194,15 +228,19 @@ private struct FeedPlayer: View {
 // MARK: - FeedAlbumImage
 
 private struct FeedAlbumImage: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var albumImageUrl: URL? {
+        URL(string: trackDetailUseCase.track.music.albumImageUrl)
+    }
+    
     var body: some View {
-        
-        // TODO: trackDetailUseCase.track.music.albumImageUrl 변경
-        AsyncImage(url: URL(string: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651")) { phase in
+        AsyncImage(url: albumImageUrl) { phase in
             if let image = phase.image {
                 image
                     .resizable()
                     .scaledToFill()
-                
                     .frame(width: 56, height: 56)
             } else {
                 Rectangle()
@@ -216,16 +254,22 @@ private struct FeedAlbumImage: View {
 // MARK: - FeedContentImage
 
 private struct FeedContentImage: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    private var contentImageUrl: URL? {
+        URL(string: trackDetailUseCase.track.imageUrl ?? "")}
+    
     var body: some View {
-        
-        // TODO: trackDetailUseCase.track.imageUrl 변경
-        AsyncImage(url: URL(string: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651")) { phase in
+        // TODO: content에 이미지가 없을 때 분기처리
+        AsyncImage(url: contentImageUrl) { phase in
             if let image = phase.image {
                 image
                     .resizable()
                     .scaledToFill()
-                    .cornerRadius(14)
                     .frame(width: 311, height: 311)
+                    .clipShape(Rectangle())
+                    .cornerRadius(14)
             } else {
                 EmptyView()
             }
@@ -237,19 +281,17 @@ private struct FeedContentImage: View {
 
 private struct FeedContentView: View {
     
-    // TODO: trackDetailUseCase.track.content 변경
-    private var text: String = "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세요 어쩌구 저쩌구... 이런 저런 글들을 올리겠지용 홍홍표정~ 더 보기를 눌렀을 때 작성한 글의 전문이 펼쳐져서 보일 수 있도록 하고싶어욧"
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     @State private var isLimit: Bool?
     @State private var isExpended: Bool = false
     
-    init(text: String) {
-        self.text = text
-    }
+    private var text: String? {
+        trackDetailUseCase.track.content ?? "" }
     
     private func calculateLimit() -> some View {
         ViewThatFits(in: .vertical) {
-            Text(text)
+            Text(text ?? "")
                 .font(.Body.body5)
                 .foregroundColor(.white)
                 .hidden()
@@ -270,14 +312,14 @@ private struct FeedContentView: View {
     var body: some View {
         HStack(spacing: 0) {
             if isExpended {
-                Text(text)
+                Text(text ?? "")
                     .font(.Body.body5)
                     .foregroundColor(.white)
                     .lineLimit(nil)
                     .background(calculateLimit())
                     .frame(width: 311)
             } else {
-                Text(text)
+                Text(text ?? "")
                     .font(.Body.body5)
                     .foregroundColor(.white)
                     .lineLimit(2)
@@ -301,14 +343,16 @@ private struct FeedContentView: View {
 // MARK: - FeedActionView
 
 private struct FeedActionView: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
     @State private var isLiked: Bool = false
     
     var body: some View {
         HStack(spacing: 0) {
-            
             Button {
                 isLiked.toggle()
-                // TODO: 좋아요 액션 추가
+                trackDetailUseCase.effect(.likeTrack)
             } label: {
                 Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
                     .foregroundColor(.white)
@@ -317,7 +361,7 @@ private struct FeedActionView: View {
             }
             
             Button {
-                // 플리 추가 액션
+                trackDetailUseCase.effect(.addToPlaylist)
             } label: {
                 Image(systemName: "text.badge.plus")
                     .foregroundColor(.white)
@@ -326,7 +370,7 @@ private struct FeedActionView: View {
             }
             
             Button {
-                // 연속 재생 액션
+                trackDetailUseCase.effect(.repeatPlayback)
             } label: {
                 Image(systemName: "repeat")
                     .foregroundColor(.white)
