@@ -11,19 +11,30 @@ import MapKit
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
     @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
+    @State private var currentCoordinate = CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude)
+    @State private var selectedTrack: Track?
+    @State private var showTrackDetail = false
+    @State private var hasNotifications = false
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             Map(position: $position) {
-                ForEach(MockDataBuilder.trackList.indices, id: \.self) { index in
-                    let track = MockDataBuilder.trackList[index]
-                    Annotation(track.music.title, coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
+                ForEach(MockDataBuilder.trackList) { track in
+                    Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                         CustomMarkerView(track: track)
+                            .onTapGesture {
+                                selectedTrack = track
+                                showTrackDetail.toggle()
+                                // TODO: 해당 트랙의 정보를 담고있는 TrackDetailView로 이동
+                            }
                     }
                 }
+                
+                MapCircle(center: currentCoordinate, radius: CLLocationDistance(500))
+                    .foregroundStyle(.platDarkpurple.opacity(0.5))
             }
             
-            MapComponentsView()
+            MapComponentsView(hasNotifications: $hasNotifications)
         }
     }
 }
@@ -75,10 +86,12 @@ private struct CustomMarkerView: View {
 // MARK: - MapComponentsView
 
 private struct MapComponentsView: View {
+    @Binding var hasNotifications: Bool
+    
     var body: some View {
         HStack(alignment: .top, spacing: 100) {
             MapAddressView()
-            MapButtonsView()
+            MapButtonsView(hasNotifications: $hasNotifications)
                 .padding(.bottom, 22)
         }
     }
@@ -103,6 +116,7 @@ private struct MapAddressView: View {
 
 private struct MapButtonsView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
+    @Binding var hasNotifications: Bool
     
     var body: some View {
         VStack {
@@ -113,8 +127,18 @@ private struct MapButtonsView: View {
                     .frame(width: 48, height: 48)
                     .foregroundStyle(.platBackground)
                     .overlay {
-                        Image(systemName: "bell")
-                            .foregroundStyle(.platPurple)
+                        if hasNotifications {
+                            HStack(alignment: .top, spacing: -5) {
+                                Image(systemName: "bell")
+                                    .foregroundStyle(.platPurple)
+                                Circle()
+                                    .frame(width: 5, height: 5)
+                                    .foregroundStyle(Color(.systemRed))
+                            }
+                        } else {
+                            Image(systemName: "bell")
+                                .foregroundStyle(.platPurple)
+                        }
                     }
             }
             
