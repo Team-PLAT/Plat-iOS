@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  PLAT
+//
+//  Created by 조세연 on 8/18/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BASE_URL =
