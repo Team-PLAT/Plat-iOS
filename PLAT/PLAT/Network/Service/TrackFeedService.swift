@@ -49,15 +49,4 @@ class FeedService {
             print(error.localizedDescription)
         }
     }
-    
-    func testNumber() async {
-        let client = NetworkClient()
-        do {
-            let url = URL(string: "http://numbersapi.com/42?json")!
-            let response: TestDto = try await client.get(url: url)
-            print("test", response)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
 }

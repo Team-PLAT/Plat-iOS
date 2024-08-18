@@ -66,14 +66,11 @@
 		DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDFAE332C43945600DE1EEB /* AuthType.swift */; };
 		DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */; };
 		DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A152C71E37E002BAD11 /* BaseResponse.swift */; };
-		DFE27A182C71E46D002BAD11 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A172C71E46D002BAD11 /* EndPoint.swift */; };
 		DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */; };
 		DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */; };
 		DFE27A202C71E78F002BAD11 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A1F2C71E78F002BAD11 /* Config.swift */; };
 		DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */; };
 		DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */; };
-		DFE27A2C2C720B8C002BAD11 /* number.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A2B2C720B8C002BAD11 /* number.swift */; };
-		DFE27A2E2C720C01002BAD11 /* ApiTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A2D2C720C01002BAD11 /* ApiTestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,14 +135,11 @@
 		DFDFAE332C43945600DE1EEB /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 		DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DFE27A152C71E37E002BAD11 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
-		DFE27A172C71E46D002BAD11 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedService.swift; sourceTree = "<group>"; };
 		DFE27A1D2C71E779002BAD11 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DFE27A1F2C71E78F002BAD11 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedResultDto.swift; sourceTree = "<group>"; };
 		DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailDto.swift; sourceTree = "<group>"; };
-		DFE27A2B2C720B8C002BAD11 /* number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = number.swift; sourceTree = "<group>"; };
-		DFE27A2D2C720C01002BAD11 /* ApiTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,7 +384,6 @@
 			isa = PBXGroup;
 			children = (
 				DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */,
-				DFE27A172C71E46D002BAD11 /* EndPoint.swift */,
 				DFE27A232C720305002BAD11 /* Service */,
 				DFE27A262C720467002BAD11 /* Dto */,
 				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
@@ -403,7 +396,6 @@
 			isa = PBXGroup;
 			children = (
 				DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */,
-				DFE27A2D2C720C01002BAD11 /* ApiTestView.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -412,7 +404,6 @@
 			isa = PBXGroup;
 			children = (
 				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
-				DFE27A2B2C720B8C002BAD11 /* number.swift */,
 				DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */,
 			);
 			path = Response;
@@ -528,7 +519,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFE27A2C2C720B8C002BAD11 /* number.swift in Sources */,
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
@@ -548,7 +538,6 @@
 				DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */,
 				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
-				DFE27A182C71E46D002BAD11 /* EndPoint.swift in Sources */,
 				DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
@@ -556,7 +545,6 @@
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
-				DFE27A2E2C720C01002BAD11 /* ApiTestView.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,

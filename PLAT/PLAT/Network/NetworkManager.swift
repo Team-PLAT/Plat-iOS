@@ -8,7 +8,6 @@
 import Foundation
 
 protocol APIMethod {
-    func get<T: Decodable>(url: URL) async throws -> T
     func get<T: Decodable>(url: URL, authToken: String) async throws -> T
     func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async throws -> T
     func post<T: Decodable, U: Encodable>(url: URL, body: U) async throws -> T
@@ -17,29 +16,6 @@ protocol APIMethod {
 }
 
 class NetworkClient: APIMethod {
-    
-    /// test get
-    func get<T: Decodable>(url: URL) async throws -> T {
-        do {
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                print("GET 요청 실패: \(response)")
-                throw URLError(.badServerResponse)
-            }
-            
-            let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return decodedData
-        } catch {
-            print("GET 요청 오류 발생: \(error.localizedDescription)")
-            throw error
-        }
-    }
     
     /// GET (쿼리로 데이터 전달)
     func get<T: Decodable>(url: URL, authToken: String) async throws -> T {
