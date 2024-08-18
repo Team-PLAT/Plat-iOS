@@ -39,8 +39,7 @@ extension MusicControlUseCase {
     enum Effect {
         case setup
         case play
-        case pause
-        case resume
+        case togglePlayback
     }
     
     func effect(_ effect: Effect) {
@@ -52,13 +51,14 @@ extension MusicControlUseCase {
             state.isPaused = false
             musicController.play(MockDataBuilder.music)
             
-        case .pause:
-            state.isPaused = true
-            musicController.pause()
+        case .togglePlayback:
+            if state.isPaused {
+                musicController.resume()
+            } else {
+                musicController.pause()
+            }
             
-        case .resume:
-            state.isPaused = false
-            musicController.resume()
+            state.isPaused.toggle()
         }
     }
 }

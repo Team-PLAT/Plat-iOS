@@ -11,12 +11,12 @@ import Foundation
 struct Log {
     
     static func success(title: String, message: String) {
-        let log = "✅ " + "[\(title)\n]" + "\(message)\n"
+        let log = "✅ " + "[\(title)]\n" + "\(message)\n"
         print(log)
     }
     
     static func fail(title: String, message: String) {
-        let log = "❌ " + "[\(title)\n]" + "\(message)\n"
+        let log = "❌ " + "[\(title)]\n" + "\(message)\n"
         print(log)
     }
 }
