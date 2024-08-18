@@ -40,7 +40,9 @@ struct TrackMapView: View {
                     .foregroundStyle(.platDarkpurple.opacity(0.5))
             }
             
-            MapComponentsView(hasNotifications: $hasNotifications)
+            if showTrackDetail == false {
+                MapComponentsView(hasNotifications: $hasNotifications)
+            }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
             if let track = selectedTrack {
