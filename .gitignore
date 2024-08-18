@@ -132,6 +132,6 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # Config file to ignore
-*.config
+*.xcconfig
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,xcode,swift
