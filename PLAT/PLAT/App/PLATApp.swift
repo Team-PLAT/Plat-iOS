@@ -14,20 +14,14 @@ struct PLATApp: App {
     
     // TODO: 추후 스트리밍 계정 선택할 때 주입해주기
     @State private var musicControlUseCase = MusicControlUseCase(
-        musicController: SpotifyMusicController()
+        musicController: SpotifyMusicController.shared
     )
-    
-    private var spotify = SpotifyMusicController()
     
     var body: some Scene {
         WindowGroup {
-            // OnboardingView()
             TrackDetailView()
                 .onAppear {
-                    spotify.setup()
-                }
-                .onOpenURL { url in
-                    spotify.setAccessToken(from: url)
+                    musicControlUseCase.effect(.setup)
                 }
         }
         .environment(musicControlUseCase)

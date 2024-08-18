@@ -35,6 +35,13 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
-        
+        case setup
+    }
+    
+    func effect(_ effect: Effect) {
+        switch effect {
+        case .setup:
+            musicController.setup()
+        }
     }
 }

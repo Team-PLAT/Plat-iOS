@@ -11,7 +11,9 @@ import SpotifyiOS
 
 // MARK: - SpotifyMusicController
 
-class SpotifyMusicController: NSObject, MusicControllerInterface {
+final class SpotifyMusicController: NSObject, MusicControllerInterface {
+    
+    static let shared = SpotifyMusicController()
     
     private let spotifyClientID = "5b202600356943f9bf865d44b7a61bb5"
     private let spotifyRedirectURL = "spotify-ios-quick-start://spotify-login-callback"
@@ -36,10 +38,10 @@ class SpotifyMusicController: NSObject, MusicControllerInterface {
         return appRemote
     }()
     
-    /// 이 코드는 앱이 활성화되거나 백그라운드에서 종료되는 것을 수신합니다.
-    /// 이에 따라 Spotify의 API에 자동으로 연결하거나 연결을 끊으므로
-    /// 앱이 Spotify와의 연결 상태를 효율적으로 관리할 수 있습니다.
-    override init() {
+    // 이 코드는 앱이 활성화되거나 백그라운드에서 종료되는 것을 수신합니다.
+    // 이에 따라 Spotify의 API에 자동으로 연결하거나 연결을 끊으므로
+    // 앱이 Spotify와의 연결 상태를 효율적으로 관리할 수 있습니다.
+    private override init() {
         super.init()
         
         connectCancellable = NotificationCenter.default
@@ -92,6 +94,7 @@ extension SpotifyMusicController {
 // MARK: - Authorization
 
 extension SpotifyMusicController {
+    
     /// 사용자가 Spotify에 로그인하고 앱을 승인하면
     /// Spotify는 액세스 토큰이 포함된 URL을 사용하여
     /// 사용자를 앱으로 다시 리디렉션합니다.
