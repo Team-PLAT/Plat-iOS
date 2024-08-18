@@ -14,20 +14,19 @@ struct FeedView: View {
                 .padding(.leading, 18)
                 .padding(.bottom, 20)
             ScrollView {
+                
+                //                ForEach(MockDataBuilder.track) {
+                //                    // TODO: track id에 따라 FeedRowView() 그려지게 변경
+                //                }
                 FeedRowView()
                 FeedRowView()
                 FeedRowView()
             }
         }
         .refreshable {
-            await refreshData()
+            // TODO: fetch 한 값 불러오기
         }
     }
-}
-
-private func refreshData() async {
-    // TODO: fetch 한 값 불러오기
-    //    await
 }
 
 // MARK: - FeedRowView
@@ -41,17 +40,18 @@ private struct FeedRowView: View {
                 HStack(spacing: 0) {
                     VStack(alignment: . leading, spacing: 2) {
                         FeedHeaderView()
-                        FeedLocation()
+                        FeedLocationView()
                     }
                     .padding(.trailing, 96)
                     
-                    FeedActionButton(
-                        systemImage: "ellipsis.circle",
-                        tapGesture: {
-                            // TODO: 디자인 반영
-                            // 신고 알럿 창 띄우기
-                        }
-                    )
+                    Button {
+                        // 신고 알럿 창 띄우기
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .foregroundColor(.white)
+                            .frame(width: 20, height: 20)
+                            .padding(.bottom, 8)
+                    }
                 }
                 .padding(.bottom, 8)
                 
@@ -61,7 +61,7 @@ private struct FeedRowView: View {
                 FeedContentImage()
                     .padding(.bottom, 6)
                 
-                FeedContent(text: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세요 어쩌구 저쩌구... 이런 저런 글들을 올리겠지용 홍홍표정~ 더 보기를 눌렀을 때 작성한 글의 전문이 펼쳐져서 보일 수 있도록 하고싶어욧")
+                FeedContentView(text: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세요 어쩌구 저쩌구... 이런 저런 글들을 올리겠지용 홍홍표정~ 더 보기를 눌렀을 때 작성한 글의 전문이 펼쳐져서 보일 수 있도록 하고싶어욧")
                     .padding(.bottom, 8)
                 
                 FeedActionView()
@@ -72,7 +72,7 @@ private struct FeedRowView: View {
         
         Rectangle()
             .foregroundColor(.gray9)
-            .frame(width: 393, height: 2)
+            .frame(width: 393, height: 1)
     }
 }
 
@@ -119,9 +119,9 @@ private struct FeedHeaderView: View {
     }
 }
 
-// MARK: - FeedLocation
+// MARK: - FeedLocationView
 
-private struct FeedLocation: View {
+private struct FeedLocationView: View {
     var body: some View {
         HStack(spacing: 4) {
             Image(.imgFeedloacation)
@@ -233,9 +233,9 @@ private struct FeedContentImage: View {
     }
 }
 
-// MARK: - FeedContent
+// MARK: - FeedContentView
 
-private struct FeedContent: View {
+private struct FeedContentView: View {
     
     // TODO: trackDetailUseCase.track.content 변경
     private var text: String = "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세요 어쩌구 저쩌구... 이런 저런 글들을 올리겠지용 홍홍표정~ 더 보기를 눌렀을 때 작성한 글의 전문이 펼쳐져서 보일 수 있도록 하고싶어욧"
@@ -301,51 +301,38 @@ private struct FeedContent: View {
 // MARK: - FeedActionView
 
 private struct FeedActionView: View {
+    @State private var isLiked: Bool = false
+    
     var body: some View {
         HStack(spacing: 0) {
-            FeedActionButton(
-                systemImage: "heart.fill",
-                tapGesture: {
-                    // 좋아요 액션
-                }
-            )
-            .padding(.trailing, 31)
             
-            FeedActionButton(
-                systemImage: "text.badge.plus",
-                tapGesture: {
-                    // 플리 추가 액션
-                }
-            )
-            .padding(.trailing, 220)
+            Button {
+                isLiked.toggle()
+                // TODO: 좋아요 액션 추가
+            } label: {
+                Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
+                    .foregroundColor(.white)
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 31)
+            }
             
-            FeedActionButton(
-                systemImage: "repeat",
-                tapGesture: {
-                    // 연속 재생 액션
-                }
-            )
-            .padding(.trailing, 18)
-        }
-    }
-}
-
-// MARK: - FeedActionButton
-
-private struct FeedActionButton: View {
-    
-    let systemImage: String
-    let tapGesture: () -> Void
-    
-    var body: some View {
-        Button {
-            tapGesture()
-        } label: {
-            Image(systemName: systemImage)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 20, height: 20)
-                .foregroundStyle(.white)
+            Button {
+                // 플리 추가 액션
+            } label: {
+                Image(systemName: "text.badge.plus")
+                    .foregroundColor(.white)
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 220)
+            }
+            
+            Button {
+                // 연속 재생 액션
+            } label: {
+                Image(systemName: "repeat")
+                    .foregroundColor(.white)
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 18)
+            }
         }
     }
 }
