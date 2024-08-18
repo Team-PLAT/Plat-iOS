@@ -15,4 +15,11 @@ extension Date {
         formatter.dateFormat = "yyyy.MM.dd"
         return formatter.string(from: self)
     }
+    
+    /// 07/31/2024 포맷 문자열을 반환
+    var monthDayYearFormat: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        return formatter.string(from: self)
+    }
 }
