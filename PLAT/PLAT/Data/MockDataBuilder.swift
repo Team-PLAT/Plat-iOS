@@ -9,16 +9,32 @@ import Foundation
 
 struct MockDataBuilder {
     
+    /// Mock playlist 데이터를 반환합니다.
+    static var playlist: Playlist {
+        return Playlist(
+            title: "지곡동에서의 PLAT",
+            imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
+            trackList: Array(repeating: track, count: 6)
+        )
+    }
+    
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
-        return Array(repeating: track, count: 6)
+        return zip(Array(repeating: music, count: 6), locationList).map { music, location in
+            Track(
+                music: music,
+                location: location,
+                platter: user,
+                createdDate: .now
+            )
+        }
     }
     
     /// Mock track 데이터를 반환합니다.
     static var track: Track {
         return Track(
             music: music,
-            location: location,
+            location: currentLocation,
             platter: user,
             content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
             imageUrl: "https://rtlimages.apple.com/cmc/dieter/store/16_9/R692.png?resize=672:378&output-format=jpg&output-quality=85&interpolation=progressive-bicubic",
@@ -39,12 +55,24 @@ struct MockDataBuilder {
         )
     }
     
-    /// Mock Location 데이터를 반환합니다.
-    static var location: Location {
+    /// Mock currentLocation 데이터를 반환합니다.
+    static var currentLocation: Location {
         return Location(
             latitude: 36.014077390156416,
             longitude: 129.3258820318646
         )
+    }
+    
+    /// Mock trackLocationList 데이터를 반환합니다.
+    static var locationList: [Location] {
+        return [
+            Location(latitude: 36.014077390156416, longitude: 129.3258820318646),
+            Location(latitude: 36.01564775556712, longitude: 129.32295876966293),
+            Location(latitude: 36.01867120920973, longitude: 129.32409007297255),
+            Location(latitude: 36.01695052119649, longitude: 129.3208232860788),
+            Location(latitude: 36.01317359607363, longitude: 129.32137789913355),
+            Location(latitude: 36.01269106639098, longitude: 129.32489032489292)
+        ]
     }
     
     /// Mock User 데이터를 반환합니다.
