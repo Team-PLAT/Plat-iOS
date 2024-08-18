@@ -8,6 +8,11 @@
 import Foundation
 
 struct StubMusicController: MusicControllerInterface {
+    
+    func setup() {
+        print(#function)
+    }
+    
     func play() {
         print(#function)
     }
