@@ -11,8 +11,7 @@ import SwiftUI
 struct PLATApp: App {
     var body: some Scene {
         WindowGroup {
-            // OnboardingView()
-            TrackDetailView()
+            OnboardingView()
         }
     }
 }
