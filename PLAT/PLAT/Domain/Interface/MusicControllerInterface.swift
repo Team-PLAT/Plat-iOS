@@ -9,7 +9,7 @@ import Foundation
 
 protocol MusicControllerInterface {
     func setup()
-    func play()
+    func play(_ music: Music)
     func pause()
     func previous()
     func next()

@@ -66,6 +66,7 @@
 		8269333B2C71D1810004E0B5 /* MusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicController.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
+		826933492C7207310004E0B5 /* Helper+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933482C7207310004E0B5 /* Helper+Log.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
 		82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */; };
 		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
@@ -149,6 +150,7 @@
 		8269333A2C71D1810004E0B5 /* MusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicController.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		826933482C7207310004E0B5 /* Helper+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Log.swift"; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicController.swift; sourceTree = "<group>"; };
 		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				796465992C3A5C2400F6DC2D /* Helper+Preview.swift */,
 				51B4784F2C4379E00008EB37 /* Helper+Text.swift */,
 				DFD110D52C4644D500696FCB /* Helper+Lottie.swift */,
+				826933482C7207310004E0B5 /* Helper+Log.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
+				826933492C7207310004E0B5 /* Helper+Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

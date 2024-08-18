@@ -70,7 +70,7 @@ extension SpotifyMusicController {
         }
     }
     
-    func play() {
+    func play(_ music: Music) {
         //
     }
     
@@ -115,7 +115,7 @@ extension SpotifyMusicController {
     /// AuthorizeAndPlayURI는 특정 Spotify URI의 재생을 시작할 수 있지만
     /// 여기에서처럼 빈 문자열("")을 전달하면 재생을 시작하지 않고 승인 프로세스만 트리거됩니다.
     func authorize() {
-        self.appRemote.authorizeAndPlayURI("")
+        self.appRemote.authorizeAndPlayURI("dummy")
     }
 }
 
@@ -146,13 +146,13 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
         self.appRemote = appRemote
         self.appRemote.playerAPI?.delegate = self
-        self.appRemote.playerAPI?.subscribe(toPlayerState: { (_, error) in
+        self.appRemote.playerAPI?.subscribe { _, error in
             if let error = error {
-                print("Error subscribing to player state: \(error.localizedDescription)")
+                Log.print(.fail, title: "Spotify Player State", message: error.localizedDescription)
             } else {
-                print("Successfully subscribed to player state")
+                Log.print(.success, title: "Spotify Player State", message: "구독 성공")
             }
-        })
+        }
     }
     
     func appRemote(

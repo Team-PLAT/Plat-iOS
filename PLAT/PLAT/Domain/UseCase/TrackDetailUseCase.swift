@@ -87,7 +87,7 @@ extension TrackDetailUseCase {
             
         case .togglePlayback:
             if state.isPaused {
-                musicController.play()
+                musicController.play(track.music)
             } else {
                 musicController.pause()
             }

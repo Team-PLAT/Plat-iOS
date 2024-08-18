@@ -13,7 +13,7 @@ struct StubMusicController: MusicControllerInterface {
         print(#function)
     }
     
-    func play() {
+    func play(_ music: Music) {
         print(#function)
     }
     
