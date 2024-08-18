@@ -6,3 +6,27 @@
 //
 
 import Foundation
+
+// MARK: - SpotifyMusicController
+
+struct SpotifyMusicController: MusicControllerInterface {
+    func play() {
+        //
+    }
+    
+    func pause() {
+        //
+    }
+    
+    func previous() {
+        //
+    }
+    
+    func next() {
+        //
+    }
+    
+    func repeatPlayback() {
+        //
+    }
+}
