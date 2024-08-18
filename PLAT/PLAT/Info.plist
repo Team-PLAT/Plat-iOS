@@ -14,5 +14,20 @@
 		<string>Pretendard-SemiBold.ttf</string>
 		<string>Pretendard-Thin.ttf</string>
 	</array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>spotify</string>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>com.spotify.iOS-SDK-Quick-Start</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>spotify-ios-quick-start</string>
+        </array>
+      </dict>
+    </array>
 </dict>
 </plist>
