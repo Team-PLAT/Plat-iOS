@@ -28,7 +28,7 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
         redirectURL: URL(string: spotifyRedirectURL)!
     )
     
-    lazy var appRemote: SPTAppRemote = {
+    private lazy var appRemote: SPTAppRemote = {
         let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
         appRemote.connectionParameters.accessToken = self.accessToken
         appRemote.delegate = self
@@ -93,6 +93,28 @@ extension SpotifyMusicController {
     
     func repeatPlayback() {
         //
+    }
+    
+    func currentDuration() -> AnyPublisher<Double, Never> {
+        return Timer.publish(every: 0.5, on: .main, in: .common)
+            .autoconnect()
+            .flatMap { [weak self] _ -> Future<Double, Never> in
+                return Future { promise in
+                    self?.appRemote.playerAPI?.getPlayerState { result, error in
+                        if let error = error {
+                            Log.fail(
+                                title: "현재 재생 중인 음악 position 값 불러오기",
+                                message: "PlayerState 검색 실패: \(error.localizedDescription)"
+                            )
+                            promise(.success(0))
+                        } else if let playerState = result as? SPTAppRemotePlayerState {
+                            let playbackPostion = Double(playerState.playbackPosition)
+                            promise(.success(playbackPostion / 1000))
+                        }
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }
 
@@ -171,9 +193,9 @@ extension SpotifyMusicController {
         if let accessToken = parameters?[SPTAppRemoteAccessTokenKey] {
             appRemote.connectionParameters.accessToken = accessToken
             self.accessToken = accessToken
-            print("AccessToken: \(accessToken)")
+            Log.success(title: "Access Token", message: accessToken)
         } else if let errorDescription = parameters?[SPTAppRemoteErrorDescriptionKey] {
-            print(errorDescription)
+            Log.fail(title: "Access Token", message: errorDescription)
         }
     }
     

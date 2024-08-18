@@ -14,16 +14,13 @@ final class TrackDetailUseCase {
     private(set) var track: Track
     
     private var trackService: TrackServiceInterface
-    private var musicController: MusicControllerInterface
     
     init(
         track: Track,
-        trackService: TrackServiceInterface,
-        musicController: MusicControllerInterface
+        trackService: TrackServiceInterface
     ) {
         self.track = track
         self.trackService = trackService
-        self.musicController = musicController
         
         // TODO: 교체 예정
         self.state = State(
@@ -53,12 +50,8 @@ extension TrackDetailUseCase {
     enum Effect {
         case likeTrack
         case addToPlaylist
-        case repeatPlayback
         case deleteTrack
         case reportTrack
-        case togglePlayback
-        case playPrevious
-        case playNext
     }
     
     func effect(_ effect: Effect) {
@@ -74,9 +67,6 @@ extension TrackDetailUseCase {
                 playlistId: ""
             )
             
-        case .repeatPlayback:
-            musicController.repeatPlayback()
-            
         case .deleteTrack:
             // TODO: TrackId 업데이트
             trackService.delete(trackId: "")
@@ -84,20 +74,6 @@ extension TrackDetailUseCase {
         case .reportTrack:
             // TODO: TrackId 업데이트
             trackService.report(trackId: "")
-            
-        case .togglePlayback:
-            if state.isPaused {
-                musicController.play(track.music)
-            } else {
-                musicController.pause()
-            }
-            state.isPaused.toggle()
-            
-        case .playPrevious:
-            musicController.previous()
-            
-        case .playNext:
-            musicController.next()
         }
     }
 }

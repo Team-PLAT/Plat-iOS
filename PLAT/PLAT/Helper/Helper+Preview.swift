@@ -14,8 +14,7 @@ enum PreviewHelper {
     static let mockLoginUseCase = LoginUseCase(loginService: LoginService())
     static let mockTrackDetailUseCase = TrackDetailUseCase(
         track: MockDataBuilder.track,
-        trackService: StubTrackService(),
-        musicController: StubMusicController()
+        trackService: StubTrackService()
     )
     static let mockTrackMapUseCase = TrackMapUseCase(trackMapService: StubTrackMapService())
 }

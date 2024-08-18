@@ -63,7 +63,7 @@
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		826933362C71C8B60004E0B5 /* SpotifyMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */; };
 		826933392C71CA2D0004E0B5 /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 826933382C71CA2D0004E0B5 /* SpotifyiOS */; };
-		8269333B2C71D1810004E0B5 /* MusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicController.swift */; };
+		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
 		826933492C7207310004E0B5 /* Helper+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933482C7207310004E0B5 /* Helper+Log.swift */; };
@@ -148,7 +148,7 @@
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyMusicController.swift; sourceTree = "<group>"; };
-		8269333A2C71D1810004E0B5 /* MusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicController.swift; sourceTree = "<group>"; };
+		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		826933482C7207310004E0B5 /* Helper+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Log.swift"; sourceTree = "<group>"; };
@@ -376,7 +376,7 @@
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
-				8269333A2C71D1810004E0B5 /* MusicController.swift */,
+				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 				826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */,
 			);
 			path = Data;
@@ -600,7 +600,7 @@
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
 				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
-				8269333B2C71D1810004E0B5 /* MusicController.swift in Sources */,
+				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
 				79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,

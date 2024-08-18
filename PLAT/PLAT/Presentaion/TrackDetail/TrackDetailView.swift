@@ -11,12 +11,13 @@ import SwiftUI
 
 struct TrackDetailView: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlerUseCase
+    
     // TODO: 이후 상위에서 주입 받기
     // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         track: MockDataBuilder.track,
-        trackService: StubTrackService(),
-        musicController: StubMusicController()
+        trackService: StubTrackService()
     )
     
     @State private var isContentSheetPresented = false
@@ -35,7 +36,7 @@ struct TrackDetailView: View {
                 
                 // TODO: CurrentDuration 수정
                 MusicSeekBar(
-                    currentDuration: music.duration / 2,
+                    currentDuration: musicControlerUseCase.state.currentDuration,
                     totalDuration: music.duration
                 )
                 .padding(.top, 36)
@@ -168,6 +169,7 @@ private struct AlbumImage: View {
 private struct MusicControllerView: View {
     
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
         HStack(spacing: 24) {
@@ -188,7 +190,7 @@ private struct MusicControllerView: View {
             MusicControllerCell(
                 systemImage: "repeat",
                 tapAction: {
-                    trackDetailUseCase.effect(.repeatPlayback)
+                    // TODO: 반복 재생
                 }
             )
             
