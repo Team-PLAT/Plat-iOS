@@ -22,7 +22,7 @@ struct MainView: View {
                     Group {
                         switch tab {
                         case .map: Text("MapView")
-                        case .feed: Text("FeedView")
+                        case .feed: FeedView()
                         case .playlist: Text("PlaylistView")
                         case .account: UserDetailView()
                         }
