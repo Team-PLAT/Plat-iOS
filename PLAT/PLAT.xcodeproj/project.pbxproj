@@ -66,11 +66,16 @@
 		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
 		82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */; };
 		82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDA2C6DE8E000F6E6E2 /* Place.swift */; };
+		82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */; };
+		82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */; };
+		82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */; };
+		82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825152C6E30D00084D7E8 /* MusicIndicator.swift */; };
+		82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */; };
+		82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */; };
 		82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailView.swift */; };
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
 		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
-		DF0DF3C52C6E5FEC00B67792 /* Helper+FeedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0DF3C42C6E5FEC00B67792 /* Helper+FeedDateFormatter.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
@@ -142,11 +147,16 @@
 		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
 		82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataBuilder.swift; sourceTree = "<group>"; };
 		82A36EDA2C6DE8E000F6E6E2 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSeekBar.swift; sourceTree = "<group>"; };
+		82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+StringFormatter.swift"; sourceTree = "<group>"; };
+		82A825152C6E30D00084D7E8 /* MusicIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicIndicator.swift; sourceTree = "<group>"; };
+		82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+DateFormatter.swift"; sourceTree = "<group>"; };
+		82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMusicPlayer.swift; sourceTree = "<group>"; };
 		82C06F532C6DD977000FEE3A /* TrackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailView.swift; sourceTree = "<group>"; };
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
 		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
-		DF0DF3C42C6E5FEC00B67792 /* Helper+FeedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+FeedDateFormatter.swift"; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
@@ -207,11 +217,12 @@
 			isa = PBXGroup;
 			children = (
 				51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */,
+				82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */,
+				82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */,
 				796465992C3A5C2400F6DC2D /* Helper+Preview.swift */,
 				51B4784F2C4379E00008EB37 /* Helper+Text.swift */,
 				DFD110D52C4644D500696FCB /* Helper+Lottie.swift */,
 				DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */,
-				DF0DF3C42C6E5FEC00B67792 /* Helper+FeedDateFormatter.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -273,6 +284,10 @@
 				7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */,
 				796465A52C3A82A200F6DC2D /* ListRadioButton.swift */,
 				513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */,
+				82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */,
+				82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */,
+				82A825152C6E30D00084D7E8 /* MusicIndicator.swift */,
+				82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -527,21 +542,24 @@
 				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
+				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
+				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				793509BF2C39324A0098B073 /* StubUserService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
 				DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */,
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
-				DF0DF3C52C6E5FEC00B67792 /* Helper+FeedDateFormatter.swift in Sources */,
 				DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */,
 				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
+				82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */,
+				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
@@ -551,8 +569,10 @@
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
+				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
+				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
 				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
