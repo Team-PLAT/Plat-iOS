@@ -72,6 +72,7 @@ private struct HeaderView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
         VStack(alignment: .leading, spacing: -2) {

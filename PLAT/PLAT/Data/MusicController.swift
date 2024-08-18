@@ -17,7 +17,9 @@ final class MusicControlUseCase {
     
     init(musicController: MusicControllerInterface) {
         self.musicController = musicController
-        self.state = State()
+        self.state = State(
+            isPaused: false
+        )
     }
 }
 
@@ -26,7 +28,7 @@ final class MusicControlUseCase {
 extension MusicControlUseCase {
     
     struct State {
-        
+        var isPaused: Bool
     }
 }
 
@@ -36,12 +38,27 @@ extension MusicControlUseCase {
     
     enum Effect {
         case setup
+        case play
+        case pause
+        case resume
     }
     
     func effect(_ effect: Effect) {
         switch effect {
         case .setup:
             musicController.setup()
+            
+        case .play:
+            state.isPaused = false
+            musicController.play(MockDataBuilder.music)
+            
+        case .pause:
+            state.isPaused = true
+            musicController.pause()
+            
+        case .resume:
+            state.isPaused = false
+            musicController.resume()
         }
     }
 }

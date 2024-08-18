@@ -64,18 +64,29 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
 
 extension SpotifyMusicController {
     
+    /// 기본 설정을 진행합니다.
     func setup() {
         if !appRemote.isConnected {
             authorize()
         }
     }
     
+    /// 음악을 재생합니다.
     func play(_ music: Music) {
-        //
+        Task {
+            let uri = await requestURI(for: music.isrc)
+            appRemote.playerAPI?.play(uri ?? "")
+        }
     }
     
+    /// 음악을 일시 정지합니다.
     func pause() {
-        //
+        appRemote.playerAPI?.pause()
+    }
+    
+    /// 음악을 재개합니다.
+    func resume() {
+        appRemote.playerAPI?.resume()
     }
     
     func previous() {
@@ -88,6 +99,71 @@ extension SpotifyMusicController {
     
     func repeatPlayback() {
         //
+    }
+}
+
+// MARK: - Network Helper
+
+extension SpotifyMusicController {
+    
+    /// Sptotify Web API 호출을 위한 기본 URL입니다.
+    private var baseURL: String {
+        "https://api.spotify.com/v1/"
+    }
+    
+    /// ISRC값을 이용해 URL 문자열을 반환받습니다.
+    private func searchQueryURL(isrc: String) -> String {
+        let header = baseURL + "search?"
+        let searchQuery = "q=" + "isrc:\(isrc)&"
+        let type = "type=" + "track&"
+        let market = "market=" + "KR&"
+        let limit = "limit=" + "1&"
+        return header + searchQuery + type + market + limit
+    }
+    
+    /// ISRC값을 이용해 URI 값을 반환받습니다.
+    private func requestURI(for isrc: String) async -> String? {
+        let urlString = searchQueryURL(isrc: isrc)
+        guard let url = URL(string: urlString) else {
+            Log.fail(
+                title: "ISRC 값을 이용한 URI 반환",
+                message: "조건에 맞지 않는 URL: \(urlString)"
+            )
+            return nil
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(
+            "Bearer \(accessToken ?? "")",
+            forHTTPHeaderField: "Authorization"
+        )
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let decoder = JSONDecoder()
+            let decodeData = try decoder.decode(SpotifyTrackDTO.self, from: data)
+            guard let uri = decodeData.tracks.items.first?.uri else {
+                Log.fail(
+                    title: "ISRC 값을 이용한 URI 반환",
+                    message: "값 없음!"
+                )
+                return nil
+            }
+            
+            Log.success(
+                title: "ISRC 값을 이용한 URI 반환",
+                message: "URI: \(uri)"
+            )
+            
+            return uri
+        } catch {
+            Log.fail(
+                title: "ISRC 값을 이용한 URI 반환",
+                message: "Decoding 실패"
+            )
+            return nil
+        }
     }
 }
 
@@ -115,7 +191,7 @@ extension SpotifyMusicController {
     /// AuthorizeAndPlayURI는 특정 Spotify URI의 재생을 시작할 수 있지만
     /// 여기에서처럼 빈 문자열("")을 전달하면 재생을 시작하지 않고 승인 프로세스만 트리거됩니다.
     func authorize() {
-        self.appRemote.authorizeAndPlayURI("dummy")
+        self.appRemote.authorizeAndPlayURI("")
     }
 }
 
@@ -148,9 +224,15 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
         self.appRemote.playerAPI?.delegate = self
         self.appRemote.playerAPI?.subscribe { _, error in
             if let error = error {
-                Log.print(.fail, title: "Spotify Player State", message: error.localizedDescription)
+                Log.fail(
+                    title: "Spotify Player State",
+                    message: error.localizedDescription
+                )
             } else {
-                Log.print(.success, title: "Spotify Player State", message: "구독 성공")
+                Log.success(
+                    title: "Spotify Player State",
+                    message: "구독 성공"
+                )
             }
         }
     }
@@ -159,14 +241,14 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
         _ appRemote: SPTAppRemote,
         didFailConnectionAttemptWithError error: (any Error)?
     ) {
-        print(#function)
+        // print(#function)
     }
     
     func appRemote(
         _ appRemote: SPTAppRemote,
         didDisconnectWithError error: (any Error)?
     ) {
-        print(#function)
+        // print(#function)
     }
 }
 
@@ -174,6 +256,6 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
 
 extension SpotifyMusicController: SPTAppRemotePlayerStateDelegate {
     func playerStateDidChange(_ playerState: any SPTAppRemotePlayerState) {
-        print(#function)
+        // print(#function)
     }
 }

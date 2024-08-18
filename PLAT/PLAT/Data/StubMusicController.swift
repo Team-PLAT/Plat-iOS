@@ -21,6 +21,10 @@ struct StubMusicController: MusicControllerInterface {
         print(#function)
     }
     
+    func resume() {
+        print(#function)
+    }
+    
     func previous() {
         print(#function)
     }
