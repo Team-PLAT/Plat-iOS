@@ -10,7 +10,7 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
-    @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)))
+    @State private var position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)))
     @State private var currentCoordinate = CLLocationCoordinate2D(latitude: MockDataBuilder.currentLocation.latitude, longitude: MockDataBuilder.currentLocation.longitude)
     @State private var selectedTrack: Track?
     @State private var showTrackDetail = false
@@ -19,6 +19,10 @@ struct TrackMapView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Map(position: $position) {
+                Annotation("", coordinate: CLLocationCoordinate2D(latitude: currentCoordinate.latitude, longitude: currentCoordinate.longitude)) {
+                    CurrentLocationDotView()
+                }
+                
                 ForEach(MockDataBuilder.trackList) { track in
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                         CustomMarkerView(track: track)
@@ -127,6 +131,7 @@ private struct MapButtonsView: View {
                     .frame(width: 48, height: 48)
                     .foregroundStyle(.platBackground)
                     .overlay {
+                        // TODO: 알림이 있을 경우 hasNotifications를 true로 변경
                         if hasNotifications {
                             HStack(alignment: .top, spacing: -5) {
                                 Image(systemName: "bell")
@@ -182,6 +187,29 @@ private struct MapButtonsView: View {
     }
 }
 
+// MARK: - CurrentLocationDotView
+
+struct CurrentLocationDotView: View {
+    var body: some View {
+        VStack(spacing: 3) {
+            Image(systemName: "triangle.fill")
+                .resizable()
+                .frame(width: 10, height: 10)
+                .foregroundStyle(.platPurple)
+            
+            Circle()
+                .frame(width: 16, height: 16)
+                .foregroundStyle(.gray3)
+                .overlay {
+                    Circle()
+                        .frame(width: 11, height: 11)
+                        .foregroundStyle(.platPurple)
+                }
+        }
+    }
+}
+
+// MARK: - Preview
 #Preview {
     TrackMapView()
         .environment(PreviewHelper.mockTrackMapUseCase)
