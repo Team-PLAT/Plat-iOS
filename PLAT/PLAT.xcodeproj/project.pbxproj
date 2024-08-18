@@ -10,6 +10,7 @@
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
+		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
@@ -90,6 +91,7 @@
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -187,6 +189,14 @@
 				51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */,
 			);
 			path = Lotties;
+			sourceTree = "<group>";
+		};
+		5151BEA92C71EAB5001DA80F /* Platting */ = {
+			isa = PBXGroup;
+			children = (
+				5151BEAA2C71EB73001DA80F /* PlattingView.swift */,
+			);
+			path = Platting;
 			sourceTree = "<group>";
 		};
 		51F433332C34115900FAFD14 /* Fonts */ = {
@@ -321,6 +331,7 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
+				5151BEA92C71EAB5001DA80F /* Platting */,
 				790AF0682C6DD13F0005FA9A /* TrackMap */,
 				82C06F522C6DD961000FEE3A /* TrackDetail */,
 				8208368A2C3403EE00F6D0CF /* Register */,
@@ -547,6 +558,7 @@
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
+				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				793509BF2C39324A0098B073 /* StubUserService.swift in Sources */,
