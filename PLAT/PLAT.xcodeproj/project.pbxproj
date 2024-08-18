@@ -23,6 +23,7 @@
 		51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */; };
 		51F433462C3411D500FAFD14 /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */; };
 		51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */; };
+		790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790AF0692C6DD1640005FA9A /* TrackMapView.swift */; };
 		793278092C2D014500F433F5 /* PLATApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793278082C2D014500F433F5 /* PLATApp.swift */; };
 		7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7932780A2C2D014500F433F5 /* OnboardingView.swift */; };
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
@@ -41,10 +42,13 @@
 		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
 		79B48AF72C413B5600A73CA0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* Path.swift */; };
-		820836772C34001D00F6D0CF /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* AppleLoginService.swift */; };
-		820836792C34002D00F6D0CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* User.swift */; };
-		8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* AuthUseCase.swift */; };
-		8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */; };
+		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
+		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
+		79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51492C6DEA6600489507 /* StubTrackMapService.swift */; };
+		820836772C34001D00F6D0CF /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* LoginService.swift */; };
+		820836792C34002D00F6D0CF /* Platter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Platter.swift */; };
+		8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* LoginUseCase.swift */; };
+		8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367E2C34012E00F6D0CF /* LoginServiceInterface.swift */; };
 		820836812C34030C00F6D0CF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836802C34030C00F6D0CF /* LoginView.swift */; };
 		820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836822C3403A700F6D0CF /* SelectStreamAccountView.swift */; };
 		820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836842C3403B400F6D0CF /* UserDetailView.swift */; };
@@ -60,7 +64,27 @@
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
+		82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */; };
+		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
+		82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */; };
+		82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDA2C6DE8E000F6E6E2 /* Place.swift */; };
+		82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */; };
+		82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */; };
+		82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */; };
+		82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825152C6E30D00084D7E8 /* MusicIndicator.swift */; };
+		82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */; };
+		82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */; };
+		82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailView.swift */; };
+		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
+		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
+		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
+		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
+		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
+		DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCB2C6C959F00D5252B /* Music.swift */; };
+		DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCD2C6C95FD00D5252B /* Location.swift */; };
+		DFDF9DD22C6C989200D5252B /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DD12C6C989200D5252B /* Track.swift */; };
+		DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DD32C6C98FF00D5252B /* Playlist.swift */; };
 		DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDFAE332C43945600DE1EEB /* AuthType.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +105,7 @@
 		51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+PretendardFont.swift"; sourceTree = "<group>"; };
+		790AF0692C6DD1640005FA9A /* TrackMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapView.swift; sourceTree = "<group>"; };
 		793278052C2D014500F433F5 /* PLAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		793278082C2D014500F433F5 /* PLATApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLATApp.swift; sourceTree = "<group>"; };
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -100,10 +125,13 @@
 		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		79B48AF62C413B5600A73CA0 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		820836762C34001D00F6D0CF /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
-		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		8208367B2C34005400F6D0CF /* AuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUseCase.swift; sourceTree = "<group>"; };
-		8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginServiceInterface.swift; sourceTree = "<group>"; };
+		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
+		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
+		79FC51492C6DEA6600489507 /* StubTrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackMapService.swift; sourceTree = "<group>"; };
+		820836762C34001D00F6D0CF /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		820836782C34002D00F6D0CF /* Platter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platter.swift; sourceTree = "<group>"; };
+		8208367B2C34005400F6D0CF /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		8208367E2C34012E00F6D0CF /* LoginServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginServiceInterface.swift; sourceTree = "<group>"; };
 		820836802C34030C00F6D0CF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		820836822C3403A700F6D0CF /* SelectStreamAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStreamAccountView.swift; sourceTree = "<group>"; };
 		820836842C3403B400F6D0CF /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
@@ -119,8 +147,28 @@
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicController.swift; sourceTree = "<group>"; };
+		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
+		82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataBuilder.swift; sourceTree = "<group>"; };
+		82A36EDA2C6DE8E000F6E6E2 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSeekBar.swift; sourceTree = "<group>"; };
+		82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+StringFormatter.swift"; sourceTree = "<group>"; };
+		82A825152C6E30D00084D7E8 /* MusicIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicIndicator.swift; sourceTree = "<group>"; };
+		82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+DateFormatter.swift"; sourceTree = "<group>"; };
+		82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMusicPlayer.swift; sourceTree = "<group>"; };
+		82C06F532C6DD977000FEE3A /* TrackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailView.swift; sourceTree = "<group>"; };
+		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
+		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
+		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
+		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
 		DFD110D52C4644D500696FCB /* Helper+Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Lottie.swift"; sourceTree = "<group>"; };
+		DFDF9DCB2C6C959F00D5252B /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		DFDF9DCD2C6C95FD00D5252B /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DFDF9DD12C6C989200D5252B /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		DFDF9DD32C6C98FF00D5252B /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		DFDFAE332C43945600DE1EEB /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,11 +221,22 @@
 			isa = PBXGroup;
 			children = (
 				51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */,
+				82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */,
+				82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */,
 				796465992C3A5C2400F6DC2D /* Helper+Preview.swift */,
 				51B4784F2C4379E00008EB37 /* Helper+Text.swift */,
 				DFD110D52C4644D500696FCB /* Helper+Lottie.swift */,
+				DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		790AF0682C6DD13F0005FA9A /* TrackMap */ = {
+			isa = PBXGroup;
+			children = (
+				790AF0692C6DD1640005FA9A /* TrackMapView.swift */,
+			);
+			path = TrackMap;
 			sourceTree = "<group>";
 		};
 		793277FC2C2D014500F433F5 = {
@@ -229,6 +288,10 @@
 				7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */,
 				796465A52C3A82A200F6DC2D /* ListRadioButton.swift */,
 				513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */,
+				82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */,
+				82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */,
+				82A825152C6E30D00084D7E8 /* MusicIndicator.swift */,
+				82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -262,8 +325,11 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
+				790AF0682C6DD13F0005FA9A /* TrackMap */,
+				82C06F522C6DD961000FEE3A /* TrackDetail */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
 			);
 			path = Presentaion;
 			sourceTree = "<group>";
@@ -298,7 +364,10 @@
 				793509BE2C39324A0098B073 /* StubUserService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
-				7944BB1D2C47A18D00A92789 /* StubUserSessionService.swift */,
+				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
+				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
+				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
+				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -310,6 +379,8 @@
 				820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */,
 				820836942C34050000F6D0CF /* UserUseCase.swift */,
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
+				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
+				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -322,6 +393,9 @@
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
+				79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */,
+				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
+				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -351,12 +425,25 @@
 		8208369E2C3409E200F6D0CF /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				820836782C34002D00F6D0CF /* User.swift */,
+				DFDF9DD32C6C98FF00D5252B /* Playlist.swift */,
+				DFDF9DD12C6C989200D5252B /* Track.swift */,
+				DFDF9DCB2C6C959F00D5252B /* Music.swift */,
+				DFDF9DCD2C6C95FD00D5252B /* Location.swift */,
+				82A36EDA2C6DE8E000F6E6E2 /* Place.swift */,
+				820836782C34002D00F6D0CF /* Platter.swift */,
 				820836982C34064400F6D0CF /* StreamAccount.swift */,
-				79A09D4F2C391C4A006F14F4 /* Tab.swift */,
 				DFDFAE332C43945600DE1EEB /* AuthType.swift */,
+				79A09D4F2C391C4A006F14F4 /* Tab.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		82C06F522C6DD961000FEE3A /* TrackDetail */ = {
+			isa = PBXGroup;
+			children = (
+				82C06F532C6DD977000FEE3A /* TrackDetailView.swift */,
+			);
+			path = TrackDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,42 +540,65 @@
 			files = (
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
+				DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */,
+				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
+				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
-				8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */,
+				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
+				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
+				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
+				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
+				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
+				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				793509BF2C39324A0098B073 /* StubUserService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
-				7944BB1C2C479FE600A92789 /* UserSessionServiceInterface.swift in Sources */,
+				DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */,
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
+				DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */,
 				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
+				82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */,
+				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
+				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
+				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
-				820836792C34002D00F6D0CF /* User.swift in Sources */,
+				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
+				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
+				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
+				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
+				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
+				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
+				79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,
 				79A09D502C391C4A006F14F4 /* Tab.swift in Sources */,
 				7944BB1E2C47A18D00A92789 /* StubUserSessionService.swift in Sources */,
 				820836992C34064400F6D0CF /* StreamAccount.swift in Sources */,
-				820836772C34001D00F6D0CF /* AppleLoginService.swift in Sources */,
-				8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */,
+				820836772C34001D00F6D0CF /* LoginService.swift in Sources */,
+				79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */,
+				8208367C2C34005400F6D0CF /* LoginUseCase.swift in Sources */,
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
+				79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */,
+				82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
+				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,7 +740,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -647,7 +757,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seyeoncho.com.cabin.plat;
+				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -664,7 +774,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -681,7 +791,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seyeoncho.com.cabin.plat;
+				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

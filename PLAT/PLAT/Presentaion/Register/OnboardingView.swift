@@ -23,9 +23,9 @@ struct OnboardingView: View {
                     .padding(.horizontal, 162)
                     .padding(.bottom, 24)
                 
-                Text("Place에 맞는 음악을,\nPLAT으로\nPLAY.", targetString: "PLAT", targetFont: Font.custom("Pretendard-ExtraBold", size: 34))
+                Text("Place에 맞는 음악을,\nPLAT으로\nPLAY.", targetString: "PLAT", targetFont: .CustomTitle.customTitle1)
                     .foregroundStyle(.white)
-                    .font(Font.custom("Pretendard-Regular", size: 34))
+                    .font(.CustomTitle.customTitle2)
                     .padding(.leading, 24)
                     .padding(.trailing, 82)
                 
@@ -59,23 +59,23 @@ struct OnboardingView: View {
                     }
                 }
         }
-        .environment(infoUseCase)
         .environment(pathModel)
     }
 }
 
 // MARK: - LoginButton
+
 private struct LoginButton: View {
     @Environment(PathModel.self) var pathModel
     @Binding var authType: AuthType
     
     var body: some View {
-        Button(action: {
+        Button {
             self.authType = .signIn
             pathModel.registerPaths.append(.loginView)
-        }, label: {
+        } label: {
             Text("로그인")
-        })
+        }
     }
 }
 
