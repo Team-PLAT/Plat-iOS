@@ -351,7 +351,7 @@
 				82C06F522C6DD961000FEE3A /* TrackDetail */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
-				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
+				DFE27A2F2C721DC7002BAD11 /* Feed */,
 			);
 			path = Presentaion;
 			sourceTree = "<group>";
@@ -466,6 +466,14 @@
 			);
 			path = TrackDetail;
 			sourceTree = "<group>";
+		};
+		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
+			);
+			path = Feed;
+      sourceTree = "<group>";
 		};
 		DFE27A122C71D43F002BAD11 /* Network */ = {
 			isa = PBXGroup;
