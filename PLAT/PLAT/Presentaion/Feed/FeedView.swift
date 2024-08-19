@@ -12,8 +12,7 @@ struct FeedView: View {
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
         track: MockDataBuilder.track,
-        trackService: StubTrackService(),
-        musicController: StubMusicController()
+        trackService: StubTrackService()
     )
     
     var body: some View {
@@ -222,7 +221,7 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    trackDetailUseCase.effect(.togglePlayback)
+                    // TODO: MusicControlUseCase 재생 토글
                 } label: {
                     Image(systemName: isPaused ? "play.fill" : "pause.fill")
                         .foregroundColor(.gray6)
@@ -397,7 +396,7 @@ private struct FeedActionView: View {
             }
             
             Button {
-                trackDetailUseCase.effect(.repeatPlayback)
+                // TODO: MusicControlUseCase 다시 재생(근데 얘는 없어져야함)
             } label: {
                 Image(systemName: "repeat")
                     .foregroundColor(.white)
