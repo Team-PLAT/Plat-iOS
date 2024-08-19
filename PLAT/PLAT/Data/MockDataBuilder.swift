@@ -80,6 +80,58 @@ struct MockDataBuilder {
         )
     }
     
+    static var musicList: [Music] {
+        return [
+            Music(
+                isrc: "GBAYE0500605",
+                title: "Fix you",
+                artist: "ColdPlay",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
+                duration: 295533
+            ),
+            
+            Music(
+                isrc: "KRA382001452",
+                title: "Flowering",
+                artist: "LUCY",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2735b558b31b6ba531d48f46007",
+                duration: 251293
+            ),
+            
+            Music(
+                isrc: "GBAYE0500605",
+                title: "Fix you",
+                artist: "ColdPlay",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
+                duration: 295533
+            ),
+            
+            Music(
+                isrc: "GBAYE0500605",
+                title: "Fix you",
+                artist: "ColdPlay",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
+                duration: 295533
+            ),
+            
+            Music(
+                isrc: "GBAYE0500605",
+                title: "Fix you",
+                artist: "ColdPlay",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
+                duration: 295533
+            ),
+            
+            Music(
+                isrc: "GBAYE0500605",
+                title: "Fix you",
+                artist: "ColdPlay",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
+                duration: 295533
+            )
+        ]
+    }
+    
     /// Mock Music 데이터를 반환합니다.
     static var music: Music {
         return Music(

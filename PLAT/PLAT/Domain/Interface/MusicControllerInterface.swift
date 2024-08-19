@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 protocol MusicControllerInterface {
-    func play()
+    func setup(_ music: Music)
+    func play(_ music: Music)
     func pause()
-    func previous()
-    func next()
+    func resume()
     func repeatPlayback()
+    func currentDuration() -> AnyPublisher<Double, Error>
 }

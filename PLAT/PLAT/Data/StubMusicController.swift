@@ -6,13 +6,23 @@
 //
 
 import Foundation
+import Combine
 
 struct StubMusicController: MusicControllerInterface {
-    func play() {
+    
+    func setup(_ music: Music) {
+        print(#function)
+    }
+    
+    func play(_ music: Music) {
         print(#function)
     }
     
     func pause() {
+        print(#function)
+    }
+    
+    func resume() {
         print(#function)
     }
     
@@ -26,5 +36,9 @@ struct StubMusicController: MusicControllerInterface {
     
     func repeatPlayback() {
         print(#function)
+    }
+    
+    func currentDuration() -> AnyPublisher<Double, Error> {
+        return Empty<Double, Error>().eraseToAnyPublisher()
     }
 }

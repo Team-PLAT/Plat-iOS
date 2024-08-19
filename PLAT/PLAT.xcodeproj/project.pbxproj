@@ -62,6 +62,13 @@
 		820836992C34064400F6D0CF /* StreamAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836982C34064400F6D0CF /* StreamAccount.swift */; };
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
+		826933362C71C8B60004E0B5 /* SpotifyMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */; };
+		826933392C71CA2D0004E0B5 /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 826933382C71CA2D0004E0B5 /* SpotifyiOS */; };
+		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
+		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
+		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
+		826933492C7207310004E0B5 /* Helper+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933482C7207310004E0B5 /* Helper+Log.swift */; };
+		8269334C2C720A5C0004E0B5 /* SpotifyTrackDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269334B2C720A5C0004E0B5 /* SpotifyTrackDTO.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
 		82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */; };
 		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
@@ -151,6 +158,12 @@
 		820836982C34064400F6D0CF /* StreamAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAccount.swift; sourceTree = "<group>"; };
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
+		826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyMusicController.swift; sourceTree = "<group>"; };
+		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
+		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		826933482C7207310004E0B5 /* Helper+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Log.swift"; sourceTree = "<group>"; };
+		8269334B2C720A5C0004E0B5 /* SpotifyTrackDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTrackDTO.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicController.swift; sourceTree = "<group>"; };
 		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
@@ -190,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */,
+				826933392C71CA2D0004E0B5 /* SpotifyiOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +260,7 @@
 				796465992C3A5C2400F6DC2D /* Helper+Preview.swift */,
 				51B4784F2C4379E00008EB37 /* Helper+Text.swift */,
 				DFD110D52C4644D500696FCB /* Helper+Lottie.swift */,
+				826933482C7207310004E0B5 /* Helper+Log.swift */,
 				DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */,
 			);
 			path = Helper;
@@ -337,6 +352,8 @@
 			isa = PBXGroup;
 			children = (
 				793278082C2D014500F433F5 /* PLATApp.swift */,
+				826933442C71FF5B0004E0B5 /* AppDelegate.swift */,
+				826933462C71FFE20004E0B5 /* SceneDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -382,6 +399,7 @@
 		820836742C33FFFC00F6D0CF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8269334A2C720A510004E0B5 /* DTO */,
 				820836762C34001D00F6D0CF /* LoginService.swift */,
 				793509BE2C39324A0098B073 /* StubUserService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
@@ -390,6 +408,7 @@
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
+				826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -403,6 +422,7 @@
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
 				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
+				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -457,6 +477,14 @@
 				79A09D4F2C391C4A006F14F4 /* Tab.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		8269334A2C720A510004E0B5 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				8269334B2C720A5C0004E0B5 /* SpotifyTrackDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		82C06F522C6DD961000FEE3A /* TrackDetail */ = {
@@ -540,6 +568,7 @@
 			name = PLAT;
 			packageProductDependencies = (
 				518B4EEF2C3EE27F005FF553 /* Lottie */,
+				826933382C71CA2D0004E0B5 /* SpotifyiOS */,
 			);
 			productName = PLAT;
 			productReference = 793278052C2D014500F433F5 /* PLAT.app */;
@@ -572,6 +601,7 @@
 			packageReferences = (
 				827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				826933372C71CA2D0004E0B5 /* XCRemoteSwiftPackageReference "ios-sdk" */,
 			);
 			productRefGroup = 793278062C2D014500F433F5 /* Products */;
 			projectDirPath = "";
@@ -622,6 +652,7 @@
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
 				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
+				826933362C71C8B60004E0B5 /* SpotifyMusicController.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
@@ -629,6 +660,7 @@
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
+				826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
 				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
@@ -652,6 +684,7 @@
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
+				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
@@ -662,6 +695,7 @@
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
 				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
+				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
 				79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,
@@ -676,11 +710,13 @@
 				79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */,
 				82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
+				8269334C2C720A5C0004E0B5 /* SpotifyTrackDTO.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
+				826933492C7207310004E0B5 /* Helper+Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,7 +860,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -841,7 +877,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -858,7 +894,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -875,7 +911,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -915,6 +951,14 @@
 				minimumVersion = 4.5.0;
 			};
 		};
+		826933372C71CA2D0004E0B5 /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/spotify/ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
@@ -930,6 +974,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		826933382C71CA2D0004E0B5 /* SpotifyiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 826933372C71CA2D0004E0B5 /* XCRemoteSwiftPackageReference "ios-sdk" */;
+			productName = SpotifyiOS;
 		};
 		827A1DDD2C2D9B0D00C40046 /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
