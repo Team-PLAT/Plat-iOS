@@ -376,7 +376,6 @@
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
-				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 				826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */,
 			);
 			path = Data;
@@ -391,6 +390,7 @@
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
 				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
+				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";

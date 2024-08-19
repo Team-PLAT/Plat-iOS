@@ -20,6 +20,8 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
     
     private var accessToken: String?
     
+    private var subscriptCompletion: (() -> Void)?
+    
     private var connectCancellable: AnyCancellable?
     private var disconnectCancellable: AnyCancellable?
     
@@ -59,9 +61,12 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
 extension SpotifyMusicController {
     
     /// 기본 설정을 진행합니다.
-    func setup() {
+    func setup(_ music: Music) {
         if !appRemote.isConnected {
             authorize()
+            subscriptCompletion = { [weak self] in
+                self?.play(music)
+            }
         }
     }
     
@@ -95,10 +100,10 @@ extension SpotifyMusicController {
         //
     }
     
-    func currentDuration() -> AnyPublisher<Double, Never> {
+    func currentDuration() -> AnyPublisher<Double, Error> {
         return Timer.publish(every: 0.5, on: .main, in: .common)
             .autoconnect()
-            .flatMap { [weak self] _ -> Future<Double, Never> in
+            .flatMap { [weak self] _ -> Future<Double, Error> in
                 return Future { promise in
                     self?.appRemote.playerAPI?.getPlayerState { result, error in
                         if let error = error {
@@ -106,7 +111,7 @@ extension SpotifyMusicController {
                                 title: "현재 재생 중인 음악 position 값 불러오기",
                                 message: "PlayerState 검색 실패: \(error.localizedDescription)"
                             )
-                            promise(.success(0))
+                            promise(.failure(error))
                         } else if let playerState = result as? SPTAppRemotePlayerState {
                             let playbackPostion = Double(playerState.playbackPosition)
                             promise(.success(playbackPostion / 1000))
@@ -157,27 +162,42 @@ extension SpotifyMusicController {
         
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
-            let decoder = JSONDecoder()
-            let decodeData = try decoder.decode(SpotifyTrackDTO.self, from: data)
-            guard let uri = decodeData.tracks.items.first?.uri else {
+            print("데이터!: \(data)\n")
+            
+            do {
+                let decoder = JSONDecoder()
+                let decodeData = try decoder.decode(SpotifyTrackDTO.self, from: data)
+                
+                guard let uri = decodeData.tracks.items.first?.uri else {
+                    Log.fail(
+                        title: "ISRC 값을 이용한 URI 반환",
+                        message: "값 없음!"
+                    )
+                    return nil
+                }
+                
+                Log.success(
+                    title: "ISRC 값을 이용한 URI 반환",
+                    message: "URI: \(uri)"
+                )
+                
+                return uri
+                
+            } catch {
                 Log.fail(
                     title: "ISRC 값을 이용한 URI 반환",
-                    message: "값 없음!"
+                    message: "Decoding 실패"
                 )
-                return nil
             }
             
-            Log.success(
-                title: "ISRC 값을 이용한 URI 반환",
-                message: "URI: \(uri)"
-            )
+            return nil
             
-            return uri
         } catch {
             Log.fail(
                 title: "ISRC 값을 이용한 URI 반환",
-                message: "Decoding 실패"
+                message: "URLSession 실패: \(error.localizedDescription)"
             )
+            
             return nil
         }
     }
@@ -241,6 +261,8 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
                     title: "Spotify Player State",
                     message: "구독 성공"
                 )
+                
+                self.subscriptCompletion?()
             }
         }
     }

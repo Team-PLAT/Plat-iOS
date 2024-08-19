@@ -9,10 +9,10 @@ import Foundation
 import Combine
 
 protocol MusicControllerInterface {
-    func setup()
+    func setup(_ music: Music)
     func play(_ music: Music)
     func pause()
     func resume()
     func repeatPlayback()
-    func currentDuration() -> AnyPublisher<Double, Never>
+    func currentDuration() -> AnyPublisher<Double, Error>
 }

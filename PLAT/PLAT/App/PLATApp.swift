@@ -21,7 +21,7 @@ struct PLATApp: App {
         WindowGroup {
             TrackDetailView()
                 .onAppear {
-                    musicControlUseCase.effect(.setup)
+                    musicControlUseCase.effect(.setup(musis: MockDataBuilder.musicList[1]))
                 }
         }
         .environment(musicControlUseCase)

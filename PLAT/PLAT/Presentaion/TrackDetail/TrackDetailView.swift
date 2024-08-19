@@ -34,7 +34,6 @@ struct TrackDetailView: View {
                 MusicControllerView()
                     .padding(.top, 24)
                 
-                // TODO: CurrentDuration 수정
                 MusicSeekBar(
                     currentDuration: musicControlerUseCase.state.currentDuration,
                     totalDuration: music.duration

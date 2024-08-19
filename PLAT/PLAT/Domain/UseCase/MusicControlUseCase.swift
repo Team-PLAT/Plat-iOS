@@ -42,21 +42,21 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
-        case setup
-        case play
+        case setup(musis: Music)
+        case play(music: Music)
         case togglePlayback
     }
     
     func effect(_ effect: Effect) {
         switch effect {
-        case .setup:
-            musicController.setup()
+        case let .setup(music):
+            musicController.setup(music)
             fetchCurrentPlaybackPosition()
             
-        case .play:
+        case let .play(music):
             cancelPublisher()
             state.isPaused = false
-            musicController.play(MockDataBuilder.music)
+            musicController.play(music)
             fetchCurrentPlaybackPosition()
             
         case .togglePlayback:
@@ -79,8 +79,11 @@ extension MusicControlUseCase {
     
     private func fetchCurrentPlaybackPosition() {
         musicController.currentDuration()
-            .sink { [weak self] currentPosition in
-                self?.state.currentDuration = currentPosition
+            .sink { [weak self] error in
+                print(error)
+                self?.cancelPublisher()
+            } receiveValue: {
+                self.state.currentDuration = $0
             }
             .store(in: &cancellables)
     }
