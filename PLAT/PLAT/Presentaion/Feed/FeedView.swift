@@ -22,7 +22,6 @@ struct FeedView: View {
                 .padding(.leading, 18)
                 .padding(.bottom, 20)
             ScrollView {
-                
                 ForEach(MockDataBuilder.feedTrack) { track in
                     FeedRowView(track: track)
                 }
@@ -42,46 +41,48 @@ private struct FeedRowView: View {
     let track: Track
     
     var body: some View {
-        HStack(alignment: .top, spacing: 6) {
-            FeedProfileImage(track: track)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                HStack(spacing: 0) {
-                    VStack(alignment: . leading, spacing: 2) {
-                        FeedHeaderView(track: track)
-                        FeedLocationView()
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 6) {
+                FeedProfileImage(track: track)
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 0) {
+                        VStack(alignment: . leading, spacing: 2) {
+                            FeedHeaderView(track: track)
+                            FeedLocationView()
+                        }
+                        .padding(.trailing, 96)
+                        
+                        Button {
+                            // 신고 알럿 창 띄우기
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .foregroundColor(.white)
+                                .frame(width: 20, height: 20)
+                                .padding(.bottom, 8)
+                        }
                     }
-                    .padding(.trailing, 96)
-                    
-                    Button {
-                        // 신고 알럿 창 띄우기
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .foregroundColor(.white)
-                            .frame(width: 20, height: 20)
-                            .padding(.bottom, 8)
-                    }
-                }
-                .padding(.bottom, 8)
-                
-                FeedPlayer(track: track)
-                    .padding(.bottom, 6)
-                
-                FeedContentImage(track: track)
-                    .padding(.bottom, 6)
-                
-                FeedContentView(track: track)
                     .padding(.bottom, 8)
-                
-                FeedActionView()
-                    .padding(.bottom, 18)
+                    
+                    FeedPlayer(track: track)
+                        .padding(.bottom, 6)
+                    
+                    FeedContentImage(track: track)
+                        .padding(.bottom, 6)
+                    
+                    FeedContentView(track: track)
+                        .padding(.bottom, 8)
+                    
+                    FeedActionView()
+                        .padding(.bottom, 18)
+                }
             }
+            .padding(.top, 18)
+            
+            Rectangle()
+                .foregroundColor(.gray9)
+                .frame(width: UIScreen.main.bounds.width, height: 1)
         }
-        .padding(.top, 18)
-        
-        Rectangle()
-            .foregroundColor(.gray9)
-            .frame(width: 393, height: 1)
     }
 }
 
@@ -99,7 +100,7 @@ private struct FeedProfileImage: View {
     }
     
     private var profileImageUrl: URL? {
-        //        URL(string: trackDetailUseCase.track.platter.profileImageUrl)
+//                URL(string: trackDetailUseCase.track.platter.profileImageUrl)
         URL(string: track.platter.profileImageUrl)
     }
     
@@ -142,7 +143,7 @@ private struct FeedHeaderView: View {
             Circle()
                 .frame(width: 2, height: 2)
             
-            Text(trackDetailUseCase.track.createdDate.monthDayYearFormat)
+            Text(track.createdDate.monthDayYearFormat)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
             
