@@ -140,6 +140,9 @@ private struct MapAddressView: View {
 private struct MapButtonsView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
     @Binding var hasNotifications: Bool
+    @State private var isPlattingSheet = false
+    // TODO: 목 데이터 제거하고 실제 데이터 연결
+    @State private var playlist: Playlist = MockDataBuilder.playlist
     
     var body: some View {
         VStack {
@@ -183,9 +186,10 @@ private struct MapButtonsView: View {
             
             Button {
                 Task {
-                    let playlist = await trackMapUseCase.creatPlatPlaylist(currentLocation: MockDataBuilder.currentLocation)
-                    // TODO: PlatProcessingView로 이동
+                    // TODO: 목 데이터 제거하고 실제 데이터 연결
+                    playlist = await trackMapUseCase.creatPlatPlaylist(currentLocation: MockDataBuilder.currentLocation)
                 }
+                isPlattingSheet.toggle()
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
@@ -202,6 +206,10 @@ private struct MapButtonsView: View {
                             }
                     }
             }
+            .fullScreenCover(isPresented: $isPlattingSheet, content: {
+                PlattingView(playList: $playlist)
+                    .presentationBackground(.black.opacity(0.8))
+            })
         }
     }
 }

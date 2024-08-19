@@ -11,16 +11,16 @@ import SwiftUI
 
 struct MusicIndicator: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlerUseCase
     
     private var isPaused: Bool {
-        trackDetailUseCase.state.isPaused
+        musicControlerUseCase.state.isPaused
     }
     
     var body: some View {
         HStack(spacing: 30) {
             Button {
-                trackDetailUseCase.effect(.playPrevious)
+                // TODO: 이전 음악 재생
             } label: {
                 Image(systemName: "backward.end.fill")
                     .resizable()
@@ -29,16 +29,20 @@ struct MusicIndicator: View {
             }
             
             Button {
-                trackDetailUseCase.effect(.togglePlayback)
+                musicControlerUseCase.effect(.togglePlayback)
             } label: {
                 Image(systemName: isPaused ? "play.fill" : "pause.fill")
                     .resizable()
                     .scaledToFill()
                     .frame(width: 28, height: 28)
+                    .transaction { transaction in
+                        transaction.animation = nil
+                    }
             }
             
             Button {
-                trackDetailUseCase.effect(.playNext)
+                // TODO: 다음 음악 재생
+                // musicControlerUseCase.effect(.play(music: <#T##Music#>))
             } label: {
                 Image(systemName: "forward.end.fill")
                     .resizable()
