@@ -23,6 +23,14 @@ struct TrackDetailView: View {
     
     @State private var isContentSheetPresented = false
     
+    init(track: Track) {
+        self._trackDetailUseCase = State(initialValue: TrackDetailUseCase(
+            track: track,
+            trackService: StubTrackService(),
+            musicController: StubMusicController()
+        ))
+    }
+    
     private var music: Music {
         trackDetailUseCase.track.music
     }
@@ -346,6 +354,6 @@ private struct ProfileContent: View {
             .frame(width: 0)
             .ignoresSafeArea()
         
-        TrackDetailView()
+        TrackDetailView(track: MockDataBuilder.track)
     }
 }

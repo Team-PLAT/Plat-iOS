@@ -154,7 +154,7 @@ struct MockDataBuilder {
     /// Mock trackLocationList 데이터를 반환합니다.
     static var locationList: [Location] {
         return [
-            Location(latitude: 36.014077390156416, longitude: 129.3258820318646),
+            Location(latitude: 36.01032332879186, longitude: 129.32943400918083),
             Location(latitude: 36.01564775556712, longitude: 129.32295876966293),
             Location(latitude: 36.01867120920973, longitude: 129.32409007297255),
             Location(latitude: 36.01695052119649, longitude: 129.3208232860788),
