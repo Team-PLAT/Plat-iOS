@@ -11,16 +11,19 @@ import Foundation
 final class TrackDetailUseCase {
     
     private(set) var state: State
+    private(set) var feedTrack: [Track]
     private(set) var track: Track
     
     private var trackService: TrackServiceInterface
     private var musicController: MusicControllerInterface
     
     init(
+        feedTrack: [Track],
         track: Track,
         trackService: TrackServiceInterface,
         musicController: MusicControllerInterface
     ) {
+        self.feedTrack = feedTrack
         self.track = track
         self.trackService = trackService
         self.musicController = musicController

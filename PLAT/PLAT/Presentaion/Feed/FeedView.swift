@@ -10,12 +10,11 @@ import SwiftUI
 struct FeedView: View {
     
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+        feedTrack: MockDataBuilder.feedTrack,
         track: MockDataBuilder.track,
         trackService: StubTrackService(),
         musicController: StubMusicController()
     )
-    
-    @State private var isContentSheetPresented = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -24,12 +23,9 @@ struct FeedView: View {
                 .padding(.bottom, 20)
             ScrollView {
                 
-                //                ForEach(MockDataBuilder.track) {
-                //                    // TODO: track id에 따라 FeedRowView() 그려지게 변경
-                //                }
-                FeedRowView()
-                FeedRowView()
-                FeedRowView()
+                ForEach(MockDataBuilder.feedTrack) { track in
+                    FeedRowView(track: track)
+                }
             }
         }
         .environment(trackDetailUseCase)
@@ -42,14 +38,17 @@ struct FeedView: View {
 // MARK: - FeedRowView
 
 private struct FeedRowView: View {
+    
+    let track: Track
+    
     var body: some View {
         HStack(alignment: .top, spacing: 6) {
-            FeedProfileImage()
+            FeedProfileImage(track: track)
             
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
                     VStack(alignment: . leading, spacing: 2) {
-                        FeedHeaderView()
+                        FeedHeaderView(track: track)
                         FeedLocationView()
                     }
                     .padding(.trailing, 96)
@@ -65,13 +64,13 @@ private struct FeedRowView: View {
                 }
                 .padding(.bottom, 8)
                 
-                FeedPlayer()
+                FeedPlayer(track: track)
                     .padding(.bottom, 6)
                 
-                FeedContentImage()
+                FeedContentImage(track: track)
                     .padding(.bottom, 6)
                 
-                FeedContentView()
+                FeedContentView(track: track)
                     .padding(.bottom, 8)
                 
                 FeedActionView()
@@ -90,14 +89,18 @@ private struct FeedRowView: View {
 
 private struct FeedProfileImage: View {
     
+    let track: Track
+    
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     private var platter: Platter {
-        trackDetailUseCase.track.platter
+        track.platter
+        //        trackDetailUseCase.track.platter
     }
     
     private var profileImageUrl: URL? {
-        URL(string: trackDetailUseCase.track.platter.profileImageUrl)
+        //        URL(string: trackDetailUseCase.track.platter.profileImageUrl)
+        URL(string: track.platter.profileImageUrl)
     }
     
     var body: some View {
@@ -121,10 +124,13 @@ private struct FeedProfileImage: View {
 
 private struct FeedHeaderView: View {
     
+    let track: Track
+    
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     private var platter: Platter {
-        trackDetailUseCase.track.platter
+        //        trackDetailUseCase.track.platter
+        track.platter
     }
     
     var body: some View {
@@ -170,10 +176,13 @@ private struct FeedLocationView: View {
 
 private struct FeedPlayer: View {
     
+    let track: Track
+    
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     private var music: Music {
-        trackDetailUseCase.track.music
+        //        trackDetailUseCase.track.music
+        track.music
     }
     
     private var isPaused: Bool {
@@ -192,7 +201,7 @@ private struct FeedPlayer: View {
                     .frame(width: 56, height: 56)
                     .foregroundColor(.clear)
                     .background(
-                        FeedAlbumImage()
+                        FeedAlbumImage(track: track)
                     )
                     .cornerRadius(8, corners: [.topLeft, .bottomLeft])
                     .padding(.trailing, 8)
@@ -229,10 +238,13 @@ private struct FeedPlayer: View {
 
 private struct FeedAlbumImage: View {
     
+    let track: Track
+    
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     private var albumImageUrl: URL? {
-        URL(string: trackDetailUseCase.track.music.albumImageUrl)
+        //        URL(string: trackDetailUseCase.track.music.albumImageUrl)
+        URL(string: track.music.albumImageUrl)
     }
     
     var body: some View {
@@ -254,25 +266,31 @@ private struct FeedAlbumImage: View {
 // MARK: - FeedContentImage
 
 private struct FeedContentImage: View {
+    let track: Track
     
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     private var contentImageUrl: URL? {
-        URL(string: trackDetailUseCase.track.imageUrl ?? "")}
+        //        URL(string: trackDetailUseCase.track.imageUrl ?? "")
+        URL(string: track.imageUrl ?? "")
+    }
     
     var body: some View {
-        // TODO: content에 이미지가 없을 때 분기처리
-        AsyncImage(url: contentImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 311, height: 311)
-                    .clipShape(Rectangle())
-                    .cornerRadius(14)
-            } else {
-                EmptyView()
+        if contentImageUrl != nil {
+            AsyncImage(url: contentImageUrl) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 311, height: 311)
+                        .clipShape(Rectangle())
+                        .cornerRadius(14)
+                } else {
+                    EmptyView()
+                }
             }
+        } else {
+            EmptyView()
         }
     }
 }
@@ -281,13 +299,17 @@ private struct FeedContentImage: View {
 
 private struct FeedContentView: View {
     
+    let track: Track
+    
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
     @State private var isLimit: Bool?
     @State private var isExpended: Bool = false
     
     private var text: String? {
-        trackDetailUseCase.track.content ?? "" }
+        //        trackDetailUseCase.track.content ?? ""
+        track.content ?? ""
+    }
     
     private func calculateLimit() -> some View {
         ViewThatFits(in: .vertical) {
@@ -310,32 +332,36 @@ private struct FeedContentView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
-            if isExpended {
-                Text(text ?? "")
-                    .font(.Body.body5)
-                    .foregroundColor(.white)
-                    .lineLimit(nil)
-                    .background(calculateLimit())
-                    .frame(width: 311)
-            } else {
-                Text(text ?? "")
-                    .font(.Body.body5)
-                    .foregroundColor(.white)
-                    .lineLimit(2)
-                    .background(calculateLimit())
-                    .frame(width: 276)
-                
-                if isLimit == true {
-                    Text("더 보기")
-                        .foregroundColor(.platPurple)
+        if text != "" {
+            HStack(spacing: 0) {
+                if isExpended {
+                    Text(text ?? "")
                         .font(.Body.body5)
-                        .padding(.top, 20)
-                        .onTapGesture {
-                            self.isExpended.toggle()
-                        }
+                        .foregroundColor(.white)
+                        .lineLimit(nil)
+                        .background(calculateLimit())
+                        .frame(width: 311, alignment: .leading)
+                } else {
+                    Text(text ?? "")
+                        .font(.Body.body5)
+                        .foregroundColor(.white)
+                        .lineLimit(2)
+                        .background(calculateLimit())
+                        .frame(width: 276, alignment: .leading)
+                    
+                    if isLimit == true {
+                        Text("더 보기")
+                            .foregroundColor(.platPurple)
+                            .font(.Body.body5)
+                            .padding(.top, 20)
+                            .onTapGesture {
+                                self.isExpended.toggle()
+                            }
+                    }
                 }
             }
+        } else {
+            EmptyView()
         }
     }
 }
