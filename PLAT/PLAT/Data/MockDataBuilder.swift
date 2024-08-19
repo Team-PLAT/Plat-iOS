@@ -30,6 +30,42 @@ struct MockDataBuilder {
         }
     }
     
+    /// Mock feedTrack 데이터를 반환합니다.
+    static var feedTrack: [Track] {
+        return [
+            Track(
+                music: music,
+                location: currentLocation,
+                platter: friend,
+                content: "멀보냐능!자고싶다자고싶다 졸려 엥엥엥에에에엥 방학을 주라",
+                imageUrl: "",
+                createdDate: .now,
+                isLike: true,
+                isReported: false
+            ),
+            Track(
+                music: music,
+                location: currentLocation,
+                platter: user,
+                content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
+                imageUrl: "https://rtlimages.apple.com/cmc/dieter/store/16_9/R692.png?resize=672:378&output-format=jpg&output-quality=85&interpolation=progressive-bicubic",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
+                music: music,
+                location: currentLocation,
+                platter: friend,
+                content: "",
+                imageUrl: "",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            )
+        ]
+    }
+
     /// Mock track 데이터를 반환합니다.
     static var track: Track {
         return Track(

@@ -11,14 +11,17 @@ import Foundation
 final class TrackDetailUseCase {
     
     private(set) var state: State
+    private(set) var feedTrack: [Track]
     private(set) var track: Track
     
     private var trackService: TrackServiceInterface
     
     init(
+        feedTrack: [Track],
         track: Track,
         trackService: TrackServiceInterface
     ) {
+        self.feedTrack = feedTrack
         self.track = track
         self.trackService = trackService
         

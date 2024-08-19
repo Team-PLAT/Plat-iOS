@@ -19,10 +19,7 @@ struct PLATApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TrackDetailView()
-                .onAppear {
-                    musicControlUseCase.effect(.setup(musis: MockDataBuilder.musicList[1]))
-                }
+            OnboardingView()
         }
         .environment(musicControlUseCase)
     }

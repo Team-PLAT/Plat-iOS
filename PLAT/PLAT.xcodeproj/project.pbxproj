@@ -10,6 +10,7 @@
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
+		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
@@ -83,18 +84,28 @@
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
 		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
+		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
+		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
 		DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCB2C6C959F00D5252B /* Music.swift */; };
 		DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCD2C6C95FD00D5252B /* Location.swift */; };
 		DFDF9DD22C6C989200D5252B /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DD12C6C989200D5252B /* Track.swift */; };
 		DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DD32C6C98FF00D5252B /* Playlist.swift */; };
 		DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDFAE332C43945600DE1EEB /* AuthType.swift */; };
+		DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */; };
+		DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A152C71E37E002BAD11 /* BaseResponse.swift */; };
+		DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */; };
+		DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */; };
+		DFE27A202C71E78F002BAD11 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A1F2C71E78F002BAD11 /* Config.swift */; };
+		DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */; };
+		DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -168,6 +179,8 @@
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
 		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
+		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
 		DFD110D52C4644D500696FCB /* Helper+Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Lottie.swift"; sourceTree = "<group>"; };
 		DFDF9DCB2C6C959F00D5252B /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
@@ -175,6 +188,13 @@
 		DFDF9DD12C6C989200D5252B /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		DFDF9DD32C6C98FF00D5252B /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		DFDFAE332C43945600DE1EEB /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
+		DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		DFE27A152C71E37E002BAD11 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedService.swift; sourceTree = "<group>"; };
+		DFE27A1D2C71E779002BAD11 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		DFE27A1F2C71E78F002BAD11 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedResultDto.swift; sourceTree = "<group>"; };
+		DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailDto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +217,14 @@
 				51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */,
 			);
 			path = Lotties;
+			sourceTree = "<group>";
+		};
+		5151BEA92C71EAB5001DA80F /* Platting */ = {
+			isa = PBXGroup;
+			children = (
+				5151BEAA2C71EB73001DA80F /* PlattingView.swift */,
+			);
+			path = Platting;
 			sourceTree = "<group>";
 		};
 		51F433332C34115900FAFD14 /* Fonts */ = {
@@ -233,6 +261,7 @@
 				51B4784F2C4379E00008EB37 /* Helper+Text.swift */,
 				DFD110D52C4644D500696FCB /* Helper+Lottie.swift */,
 				826933482C7207310004E0B5 /* Helper+Log.swift */,
+				DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -269,6 +298,7 @@
 				51F433472C3411ED00FAFD14 /* Info.plist */,
 				820836702C33FFAE00F6D0CF /* App */,
 				820836732C33FFF500F6D0CF /* Domain */,
+				DFE27A122C71D43F002BAD11 /* Network */,
 				820836742C33FFFC00F6D0CF /* Data */,
 				820836712C33FFD000F6D0CF /* Presentaion */,
 				51F433482C34138600FAFD14 /* Helper */,
@@ -333,10 +363,12 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
+				5151BEA92C71EAB5001DA80F /* Platting */,
 				790AF0682C6DD13F0005FA9A /* TrackMap */,
 				82C06F522C6DD961000FEE3A /* TrackDetail */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
+				DFE27A2F2C721DC7002BAD11 /* Feed */,
 			);
 			path = Presentaion;
 			sourceTree = "<group>";
@@ -463,6 +495,60 @@
 			path = TrackDetail;
 			sourceTree = "<group>";
 		};
+		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
+			);
+			path = Feed;
+      sourceTree = "<group>";
+		};
+		DFE27A122C71D43F002BAD11 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */,
+				DFE27A232C720305002BAD11 /* Service */,
+				DFE27A262C720467002BAD11 /* Dto */,
+				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
+				DFE27A1D2C71E779002BAD11 /* Config.xcconfig */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DFE27A232C720305002BAD11 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		DFE27A242C720315002BAD11 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
+				DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		DFE27A252C720457002BAD11 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		DFE27A262C720467002BAD11 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A242C720315002BAD11 /* Response */,
+				DFE27A252C720457002BAD11 /* Request */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -536,6 +622,7 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
+				DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -559,6 +646,9 @@
 			files = (
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
+				DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */,
+				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
+				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
 				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
@@ -566,11 +656,13 @@
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
+				DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
+				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				793509BF2C39324A0098B073 /* StubUserService.swift in Sources */,
@@ -584,14 +676,17 @@
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
 				82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */,
 				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
+				DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
+				DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
+				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
 				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
@@ -617,6 +712,7 @@
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				8269334C2C720A5C0004E0B5 /* SpotifyTrackDTO.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
+				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
@@ -636,6 +732,7 @@
 /* Begin XCBuildConfiguration section */
 		793278112C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -699,6 +796,7 @@
 		};
 		793278122C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

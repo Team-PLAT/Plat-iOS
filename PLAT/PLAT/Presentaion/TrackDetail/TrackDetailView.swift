@@ -16,6 +16,7 @@ struct TrackDetailView: View {
     // TODO: 이후 상위에서 주입 받기
     // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+        feedTrack: MockDataBuilder.feedTrack,
         track: MockDataBuilder.track,
         trackService: StubTrackService()
     )
