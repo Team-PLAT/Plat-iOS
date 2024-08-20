@@ -127,8 +127,12 @@ extension SpotifyMusicController {
             .eraseToAnyPublisher()
     }
     
-    func movePosition(to duration: Double) {
-        self.appRemote.playerAPI?.seek(toPosition: Int(duration * 1000))
+    func movePosition(to duration: Double, with isPaused: Bool) {
+        self.appRemote.playerAPI?.seek(toPosition: Int(duration * 1000)) { _, _ in
+            if isPaused {
+                self.appRemote.playerAPI?.pause()
+            }
+        }
     }
 }
 
@@ -295,6 +299,7 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
         didFailConnectionAttemptWithError error: (any Error)?
     ) {
         print("디드 디스코넥션 어템트 윗 에러")
+        // TODO: 이때는 연결이 완전히 끊긴 것임. 이때 어떻게 처리해야할지 고민하기
     }
     
     func appRemote(
@@ -302,7 +307,7 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
         didDisconnectWithError error: (any Error)?
     ) {
         print("디드 디스코넥트 윗 에러")
-        appRemote.connect()
+        // TODO: 이때는 연결이 완전히 끊긴 것임. 이때 어떻게 처리해야할지 고민하기
     }
 }
 

@@ -82,8 +82,10 @@ extension MusicControlUseCase {
             cancelPublisher()
             
         case .endMovePosition:
-            musicController.movePosition(to: currentDuration)
-            fetchCurrentPlaybackPosition()
+            musicController.movePosition(to: currentDuration, with: state.isPaused)
+            if !state.isPaused {
+                fetchCurrentPlaybackPosition()
+            }
         }
     }
 }

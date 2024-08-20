@@ -42,7 +42,7 @@ struct StubMusicController: MusicControllerInterface {
         return Empty<Double, Error>().eraseToAnyPublisher()
     }
     
-    func movePosition(to duration: Double) {
+    func movePosition(to duration: Double, with isPaused: Bool) {
         print(#function)
     }
 }

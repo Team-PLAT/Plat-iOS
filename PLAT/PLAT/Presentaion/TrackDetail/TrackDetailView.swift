@@ -61,6 +61,7 @@ struct TrackDetailView: View {
         .background(.black.opacity(0.6))
         .environment(trackUseCase)
         .onAppear {
+            // TODO: 전달 받은 ISRC 값 넣기
             musicControlUseCase.effect(.setup(isrc: MockDataBuilder.musicList[1].isrc))
         }
         .onTapGesture {
