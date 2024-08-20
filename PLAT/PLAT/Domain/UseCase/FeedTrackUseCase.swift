@@ -1,5 +1,5 @@
 //
-//  FeedViewUseCase.swift
+//  FeedTrackUseCase.swift
 //  PLAT
 //
 //  Created by 조세연 on 8/20/24.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-final class FeedViewUseCase {
+final class FeedTrackUseCase {
     
     private(set) var state: State
     private(set) var feedTrack: [Track]
@@ -35,7 +35,7 @@ final class FeedViewUseCase {
 
 // MARK: - State
 
-extension FeedViewUseCase {
+extension FeedTrackUseCase {
     
     struct State {
         var place: Place
@@ -45,13 +45,13 @@ extension FeedViewUseCase {
 
 // MARK: - Effect
 
-extension FeedViewUseCase {
+extension FeedTrackUseCase {
     
     enum FeedEffect {
-        case likeTrack(at: Int)
-        case addToPlaylist(at: Int, playlistId: String)
-        case deleteTrack(at: Int)
-        case reportTrack(at: Int)
+        case likeTrack(index: Int)
+        case addToPlaylist(index: Int, playlistId: String)
+        case deleteTrack(index: Int)
+        case reportTrack(index: Int)
     }
     
     func effect(_ effect: FeedEffect) {

@@ -87,7 +87,7 @@
 		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
-		DF6DC9952C7434EA004A23F7 /* FeedViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9942C7434EA004A23F7 /* FeedViewUseCase.swift */; };
+		DF6DC9952C7434EA004A23F7 /* FeedTrackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */; };
 		DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */; };
 		DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
@@ -186,7 +186,7 @@
 		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
-		DF6DC9942C7434EA004A23F7 /* FeedViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewUseCase.swift; sourceTree = "<group>"; };
+		DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackUseCase.swift; sourceTree = "<group>"; };
 		DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackService.swift; sourceTree = "<group>"; };
 		DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackServiceInterface.swift; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
@@ -432,8 +432,8 @@
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
 				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
-				DF6DC9942C7434EA004A23F7 /* FeedViewUseCase.swift */,
 				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
+				DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -659,7 +659,7 @@
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */,
-				DF6DC9952C7434EA004A23F7 /* FeedViewUseCase.swift in Sources */,
+				DF6DC9952C7434EA004A23F7 /* FeedTrackUseCase.swift in Sources */,
 				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
 				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
