@@ -394,15 +394,15 @@ private struct FeedActionView: View {
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 220)
             }
-            
-            Button {
-                // TODO: MusicControlUseCase 다시 재생(근데 얘는 없어져야함)
-            } label: {
-                Image(systemName: "repeat")
-                    .foregroundColor(.white)
-                    .frame(width: 20, height: 20)
-                    .padding(.trailing, 18)
-            }
+    
+//            Button {
+//                // TODO: MusicControlUseCase 다시 재생(근데 얘는 없어져야함)
+//            } label: {
+//                Image(systemName: "repeat")
+//                    .foregroundColor(.white)
+//                    .frame(width: 20, height: 20)
+//                    .padding(.trailing, 18)
+//            }
         }
     }
 }

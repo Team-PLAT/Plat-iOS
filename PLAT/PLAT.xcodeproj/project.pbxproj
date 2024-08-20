@@ -87,6 +87,9 @@
 		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
+		DF6DC9952C7434EA004A23F7 /* FeedViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9942C7434EA004A23F7 /* FeedViewUseCase.swift */; };
+		DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */; };
+		DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
 		DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCB2C6C959F00D5252B /* Music.swift */; };
 		DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCD2C6C95FD00D5252B /* Location.swift */; };
@@ -183,6 +186,9 @@
 		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
+		DF6DC9942C7434EA004A23F7 /* FeedViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewUseCase.swift; sourceTree = "<group>"; };
+		DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackService.swift; sourceTree = "<group>"; };
+		DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackServiceInterface.swift; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
 		DFD110D52C4644D500696FCB /* Helper+Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Lottie.swift"; sourceTree = "<group>"; };
 		DFDF9DCB2C6C959F00D5252B /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
@@ -403,6 +409,7 @@
 			children = (
 				8269334A2C720A510004E0B5 /* DTO */,
 				820836762C34001D00F6D0CF /* LoginService.swift */,
+				DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */,
 				793509BE2C39324A0098B073 /* StubUserService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
@@ -425,6 +432,7 @@
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
 				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
+				DF6DC9942C7434EA004A23F7 /* FeedViewUseCase.swift */,
 				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 			);
 			path = UseCase;
@@ -440,6 +448,7 @@
 				79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */,
 				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
+				DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -498,14 +507,6 @@
 			path = TrackDetail;
 			sourceTree = "<group>";
 		};
-		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
-			);
-			path = Feed;
-      sourceTree = "<group>";
-		};
 		DFE27A122C71D43F002BAD11 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +551,14 @@
 				DFE27A252C720457002BAD11 /* Request */,
 			);
 			path = Dto;
+			sourceTree = "<group>";
+		};
+		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -650,6 +659,7 @@
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */,
+				DF6DC9952C7434EA004A23F7 /* FeedViewUseCase.swift in Sources */,
 				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
 				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
@@ -712,6 +722,7 @@
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
 				79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */,
+				DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */,
 				82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				8269334C2C720A5C0004E0B5 /* SpotifyTrackDTO.swift in Sources */,
@@ -721,6 +732,7 @@
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
 				826933492C7207310004E0B5 /* Helper+Log.swift in Sources */,
+				DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,7 +876,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -882,7 +894,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.crownjoe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -899,7 +911,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = 4QMNM64P9Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -917,7 +929,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.crownjoe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
