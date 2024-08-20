@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 struct StubMusicController: MusicControllerInterface {
+    
     func setup(completion: @escaping () -> Void) {
         print(#function)
     }
@@ -39,5 +40,9 @@ struct StubMusicController: MusicControllerInterface {
     
     func currentDuration() -> AnyPublisher<Double, Error> {
         return Empty<Double, Error>().eraseToAnyPublisher()
+    }
+    
+    func movePosition(to duration: Double) {
+        print(#function)
     }
 }

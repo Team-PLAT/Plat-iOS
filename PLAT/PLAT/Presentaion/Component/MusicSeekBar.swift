@@ -11,24 +11,25 @@ import SwiftUI
 
 struct MusicSeekBar: View {
     
-    @State private var isMoving = false
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @Binding private(set) var currentDuration: Double
+    @State private var isMoving = false
     
     let totalDuration: Double
     
     private var progress: Double {
-        currentDuration / totalDuration
+        musicControlUseCase.currentDuration / totalDuration
     }
     
     private var leftDuration: Double {
-        totalDuration - currentDuration
+        totalDuration - musicControlUseCase.currentDuration
     }
     
     var body: some View {
+        @Bindable var musicControlerUseCase = musicControlUseCase
         VStack(spacing: 12) {
             Slider(
-                value: $currentDuration,
+                value: $musicControlerUseCase.currentDuration,
                 in: 0...totalDuration,
                 onEditingChanged: {
                     isMoving = $0
@@ -38,12 +39,21 @@ struct MusicSeekBar: View {
             .tint(.platPurple)
             
             HStack {
-                Text(currentDuration.musicTimeFormat)
+                Text(musicControlUseCase.currentDuration.musicTimeFormat)
                 Spacer()
                 Text("-\(leftDuration.musicTimeFormat)")
             }
             .font(.Body.body5)
             .foregroundStyle(.gray7)
+        }
+        .onChange(of: isMoving) { _, bool in
+            if bool {
+                print("움직이고 있음")
+                musicControlerUseCase.effect(.startMovePosition)
+            } else {
+                print("움직임 끝남")
+                musicControlerUseCase.effect(.endMovePosition)
+            }
         }
     }
 }
@@ -89,7 +99,6 @@ struct CustomSlider: View {
 
 #Preview {
     MusicSeekBar(
-        currentDuration: .constant(300),
         totalDuration: 365
     )
 }

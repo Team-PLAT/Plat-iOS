@@ -126,6 +126,10 @@ extension SpotifyMusicController {
             }
             .eraseToAnyPublisher()
     }
+    
+    func movePosition(to duration: Double) {
+        self.appRemote.playerAPI?.seek(toPosition: Int(duration * 1000))
+    }
 }
 
 // MARK: - Network Helper
@@ -290,14 +294,15 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
         _ appRemote: SPTAppRemote,
         didFailConnectionAttemptWithError error: (any Error)?
     ) {
-        // print(#function)
+        print("디드 디스코넥션 어템트 윗 에러")
     }
     
     func appRemote(
         _ appRemote: SPTAppRemote,
         didDisconnectWithError error: (any Error)?
     ) {
-        // print(#function)
+        print("디드 디스코넥트 윗 에러")
+        appRemote.connect()
     }
 }
 
@@ -305,6 +310,6 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
 
 extension SpotifyMusicController: SPTAppRemotePlayerStateDelegate {
     func playerStateDidChange(_ playerState: any SPTAppRemotePlayerState) {
-        // print(#function)
+        print("플레이어 상태 변경: \(playerState)")
     }
 }

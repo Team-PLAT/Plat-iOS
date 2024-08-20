@@ -15,4 +15,5 @@ protocol MusicControllerInterface {
     func pause()
     func resume()
     func currentDuration() -> AnyPublisher<Double, Error>
+    func movePosition(to duration: Double)
 }

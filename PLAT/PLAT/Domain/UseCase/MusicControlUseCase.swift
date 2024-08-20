@@ -46,6 +46,8 @@ extension MusicControlUseCase {
         case setup(isrc: String)
         case play(isrc: String)
         case togglePlayback
+        case startMovePosition
+        case endMovePosition
     }
     
     func effect(_ effect: Effect) {
@@ -75,6 +77,13 @@ extension MusicControlUseCase {
             }
             
             state.isPaused.toggle()
+            
+        case .startMovePosition:
+            cancelPublisher()
+            
+        case .endMovePosition:
+            musicController.movePosition(to: currentDuration)
+            fetchCurrentPlaybackPosition()
         }
     }
 }
