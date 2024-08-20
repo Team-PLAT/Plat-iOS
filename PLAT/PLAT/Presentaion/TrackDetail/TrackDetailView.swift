@@ -29,7 +29,7 @@ struct TrackDetailView: View {
                 feedTrack: [track],
                 track: track,
                 trackService: StubTrackService()
-//                ,musicController: StubMusicController()
+                //                ,musicController: StubMusicController()
             )
         )
     }
@@ -40,6 +40,8 @@ struct TrackDetailView: View {
     
     var body: some View {
         ZStack {
+            Background()
+            
             VStack(spacing: 0) {
                 MusicView()
                 
@@ -75,6 +77,23 @@ struct TrackDetailView: View {
                 isContentSheetPresented = false
             }
         }
+    }
+}
+
+// MARK: - Background
+
+private struct Background: View {
+    var body: some View {
+        Group {
+            // TODO: 만약 Track에 이미지가 있다면 다른 이미지로 처리하기
+            Image(.imgTestBackground)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 0)
+
+            Color.black.opacity(0.6)
+        }
+        .ignoresSafeArea()
     }
 }
 
@@ -350,13 +369,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    ZStack {
-        Image(.imgTestBackground)
-            .resizable()
-            .scaledToFill()
-            .frame(width: 0)
-            .ignoresSafeArea()
-        
-        TrackDetailView(track: MockDataBuilder.track)
-    }
+    TrackDetailView(track: MockDataBuilder.track)
+        .environment(MusicControlUseCase(musicController: StubMusicController()))
 }
