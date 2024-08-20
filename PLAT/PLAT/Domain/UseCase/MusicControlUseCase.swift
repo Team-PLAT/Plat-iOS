@@ -16,13 +16,14 @@ final class MusicControlUseCase {
     
     private(set) var state: State
     
+    var currentDuration: Double = 0
+    
     private var cancellables = Set<AnyCancellable>()
     
     init(musicController: MusicControllerInterface) {
         self.musicController = musicController
         self.state = State(
-            isPaused: false,
-            currentDuration: 0
+            isPaused: false
         )
     }
 }
@@ -34,7 +35,6 @@ extension MusicControlUseCase {
     struct State {
         var activeMusic: Music?
         var isPaused: Bool
-        var currentDuration: Double
     }
 }
 
@@ -100,7 +100,7 @@ extension MusicControlUseCase {
                 print(error)
                 self?.cancelPublisher()
             } receiveValue: {
-                self.state.currentDuration = $0
+                self.currentDuration = $0
             }
             .store(in: &cancellables)
     }

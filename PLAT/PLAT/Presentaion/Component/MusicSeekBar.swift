@@ -11,7 +11,10 @@ import SwiftUI
 
 struct MusicSeekBar: View {
     
-    let currentDuration: Double
+    @State private var isMoving = false
+    
+    @Binding private(set) var currentDuration: Double
+    
     let totalDuration: Double
     
     private var progress: Double {
@@ -24,11 +27,15 @@ struct MusicSeekBar: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            ProgressView(value: progress)
-                .tint(.platPurple)
-                .background(.secondary.opacity(0.32))
-                .clipShape(RoundedRectangle(cornerRadius: 100))
-                .scaleEffect(x: 1, y: 1.5, anchor: .center)
+            Slider(
+                value: $currentDuration,
+                in: 0...totalDuration,
+                onEditingChanged: {
+                    isMoving = $0
+                }
+            )
+            .controlSize(.mini)
+            .tint(.platPurple)
             
             HStack {
                 Text(currentDuration.musicTimeFormat)
@@ -41,11 +48,48 @@ struct MusicSeekBar: View {
     }
 }
 
+// MARK: - CustomSlider
+
+struct CustomSlider: View {
+    @Binding var value: Double
+    let range: ClosedRange<Double>
+    let thumbSize: CGFloat
+    
+    var body: some View {
+        GeometryReader { geometry in
+            let sliderWidth = geometry.size.width
+            let thumbPosition = (value - range.lowerBound) / (range.upperBound - range.lowerBound) * sliderWidth
+
+            ZStack(alignment: .leading) {
+                // 슬라이더의 트랙
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 4)
+                
+                // 핸들 (Thumb)
+                Circle()
+                    .frame(width: thumbSize, height: thumbSize)
+                    .foregroundColor(.blue)
+                    .offset(x: thumbPosition - thumbSize / 2)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { drag in
+                                let newValue = min(max(0, drag.location.x / sliderWidth), 1) * (range.upperBound - range.lowerBound) + range.lowerBound
+                                value = newValue
+                            }
+                    )
+            }
+            .padding(.horizontal, thumbSize / 2)
+        }
+        .frame(height: thumbSize)
+    }
+}
+
 // MARK: - Preview
 
 #Preview {
     MusicSeekBar(
-        currentDuration: 300,
+        currentDuration: .constant(300),
         totalDuration: 365
     )
 }

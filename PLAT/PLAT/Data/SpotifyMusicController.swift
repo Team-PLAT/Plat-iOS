@@ -22,6 +22,8 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
     
     private var accessToken: String?
     
+    private var isStreaming = false
+    
     private var subscriptCompletion: (() -> Void)?
     
     private var connectCancellable: AnyCancellable?
@@ -263,6 +265,7 @@ extension SpotifyMusicController {
 
 extension SpotifyMusicController: SPTAppRemoteDelegate {
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        if isStreaming { return }
         self.appRemote = appRemote
         self.appRemote.playerAPI?.delegate = self
         self.appRemote.playerAPI?.subscribe { _, error in
@@ -277,6 +280,7 @@ extension SpotifyMusicController: SPTAppRemoteDelegate {
                     message: "구독 성공"
                 )
                 
+                self.isStreaming = true
                 self.subscriptCompletion?()
             }
         }

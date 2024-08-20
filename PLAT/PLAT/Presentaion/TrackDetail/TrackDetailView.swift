@@ -28,6 +28,7 @@ struct TrackDetailView: View {
     }
     
     var body: some View {
+        @Bindable var musicControlerUseCase = musicControlUseCase
         ZStack {
             VStack(spacing: 0) {
                 MusicView()
@@ -40,7 +41,7 @@ struct TrackDetailView: View {
                     .padding(.top, 24)
                 
                 MusicSeekBar(
-                    currentDuration: musicControlUseCase.state.currentDuration,
+                    currentDuration: $musicControlerUseCase.currentDuration,
                     totalDuration: music?.duration ?? 1
                 )
                 .padding(.top, 36)
