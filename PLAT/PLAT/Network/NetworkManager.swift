@@ -35,7 +35,11 @@ class NetworkClient: APIMethod {
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return .success(decodedData)
         } catch {
-            return .failure(NetworkError.urlError(error as! URLError))
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
@@ -59,7 +63,11 @@ class NetworkClient: APIMethod {
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return .success(decodedData)
         } catch {
-            return .failure(NetworkError.urlError(error as! URLError))
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
@@ -82,7 +90,11 @@ class NetworkClient: APIMethod {
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return .success(decodedData)
         } catch {
-            return .failure(NetworkError.urlError(error as! URLError))
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
@@ -106,7 +118,11 @@ class NetworkClient: APIMethod {
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return .success(decodedData)
         } catch {
-            return .failure(NetworkError.urlError(error as! URLError))
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
@@ -128,7 +144,11 @@ class NetworkClient: APIMethod {
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return .success(decodedData)
         } catch {
-            return .failure(NetworkError.urlError(error as! URLError))
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
 }
