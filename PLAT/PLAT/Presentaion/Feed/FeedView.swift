@@ -49,6 +49,7 @@ private struct FeedRowView: View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 6) {
                 FeedProfileImage(track: track)
+                    .padding(.leading, 12)
                 
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 0) {
@@ -56,7 +57,8 @@ private struct FeedRowView: View {
                             FeedHeaderView(track: track)
                             FeedLocationView()
                         }
-                        .padding(.trailing, 96)
+                        
+                        Spacer()
                         
                         Button {
                             // 신고 알럿 창 띄우기
@@ -66,6 +68,7 @@ private struct FeedRowView: View {
                                 .frame(width: 20, height: 20)
                                 .padding(.bottom, 8)
                         }
+                        .padding(.trailing, 18)
                     }
                     .padding(.bottom, 8)
                     
@@ -221,7 +224,7 @@ private struct FeedPlayer: View {
                 Button {
                     // TODO: MusicControlUseCase 재생 토글
                 } label: {
-                    Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                    Image(systemName: isPaused ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
@@ -345,7 +348,7 @@ private struct FeedContentView: View {
                             .padding(.top, 20)
                             .onTapGesture {
                                 self.isExpended.toggle()
-                            }
+                        }
                     }
                 }
             }
