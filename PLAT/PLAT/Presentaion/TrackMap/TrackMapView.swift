@@ -12,15 +12,18 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
-    @StateObject private var locationManager = LocationManager()
     
     @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
     @State private var hasNotifications = false
+    @State private var playlist: Playlist?
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(position: $locationManager.position, interactionModes: []) {
+            Map(position: .init(
+                get: { trackMapUseCase.locationManager.position },
+                set: { _ in }),
+                interactionModes: []) {
                 UserAnnotation()
                 
                 ForEach(trackMapUseCase.state.trackList) { track in
@@ -33,18 +36,17 @@ struct TrackMapView: View {
                     }
                 }
                 
-                if let location = locationManager.location {
+                if let location = trackMapUseCase.locationManager.location {
                     MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
                         .foregroundStyle(.platDarkpurple.opacity(0.5))
                 }
             }
             
             if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications)
+                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist)
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
-            // 트랙 전부를 넘겨주는게 아니라 trackID만 넘겨줘야함
             if let trackId = selectedTrackId {
                 TrackDetailView(trackId: trackId)
                     .presentationBackground(.thinMaterial.opacity(0.5))
@@ -56,8 +58,15 @@ struct TrackMapView: View {
             print("showTrackDetail changed: \(newValue)")
         }
         .onAppear {
-            if let location = locationManager.location {
+            if let location = trackMapUseCase.locationManager.location {
+                print("Current Location: \(location)")
                 trackMapUseCase.fetchTrackList(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+                Task {
+                    playlist = await trackMapUseCase.createPlatPlaylist(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+                    print("Playlist created with \(playlist?.trackList.count ?? 0) tracks")
+                }
+            } else {
+                print("Location 아직 없어임마")
             }
         }
     }
@@ -111,11 +120,12 @@ private struct CustomMarkerView: View {
 
 private struct MapComponentsView: View {
     @Binding var hasNotifications: Bool
+    @Binding var playlist: Playlist?
     
     var body: some View {
         HStack(alignment: .top, spacing: 100) {
             MapAddressView()
-            MapButtonsView(hasNotifications: $hasNotifications)
+            MapButtonsView(hasNotifications: $hasNotifications, playlist: $playlist)
                 .padding(.bottom, 22)
         }
     }
@@ -143,7 +153,7 @@ private struct MapButtonsView: View {
     @Binding var hasNotifications: Bool
     @State private var isPlattingSheet = false
     // TODO: 목 데이터 제거하고 실제 데이터 연결
-    @State private var playlist: Playlist = MockDataBuilder.playlist
+    @Binding var playlist: Playlist?
     
     var body: some View {
         VStack {
@@ -186,10 +196,6 @@ private struct MapButtonsView: View {
             .padding(.bottom, 22)
             
             Button {
-                Task {
-                    // TODO: 목 데이터 제거하고 실제 데이터 연결
-                    playlist = await trackMapUseCase.creatPlatPlaylist(currentLocation: MockDataBuilder.currentLocation)
-                }
                 isPlattingSheet.toggle()
             } label: {
                 Circle()
@@ -201,16 +207,16 @@ private struct MapButtonsView: View {
                             .foregroundStyle(.platPurple)
                             .padding(.bottom, 4)
                             .overlay {
-                                Text("\(MockDataBuilder.trackList.count)")
+                                Text("\(playlist?.trackList.count ?? 0)")
                                     .foregroundStyle(.platPurple)
                                     .font(.Body.body4)
                             }
                     }
             }
-            .fullScreenCover(isPresented: $isPlattingSheet, content: {
+            .fullScreenCover(isPresented: $isPlattingSheet) {
                 PlattingView(playList: $playlist)
                     .presentationBackground(.black.opacity(0.8))
-            })
+            }
         }
     }
 }

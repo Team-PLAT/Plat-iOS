@@ -13,6 +13,7 @@ final class TrackMapUseCase {
     
     private(set) var trackMapService: TrackMapServiceInterface
     private(set) var state: State
+    private(set) var locationManager = LocationManager()
     
     init(trackMapService: TrackMapServiceInterface) {
         self.trackMapService = trackMapService
@@ -59,8 +60,8 @@ extension TrackMapUseCase {
     }
     
     /// 플레이리스트 생성하기
-    func creatPlatPlaylist(currentLocation: Location) async -> Playlist {
-        let playlist = await self.trackMapService.creatPlatPlaylist(currentLocation: currentLocation)
+    func createPlatPlaylist(currentLocation: Location) async -> Playlist {
+        let playlist = await self.trackMapService.createPlatPlaylist(currentLocation: currentLocation)
         return playlist
     }
 }

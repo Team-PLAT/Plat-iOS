@@ -9,16 +9,24 @@ import SwiftUI
 
 struct PlattingView: View {
     @State var isCompleteLoading = false
-    @Binding var playList: Playlist
+    @Binding var playList: Playlist?
     
     var body: some View {
         VStack {
             PlattingDismissButton()
             Spacer()
             if isCompleteLoading {
-                PlattingPlayListView(playList: playList)
+                if let playlist = playList {
+                    PlattingPlayListView(playList: playlist)
+                } else {
+                    Text("No playlist available")
+                }
             } else {
-                PlattingLoadingView(trackList: playList.trackList)
+                if let trackList = playList?.trackList {
+                    PlattingLoadingView(trackList: trackList)
+                } else {
+                    Text("Loading failed")
+                }
             }
         }
         

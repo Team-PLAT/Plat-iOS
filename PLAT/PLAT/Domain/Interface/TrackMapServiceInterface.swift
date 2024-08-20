@@ -12,5 +12,5 @@ protocol TrackMapServiceInterface {
     func currentLocation() -> Location
     func fetchTrackList(currentLocation: Location) async -> [Track]
     func insertPin(location: Location, track: Track)
-    func creatPlatPlaylist(currentLocation: Location) async -> Playlist
+    func createPlatPlaylist(currentLocation: Location) async -> Playlist
 }
