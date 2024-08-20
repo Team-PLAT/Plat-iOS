@@ -1,5 +1,5 @@
 //
-//  TrackFeedResponsetDto.swift
+//  TrackDetailResponse.swift
 //  PLAT
 //
 //  Created by 조세연 on 8/18/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TrackFeedResponse: Decodable {
+struct TrackDetailResponse: Decodable {
     let tracks: [Track]
     
     struct Track: Decodable {
