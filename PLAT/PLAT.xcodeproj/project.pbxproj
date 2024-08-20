@@ -87,6 +87,7 @@
 		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
+		DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF616E5B2C74277300CCDC9D /* NetworkError.swift */; };
 		DF6DC9952C7434EA004A23F7 /* FeedTrackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */; };
 		DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */; };
 		DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */; };
@@ -99,10 +100,9 @@
 		DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */; };
 		DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A152C71E37E002BAD11 /* BaseResponse.swift */; };
 		DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */; };
-		DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */; };
 		DFE27A202C71E78F002BAD11 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A1F2C71E78F002BAD11 /* Config.swift */; };
-		DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */; };
-		DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */; };
+		DFE27A222C71FEE0002BAD11 /* TrackDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackDetailResponse.swift */; };
+		DFE27A282C72048F002BAD11 /* TrackDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A272C72048F002BAD11 /* TrackDetailRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,6 +186,8 @@
 		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
+		DF616E592C7340CC00CCDC9D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		DF616E5B2C74277300CCDC9D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackUseCase.swift; sourceTree = "<group>"; };
 		DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackService.swift; sourceTree = "<group>"; };
 		DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackServiceInterface.swift; sourceTree = "<group>"; };
@@ -199,10 +201,9 @@
 		DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DFE27A152C71E37E002BAD11 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedService.swift; sourceTree = "<group>"; };
-		DFE27A1D2C71E779002BAD11 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DFE27A1F2C71E78F002BAD11 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedResultDto.swift; sourceTree = "<group>"; };
-		DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailDto.swift; sourceTree = "<group>"; };
+		DFE27A212C71FEE0002BAD11 /* TrackDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailResponse.swift; sourceTree = "<group>"; };
+		DFE27A272C72048F002BAD11 /* TrackDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,14 +508,23 @@
 			path = TrackDetail;
 			sourceTree = "<group>";
 		};
+		DF616E5A2C741A7F00CCDC9D /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
+				DF616E5B2C74277300CCDC9D /* NetworkError.swift */,
+				DFE27A262C720467002BAD11 /* TrackDetail */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
 		DFE27A122C71D43F002BAD11 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */,
 				DFE27A232C720305002BAD11 /* Service */,
-				DFE27A262C720467002BAD11 /* Dto */,
 				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
-				DFE27A1D2C71E779002BAD11 /* Config.xcconfig */,
+				DF616E592C7340CC00CCDC9D /* Config.xcconfig */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -523,34 +533,26 @@
 			isa = PBXGroup;
 			children = (
 				DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */,
+				DF616E5A2C741A7F00CCDC9D /* Dto */,
 			);
 			path = Service;
 			sourceTree = "<group>";
 		};
-		DFE27A242C720315002BAD11 /* Response */ = {
+		DFE27A262C720467002BAD11 /* TrackDetail */ = {
 			isa = PBXGroup;
 			children = (
-				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
-				DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */,
+				DFE27A212C71FEE0002BAD11 /* TrackDetailResponse.swift */,
+				DFE27A272C72048F002BAD11 /* TrackDetailRequest.swift */,
 			);
-			path = Response;
+			path = TrackDetail;
 			sourceTree = "<group>";
 		};
-		DFE27A252C720457002BAD11 /* Request */ = {
+		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */,
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
 			);
-			path = Request;
-			sourceTree = "<group>";
-		};
-		DFE27A262C720467002BAD11 /* Dto */ = {
-			isa = PBXGroup;
-			children = (
-				DFE27A242C720315002BAD11 /* Response */,
-				DFE27A252C720457002BAD11 /* Request */,
-			);
-			path = Dto;
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
@@ -634,7 +636,6 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
-				DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -689,11 +690,11 @@
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
 				82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */,
 				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
-				DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */,
+				DFE27A222C71FEE0002BAD11 /* TrackDetailResponse.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
-				DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */,
+				DFE27A282C72048F002BAD11 /* TrackDetailRequest.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
@@ -727,6 +728,7 @@
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				8269334C2C720A5C0004E0B5 /* SpotifyTrackDTO.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
+				DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */,
 				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
@@ -748,7 +750,6 @@
 /* Begin XCBuildConfiguration section */
 		793278112C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -812,7 +813,6 @@
 		};
 		793278122C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

@@ -1,5 +1,5 @@
 //
-//  TrackDetailDto.swift
+//  TrackDetailRequest.swift
 //  PLAT
 //
 //  Created by 조세연 on 8/18/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TrackDetailDto: Encodable {
+struct TrackDetailRequest: Encodable {
     let isrc: String
     let imageUrl: String
     let context: String
