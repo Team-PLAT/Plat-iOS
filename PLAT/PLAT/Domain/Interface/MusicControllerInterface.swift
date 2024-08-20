@@ -9,8 +9,9 @@ import Foundation
 import Combine
 
 protocol MusicControllerInterface {
-    func setup()
-    func play(_ music: Music)
+    func setup(completion: @escaping () -> Void)
+    func fetchMusic(_ isrc: String) async -> Music?
+    func play(_ isrc: String)
     func pause()
     func resume()
     func repeatPlayback()

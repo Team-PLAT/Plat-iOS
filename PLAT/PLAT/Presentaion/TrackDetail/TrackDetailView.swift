@@ -11,7 +11,7 @@ import SwiftUI
 
 struct TrackDetailView: View {
     
-    @Environment(MusicControlUseCase.self) private var musicControlerUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     // TODO: 이후 상위에서 주입 받기
     // TODO: Stub 객체 교체하기
@@ -23,26 +23,25 @@ struct TrackDetailView: View {
     
     @State private var isContentSheetPresented = false
     
-    private var music: Music {
-        trackUseCase.detailTrack.music
+    private var music: Music? {
+        musicControlUseCase.state.music
     }
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                
-                // TODO: 테스트용
                 MusicView()
                     .onTapGesture {
-                        musicControlerUseCase.effect(.play)
+                        // TODO: 테스트용
+                        musicControlUseCase.effect(.play(isrc: MockDataBuilder.musicList[1].isrc))
                     }
                 
                 MusicControllerView()
                     .padding(.top, 24)
                 
                 MusicSeekBar(
-                    currentDuration: musicControlerUseCase.state.currentDuration,
-                    totalDuration: music.duration
+                    currentDuration: musicControlUseCase.state.currentDuration,
+                    totalDuration: music?.duration ?? 1
                 )
                 .padding(.top, 36)
                 .padding(.horizontal, 16)
@@ -65,7 +64,7 @@ struct TrackDetailView: View {
         .background(.black.opacity(0.6))
         .environment(trackUseCase)
         .onAppear {
-            musicControlerUseCase.effect(.setup)
+            musicControlUseCase.effect(.setup(isrc: MockDataBuilder.musicList[1].isrc))
         }
         .onTapGesture {
             withAnimation(.easeInOut) {
@@ -118,22 +117,22 @@ private struct HeaderView: View {
 
 private struct MusicView: View {
     
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    private var music: Music {
-        trackDetailUseCase.detailTrack.music
+    private var music: Music? {
+        musicControlUseCase.state.music
     }
     
     var body: some View {
         VStack(spacing: 0) {
             AlbumImage()
             
-            Text(music.title)
+            Text(music?.title ?? "")
                 .font(.Head.head2)
                 .foregroundStyle(.white)
                 .padding(.top, 16)
             
-            Text(music.artist)
+            Text(music?.artist ?? "")
                 .font(.Head.head5)
                 .foregroundStyle(.gray7)
                 .padding(.top, 4)
@@ -145,10 +144,10 @@ private struct MusicView: View {
 
 private struct AlbumImage: View {
     
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var albumImageUrl: URL? {
-        URL(string: trackDetailUseCase.detailTrack.music.albumImageUrl)
+        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
     }
     
     var body: some View {

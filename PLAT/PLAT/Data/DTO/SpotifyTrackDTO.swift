@@ -11,63 +11,63 @@ import Foundation
 
 struct SpotifyTrackDTO: Codable {
     let tracks: Tracks
-}
-
-// MARK: - Tracks
-
-struct Tracks: Codable {
-    let items: [Item]
-}
-
-// MARK: - Item
-
-struct Item: Codable {
-    let album: Album
-    let artists: [Artist]
-    let durationMS: Int
-    let externalIDS: ExternalIDS
-    let name: String
-    let uri: String
     
-    enum CodingKeys: String, CodingKey {
-        case album, artists
-        case durationMS = "duration_ms"
-        case externalIDS = "external_ids"
-        case name
-        case uri
+    // MARK: - Tracks
+
+    struct Tracks: Codable {
+        let items: [Item]
     }
-}
 
-// MARK: - Album
+    // MARK: - Item
 
-struct Album: Codable {
-    let artists: [Artist]
-    let images: [TrackImage]
-    
-    enum CodingKeys: String, CodingKey {
-        case artists
-        case images
+    struct Item: Codable {
+        let album: Album
+        let artists: [Artist]
+        let durationMS: Int
+        let externalIDS: ExternalIDS
+        let name: String
+        let uri: String
+        
+        enum CodingKeys: String, CodingKey {
+            case album, artists
+            case durationMS = "duration_ms"
+            case externalIDS = "external_ids"
+            case name
+            case uri
+        }
     }
-}
 
-// MARK: - Artist
+    // MARK: - Album
 
-struct Artist: Codable {
-    let name: String
-    
-    enum CodingKeys: String, CodingKey {
-        case name
+    struct Album: Codable {
+        let artists: [Artist]
+        let images: [TrackImage]
+        
+        enum CodingKeys: String, CodingKey {
+            case artists
+            case images
+        }
     }
-}
 
-// MARK: - Image
+    // MARK: - Artist
 
-struct TrackImage: Codable {
-    let url: String
-}
+    struct Artist: Codable {
+        let name: String
+        
+        enum CodingKeys: String, CodingKey {
+            case name
+        }
+    }
 
-// MARK: - ExternalIDS
+    // MARK: - Image
 
-struct ExternalIDS: Codable {
-    let isrc: String
+    struct TrackImage: Codable {
+        let url: String
+    }
+
+    // MARK: - ExternalIDS
+
+    struct ExternalIDS: Codable {
+        let isrc: String
+    }
 }

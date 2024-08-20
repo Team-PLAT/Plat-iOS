@@ -9,12 +9,15 @@ import Foundation
 import Combine
 
 struct StubMusicController: MusicControllerInterface {
-    
-    func setup() {
+    func setup(completion: @escaping () -> Void) {
         print(#function)
     }
     
-    func play(_ music: Music) {
+    func fetchMusic(_ isrc: String) async -> Music? {
+        return MockDataBuilder.music
+    }
+    
+    func play(_ isrc: String) {
         print(#function)
     }
     

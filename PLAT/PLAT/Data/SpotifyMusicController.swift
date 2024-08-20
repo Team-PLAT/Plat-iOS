@@ -63,16 +63,24 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
 extension SpotifyMusicController {
     
     /// 기본 설정을 진행합니다.
-    func setup() {
+    func setup(completion: @escaping () -> Void) {
         if !appRemote.isConnected {
             authorize()
+            subscriptCompletion = {
+                completion()
+            }
         }
     }
     
+    func fetchMusic(_ isrc: String) async -> Music? {
+        let music = await self.requestMusic(for: isrc)
+        return music?.0
+    }
+    
     /// 음악을 재생합니다.
-    func play(_ music: Music) {
+    func play(_ isrc: String) {
         Task {
-            let music = await requestMusic(for: music.isrc)
+            let music = await requestMusic(for: isrc)
             appRemote.playerAPI?.play(music?.1 ?? "")
         }
     }
@@ -104,18 +112,18 @@ extension SpotifyMusicController {
             .autoconnect()
             .flatMap { [weak self] _ -> Future<Double, Error> in
                 return Future { promise in
-//                    self?.appRemote.playerAPI?.getPlayerState { result, error in
-//                        if let error = error {
-//                            Log.fail(
-//                                title: "현재 재생 중인 음악 position 값 불러오기",
-//                                message: "PlayerState 검색 실패: \(error.localizedDescription)"
-//                            )
-//                            promise(.failure(error))
-//                        } else if let playerState = result as? SPTAppRemotePlayerState {
-//                            let playbackPostion = Double(playerState.playbackPosition)
-//                            promise(.success(playbackPostion / 1000))
-//                        }
-//                    }
+                    self?.appRemote.playerAPI?.getPlayerState { result, error in
+                        if let error = error {
+                            Log.fail(
+                                title: "현재 재생 중인 음악 position 값 불러오기",
+                                message: "PlayerState 검색 실패: \(error.localizedDescription)"
+                            )
+                            promise(.failure(error))
+                        } else if let playerState = result as? SPTAppRemotePlayerState {
+                            let playbackPostion = Double(playerState.playbackPosition)
+                            promise(.success(playbackPostion / 1000))
+                        }
+                    }
                 }
             }
             .eraseToAnyPublisher()
@@ -200,14 +208,14 @@ extension SpotifyMusicController {
         }
     }
     
-    private func itemToMusic(_ item: Item) -> (Music, URI) {
+    private func itemToMusic(_ item: SpotifyTrackDTO.Item) -> (Music, URI) {
         (
             Music(
                 isrc: item.externalIDS.isrc,
                 title: item.name,
                 artist: item.artists.first?.name ?? "error",
                 albumImageUrl: item.album.images.first?.url ?? "",
-                duration: Double(item.durationMS)
+                duration: Double(item.durationMS) / 1000
             ),
             (item.uri)
         )

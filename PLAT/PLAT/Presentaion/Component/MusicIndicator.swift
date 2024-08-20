@@ -42,7 +42,6 @@ struct MusicIndicator: View {
             
             Button {
                 // TODO: 다음 음악 재생
-                // musicControlerUseCase.effect(.play(music: <#T##Music#>))
             } label: {
                 Image(systemName: "forward.end.fill")
                     .resizable()
