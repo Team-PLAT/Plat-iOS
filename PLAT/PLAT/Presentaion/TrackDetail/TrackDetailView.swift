@@ -29,19 +29,24 @@ struct TrackDetailView: View {
     
     var body: some View {
         ZStack {
+            Background()
+            
             VStack(spacing: 0) {
                 MusicView()
                     .onTapGesture {
                         // TODO: 테스트용
-                        musicControlUseCase.effect(.play(isrc: MockDataBuilder.musicList[1].isrc))
+                        Task {
+                            let track = await trackUseCase.fetchTrack(id: 0)
+                            musicControlUseCase.effect(.play(isrc: track?.music.isrc ?? ""))
+                        }
                     }
                 
                 MusicControllerView()
                     .padding(.top, 24)
                 
                 MusicSeekBar(totalDuration: music?.duration ?? 1)
-                .padding(.top, 36)
-                .padding(.horizontal, 16)
+                    .padding(.top, 36)
+                    .padding(.horizontal, 16)
                 
                 MusicIndicator()
                     .padding(.top, 16)
@@ -58,17 +63,36 @@ struct TrackDetailView: View {
                     .padding(.bottom, 0)
             }
         }
-        .background(.black.opacity(0.6))
         .environment(trackUseCase)
         .onAppear {
-            // TODO: 전달 받은 ISRC 값 넣기
-            musicControlUseCase.effect(.setup(isrc: MockDataBuilder.musicList[1].isrc))
+            // TODO: 트랙 아이디 외부 값으로 업데이트
+            Task {
+                let track = await trackUseCase.fetchTrack(id: 0)
+                musicControlUseCase.effect(.setup(isrc: track?.music.isrc ?? ""))
+            }
         }
         .onTapGesture {
             withAnimation(.easeInOut) {
                 isContentSheetPresented = false
             }
         }
+    }
+}
+
+// MARK: - Background
+
+private struct Background: View {
+    var body: some View {
+        Group {
+            // TODO: 만약 Track에 이미지가 있다면 다른 이미지로 처리하기
+            Image(.imgTestBackground)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 0)
+            
+            Color.black.opacity(0.6)
+        }
+        .ignoresSafeArea()
     }
 }
 
@@ -244,7 +268,7 @@ private struct BottomView: View {
     @Binding private(set) var isContentSheetPresented: Bool
     
     private var content: String? {
-        let origin = trackDetailUseCase.detailTrack.content
+        let origin = trackDetailUseCase.track.content
         if isContentSheetPresented {
             return origin
         } else {
@@ -274,7 +298,7 @@ private struct ProfileHeader: View {
     @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var platter: Platter {
-        trackDetailUseCase.detailTrack.platter
+        trackDetailUseCase.track.platter
     }
     
     private var profileImageUrl: URL? {
@@ -302,7 +326,7 @@ private struct ProfileHeader: View {
                 Text(platter.nickname)
                     .font(.Body.body2)
                 
-                Text(trackDetailUseCase.detailTrack.createdDate.yearMonthDayFormat)
+                Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
                     .font(.Body.body5)
                 
             }
@@ -345,14 +369,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    ZStack {
-        Image(.imgTestBackground)
-            .resizable()
-            .scaledToFill()
-            .frame(width: 0)
-            .ignoresSafeArea()
-        
-        TrackDetailView()
-    }
-    .environment(PreviewHelper.mockMusicControlUseCase)
+    TrackDetailView()
+        .environment(PreviewHelper.mockMusicControlUseCase)
 }

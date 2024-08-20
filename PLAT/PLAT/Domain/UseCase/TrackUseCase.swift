@@ -12,7 +12,7 @@ final class TrackUseCase {
     
     private(set) var state: State
     private(set) var feedTrack: [Track]
-    private(set) var detailTrack: Track
+    private(set) var track: Track
     
     private var trackService: TrackServiceInterface
     
@@ -22,7 +22,7 @@ final class TrackUseCase {
         trackService: TrackServiceInterface
     ) {
         self.feedTrack = feedTrack
-        self.detailTrack = detailTrack
+        self.track = detailTrack
         self.trackService = trackService
         
         // TODO: 교체 예정
@@ -51,6 +51,7 @@ extension TrackUseCase {
 extension TrackUseCase {
     
     enum Effect {
+        case fetchTrack(id: Int)
         case likeTrack
         case addToPlaylist
         case deleteTrack
@@ -59,6 +60,20 @@ extension TrackUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
+        case let .fetchTrack(id):
+            Task {
+                if let track = await trackService.fetchTrack(with: id) {
+                    self.track = track
+                    print("현재 트랙!: \(track.music.title)")
+                } else {
+                    // TODO: 에러처리
+                    Log.fail(
+                        title: "Track 불러오기",
+                        message: "옵셔널 값..."
+                    )
+                }
+            }
+            
         case .likeTrack:
             // TODO: TrackId 업데이트
             trackService.like(trackId: "")
@@ -78,5 +93,26 @@ extension TrackUseCase {
             // TODO: TrackId 업데이트
             trackService.report(trackId: "")
         }
+    }
+}
+
+// MARK: - Fetch Track
+
+extension TrackUseCase {
+    
+    func fetchTrack(id: Int) async -> Track? {
+        if let track = await trackService.fetchTrack(with: id) {
+            self.track = track
+            return track
+            
+        } else {
+            // TODO: 에러처리
+            Log.fail(
+                title: "Track 불러오기",
+                message: "옵셔널 값..."
+            )
+        }
+        
+        return nil
     }
 }

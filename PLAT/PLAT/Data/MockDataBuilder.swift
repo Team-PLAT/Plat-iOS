@@ -20,7 +20,7 @@ struct MockDataBuilder {
     
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
-        return zip(Array(repeating: music, count: 6), locationList).map { music, location in
+        return zip(musicList, locationList).map { music, location in
             Track(
                 music: music,
                 location: location,
@@ -34,7 +34,7 @@ struct MockDataBuilder {
     static var feedTrack: [Track] {
         return [
             Track(
-                music: music,
+                music: musicList[0],
                 location: currentLocation,
                 platter: friend,
                 content: "멀보냐능!자고싶다자고싶다 졸려 엥엥엥에에에엥 방학을 주라",
@@ -44,7 +44,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                music: music,
+                music: musicList[1],
                 location: currentLocation,
                 platter: user,
                 content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
@@ -54,7 +54,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                music: music,
+                music: musicList[2],
                 location: currentLocation,
                 platter: friend,
                 content: "",
@@ -99,11 +99,11 @@ struct MockDataBuilder {
             ),
             
             Music(
-                isrc: "GBAYE0500605",
-                title: "Fix you",
-                artist: "ColdPlay",
-                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
-                duration: 295533
+                isrc: "KRMIM2210467",
+                title: "이상기후",
+                artist: "끼리보이",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2738d4a02d1e213c917001f0074",
+                duration: 246426
             ),
             
             Music(

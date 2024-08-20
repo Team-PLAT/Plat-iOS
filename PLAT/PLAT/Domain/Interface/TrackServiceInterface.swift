@@ -8,6 +8,7 @@
 import Foundation
 
 protocol TrackServiceInterface {
+    func fetchTrack(with trackId: Int) async -> Track?
     func like(trackId: String)
     func delete(trackId: String)
     func report(trackId: String)

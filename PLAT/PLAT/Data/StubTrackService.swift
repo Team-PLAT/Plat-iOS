@@ -8,6 +8,10 @@
 import Foundation
 
 struct StubTrackService: TrackServiceInterface {
+    func fetchTrack(with trackId: Int) async -> Track? {
+        return MockDataBuilder.feedTrack.randomElement()
+    }
+    
     func like(trackId: String) {
         print(#function)
     }
