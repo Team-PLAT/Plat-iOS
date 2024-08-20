@@ -96,7 +96,6 @@
 		DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */; };
 		DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A152C71E37E002BAD11 /* BaseResponse.swift */; };
 		DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */; };
-		DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */; };
 		DFE27A202C71E78F002BAD11 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A1F2C71E78F002BAD11 /* Config.swift */; };
 		DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */; };
 		DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */; };
@@ -121,6 +120,7 @@
 		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+PretendardFont.swift"; sourceTree = "<group>"; };
 		790AF0692C6DD1640005FA9A /* TrackMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapView.swift; sourceTree = "<group>"; };
+		791FEF882C74166B006CBDE0 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		793278052C2D014500F433F5 /* PLAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		793278082C2D014500F433F5 /* PLATApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLATApp.swift; sourceTree = "<group>"; };
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -193,7 +193,6 @@
 		DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DFE27A152C71E37E002BAD11 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedService.swift; sourceTree = "<group>"; };
-		DFE27A1D2C71E779002BAD11 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DFE27A1F2C71E78F002BAD11 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		DFE27A212C71FEE0002BAD11 /* TrackFeedResultDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedResultDto.swift; sourceTree = "<group>"; };
 		DFE27A272C72048F002BAD11 /* TrackDetailDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailDto.swift; sourceTree = "<group>"; };
@@ -498,22 +497,14 @@
 			path = TrackDetail;
 			sourceTree = "<group>";
 		};
-		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
-			);
-			path = Feed;
-      sourceTree = "<group>";
-		};
 		DFE27A122C71D43F002BAD11 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */,
 				DFE27A232C720305002BAD11 /* Service */,
 				DFE27A262C720467002BAD11 /* Dto */,
+				791FEF882C74166B006CBDE0 /* Config.xcconfig */,
 				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
-				DFE27A1D2C71E779002BAD11 /* Config.xcconfig */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -550,6 +541,14 @@
 				DFE27A252C720457002BAD11 /* Request */,
 			);
 			path = Dto;
+			sourceTree = "<group>";
+		};
+		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -625,7 +624,6 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
-				DFE27A1E2C71E779002BAD11 /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -736,7 +734,6 @@
 /* Begin XCBuildConfiguration section */
 		793278112C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -800,7 +797,6 @@
 		};
 		793278122C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFE27A1D2C71E779002BAD11 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -864,7 +860,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -882,7 +878,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
+				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -899,7 +895,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -917,7 +913,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
+				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

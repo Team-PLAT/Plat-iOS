@@ -14,7 +14,7 @@ struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
     @StateObject private var locationManager = LocationManager()
     
-    @State private var selectedTrack: Track?
+    @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
     @State private var hasNotifications = false
     
@@ -27,7 +27,7 @@ struct TrackMapView: View {
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                         CustomMarkerView(track: track)
                             .onTapGesture {
-                                selectedTrack = track
+                                selectedTrackId = track.id
                                 showTrackDetail.toggle()
                             }
                     }
@@ -44,8 +44,9 @@ struct TrackMapView: View {
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
-            if let track = selectedTrack {
-                TrackDetailView(track: track)
+            // 트랙 전부를 넘겨주는게 아니라 trackID만 넘겨줘야함
+            if let trackId = selectedTrackId {
+                TrackDetailView(trackId: trackId)
                     .presentationBackground(.thinMaterial.opacity(0.5))
             } else {
                 Text("No Track Selected")

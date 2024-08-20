@@ -12,7 +12,8 @@ struct FeedView: View {
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
         track: MockDataBuilder.track,
-        trackService: StubTrackService()
+        trackService: StubTrackService(),
+        trackId: MockDataBuilder.track.id
     )
     
     var body: some View {
