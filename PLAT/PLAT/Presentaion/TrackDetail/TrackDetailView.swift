@@ -24,11 +24,14 @@ struct TrackDetailView: View {
     @State private var isContentSheetPresented = false
     
     init(track: Track) {
-        self._trackDetailUseCase = State(initialValue: TrackDetailUseCase(
-            track: track,
-            trackService: StubTrackService(),
-            musicController: StubMusicController()
-        ))
+        self._trackDetailUseCase = State(
+            initialValue: TrackDetailUseCase(
+                feedTrack: [track],
+                track: track,
+                trackService: StubTrackService()
+//                ,musicController: StubMusicController()
+            )
+        )
     }
     
     private var music: Music {
