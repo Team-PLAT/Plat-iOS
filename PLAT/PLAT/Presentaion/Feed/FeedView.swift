@@ -9,9 +9,9 @@ import SwiftUI
 
 struct FeedView: View {
     
-    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+    @State private var trackUseCase: TrackUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
+        detailTrack: MockDataBuilder.track,
         trackService: StubTrackService()
     )
     
@@ -26,7 +26,7 @@ struct FeedView: View {
                 }
             }
         }
-        .environment(trackDetailUseCase)
+        .environment(trackUseCase)
         .refreshable {
             // TODO: fetch 한 값 불러오기
         }
@@ -91,7 +91,7 @@ private struct FeedProfileImage: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var platter: Platter {
         track.platter
@@ -126,7 +126,7 @@ private struct FeedHeaderView: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var platter: Platter {
         //        trackDetailUseCase.track.platter
@@ -154,7 +154,7 @@ private struct FeedHeaderView: View {
 
 private struct FeedLocationView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     var body: some View {
         HStack(spacing: 4) {
@@ -178,7 +178,7 @@ private struct FeedPlayer: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var music: Music {
         //        trackDetailUseCase.track.music
@@ -240,7 +240,7 @@ private struct FeedAlbumImage: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var albumImageUrl: URL? {
         //        URL(string: trackDetailUseCase.track.music.albumImageUrl)
@@ -268,7 +268,7 @@ private struct FeedAlbumImage: View {
 private struct FeedContentImage: View {
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var contentImageUrl: URL? {
         //        URL(string: trackDetailUseCase.track.imageUrl ?? "")
@@ -301,7 +301,7 @@ private struct FeedContentView: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @State private var isLimit: Bool?
     @State private var isExpended: Bool = false
@@ -370,7 +370,7 @@ private struct FeedContentView: View {
 
 private struct FeedActionView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @State private var isLiked: Bool = false
     

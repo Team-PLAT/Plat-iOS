@@ -13,6 +13,8 @@ import SpotifyiOS
 
 final class SpotifyMusicController: NSObject, MusicControllerInterface {
     
+    typealias URI = String
+    
     static let shared = SpotifyMusicController()
     
     private let spotifyClientID = "5b202600356943f9bf865d44b7a61bb5"
@@ -61,20 +63,17 @@ final class SpotifyMusicController: NSObject, MusicControllerInterface {
 extension SpotifyMusicController {
     
     /// 기본 설정을 진행합니다.
-    func setup(_ music: Music) {
+    func setup() {
         if !appRemote.isConnected {
             authorize()
-            subscriptCompletion = { [weak self] in
-                self?.play(music)
-            }
         }
     }
     
     /// 음악을 재생합니다.
     func play(_ music: Music) {
         Task {
-            let uri = await requestURI(for: music.isrc)
-            appRemote.playerAPI?.play(uri ?? "")
+            let music = await requestMusic(for: music.isrc)
+            appRemote.playerAPI?.play(music?.1 ?? "")
         }
     }
     
@@ -105,18 +104,18 @@ extension SpotifyMusicController {
             .autoconnect()
             .flatMap { [weak self] _ -> Future<Double, Error> in
                 return Future { promise in
-                    self?.appRemote.playerAPI?.getPlayerState { result, error in
-                        if let error = error {
-                            Log.fail(
-                                title: "현재 재생 중인 음악 position 값 불러오기",
-                                message: "PlayerState 검색 실패: \(error.localizedDescription)"
-                            )
-                            promise(.failure(error))
-                        } else if let playerState = result as? SPTAppRemotePlayerState {
-                            let playbackPostion = Double(playerState.playbackPosition)
-                            promise(.success(playbackPostion / 1000))
-                        }
-                    }
+//                    self?.appRemote.playerAPI?.getPlayerState { result, error in
+//                        if let error = error {
+//                            Log.fail(
+//                                title: "현재 재생 중인 음악 position 값 불러오기",
+//                                message: "PlayerState 검색 실패: \(error.localizedDescription)"
+//                            )
+//                            promise(.failure(error))
+//                        } else if let playerState = result as? SPTAppRemotePlayerState {
+//                            let playbackPostion = Double(playerState.playbackPosition)
+//                            promise(.success(playbackPostion / 1000))
+//                        }
+//                    }
                 }
             }
             .eraseToAnyPublisher()
@@ -142,8 +141,8 @@ extension SpotifyMusicController {
         return header + searchQuery + type + market + limit
     }
     
-    /// ISRC값을 이용해 URI 값을 반환받습니다.
-    private func requestURI(for isrc: String) async -> String? {
+    /// ISRC값을 이용해 Music 엔티티를 반환받습니다.
+    private func requestMusic(for isrc: String) async -> (Music, URI)? {
         let urlString = searchQueryURL(isrc: isrc)
         guard let url = URL(string: urlString) else {
             Log.fail(
@@ -162,13 +161,12 @@ extension SpotifyMusicController {
         
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
-            print("데이터!: \(data)\n")
             
             do {
                 let decoder = JSONDecoder()
                 let decodeData = try decoder.decode(SpotifyTrackDTO.self, from: data)
                 
-                guard let uri = decodeData.tracks.items.first?.uri else {
+                guard let item = decodeData.tracks.items.first else {
                     Log.fail(
                         title: "ISRC 값을 이용한 URI 반환",
                         message: "값 없음!"
@@ -178,10 +176,10 @@ extension SpotifyMusicController {
                 
                 Log.success(
                     title: "ISRC 값을 이용한 URI 반환",
-                    message: "URI: \(uri)"
+                    message: "URI: \(item.uri)"
                 )
                 
-                return uri
+                return itemToMusic(item)
                 
             } catch {
                 Log.fail(
@@ -200,6 +198,19 @@ extension SpotifyMusicController {
             
             return nil
         }
+    }
+    
+    private func itemToMusic(_ item: Item) -> (Music, URI) {
+        (
+            Music(
+                isrc: item.externalIDS.isrc,
+                title: item.name,
+                artist: item.artists.first?.name ?? "error",
+                albumImageUrl: item.album.images.first?.url ?? "",
+                duration: Double(item.durationMS)
+            ),
+            (item.uri)
+        )
     }
 }
 

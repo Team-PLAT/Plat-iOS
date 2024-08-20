@@ -58,5 +58,5 @@ struct MusicIndicator: View {
 
 #Preview {
     MusicIndicator()
-        .environment(PreviewHelper.mockTrackDetailUseCase)
+        .environment(PreviewHelper.mockTrackUseCase)
 }

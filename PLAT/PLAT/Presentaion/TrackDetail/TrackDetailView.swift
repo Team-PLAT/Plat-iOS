@@ -15,22 +15,27 @@ struct TrackDetailView: View {
     
     // TODO: 이후 상위에서 주입 받기
     // TODO: Stub 객체 교체하기
-    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+    @State private var trackUseCase: TrackUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
+        detailTrack: MockDataBuilder.track,
         trackService: StubTrackService()
     )
     
     @State private var isContentSheetPresented = false
     
     private var music: Music {
-        trackDetailUseCase.track.music
+        trackUseCase.detailTrack.music
     }
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                
+                // TODO: 테스트용
                 MusicView()
+                    .onTapGesture {
+                        musicControlerUseCase.effect(.play)
+                    }
                 
                 MusicControllerView()
                     .padding(.top, 24)
@@ -58,7 +63,10 @@ struct TrackDetailView: View {
             }
         }
         .background(.black.opacity(0.6))
-        .environment(trackDetailUseCase)
+        .environment(trackUseCase)
+        .onAppear {
+            musicControlerUseCase.effect(.setup)
+        }
         .onTapGesture {
             withAnimation(.easeInOut) {
                 isContentSheetPresented = false
@@ -72,7 +80,7 @@ struct TrackDetailView: View {
 private struct HeaderView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
@@ -110,10 +118,10 @@ private struct HeaderView: View {
 
 private struct MusicView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var music: Music {
-        trackDetailUseCase.track.music
+        trackDetailUseCase.detailTrack.music
     }
     
     var body: some View {
@@ -137,10 +145,10 @@ private struct MusicView: View {
 
 private struct AlbumImage: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var albumImageUrl: URL? {
-        URL(string: trackDetailUseCase.track.music.albumImageUrl)
+        URL(string: trackDetailUseCase.detailTrack.music.albumImageUrl)
     }
     
     var body: some View {
@@ -168,7 +176,7 @@ private struct AlbumImage: View {
 
 private struct MusicControllerView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
@@ -233,12 +241,12 @@ private struct MusicControllerCell: View {
 
 private struct BottomView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
     private var content: String? {
-        let origin = trackDetailUseCase.track.content
+        let origin = trackDetailUseCase.detailTrack.content
         if isContentSheetPresented {
             return origin
         } else {
@@ -265,10 +273,10 @@ private struct BottomView: View {
 
 private struct ProfileHeader: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     private var platter: Platter {
-        trackDetailUseCase.track.platter
+        trackDetailUseCase.detailTrack.platter
     }
     
     private var profileImageUrl: URL? {
@@ -296,7 +304,7 @@ private struct ProfileHeader: View {
                 Text(platter.nickname)
                     .font(.Body.body2)
                 
-                Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
+                Text(trackDetailUseCase.detailTrack.createdDate.yearMonthDayFormat)
                     .font(.Body.body5)
                 
             }
@@ -348,4 +356,5 @@ private struct ProfileContent: View {
         
         TrackDetailView()
     }
+    .environment(PreviewHelper.mockMusicControlUseCase)
 }

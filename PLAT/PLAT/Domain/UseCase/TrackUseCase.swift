@@ -8,21 +8,21 @@
 import Foundation
 
 @Observable
-final class TrackDetailUseCase {
+final class TrackUseCase {
     
     private(set) var state: State
     private(set) var feedTrack: [Track]
-    private(set) var track: Track
+    private(set) var detailTrack: Track
     
     private var trackService: TrackServiceInterface
     
     init(
         feedTrack: [Track],
-        track: Track,
+        detailTrack: Track,
         trackService: TrackServiceInterface
     ) {
         self.feedTrack = feedTrack
-        self.track = track
+        self.detailTrack = detailTrack
         self.trackService = trackService
         
         // TODO: 교체 예정
@@ -38,7 +38,7 @@ final class TrackDetailUseCase {
 
 // MARK: - State
 
-extension TrackDetailUseCase {
+extension TrackUseCase {
     
     struct State {
         var place: Place
@@ -48,7 +48,7 @@ extension TrackDetailUseCase {
 
 // MARK: - Effect
 
-extension TrackDetailUseCase {
+extension TrackUseCase {
     
     enum Effect {
         case likeTrack

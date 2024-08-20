@@ -84,7 +84,7 @@
 		82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailView.swift */; };
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
-		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
+		82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
@@ -180,7 +180,7 @@
 		82C06F532C6DD977000FEE3A /* TrackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailView.swift; sourceTree = "<group>"; };
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
-		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
+		82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackUseCase.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
@@ -424,7 +424,7 @@
 				820836942C34050000F6D0CF /* UserUseCase.swift */,
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
-				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
+				82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */,
 				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 			);
 			path = UseCase;
@@ -498,14 +498,6 @@
 			path = TrackDetail;
 			sourceTree = "<group>";
 		};
-		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
-			isa = PBXGroup;
-			children = (
-				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
-			);
-			path = Feed;
-      sourceTree = "<group>";
-		};
 		DFE27A122C71D43F002BAD11 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +542,14 @@
 				DFE27A252C720457002BAD11 /* Request */,
 			);
 			path = Dto;
+			sourceTree = "<group>";
+		};
+		DFE27A2F2C721DC7002BAD11 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -681,7 +681,7 @@
 				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
 				DFE27A222C71FEE0002BAD11 /* TrackFeedResultDto.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
-				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
+				82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				DFE27A282C72048F002BAD11 /* TrackDetailDto.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
