@@ -37,10 +37,6 @@ struct StubMusicController: MusicControllerInterface {
         print(#function)
     }
     
-    func repeatPlayback() {
-        print(#function)
-    }
-    
     func currentDuration() -> AnyPublisher<Double, Error> {
         return Empty<Double, Error>().eraseToAnyPublisher()
     }

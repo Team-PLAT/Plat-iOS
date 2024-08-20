@@ -103,10 +103,6 @@ extension SpotifyMusicController {
         //
     }
     
-    func repeatPlayback() {
-        //
-    }
-    
     func currentDuration() -> AnyPublisher<Double, Error> {
         return Timer.publish(every: 0.5, on: .main, in: .common)
             .autoconnect()

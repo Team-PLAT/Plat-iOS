@@ -32,7 +32,7 @@ final class MusicControlUseCase {
 extension MusicControlUseCase {
     
     struct State {
-        var music: Music?
+        var activeMusic: Music?
         var isPaused: Bool
         var currentDuration: Double
     }
@@ -85,7 +85,7 @@ extension MusicControlUseCase {
     
     private func fetchMusic(isrc: String) {
         Task {
-            state.music = await musicController.fetchMusic(isrc)
+            state.activeMusic = await musicController.fetchMusic(isrc)
         }
     }
 }

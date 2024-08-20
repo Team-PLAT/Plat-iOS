@@ -24,7 +24,7 @@ struct TrackDetailView: View {
     @State private var isContentSheetPresented = false
     
     private var music: Music? {
-        musicControlUseCase.state.music
+        musicControlUseCase.state.activeMusic
     }
     
     var body: some View {
@@ -120,7 +120,7 @@ private struct MusicView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var music: Music? {
-        musicControlUseCase.state.music
+        musicControlUseCase.state.activeMusic
     }
     
     var body: some View {
@@ -147,7 +147,7 @@ private struct AlbumImage: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var albumImageUrl: URL? {
-        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
+        URL(string: musicControlUseCase.state.activeMusic?.albumImageUrl ?? "")
     }
     
     var body: some View {
@@ -231,6 +231,7 @@ private struct MusicControllerCell: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 16, height: 16)
+                    .foregroundStyle(.white)
             }
         }
     }

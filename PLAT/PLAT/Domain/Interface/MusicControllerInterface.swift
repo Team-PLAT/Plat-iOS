@@ -14,6 +14,5 @@ protocol MusicControllerInterface {
     func play(_ isrc: String)
     func pause()
     func resume()
-    func repeatPlayback()
     func currentDuration() -> AnyPublisher<Double, Error>
 }
