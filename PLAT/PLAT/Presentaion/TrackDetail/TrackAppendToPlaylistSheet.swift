@@ -11,12 +11,26 @@ import SwiftUI
 
 struct TrackAppendToPlaylistSheet: View {
     
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
+    @State private var scrollPosition: Int? = 0
+    
+    let playlists: [Playlist] = Array(repeating: MockDataBuilder.playlist, count: 20)
+    
     var body: some View {
         ZStack {
             Color.platBlack.ignoresSafeArea()
             VStack(spacing: 0) {
-                PagingScrollView()
+                Spacer()
+                
+                PagingScrollView(scrollPosition: $scrollPosition, playlists: playlists)
                     .safeAreaPadding([.horizontal], 150)
+                    .padding(.bottom, 32)
+                
+                AddButton(title: "\(playlists[scrollPosition ?? 0].title)") {
+                    trackDetailUseCase.effect(.addToPlaylist)
+                }
+                .padding(.bottom, 16)
             }
         }
     }
@@ -26,9 +40,9 @@ struct TrackAppendToPlaylistSheet: View {
 
 private struct PagingScrollView: View {
     
-    @State private var scrollPosition: Int? = 0
+    @Binding private(set) var scrollPosition: Int?
     
-    let playlists: [Playlist] = Array(repeating: MockDataBuilder.playlist, count: 20)
+    let playlists: [Playlist]
     
     var body: some View {
         VStack {
@@ -47,12 +61,11 @@ private struct PagingScrollView: View {
                 }
                 .scrollTargetLayout()
             }
+            .frame(height: 136)
+            .scrollIndicators(.hidden)
             .scrollTargetBehavior(.viewAligned)
             .scrollPosition(id: $scrollPosition, anchor: .center)
             .animation(.smooth, value: scrollPosition)
-        }
-        .onChange(of: scrollPosition) { _, value in
-            // TODO: 게시글 확인
         }
     }
 }
@@ -82,6 +95,35 @@ private struct ListCell: View {
             }
         }
         .shadow(color: .black.opacity(0.6), radius: 5, x: 0, y: 2)
+    }
+}
+
+// MARK: - AddButton
+
+private struct AddButton: View {
+    
+    let title: String
+    let tapAction: () -> Void
+    
+    var body: some View {
+        Button {
+            tapAction()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "text.badge.plus")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 16, height: 16)
+                
+                Text("\(title) 추가")
+                    .font(.Body.body4)
+                    .foregroundStyle(.white)
+            }
+            .padding(.horizontal, 12)
+            .frame(height: 32)
+            .background(.gray9)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+        }
     }
 }
 
