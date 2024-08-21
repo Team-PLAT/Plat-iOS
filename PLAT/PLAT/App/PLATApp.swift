@@ -14,7 +14,7 @@ struct PLATApp: App {
     
     // TODO: 추후 스트리밍 계정 선택할 때 주입해주기
     @State private var musicControlUseCase = MusicControlUseCase(
-        musicController: SpotifyMusicController.shared
+        musicController: StubMusicController()
     )
     
     var body: some Scene {
