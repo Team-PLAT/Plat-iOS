@@ -17,20 +17,20 @@ struct OnboardingView: View {
     var body: some View {
         NavigationStack(path: $pathModel.registerPaths) {
             VStack {
-                Image("plat")
+                Image(.imgPlat)
                     .resizable()
                     .frame(height: 20)
                     .padding(.top, 32)
                     .padding(.horizontal, 162)
                     .padding(.bottom, 24)
                 
-                Text("Place에 맞는 음악을,\nPLAT으로\nPLAY.", targetString: "PLAT", targetFont: Font.custom("Pretendard-ExtraBold", size: 34))
+                Text("Place에 맞는 음악을,\nPLAT으로\nPLAY.", targetString: "PLAT", targetFont: .CustomTitle.customTitle1)
                     .foregroundStyle(.white)
-                    .font(Font.custom("Pretendard-Regular", size: 34))
+                    .font(.CustomTitle.customTitle2)
                     .padding(.leading, 24)
                     .padding(.trailing, 82)
                 
-                LottieAnimationView(lottieName: "plat_map_animation_lottie", lottieSpeed: 3)
+                LottieAnimationView(lottieName: Lottie.map, lottieSpeed: 3)
                 
                 ActionButton(state: .enabled, title: "시작하기") {
                     self.authType = .signUp
@@ -61,22 +61,24 @@ struct OnboardingView: View {
                             .navigationBarBackButtonHidden()
                     }
                 }
-        } .environment(pathModel)
+        }
+        .environment(pathModel)
     }
 }
 
 // MARK: - LoginButton
+
 private struct LoginButton: View {
     @Environment(PathModel.self) var pathModel
     @Binding var authType: AuthType
     
     var body: some View {
-        Button(action: {
+        Button {
             self.authType = .signIn
             pathModel.registerPaths.append(.loginView)
-        }, label: {
+        } label: {
             Text("로그인")
-        })
+        }
     }
 }
 

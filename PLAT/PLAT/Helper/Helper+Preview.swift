@@ -12,4 +12,10 @@ enum PreviewHelper {
     static let mockInfoUseCase = InfoUseCase(infoService: StubInfoService())
     static let mockStreamAccountUseCase = StreamAccountUseCase(streamAccountService: StubStreamAccountService())
     static let mockLoginUseCase = LoginUseCase(loginService: LoginService())
+    static let mockTrackDetailUseCase = TrackDetailUseCase(
+        feedTrack: MockDataBuilder.feedTrack, 
+        track: MockDataBuilder.track,
+        trackService: StubTrackService()
+    )
+    static let mockTrackMapUseCase = TrackMapUseCase(trackMapService: StubTrackMapService())
 }

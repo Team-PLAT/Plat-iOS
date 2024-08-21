@@ -54,26 +54,27 @@ struct SelectStreamAccountView: View {
                 .padding(.horizontal, 38)
                 .padding(.bottom)
             
-            Button(action: {
+            Button {
                 isSheetPresented.toggle()
                 print("왜 스트리밍 계정을 연결하나요?")
-            }, label: {
+            } label: {
                 Text("왜 스트리밍 계정을 연결하나요?")
                     .font(.Body.body4)
                     .underline()
-            })
+            }
             .padding(.horizontal, 108)
             .padding(.bottom)
         }
         .foregroundStyle(.white)
         .background(.platBackground)
-        .sheet(isPresented: $isSheetPresented, content: {
+        .sheet(isPresented: $isSheetPresented) {
             WhyConnectStreamAccountSheet()
-        })
+        }
     }
 }
 
 // MARK: WhyConnectStreamAccountSheet
+
 private struct WhyConnectStreamAccountSheet: View {
     var body: some View {
         

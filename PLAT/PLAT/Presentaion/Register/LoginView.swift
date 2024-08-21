@@ -24,6 +24,7 @@ struct LoginView: View {
 }
 
 // MARK: - SignUpView
+
 private struct SignUpView: View {
     @Binding var authType: AuthType
     
@@ -40,7 +41,7 @@ private struct SignUpView: View {
             
             Spacer()
             
-            Image(.headphone)
+            Image(.imgHeadphone)
                 .resizable()
                 .frame(width: 270, height: 270)
                 .padding(.bottom, 68)
@@ -60,7 +61,8 @@ private struct SignUpView: View {
             
             SwitchSignInView(authType: $authType)
             
-        }.background(.black)
+        }
+        .background(.black)
     }
 }
 
@@ -83,10 +85,11 @@ private struct AppleSignUpButton: View {
                     print("로그인 실패 \(error.localizedDescription)")
                 }
             }
-        ).signInWithAppleButtonStyle(.white)
-            .frame(height: 54)
-            .cornerRadius(8)
-            .padding(.horizontal, 18)
+        )
+        .signInWithAppleButtonStyle(.white)
+        .frame(height: 54)
+        .cornerRadius(8)
+        .padding(.horizontal, 18)
     }
 }
 
@@ -105,8 +108,9 @@ private struct PolicyNoticeText: View {
                     infoUseCase.checkPrivacyPolicy()
                 }
             Text("및")
-        }.font(.Body.body4)
-            .foregroundColor(.white)
+        }
+        .font(.Body.body4)
+        .foregroundColor(.white)
         
         HStack(spacing: 0) {
             Text("서비스 이용약관")
@@ -119,8 +123,9 @@ private struct PolicyNoticeText: View {
                 }
             
             Text("에 동의하는 것입니다.")
-        }.font(.Body.body4)
-            .foregroundColor(.white)
+        }
+        .font(.Body.body4)
+        .foregroundColor(.white)
     }
 }
 
@@ -143,12 +148,13 @@ private struct SwitchSignInView: View {
                 .foregroundColor(.platPurple)
                 .onTapGesture {
                     self.authType = .signIn
-                }
+            }
         }
     }
 }
 
 // MARK: - SignInView
+
 private struct SignInView: View {
     @Binding var authType: AuthType
     
@@ -165,7 +171,7 @@ private struct SignInView: View {
             
             Spacer()
             
-            LottieAnimationView(lottieName: "plat_finger_animation_lottie", lottieSpeed: 1.5)
+            LottieAnimationView(lottieName: Lottie.finger, lottieSpeed: 1.5)
             
             Spacer()
             
@@ -178,7 +184,8 @@ private struct SignInView: View {
                 .background(.white)
             
             SwitchSignUpView(authType: $authType)
-        }.background(.black)
+        }
+        .background(.black)
     }
 }
 
@@ -201,10 +208,11 @@ struct AppleContinueButton: View {
                     print("로그인 실패 \(error.localizedDescription)")
                 }
             }
-        ).signInWithAppleButtonStyle(.white)
-            .frame(height: 54)
-            .cornerRadius(8)
-            .padding(.horizontal, 18)
+        )
+        .signInWithAppleButtonStyle(.white)
+        .frame(height: 54)
+        .cornerRadius(8)
+        .padding(.horizontal, 18)
     }
 }
 
@@ -227,7 +235,7 @@ private struct SwitchSignUpView: View {
                 .foregroundColor(.platPurple)
                 .onTapGesture {
                     self.authType = .signUp
-                }
+            }
         }
     }
 }
@@ -237,5 +245,4 @@ private struct SwitchSignUpView: View {
         .environment(PreviewHelper.mockLoginUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PathModel())
-    
 }
