@@ -19,7 +19,7 @@ struct PLATApp: App {
     
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            TrackDetailView()
         }
         .environment(musicControlUseCase)
     }

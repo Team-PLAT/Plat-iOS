@@ -17,7 +17,7 @@ struct TrackDetailView: View {
     // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.trackList.randomElement()!, // TODO: 일단 랜덤!
+        track: MockDataBuilder.trackList.randomElement() ?? MockDataBuilder.track, // TODO: 일단 랜덤!
         trackService: StubTrackService()
     )
     
@@ -200,6 +200,8 @@ private struct MusicControllerView: View {
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
+    @State private var isTrackAppendToPlaylistSheetPresented = true
+    
     var body: some View {
         HStack(spacing: 24) {
             MusicControllerCell(
@@ -212,7 +214,7 @@ private struct MusicControllerView: View {
             MusicControllerCell(
                 systemImage: "text.badge.plus",
                 tapAction: {
-                    trackDetailUseCase.effect(.addToPlaylist)
+                    isTrackAppendToPlaylistSheetPresented.toggle()
                 }
             )
             
@@ -229,6 +231,11 @@ private struct MusicControllerView: View {
                     // TODO: 더보기 창 띄우기
                 }
             )
+        }
+        .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
+            TrackAppendToPlaylistSheet()
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(286)])
         }
     }
 }
