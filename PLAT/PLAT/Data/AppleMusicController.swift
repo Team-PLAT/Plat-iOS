@@ -15,7 +15,6 @@ import MediaPlayer
 final class AppleMusicController: NSObject, MusicControllerInterface {
     
     var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
-    var song: Song? = nil
     
     static let shared = AppleMusicController()
 }
@@ -24,10 +23,19 @@ final class AppleMusicController: NSObject, MusicControllerInterface {
 
 extension AppleMusicController {
     
+    /// 권한 요청
     func setup(_ music: Music) {
-        print(#function)
+        Task {
+            let isAuthorized = await requestAuthorization()
+            guard isAuthorized else {
+                print("권한 없음")
+                return
+            }
+            self.play(music)
+        }
     }
-    
+
+    /// 음악 첫 재생
     func play(_ music: Music) {
         Task {
             if let currentSongId = await requestSongId(for: music.isrc) {
@@ -40,46 +48,46 @@ extension AppleMusicController {
         }
     }
     
+    /// 음악 일시정지
     func pause() {
-        print(#function)
+        musicPlayer.pause()
     }
     
+    /// 음악 재생
     func resume() {
-        print(#function)
+        musicPlayer.play()
     }
     
     func repeatPlayback() {
         print(#function)
     }
     
+    /// 현재 음악 시간
     func currentDuration() -> AnyPublisher<Double, Error> {
-        print(#function)
-        
-
-        let duration: Double = 180.0 // 예를 들어, 3분 0초
-        return Just(duration)
-            .setFailureType(to: Error.self) // 실패 타입 설정
-            .eraseToAnyPublisher() // AnyPublisher로 변환
+        return Timer.publish(every: 0.5, on: .main, in: .common)
+            .autoconnect()
+            .flatMap { [weak self] _ -> Future<Double, Error> in
+                return Future { promise in
+                    let playbackPosition = self?.musicPlayer.currentPlaybackTime ?? 0.0
+                    promise(.success(playbackPosition))
+                }
+            }
+            .eraseToAnyPublisher()
     }
 }
 
 extension AppleMusicController {
     
-    ///애플 뮤직 권한 요청
+    /// 애플 뮤직 권한을 요청합니다.
     func requestAuthorization() async -> Bool {
         let status = await MusicAuthorization.request()
         return status == .authorized
     }
     
-    /// isrc -> songId로 변환
+    /// ISRC값을 이용해 songId를 반환받습니다.
     private func requestSongId(for isrc: String) async -> String? {
-        let isAuthorized = await requestAuthorization()
-        guard isAuthorized else {
-            print("권한 없음")
-            return nil
-        }
-        
-        let urlString = "https://api.music.apple.com/v1/catalog/us/songs?filter[isrc]=\(isrc)"
+        print("잘 들어오신 isrc", isrc)
+        let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"
         
         guard let url = URL(string: urlString) else {
             print("잘못된 URL")
@@ -88,6 +96,7 @@ extension AppleMusicController {
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(Config.appleMusicToken)", forHTTPHeaderField: "Authorization")
         
         do {
@@ -109,5 +118,3 @@ extension AppleMusicController {
         
     }
 }
-
-

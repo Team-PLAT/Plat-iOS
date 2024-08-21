@@ -32,6 +32,7 @@ final class MusicControlUseCase {
 extension MusicControlUseCase {
     
     struct State {
+        var music: Music?
         var isPaused: Bool
         var currentDuration: Double
     }
@@ -42,7 +43,7 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
-        case setup(musis: Music)
+        case setup(music: Music)
         case play(music: Music)
         case togglePlayback
     }

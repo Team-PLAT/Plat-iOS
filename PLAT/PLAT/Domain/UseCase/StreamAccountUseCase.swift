@@ -40,9 +40,9 @@ extension StreamAccountUseCase {
     }
     
     /// 애플 뮤직 권한 요청하기
-    func requestAppleMusic() async -> Bool {
-        await streamAccountService.requestAppleMusic()
-    }
+//    func requestAppleMusic() async -> Bool {
+//        await streamAccountService.requestAppleMusic()
+//    }
     
     /// 애플 뮤직 구독 여부 판단하기
 //    func fetchAppleMusicSubscription() {
