@@ -17,22 +17,11 @@ struct TrackDetailView: View {
     // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
+        track: MockDataBuilder.trackList.randomElement()!, // TODO: 일단 랜덤!
         trackService: StubTrackService()
     )
     
     @State private var isContentSheetPresented = false
-    
-    init(track: Track) {
-        self._trackDetailUseCase = State(
-            initialValue: TrackDetailUseCase(
-                feedTrack: [track],
-                track: track,
-                trackService: StubTrackService()
-                //                ,musicController: StubMusicController()
-            )
-        )
-    }
     
     private var music: Music {
         trackDetailUseCase.track.music
@@ -83,14 +72,24 @@ struct TrackDetailView: View {
 // MARK: - Background
 
 private struct Background: View {
+    
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
     var body: some View {
         Group {
             // TODO: 만약 Track에 이미지가 있다면 다른 이미지로 처리하기
-            Image(.imgTestBackground)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 0)
-
+            if let imageString = trackDetailUseCase.track.imageUrl,
+               let imageURL = URL(string: imageString) {
+                AsyncImage(url: imageURL) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 0)
+                    }
+                }
+            }
+            
             Color.black.opacity(0.6)
         }
         .ignoresSafeArea()
@@ -369,6 +368,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView(track: MockDataBuilder.track)
+    TrackDetailView()
         .environment(MusicControlUseCase(musicController: StubMusicController()))
 }

@@ -26,7 +26,7 @@ struct MockDataBuilder {
                 location: currentLocation,
                 platter: friend,
                 content: "멀보냐능!",
-                imageUrl: "",
+                imageUrl: nil,
                 createdDate: .now,
                 isLike: true,
                 isReported: false

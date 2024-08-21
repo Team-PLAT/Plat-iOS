@@ -25,7 +25,7 @@ struct MusicIndicator: View {
                 Image(systemName: "backward.end.fill")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 24, height: 24)
+                    .frame(width: 20, height: 20)
             }
             
             Button {
@@ -34,7 +34,7 @@ struct MusicIndicator: View {
                 Image(systemName: isPaused ? "play.fill" : "pause.fill")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 28, height: 28)
+                    .frame(width: 24, height: 24)
                     .transaction { transaction in
                         transaction.animation = nil
                     }
@@ -42,12 +42,11 @@ struct MusicIndicator: View {
             
             Button {
                 // TODO: 다음 음악 재생
-                // musicControlerUseCase.effect(.play(music: <#T##Music#>))
             } label: {
                 Image(systemName: "forward.end.fill")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 24, height: 24)
+                    .frame(width: 20, height: 20)
             }
         }
         .foregroundStyle(.white)
