@@ -59,7 +59,7 @@ struct TrackDetailView: View {
                     .padding(.bottom, 0)
             }
         }
-        .background(.black.opacity(0.6))
+        .presentationBackground(.thinMaterial.opacity(0.5))
         .environment(trackDetailUseCase)
         .onTapGesture {
             withAnimation(.easeInOut) {
@@ -260,6 +260,7 @@ private struct MusicControllerCell: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 16, height: 16)
+                    .foregroundStyle(.white)
             }
         }
     }

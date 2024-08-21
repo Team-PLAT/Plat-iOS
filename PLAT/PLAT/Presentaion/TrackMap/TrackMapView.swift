@@ -44,9 +44,8 @@ struct TrackMapView: View {
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
-            if let track = selectedTrack {
+            if let _ = selectedTrack {
                 TrackDetailView()
-                    .presentationBackground(.thinMaterial.opacity(0.5))
             } else {
                 Text("No Track Selected")
             }

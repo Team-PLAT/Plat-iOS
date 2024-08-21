@@ -49,7 +49,7 @@ private struct PagingScrollView: View {
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
-                LazyHStack(spacing: 0) {
+                HStack(spacing: 0) {
                     ForEach(0..<playlists.count, id: \.self) { index in
                         ListCell(playlist: playlists[index])
                             .id(index)
