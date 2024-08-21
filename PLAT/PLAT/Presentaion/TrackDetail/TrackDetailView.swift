@@ -200,7 +200,7 @@ private struct MusicControllerView: View {
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var isTrackAppendToPlaylistSheetPresented = true
+    @State private var isTrackAppendToPlaylistSheetPresented = false
     
     var body: some View {
         HStack(spacing: 24) {
