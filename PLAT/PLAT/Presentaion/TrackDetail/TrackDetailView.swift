@@ -279,20 +279,23 @@ private struct BottomView: View {
         if isContentSheetPresented {
             return origin
         } else {
-            return String(origin?.prefix(10) ?? "") + "..."
+            if let safeOrigin = origin {
+                return String(safeOrigin.prefix(10)) + "..."
+            } else {
+                return nil
+            }
         }
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            ProfileHeader()
+            
             if let content = content {
-                ProfileHeader()
                 ProfileContent(
                     isContentSheetPresented: $isContentSheetPresented,
                     content: content
                 )
-            } else {
-                EmptyView()
             }
         }
     }
@@ -358,7 +361,7 @@ private struct ProfileContent: View {
                 .font(.Body.body5)
                 .foregroundStyle(.white)
             
-            if !isContentSheetPresented {
+            if !isContentSheetPresented && content.count >= 10 {
                 Button {
                     withAnimation(.easeInOut) {
                         isContentSheetPresented.toggle()
