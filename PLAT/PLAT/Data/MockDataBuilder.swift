@@ -37,7 +37,7 @@ struct MockDataBuilder {
                 music: music,
                 location: currentLocation,
                 platter: friend,
-                content: "멀보냐능!자고싶다자고싶다 졸려 엥엥엥에에에엥 방학을 주라",
+                content: "멀보냐능!",
                 imageUrl: "",
                 createdDate: .now,
                 isLike: true,

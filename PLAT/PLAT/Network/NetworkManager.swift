@@ -8,17 +8,17 @@
 import Foundation
 
 protocol APIMethod {
-    func get<T: Decodable>(url: URL, authToken: String) async throws -> T
-    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async throws -> T
-    func post<T: Decodable, U: Encodable>(url: URL, body: U) async throws -> T
-    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async throws -> T
-    func delete<T: Decodable>(url: URL, authToken: String) async throws -> T
+    func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error>
+    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error>
+    func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
+    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error>
+    func delete<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error>
 }
 
 class NetworkClient: APIMethod {
     
     /// GET (쿼리로 데이터 전달)
-    func get<T: Decodable>(url: URL, authToken: String) async throws -> T {
+    func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
@@ -29,20 +29,22 @@ class NetworkClient: APIMethod {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                print("GET 요청 실패: \(response)")
-                throw URLError(.badServerResponse)
+                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
             }
             
             let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return decodedData
+            return .success(decodedData)
         } catch {
-            print("GET 요청 오류 발생: \(error.localizedDescription)")
-            throw error
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
     /// POST (Authorization)
-    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async throws -> T {
+    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -55,20 +57,22 @@ class NetworkClient: APIMethod {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                print("POST 요청 실패: \(response)")
-                throw URLError(.badServerResponse)
+                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
             }
             
             let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return decodedData
+            return .success(decodedData)
         } catch {
-            print("POST 요청 오류 발생: \(error.localizedDescription)")
-            throw error
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
     /// POST (login)
-    func post<T: Decodable, U: Encodable>(url: URL, body: U) async throws -> T {
+    func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -80,20 +84,22 @@ class NetworkClient: APIMethod {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                print("POST 요청 실패: \(response)")
-                throw URLError(.badServerResponse)
+                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
             }
             
             let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return decodedData
+            return .success(decodedData)
         } catch {
-            print("POST 요청 오류 발생: \(error.localizedDescription)")
-            throw error
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
     /// PATCH
-    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async throws -> T {
+    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
             request.httpMethod = "PATCH"
@@ -106,20 +112,22 @@ class NetworkClient: APIMethod {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                print("PATCH 요청 실패: \(response)")
-                throw URLError(.badServerResponse)
+                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
             }
             
             let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return decodedData
+            return .success(decodedData)
         } catch {
-            print("PATCH 요청 오류 발생: \(error.localizedDescription)")
-            throw error
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
     
     /// DELETE
-    func delete<T: Decodable>(url: URL, authToken: String) async throws -> T {
+    func delete<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
             request.httpMethod = "DELETE"
@@ -130,15 +138,17 @@ class NetworkClient: APIMethod {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                print("DELETE 요청 실패: \(response)")
-                throw URLError(.badServerResponse)
+                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
             }
             
             let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return decodedData
+            return .success(decodedData)
         } catch {
-            print("DELETE 요청 오류 발생: \(error.localizedDescription)")
-            throw error
+            if let urlError = error as? URLError {
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                return .failure(NetworkError.error(error))
+            }
         }
     }
 }

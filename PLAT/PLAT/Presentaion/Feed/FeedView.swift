@@ -9,11 +9,9 @@ import SwiftUI
 
 struct FeedView: View {
     
-    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
+    @State private var feedTrackUseCase: FeedTrackUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
-        trackService: StubTrackService(),
-        trackId: MockDataBuilder.track.id
+        feedTrackService: FeedTrackService()
     )
     
     var body: some View {
@@ -21,13 +19,18 @@ struct FeedView: View {
             Image(.imgFeedlogo)
                 .padding(.leading, 18)
                 .padding(.bottom, 20)
+            
             ScrollView {
-                ForEach(MockDataBuilder.feedTrack) { track in
-                    FeedRowView(track: track)
+                ForEach(MockDataBuilder.feedTrack.indices, id: \.self) { index in
+                    FeedRowView(
+                        track: MockDataBuilder.feedTrack[index],
+                        trackIndex: index,
+                        playlistId: " "
+                    )
                 }
             }
         }
-        .environment(trackDetailUseCase)
+        .environment(feedTrackUseCase)
         .refreshable {
             // TODO: fetch 한 값 불러오기
         }
@@ -37,13 +40,16 @@ struct FeedView: View {
 // MARK: - FeedRowView
 
 private struct FeedRowView: View {
-    
+
     let track: Track
+    let trackIndex: Int
+    let playlistId: String
     
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 6) {
                 FeedProfileImage(track: track)
+                    .padding(.leading, 12)
                 
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 0) {
@@ -51,7 +57,8 @@ private struct FeedRowView: View {
                             FeedHeaderView(track: track)
                             FeedLocationView()
                         }
-                        .padding(.trailing, 96)
+                        
+                        Spacer()
                         
                         Button {
                             // 신고 알럿 창 띄우기
@@ -61,6 +68,7 @@ private struct FeedRowView: View {
                                 .frame(width: 20, height: 20)
                                 .padding(.bottom, 8)
                         }
+                        .padding(.trailing, 18)
                     }
                     .padding(.bottom, 8)
                     
@@ -73,7 +81,7 @@ private struct FeedRowView: View {
                     FeedContentView(track: track)
                         .padding(.bottom, 8)
                     
-                    FeedActionView()
+                    FeedActionView(trackIndex: trackIndex, playlistId: playlistId)
                         .padding(.bottom, 18)
                 }
             }
@@ -92,15 +100,11 @@ private struct FeedProfileImage: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
-    
     private var platter: Platter {
         track.platter
-        //        trackDetailUseCase.track.platter
     }
     
     private var profileImageUrl: URL? {
-//                URL(string: trackDetailUseCase.track.platter.profileImageUrl)
         URL(string: track.platter.profileImageUrl)
     }
     
@@ -127,10 +131,7 @@ private struct FeedHeaderView: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
-    
     private var platter: Platter {
-        //        trackDetailUseCase.track.platter
         track.platter
     }
     
@@ -155,7 +156,7 @@ private struct FeedHeaderView: View {
 
 private struct FeedLocationView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     
     var body: some View {
         HStack(spacing: 4) {
@@ -164,8 +165,8 @@ private struct FeedLocationView: View {
                 .scaledToFill()
                 .frame(width: 12, height: 16)
             
-            // TODO: 대한민국 경상북도 제거 후 변경
-            Text(trackDetailUseCase.state.place.address)
+            // TODO: 주소 처리
+            Text(feedTrackUseCase.state.place.address)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
             
@@ -179,15 +180,14 @@ private struct FeedPlayer: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     
     private var music: Music {
-        //        trackDetailUseCase.track.music
         track.music
     }
     
     private var isPaused: Bool {
-        trackDetailUseCase.state.isPaused
+        feedTrackUseCase.state.isPaused
     }
     
     var body: some View {
@@ -224,7 +224,7 @@ private struct FeedPlayer: View {
                 Button {
                     // TODO: MusicControlUseCase 재생 토글
                 } label: {
-                    Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                    Image(systemName: isPaused ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
@@ -241,10 +241,7 @@ private struct FeedAlbumImage: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
-    
     private var albumImageUrl: URL? {
-        //        URL(string: trackDetailUseCase.track.music.albumImageUrl)
         URL(string: track.music.albumImageUrl)
     }
     
@@ -269,10 +266,7 @@ private struct FeedAlbumImage: View {
 private struct FeedContentImage: View {
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
-    
     private var contentImageUrl: URL? {
-        //        URL(string: trackDetailUseCase.track.imageUrl ?? "")
         URL(string: track.imageUrl ?? "")
     }
     
@@ -302,13 +296,10 @@ private struct FeedContentView: View {
     
     let track: Track
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
-    
     @State private var isLimit: Bool?
     @State private var isExpended: Bool = false
     
     private var text: String? {
-        //        trackDetailUseCase.track.content ?? ""
         track.content ?? ""
     }
     
@@ -357,7 +348,7 @@ private struct FeedContentView: View {
                             .padding(.top, 20)
                             .onTapGesture {
                                 self.isExpended.toggle()
-                            }
+                        }
                     }
                 }
             }
@@ -371,7 +362,10 @@ private struct FeedContentView: View {
 
 private struct FeedActionView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    var trackIndex: Int
+    var playlistId: String
+    
+    @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     
     @State private var isLiked: Bool = false
     
@@ -379,7 +373,7 @@ private struct FeedActionView: View {
         HStack(spacing: 0) {
             Button {
                 isLiked.toggle()
-                trackDetailUseCase.effect(.likeTrack)
+                feedTrackUseCase.effect(.likeTrack(index: trackIndex))
             } label: {
                 Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
                     .foregroundColor(.white)
@@ -388,22 +382,22 @@ private struct FeedActionView: View {
             }
             
             Button {
-                trackDetailUseCase.effect(.addToPlaylist)
+                feedTrackUseCase.effect(.addToPlaylist(index: trackIndex, playlistId: playlistId))
             } label: {
                 Image(systemName: "text.badge.plus")
                     .foregroundColor(.white)
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 220)
             }
-            
-            Button {
-                // TODO: MusicControlUseCase 다시 재생(근데 얘는 없어져야함)
-            } label: {
-                Image(systemName: "repeat")
-                    .foregroundColor(.white)
-                    .frame(width: 20, height: 20)
-                    .padding(.trailing, 18)
-            }
+    
+//            Button {
+//                // TODO: MusicControlUseCase 다시 재생(근데 얘는 없어져야함)
+//            } label: {
+//                Image(systemName: "repeat")
+//                    .foregroundColor(.white)
+//                    .frame(width: 20, height: 20)
+//                    .padding(.trailing, 18)
+//            }
         }
     }
 }

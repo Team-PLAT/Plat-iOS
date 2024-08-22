@@ -18,7 +18,7 @@ struct TrackDetailView: View {
     @State private var trackDetailUseCase: TrackDetailUseCase
     
     @State private var isContentSheetPresented = false
-    
+
     init(trackId: Track.ID) {
         self.trackDetailUseCase = TrackDetailUseCase(
             feedTrack: MockDataBuilder.feedTrack,
