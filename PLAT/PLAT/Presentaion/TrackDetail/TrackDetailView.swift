@@ -17,9 +17,11 @@ struct TrackDetailView: View {
     // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.trackList.randomElement() ?? MockDataBuilder.track, // TODO: 일단 랜덤!
+        track: MockDataBuilder.trackList[3], // TODO: 일단 랜덤!
         trackService: StubTrackService()
     )
+    
+    // MockDataBuilder.trackList.randomElement() ?? MockDataBuilder.track
     
     @State private var isContentSheetPresented = false
     
@@ -168,6 +170,9 @@ private struct AlbumImage: View {
     
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
+    private let imageSize: CGFloat = 200
+    private let cornerRaduis: CGFloat = 12
+    
     private var albumImageUrl: URL? {
         URL(string: trackDetailUseCase.track.music.albumImageUrl)
     }
@@ -178,15 +183,11 @@ private struct AlbumImage: View {
                 image
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 200, height: 200)
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 12
-                        )
-                    )
+                    .frame(width: imageSize, height: imageSize)
+                    .clipShape(RoundedRectangle(cornerRadius: cornerRaduis))
             } else {
-                RoundedRectangle(cornerRadius: 12)
-                    .frame(width: 200, height: 200)
+                RoundedRectangle(cornerRadius: cornerRaduis)
+                    .frame(width: imageSize, height: imageSize)
                     .foregroundStyle(.gray9)
             }
         }
@@ -205,28 +206,28 @@ private struct MusicControllerView: View {
     var body: some View {
         HStack(spacing: 24) {
             MusicControllerCell(
-                systemImage: "heart",
+                systemImage: SystemImage.like,
                 tapAction: {
                     trackDetailUseCase.effect(.likeTrack)
                 }
             )
             
             MusicControllerCell(
-                systemImage: "text.badge.plus",
+                systemImage: SystemImage.addToPlaylist,
                 tapAction: {
                     isTrackAppendToPlaylistSheetPresented.toggle()
                 }
             )
             
             MusicControllerCell(
-                systemImage: "repeat",
+                systemImage: SystemImage.postWithThisMusic,
                 tapAction: {
-                    // TODO: 반복 재생
+                    // TODO: 이 음악으로 내가 게시하기(추후 개발)
                 }
             )
             
             MusicControllerCell(
-                systemImage: "ellipsis.circle",
+                systemImage: SystemImage.seeMore,
                 tapAction: {
                     // TODO: 더보기 창 띄우기
                 }
@@ -247,19 +248,22 @@ private struct MusicControllerCell: View {
     let systemImage: String
     let tapAction: () -> Void
     
+    private let backCircleSize: CGFloat = 36
+    private let systemImageSize: CGFloat = 16
+    
     var body: some View {
         Button {
             tapAction()
         } label: {
             ZStack {
                 Circle()
-                    .frame(width: 36, height: 36)
+                    .frame(width: backCircleSize, height: backCircleSize)
                     .foregroundStyle(.gray9)
                 
                 Image(systemName: systemImage)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 16, height: 16)
+                    .frame(width: systemImageSize, height: systemImageSize)
                     .foregroundStyle(.white)
             }
         }
@@ -274,17 +278,24 @@ private struct BottomView: View {
     
     @Binding private(set) var isContentSheetPresented: Bool
     
+    /// 현재 Track의 Content를 반환합니다.
     private var content: String? {
         let origin = trackDetailUseCase.track.content
         if isContentSheetPresented {
             return origin
         } else {
             if let safeOrigin = origin {
-                return String(safeOrigin.prefix(10)) + "..."
+                let contentLimit = Constant.trackContentSeeMoreButtonLimit
+                return trimContentWithDot(safeOrigin, size: contentLimit)
             } else {
                 return nil
             }
         }
+    }
+    
+    /// 문자열을 주어진 글자수에 맞게 잘라낸 후 ...을 붙여 반환합니다.
+    func trimContentWithDot(_ content: String, size: Int) -> String {
+        return String(content.prefix(size)) + "..."
     }
     
     var body: some View {
@@ -307,10 +318,15 @@ private struct ProfileHeader: View {
     
     @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     
+    /// 프로필 이미지 사이즈
+    private let profileImageSize: CGFloat = 40
+    
+    /// 현재 Track을 업로드한 Platter를 반환합니다.
     private var platter: Platter {
         trackDetailUseCase.track.platter
     }
     
+    /// 프로필 이미지 URL을 반환합니다.
     private var profileImageUrl: URL? {
         let urlString = platter.profileImageUrl
         return URL(string: urlString)
@@ -323,14 +339,13 @@ private struct ProfileHeader: View {
                     image
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 40, height: 40)
                         .clipShape(Circle())
                 } else {
                     Circle()
-                        .frame(width: 40, height: 40)
                         .foregroundStyle(.gray9)
                 }
             }
+            .frame(width: profileImageSize, height: profileImageSize)
             
             VStack(alignment: .leading, spacing: 0) {
                 Text(platter.nickname)
@@ -338,7 +353,6 @@ private struct ProfileHeader: View {
                 
                 Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
                     .font(.Body.body5)
-                
             }
             .foregroundStyle(.white)
             
@@ -351,9 +365,17 @@ private struct ProfileHeader: View {
 
 private struct ProfileContent: View {
     
+    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    
     @Binding private(set) var isContentSheetPresented: Bool
     
     let content: String
+    
+    /// 더보기 버튼이 보이는 분기를 계산합니다.
+    private var isSeeMoreButtonVisible: Bool {
+        let isContentCountLimit = content.count >= Constant.trackContentSeeMoreButtonLimit
+        return !isContentSheetPresented && isContentCountLimit
+    }
     
     var body: some View {
         HStack {
@@ -361,16 +383,14 @@ private struct ProfileContent: View {
                 .font(.Body.body5)
                 .foregroundStyle(.white)
             
-            if !isContentSheetPresented && content.count >= 10 {
-                Button {
+            if isSeeMoreButtonVisible {
+                Button("더보기") {
                     withAnimation(.easeInOut) {
                         isContentSheetPresented.toggle()
                     }
-                } label: {
-                    Text("더보기")
-                        .font(.Body.body5)
-                        .foregroundStyle(.platPurple)
                 }
+                .font(.Body.body5)
+                .foregroundStyle(.platPurple)
             }
         }
     }
@@ -380,5 +400,5 @@ private struct ProfileContent: View {
 
 #Preview {
     TrackDetailView()
-        .environment(MusicControlUseCase(musicController: StubMusicController()))
+        .environment(PreviewHelper.mockMusicControlUseCase)
 }
