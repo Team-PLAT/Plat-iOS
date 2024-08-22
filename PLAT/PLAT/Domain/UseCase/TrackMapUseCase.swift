@@ -13,7 +13,7 @@ final class TrackMapUseCase {
     
     private(set) var trackMapService: TrackMapServiceInterface
     private(set) var state: State
-    private(set) var locationManager = LocationManager()
+    var locationManager = LocationManager()
     
     init(trackMapService: TrackMapServiceInterface) {
         self.trackMapService = trackMapService

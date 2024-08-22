@@ -19,11 +19,12 @@ struct TrackMapView: View {
     @State private var playlist: Playlist?
     
     var body: some View {
+        @Bindable var trackMapUseCase = trackMapUseCase
         ZStack(alignment: .topLeading) {
-            Map(position: .init(
-                get: { trackMapUseCase.locationManager.position },
-                set: { _ in }),
-                interactionModes: []) {
+            Map(
+                position: $trackMapUseCase.locationManager.position,
+                interactionModes: []
+            ) {
                 UserAnnotation()
                 
                 ForEach(trackMapUseCase.state.trackList) { track in
@@ -50,12 +51,7 @@ struct TrackMapView: View {
             if let trackId = selectedTrackId {
                 TrackDetailView(trackId: trackId)
                     .presentationBackground(.thinMaterial.opacity(0.5))
-            } else {
-                Text("No Track Selected")
             }
-        }
-        .onChange(of: showTrackDetail) { newValue, _ in
-            print("showTrackDetail changed: \(newValue)")
         }
         .onAppear {
             if let location = trackMapUseCase.locationManager.location {
@@ -65,27 +61,12 @@ struct TrackMapView: View {
                     playlist = await trackMapUseCase.createPlatPlaylist(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
                     print("Playlist created with \(playlist?.trackList.count ?? 0) tracks")
                 }
-            } else {
-                print("Location 아직 없어임마")
             }
         }
+        .onChange(of: trackMapUseCase.locationManager.position) { _, newValue in
+            print("얌마 값 바꼈다잉: \(newValue)")
+        }
     }
-}
-
-func getMapVisibleCoordinates(mapView: MKMapView) {
-    // 현재 보이는 맵의 Rect를 가져옴
-    let visibleMapRect = mapView.visibleMapRect
-    
-    // 최상단 왼쪽 좌표 (북서쪽)
-    let topLeftPoint = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY)
-    let topLeftCoordinate = topLeftPoint.coordinate
-    
-    // 최하단 오른쪽 좌표 (남동쪽)
-    let bottomRightPoint = MKMapPoint(x: visibleMapRect.maxX, y: visibleMapRect.maxY)
-    let bottomRightCoordinate = bottomRightPoint.coordinate
-    
-    print("Top Left Coordinate: \(topLeftCoordinate.latitude), \(topLeftCoordinate.longitude)")
-    print("Bottom Right Coordinate: \(bottomRightCoordinate.latitude), \(bottomRightCoordinate.longitude)")
 }
 
 // MARK: - CustomMarkerView
@@ -219,6 +200,24 @@ private struct MapButtonsView: View {
             }
         }
     }
+}
+
+// MARK: - Functions
+
+func getMapVisibleCoordinates(mapView: MKMapView) {
+    // 현재 보이는 맵의 Rect를 가져옴
+    let visibleMapRect = mapView.visibleMapRect
+    
+    // 최상단 왼쪽 좌표 (북서쪽)
+    let topLeftPoint = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY)
+    let topLeftCoordinate = topLeftPoint.coordinate
+    
+    // 최하단 오른쪽 좌표 (남동쪽)
+    let bottomRightPoint = MKMapPoint(x: visibleMapRect.maxX, y: visibleMapRect.maxY)
+    let bottomRightCoordinate = bottomRightPoint.coordinate
+    
+    print("Top Left Coordinate: \(topLeftCoordinate.latitude), \(topLeftCoordinate.longitude)")
+    print("Bottom Right Coordinate: \(bottomRightCoordinate.latitude), \(bottomRightCoordinate.longitude)")
 }
 
 // MARK: - Preview
