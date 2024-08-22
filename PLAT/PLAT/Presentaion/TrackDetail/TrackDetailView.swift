@@ -17,11 +17,9 @@ struct TrackDetailView: View {
     // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.trackList[3], // TODO: 일단 랜덤!
+        track: MockDataBuilder.trackList.randomElement() ?? MockDataBuilder.track, // TODO: 일단 랜덤!
         trackService: StubTrackService()
     )
-    
-    // MockDataBuilder.trackList.randomElement() ?? MockDataBuilder.track
     
     @State private var isContentSheetPresented = false
     
