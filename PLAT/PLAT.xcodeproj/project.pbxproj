@@ -11,12 +11,12 @@
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
+		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
 		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
 		5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */; };
 		5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentView.swift */; };
 		5151BEBE2C74D6F3001DA80F /* TrackAppendSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEBD2C74D6F3001DA80F /* TrackAppendSearchView.swift */; };
-		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
 		51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F433312C340DB200FAFD14 /* Colors.xcassets */; };
@@ -122,12 +122,12 @@
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
 		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
 		5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackAppendService.swift; sourceTree = "<group>"; };
 		5151BEB72C742119001DA80F /* TrackAppendContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentView.swift; sourceTree = "<group>"; };
 		5151BEBD2C74D6F3001DA80F /* TrackAppendSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendSearchView.swift; sourceTree = "<group>"; };
-		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		51F433352C3411D400FAFD14 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -252,6 +252,14 @@
 			path = Lotties;
 			sourceTree = "<group>";
 		};
+		5151BEA92C71EAB5001DA80F /* Platting */ = {
+			isa = PBXGroup;
+			children = (
+				5151BEAA2C71EB73001DA80F /* PlattingView.swift */,
+			);
+			path = Platting;
+			sourceTree = "<group>";
+		};
 		5151BEAC2C72700E001DA80F /* TrackAppend */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,14 +268,6 @@
 				510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */,
 			);
 			path = TrackAppend;
-      sourceTree = "<group>";
-    };
-		5151BEA92C71EAB5001DA80F /* Platting */ = {
-			isa = PBXGroup;
-			children = (
-				5151BEAA2C71EB73001DA80F /* PlattingView.swift */,
-			);
-			path = Platting;
 			sourceTree = "<group>";
 		};
 		51F433332C34115900FAFD14 /* Fonts */ = {
@@ -944,30 +944,35 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PLAT;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 주변에 있는 트랙을 가져오고 플레이리스트를 만들기 위해 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -981,30 +986,35 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PLAT;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 주변에 있는 트랙을 가져오고 플레이리스트를 만들기 위해 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = feather.com.cabin.plat;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
