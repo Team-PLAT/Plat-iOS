@@ -183,7 +183,7 @@ struct MockDataBuilder {
             title: "Fix you",
             artist: "ColdPlay",
             albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
-            duration: 365
+            duration: 295.533
         )
     }
     

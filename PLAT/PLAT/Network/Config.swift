@@ -11,6 +11,7 @@ enum Config {
     enum Keys {
         enum Plist {
             static let baseURL = "BASE_URL"
+            static let appleMusicToken = "APPLE_MUSIC_TOKEN"
         }
     }
     
@@ -28,5 +29,12 @@ extension Config {
             fatalError("Config.baseURL 오류")
         }
         return key
+    }()
+    
+    static let appleMusicToken: String = {
+        guard let token = Config.infoDictionary[Keys.Plist.appleMusicToken] as? String else {
+            fatalError("Config.appleMusicToken 오류")
+        }
+        return token
     }()
 }

@@ -223,6 +223,7 @@ private struct FeedPlayer: View {
                 
                 Button {
                     // TODO: MusicControlUseCase 재생 토글
+//                    musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
                 } label: {
                     Image(systemName: isPaused ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)

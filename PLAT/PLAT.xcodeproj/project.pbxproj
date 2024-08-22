@@ -92,6 +92,9 @@
 		DF6DC9952C7434EA004A23F7 /* FeedTrackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */; };
 		DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */; };
 		DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */; };
+		DF6DC99B2C75CB9D004A23F7 /* AppleMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC99A2C75CB9D004A23F7 /* AppleMusicController.swift */; };
+		DF6DC99F2C75DF4B004A23F7 /* AppleMusicDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6DC99E2C75DF4B004A23F7 /* AppleMusicDTO.swift */; };
+		DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */; };
 		DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD110D52C4644D500696FCB /* Helper+Lottie.swift */; };
 		DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCB2C6C959F00D5252B /* Music.swift */; };
 		DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DCD2C6C95FD00D5252B /* Location.swift */; };
@@ -195,6 +198,9 @@
 		DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackUseCase.swift; sourceTree = "<group>"; };
 		DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackService.swift; sourceTree = "<group>"; };
 		DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTrackServiceInterface.swift; sourceTree = "<group>"; };
+		DF6DC99A2C75CB9D004A23F7 /* AppleMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicController.swift; sourceTree = "<group>"; };
+		DF6DC99E2C75DF4B004A23F7 /* AppleMusicDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicDTO.swift; sourceTree = "<group>"; };
+		DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAccountService.swift; sourceTree = "<group>"; };
 		DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PLAT.entitlements; sourceTree = "<group>"; };
 		DFD110D52C4644D500696FCB /* Helper+Lottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Lottie.swift"; sourceTree = "<group>"; };
 		DFDF9DCB2C6C959F00D5252B /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
@@ -423,7 +429,10 @@
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
+				DF6DC99A2C75CB9D004A23F7 /* AppleMusicController.swift */,
+				826933352C71C8B60004E0B5 /* SpotifyMusicController.swift */,
 				79842E8B2C7225FD0062F825 /* LocationManager.swift */,
+				DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -500,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				8269334B2C720A5C0004E0B5 /* SpotifyTrackDTO.swift */,
+				DF6DC99E2C75DF4B004A23F7 /* AppleMusicDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -679,6 +689,7 @@
 				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
+				DF6DC99F2C75DF4B004A23F7 /* AppleMusicDTO.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* LoginServiceInterface.swift in Sources */,
@@ -719,6 +730,9 @@
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
 				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
+				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
+				DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */,
+				DF6DC99B2C75CB9D004A23F7 /* AppleMusicController.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
@@ -763,6 +777,7 @@
 /* Begin XCBuildConfiguration section */
 		793278112C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF616E592C7340CC00CCDC9D /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -826,6 +841,7 @@
 		};
 		793278122C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF616E592C7340CC00CCDC9D /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -882,6 +898,7 @@
 		};
 		793278142C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF616E592C7340CC00CCDC9D /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -893,6 +910,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 주변에 있는 트랙을 가져오고 플레이리스트를 만들기 위해 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -917,6 +935,7 @@
 		};
 		793278152C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF616E592C7340CC00CCDC9D /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -928,6 +947,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "내 주변에 있는 트랙을 가져오고 플레이리스트를 만들기 위해 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
