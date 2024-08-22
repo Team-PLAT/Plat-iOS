@@ -19,14 +19,12 @@ struct TrackAppendContentView: View {
     @State var contentText = ""
     @State var selectedImage: UIImage?
     @State var isPhotoAlbumSheet = false
-    @State private var state : ContentState = .none
+    @State private var state: ContentState = .none
     @Binding var detent: PresentationDetent
     @Binding var music: Music
     @Binding var isTrackAppendViewSheet: Bool
     
-    
     var body: some View {
-        
         VStack {
             TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
             
@@ -35,14 +33,13 @@ struct TrackAppendContentView: View {
         .onAppear {
             detent = .fraction(0.25)
         }
-        .onChange(of: state, {
+        .onChange(of: state) {
             if state == .none {
                 detent = .fraction(0.25)
-            }
-            else {
+            } else {
                 detent = .fraction(1)
             }
-        })
+        }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -106,12 +103,10 @@ struct TrackAppendContentMainView: View {
                         Button {
                             if state == .write {
                                 state = .pictureAndWrite
-                            }
-                            else {
+                            } else {
                                 state = .picture
                             }
                             isPhotoAlbumSheet = true
-//                            detent = .fraction(1)
                         } label: {
                             Circle()
                                 .foregroundStyle(.gray9)
@@ -121,15 +116,13 @@ struct TrackAppendContentMainView: View {
                         }
                         .frame(width: 48, height: 48)
                     }
-                    if (state != .pictureAndWrite && state != .write) {
+                    if state != .pictureAndWrite && state != .write {
                         Button {
                             if state == .picture {
                                 state = .pictureAndWrite
-                            }
-                            else {
+                            } else {
                                 state = .write
                             }
-//                            detent = .fraction(1)
                         } label: {
                             Circle()
                                 .foregroundStyle(.gray9)
@@ -143,16 +136,15 @@ struct TrackAppendContentMainView: View {
                 }
             }
             .padding(.leading, 18)
-            .sheet(isPresented: $isPhotoAlbumSheet, onDismiss: {
-                if (selectedImage == nil) {
+            .sheet(isPresented: $isPhotoAlbumSheet) {
+                if selectedImage == nil {
                     if state == .pictureAndWrite {
                         state = .write
-                    }
-                    else {
+                    } else {
                         state = .none
                     }
                 }
-            }) {
+            } content: {
                 PhotoPicker(selectedImage: $selectedImage)
             }
             Spacer()
@@ -294,6 +286,18 @@ struct TrackAppendContentAddView: View {
     }
 }
 
-//#Preview {
-//    TrackAppendContentView(detent: .constant(.fraction(0.25)), music: .constant(Music(isrc: "", title: "no pain", artist: "실리카겔", albumImageUrl: "https://i.namu.wiki/i/1P6LoQ_N9dwT4DZZcNb2MABa80X_AElIyA92uyrI_BTBu47gs1zKq6V1zvLH-J0oA7_KqrWVkqFRWE5Lgg1VUIsVeNYHU21_bTlbBJT-JER3bcCJzbC5mcZZ_LAIZXmVjWjdNSjMqFiOLsPC6Wi3hg.webp", duration: 0)))
-//}
+#Preview {
+    TrackAppendContentView(
+        detent: .constant(.fraction(0.25)),
+        music: .constant(
+            Music(
+                isrc: "",
+                title: "no pain",
+                artist: "실리카겔",
+                albumImageUrl: "https://i.namu.wiki/i/1P6LoQ_N9dwT4DZZcNb2MABa80X_AElIyA92uyrI_BTBu47gs1zKq6V1zvLH-J0oA7_KqrWVkqFRWE5Lgg1VUIsVeNYHU21_bTlbBJT-JER3bcCJzbC5mcZZ_LAIZXmVjWjdNSjMqFiOLsPC6Wi3hg.webp",
+                duration: 0
+            )
+        ),
+        isTrackAppendViewSheet: .constant(false)
+    )
+}

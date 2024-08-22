@@ -54,7 +54,6 @@
 		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
 		79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51492C6DEA6600489507 /* StubTrackMapService.swift */; };
 		820836772C34001D00F6D0CF /* AppleSocialLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* AppleSocialLoginService.swift */; };
-		820836792C34002D00F6D0CF /* Platter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Platter.swift */; };
 		8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* AuthUseCase.swift */; };
 		8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */; };
 		820836812C34030C00F6D0CF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836802C34030C00F6D0CF /* LoginView.swift */; };
@@ -94,6 +93,7 @@
 		82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5282C75689E00C57916 /* TrackAppendToPlaylistSheet.swift */; };
 		82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A52D2C75D9D400C57916 /* Constant.swift */; };
 		82C9A5312C75DD0D00C57916 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5302C75DD0D00C57916 /* SystemImage.swift */; };
+		82C9A5342C777F1000C57916 /* Platter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Platter.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF616E5B2C74277300CCDC9D /* NetworkError.swift */; };
@@ -724,6 +724,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82C9A5342C777F1000C57916 /* Platter.swift in Sources */,
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */,
@@ -779,8 +780,6 @@
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
-				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
-				820836792C34002D00F6D0CF /* Platter.swift in Sources */,
 				DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */,
 				DF6DC99B2C75CB9D004A23F7 /* AppleMusicController.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,

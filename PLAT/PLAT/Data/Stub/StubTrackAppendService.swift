@@ -23,7 +23,7 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
             let songs = result.songs
             var musicList: [Music] = []
             musicList = songs.map({ song in
-                var musicData = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
+                let musicData = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
                 guard let musicIsrc = song.isrc else {
                     // TODO: isrc가 nil일 경우 처리
                     return musicData
