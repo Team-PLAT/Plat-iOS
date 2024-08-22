@@ -15,13 +15,18 @@ struct TrackDetailView: View {
     
     // TODO: 이후 상위에서 주입 받기
     // TODO: Stub 객체 교체하기
-    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
-        feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.trackList.randomElement() ?? MockDataBuilder.track, // TODO: 일단 랜덤!
-        trackService: StubTrackService()
-    )
+    @State private var trackDetailUseCase: TrackDetailUseCase
     
     @State private var isContentSheetPresented = false
+
+    init(trackId: Track.ID) {
+        self.trackDetailUseCase = TrackDetailUseCase(
+            feedTrack: MockDataBuilder.feedTrack,
+            track: MockDataBuilder.feedTrack.first { $0.id == trackId } ?? MockDataBuilder.track,
+            trackService: StubTrackService(),
+            trackId: trackId
+        )
+    }
     
     private var music: Music {
         trackDetailUseCase.track.music

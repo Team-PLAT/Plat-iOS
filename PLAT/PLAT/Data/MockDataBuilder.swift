@@ -13,24 +13,14 @@ struct MockDataBuilder {
     static var playlist: Playlist {
         return Playlist(
             title: "지곡동에서의 PLAT",
-            imageUrl: "https://i.namu.wiki/i/bQlWG0bl0GVxb-NOM388lYVpfhdSFd5NJJTQ9RIfoEUK6dd4W5RmEl2ZxdgV9h5HmQLnXZY0GrZG3gwwBO4hTQ.webp",
-            trackList: Array(repeating: track, count: 6)
+            imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
+            trackList: trackList
         )
     }
     
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
         return [
-            Track(
-                music: musicList[0],
-                location: currentLocation,
-                platter: friend,
-                content: "멀보냐능!",
-                imageUrl: nil,
-                createdDate: .now,
-                isLike: true,
-                isReported: false
-            ),
             Track(
                 music: musicList[1],
                 location: currentLocation,
@@ -213,7 +203,7 @@ struct MockDataBuilder {
             Location(latitude: 36.01867120920973, longitude: 129.32409007297255),
             Location(latitude: 36.01695052119649, longitude: 129.3208232860788),
             Location(latitude: 36.01317359607363, longitude: 129.32137789913355),
-            Location(latitude: 36.01269106639098, longitude: 129.32489032489292)
+            Location(latitude: 36.00664365245796, longitude: 129.32451306735135)
         ]
     }
     

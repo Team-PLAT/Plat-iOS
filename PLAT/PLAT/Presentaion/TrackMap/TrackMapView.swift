@@ -12,69 +12,61 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
-    @StateObject private var locationManager = LocationManager()
     
-    @State private var selectedTrack: Track?
+    @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
     @State private var hasNotifications = false
+    @State private var playlist: Playlist?
     
     var body: some View {
+        @Bindable var trackMapUseCase = trackMapUseCase
         ZStack(alignment: .topLeading) {
-            Map(position: $locationManager.position, interactionModes: []) {
+            Map(
+                position: $trackMapUseCase.locationManager.position,
+                interactionModes: []
+            ) {
                 UserAnnotation()
                 
                 ForEach(trackMapUseCase.state.trackList) { track in
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                         CustomMarkerView(track: track)
                             .onTapGesture {
-                                selectedTrack = track
+                                selectedTrackId = track.id
                                 showTrackDetail.toggle()
                             }
                     }
                 }
                 
-                if let location = locationManager.location {
+                if let location = trackMapUseCase.locationManager.location {
                     MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
                         .foregroundStyle(.platDarkpurple.opacity(0.5))
                 }
             }
             
             if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications)
+                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist)
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
-            if let _ = selectedTrack {
-                TrackDetailView()
-            } else {
-                Text("No Track Selected")
+            if let trackId = selectedTrackId {
+                TrackDetailView(trackId: trackId)
+                    .presentationBackground(.thinMaterial.opacity(0.5))
             }
-        }
-        .onChange(of: showTrackDetail) { newValue, _ in
-            print("showTrackDetail changed: \(newValue)")
         }
         .onAppear {
-            if let location = locationManager.location {
+            if let location = trackMapUseCase.locationManager.location {
+                print("Current Location: \(location)")
                 trackMapUseCase.fetchTrackList(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+                Task {
+                    playlist = await trackMapUseCase.createPlatPlaylist(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+                    print("Playlist created with \(playlist?.trackList.count ?? 0) tracks")
+                }
             }
         }
+        .onChange(of: trackMapUseCase.locationManager.position) { _, newValue in
+            print("얌마 값 바꼈다잉: \(newValue)")
+        }
     }
-}
-
-func getMapVisibleCoordinates(mapView: MKMapView) {
-    // 현재 보이는 맵의 Rect를 가져옴
-    let visibleMapRect = mapView.visibleMapRect
-    
-    // 최상단 왼쪽 좌표 (북서쪽)
-    let topLeftPoint = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY)
-    let topLeftCoordinate = topLeftPoint.coordinate
-    
-    // 최하단 오른쪽 좌표 (남동쪽)
-    let bottomRightPoint = MKMapPoint(x: visibleMapRect.maxX, y: visibleMapRect.maxY)
-    let bottomRightCoordinate = bottomRightPoint.coordinate
-    
-    print("Top Left Coordinate: \(topLeftCoordinate.latitude), \(topLeftCoordinate.longitude)")
-    print("Bottom Right Coordinate: \(bottomRightCoordinate.latitude), \(bottomRightCoordinate.longitude)")
 }
 
 // MARK: - CustomMarkerView
@@ -109,11 +101,12 @@ private struct CustomMarkerView: View {
 
 private struct MapComponentsView: View {
     @Binding var hasNotifications: Bool
+    @Binding var playlist: Playlist?
     
     var body: some View {
         HStack(alignment: .top, spacing: 100) {
             MapAddressView()
-            MapButtonsView(hasNotifications: $hasNotifications)
+            MapButtonsView(hasNotifications: $hasNotifications, playlist: $playlist)
                 .padding(.bottom, 22)
         }
     }
@@ -141,7 +134,7 @@ private struct MapButtonsView: View {
     @Binding var hasNotifications: Bool
     @State private var isPlattingSheet = false
     // TODO: 목 데이터 제거하고 실제 데이터 연결
-    @State private var playlist: Playlist = MockDataBuilder.playlist
+    @Binding var playlist: Playlist?
     
     var body: some View {
         VStack {
@@ -184,10 +177,6 @@ private struct MapButtonsView: View {
             .padding(.bottom, 22)
             
             Button {
-                Task {
-                    // TODO: 목 데이터 제거하고 실제 데이터 연결
-                    playlist = await trackMapUseCase.creatPlatPlaylist(currentLocation: MockDataBuilder.currentLocation)
-                }
                 isPlattingSheet.toggle()
             } label: {
                 Circle()
@@ -199,18 +188,36 @@ private struct MapButtonsView: View {
                             .foregroundStyle(.platPurple)
                             .padding(.bottom, 4)
                             .overlay {
-                                Text("\(MockDataBuilder.trackList.count)")
+                                Text("\(playlist?.trackList.count ?? 0)")
                                     .foregroundStyle(.platPurple)
                                     .font(.Body.body4)
                             }
                     }
             }
-            .fullScreenCover(isPresented: $isPlattingSheet, content: {
+            .fullScreenCover(isPresented: $isPlattingSheet) {
                 PlattingView(playList: $playlist)
                     .presentationBackground(.black.opacity(0.8))
-            })
+            }
         }
     }
+}
+
+// MARK: - Functions
+
+func getMapVisibleCoordinates(mapView: MKMapView) {
+    // 현재 보이는 맵의 Rect를 가져옴
+    let visibleMapRect = mapView.visibleMapRect
+    
+    // 최상단 왼쪽 좌표 (북서쪽)
+    let topLeftPoint = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY)
+    let topLeftCoordinate = topLeftPoint.coordinate
+    
+    // 최하단 오른쪽 좌표 (남동쪽)
+    let bottomRightPoint = MKMapPoint(x: visibleMapRect.maxX, y: visibleMapRect.maxY)
+    let bottomRightCoordinate = bottomRightPoint.coordinate
+    
+    print("Top Left Coordinate: \(topLeftCoordinate.latitude), \(topLeftCoordinate.longitude)")
+    print("Bottom Right Coordinate: \(bottomRightCoordinate.latitude), \(bottomRightCoordinate.longitude)")
 }
 
 // MARK: - Preview
