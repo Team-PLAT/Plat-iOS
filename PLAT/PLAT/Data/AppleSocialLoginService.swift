@@ -1,5 +1,5 @@
 //
-//  LoginService.swift
+//  AppleSocialLoginService.swift
 //  PLAT
 //
 //  Created by 김민준 on 7/2/24.
@@ -8,7 +8,7 @@
 import Foundation
 import AuthenticationServices
 
-struct LoginService: LoginServiceInterface {
+struct AppleSocialLoginService: SocialLoginServiceInterface {
     
     /// 로그인 요청했을 때 호출
     func requestLogin() {

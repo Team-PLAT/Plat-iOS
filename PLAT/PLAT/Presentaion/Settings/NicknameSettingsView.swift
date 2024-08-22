@@ -42,6 +42,9 @@ struct NicknameSettingsView: View {
         .navigationTitle("닉네임 변경")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
+        .onChange(of: nicknameText) { _, text in
+            nicknameText = userUseCase.validateNickname(text: text)
+        }
     }
 }
 

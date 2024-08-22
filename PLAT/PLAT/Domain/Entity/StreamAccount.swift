@@ -13,8 +13,8 @@ enum StreamAccount: String {
     
     var icon: ImageResource {
         switch self {
-        case .appleMusic: return .appleMusic
-        case .spotify: return .spotify
+        case .appleMusic: return .icnAppleMusic
+        case .spotify: return .icnSpotify
         }
     }
 }

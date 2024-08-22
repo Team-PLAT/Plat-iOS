@@ -412,6 +412,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView()
+    TrackDetailView(trackId: .init())
         .environment(PreviewHelper.mockMusicControlUseCase)
 }

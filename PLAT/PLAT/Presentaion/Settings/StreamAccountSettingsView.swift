@@ -36,7 +36,7 @@ struct StreamAccountSettingsView: View {
                 state: .radio,
                 title: StreamAccount.appleMusic.rawValue + connectTitleText(.appleMusic),
                 content: StreamAccount.appleMusic.rawValue + connectContentText(.appleMusic),
-                icon: .appleMusic,
+                icon: .icnAppleMusic,
                 isSelected: userUseCase.state.user.streamAccount == .appleMusic,
                 tapAction: {
                     streamAccountUseCase.connect(streamAccount: .appleMusic)
@@ -47,7 +47,7 @@ struct StreamAccountSettingsView: View {
                 state: .radio,
                 title: StreamAccount.spotify.rawValue + connectTitleText(.spotify),
                 content: StreamAccount.spotify.rawValue + connectContentText(.spotify),
-                icon: .spotify,
+                icon: .icnSpotify,
                 isSelected: userUseCase.state.user.streamAccount == .spotify,
                 tapAction: {
                     streamAccountUseCase.connect(streamAccount: .spotify)
