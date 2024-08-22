@@ -420,12 +420,10 @@
 		820836722C33FFDA00F6D0CF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				82C9A5322C77789C00C57916 /* Assets */,
 				82C9A52F2C75DD0400C57916 /* SystemImage */,
 				51148CCA2C42F69D00365853 /* Lotties */,
 				51F433332C34115900FAFD14 /* Fonts */,
-				7932780C2C2D014600F433F5 /* Assets.xcassets */,
-				796465A12C3A79BD00F6DC2D /* Icons.xcassets */,
-				51F433312C340DB200FAFD14 /* Colors.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -567,6 +565,16 @@
 				82C9A5302C75DD0D00C57916 /* SystemImage.swift */,
 			);
 			path = SystemImage;
+			sourceTree = "<group>";
+		};
+		82C9A5322C77789C00C57916 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				7932780C2C2D014600F433F5 /* Assets.xcassets */,
+				796465A12C3A79BD00F6DC2D /* Icons.xcassets */,
+				51F433312C340DB200FAFD14 /* Colors.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		DF616E5A2C741A7F00CCDC9D /* Dto */ = {
