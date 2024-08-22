@@ -37,7 +37,7 @@ struct ActionButton: View {
             tapAction()
         } label: {
             Text(title)
-                .font(.Head.head4)
+                .font(.Head.head5)
                 .foregroundStyle(state.foreground)
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
