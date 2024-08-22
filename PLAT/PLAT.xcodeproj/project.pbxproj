@@ -443,21 +443,13 @@
 		820836742C33FFFC00F6D0CF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				82C9A5332C77798D00C57916 /* Stub */,
 				8269334A2C720A510004E0B5 /* DTO */,
 				820836762C34001D00F6D0CF /* AppleSocialLoginService.swift */,
-				DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */,
-				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
-				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
-				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
-				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
-				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
-				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
-				5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */,
+				DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */,
 				DF6DC99A2C75CB9D004A23F7 /* AppleMusicController.swift */,
 				79842E8B2C7225FD0062F825 /* LocationManager.swift */,
-				DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */,
-				791FEF8B2C771E7B006CBDE0 /* StubUserProfileService.swift */,
-				791FEF8D2C771FD6006CBDE0 /* StubUserSessionService.swift */,
+				DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -575,6 +567,22 @@
 				51F433312C340DB200FAFD14 /* Colors.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		82C9A5332C77798D00C57916 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
+				5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */,
+				791FEF8B2C771E7B006CBDE0 /* StubUserProfileService.swift */,
+				791FEF8D2C771FD6006CBDE0 /* StubUserSessionService.swift */,
+				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
+				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
+				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
+				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
+				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 		DF616E5A2C741A7F00CCDC9D /* Dto */ = {

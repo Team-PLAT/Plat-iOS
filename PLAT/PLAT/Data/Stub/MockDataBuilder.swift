@@ -212,7 +212,7 @@ struct MockDataBuilder {
         return User(
             nickname: "한톨",
             profileImageUrl: "https://mblogthumb-phinf.pstatic.net/MjAyMjA4MjRfMTgy/MDAxNjYxMzIwNjIzODk5.OWc2z-YXeLFvyvYahPkySEAO2L4HtljLNqmL1y1D5l0g.jE14uKWjrHUYRNX7VfU95-PxStNktetch_hngxM3Q-Eg.JPEG.ages9090/KakaoTalk_20220824_140238973_17.jpg?type=w800",
-            streamAccount: .spotify
+            streamAccount: .appleMusic
         )
     }
     
