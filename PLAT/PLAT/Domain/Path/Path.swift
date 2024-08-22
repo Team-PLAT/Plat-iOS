@@ -19,8 +19,13 @@ enum Path: Hashable {
     case aboutPlatSettingsView
 }
 
+enum TrackAppendPath: Hashable {
+    case trackAppendContentView
+}
+
 @Observable
 final class PathModel {
     var paths: [Path] = []
     var registerPaths: [RegisterPath] = []
+    var trackAppendPaths: [TrackAppendPath] = []
 }
