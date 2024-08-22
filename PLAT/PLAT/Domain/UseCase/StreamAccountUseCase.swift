@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import MusicKit
 
 @Observable
 final class StreamAccountUseCase {
     
     private(set) var streamAccountService: StreamAccountServiceInterface
+    
     private(set) var state: State
     
     init(streamAccountService: StreamAccountServiceInterface) {
@@ -36,4 +38,15 @@ extension StreamAccountUseCase {
     func connect(streamAccount: StreamAccount) {
         streamAccountService.connect(streamAccount: streamAccount)
     }
+    
+    /// 애플 뮤직 권한 요청하기
+//    func requestAppleMusic() async -> Bool {
+//        await streamAccountService.requestAppleMusic()
+//    }
+    
+    /// 애플 뮤직 구독 여부 판단하기
+//    func fetchAppleMusicSubscription() {
+//        streamAccountService.fetchAppleMusicSubscription(musicsubscription: MusicSubscription)
+//    }
+    
 }

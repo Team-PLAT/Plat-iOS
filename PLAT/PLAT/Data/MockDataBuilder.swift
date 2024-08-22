@@ -14,22 +14,102 @@ struct MockDataBuilder {
         return Playlist(
             title: "지곡동에서의 PLAT",
             imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
-            trackList: Array(repeating: track, count: 6)
+            trackList: trackList
         )
     }
     
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
-        return zip(Array(repeating: music, count: 6), locationList).map { music, location in
+        return [
             Track(
-                music: music,
-                location: location,
+                music: musicList[1],
+                location: currentLocation,
                 platter: user,
-                createdDate: .now
+                content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
+                imageUrl: "https://rtlimages.apple.com/cmc/dieter/store/16_9/R692.png?resize=672:378&output-format=jpg&output-quality=85&interpolation=progressive-bicubic",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
+                music: musicList[2],
+                location: currentLocation,
+                platter: friend,
+                content: "회고(回顧)는 단순히 과거를 되돌아보는 것을 넘어, 우리의 경험과 성장을 되새기며 미래를 위한 지혜를 얻는 과정입니다. 회고는 삶의 여정 속에서 순간순간의 의미와 가치를 발견하고, 성공과 실패를 통해 얻은 교훈을 재정리하며, 이를 바탕으로 더 나은 미래를 설계하는 지적이고 감성적인 작업입니다.",
+                imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
+                music: musicList[3],
+                location: currentLocation,
+                platter: friend,
+                content: "회고(回顧)는 단순히 과거를 되돌아보는 것을 넘어, 우리의 경험과 성장을 되새기며 미래를 위한 지혜를 얻는 과정입니다. 회고는 삶의 여정 속에서 순간순간의 의미와 가치를 발견하고, 성공과 실패를 통해 얻은 교훈을 재정리하며, 이를 바탕으로 더 나은 미래를 설계하는 지적이고 감성적인 작업입니다.",
+                imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
+                music: musicList[4],
+                location: currentLocation,
+                platter: friend,
+                content: nil,
+                imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
+                music: musicList[5],
+                location: currentLocation,
+                platter: friend,
+                content: nil,
+                imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
             )
-        }
+        ]
     }
     
+    /// Mock feedTrack 데이터를 반환합니다.
+    static var feedTrack: [Track] {
+        return [
+            Track(
+                music: musicList[0],
+                location: currentLocation,
+                platter: friend,
+                content: "멀보냐능!",
+                imageUrl: "",
+                createdDate: .now,
+                isLike: true,
+                isReported: false
+            ),
+            Track(
+                music: musicList[1],
+                location: currentLocation,
+                platter: user,
+                content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
+                imageUrl: "https://rtlimages.apple.com/cmc/dieter/store/16_9/R692.png?resize=672:378&output-format=jpg&output-quality=85&interpolation=progressive-bicubic",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
+                music: musicList[2],
+                location: currentLocation,
+                platter: friend,
+                content: "회고(回顧)는 단순히 과거를 되돌아보는 것을 넘어, 우리의 경험과 성장을 되새기며 미래를 위한 지혜를 얻는 과정입니다. 회고는 삶의 여정 속에서 순간순간의 의미와 가치를 발견하고, 성공과 실패를 통해 얻은 교훈을 재정리하며, 이를 바탕으로 더 나은 미래를 설계하는 지적이고 감성적인 작업입니다.",
+                imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            )
+        ]
+    }
+
     /// Mock track 데이터를 반환합니다.
     static var track: Track {
         return Track(
@@ -44,6 +124,58 @@ struct MockDataBuilder {
         )
     }
     
+    static var musicList: [Music] {
+        return [
+            Music(
+                isrc: "GBAYE0500605",
+                title: "Fix you",
+                artist: "ColdPlay",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
+                duration: 295533
+            ),
+            
+            Music(
+                isrc: "KRA382001452",
+                title: "Flowering",
+                artist: "LUCY",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2735b558b31b6ba531d48f46007",
+                duration: 251293
+            ),
+            
+            Music(
+                isrc: "KRMIM2210467",
+                title: "Abnormal Climate",
+                artist: "GIRIBOY",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2738d4a02d1e213c917001f0074",
+                duration: 246426
+            ),
+            
+            Music(
+                isrc: "KRA492101385",
+                title: "Calibrate",
+                artist: "Ha Hyun Sang",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b273b48ee14df764cf20d4daed5b",
+                duration: 225813
+            ),
+            
+            Music(
+                isrc: "KRA381701433",
+                title: "Like it",
+                artist: "Yoon Jong Shin",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b27334fdd01f17d87acc8b8c925a",
+                duration: 328362
+            ),
+            
+            Music(
+                isrc: "JPR652100061",
+                title: "odoriko",
+                artist: "Vaundy",
+                albumImageUrl: "https://i.scdn.co/image/ab67616d0000b27364c8b41faf576a0bab551fb9",
+                duration: 230109
+            )
+        ]
+    }
+    
     /// Mock Music 데이터를 반환합니다.
     static var music: Music {
         return Music(
@@ -51,7 +183,7 @@ struct MockDataBuilder {
             title: "Fix you",
             artist: "ColdPlay",
             albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",
-            duration: 365
+            duration: 295.533
         )
     }
     
@@ -66,12 +198,12 @@ struct MockDataBuilder {
     /// Mock trackLocationList 데이터를 반환합니다.
     static var locationList: [Location] {
         return [
-            Location(latitude: 36.014077390156416, longitude: 129.3258820318646),
+            Location(latitude: 36.01032332879186, longitude: 129.32943400918083),
             Location(latitude: 36.01564775556712, longitude: 129.32295876966293),
             Location(latitude: 36.01867120920973, longitude: 129.32409007297255),
             Location(latitude: 36.01695052119649, longitude: 129.3208232860788),
             Location(latitude: 36.01317359607363, longitude: 129.32137789913355),
-            Location(latitude: 36.01269106639098, longitude: 129.32489032489292)
+            Location(latitude: 36.00664365245796, longitude: 129.32451306735135)
         ]
     }
     

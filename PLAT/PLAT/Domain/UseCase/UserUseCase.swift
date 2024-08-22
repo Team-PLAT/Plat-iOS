@@ -10,12 +10,12 @@ import Foundation
 @Observable
 final class UserUseCase {
     
-    private(set) var userService: UserServiceInterface
+    private(set) var userProfileService: UserProfileServiceInterface
     private(set) var state: State
     
-    init(userService: UserServiceInterface) {
-        self.userService = userService
-        self.state = State(user: userService.fetchUserInfo())
+    init(userProfileService: UserProfileServiceInterface) {
+        self.userProfileService = userProfileService
+        self.state = State(user: userProfileService.fetchUserInfo())
     }
 }
 
@@ -34,11 +34,15 @@ extension UserUseCase {
     
     /// 프로필 이미지 변경하기
     func updateProfileImage() {
-        userService.updateProfileImage()
+        userProfileService.updateProfileImage()
     }
     
     /// 닉네임 변경하기
     func updateNickname() {
-        userService.updateNickname()
+        userProfileService.updateNickname()
+    }
+    
+    func validateNickname(text: String) -> String {
+        return userProfileService.validateNickname(text: text)
     }
 }

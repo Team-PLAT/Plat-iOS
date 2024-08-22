@@ -13,7 +13,7 @@ struct ListSection: View {
         let id = UUID()
         let title: String
         let content: String
-        let icon: String
+        let icon: ImageResource
         var streamAccount: StreamAccount?
         var isDestructive: Bool
         var tapAction: () -> Void
@@ -21,7 +21,7 @@ struct ListSection: View {
         init(
             title: String,
             content: String = "",
-            icon: String = "chevron.right",
+            icon: ImageResource = .icnChevronRight,
             streamAccount: StreamAccount? = nil,
             isDestructive: Bool = false,
             tapAction: @escaping () -> Void
@@ -86,7 +86,10 @@ private struct ListCell: View {
                         .foregroundStyle(.white)
                 }
                 
-                Image(systemName: info.icon)
+                Image(info.icon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 24, height: 24)
                     .foregroundStyle(.gray7)
             }
             .padding(.horizontal, 24)

@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Playlist {
+struct Playlist: Identifiable {
+    var id = UUID()
     var title: String
     var createdDate: Date
     var imageUrl: String

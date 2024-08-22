@@ -9,7 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 struct LoginView: View {
-    @Environment(LoginUseCase.self) private var loginUseCase: LoginUseCase
+    @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
     @Binding var authType: AuthType
@@ -67,7 +67,7 @@ private struct SignUpView: View {
 }
 
 private struct AppleSignUpButton: View {
-    @Environment(LoginUseCase.self) private var loginUseCase
+    @Environment(AuthUseCase.self) private var loginUseCase
     @Environment(PathModel.self) var pathModel
     
     var body: some View {
@@ -190,7 +190,7 @@ private struct SignInView: View {
 }
 
 struct AppleContinueButton: View {
-    @Environment(LoginUseCase.self) private var loginUseCase
+    @Environment(AuthUseCase.self) private var loginUseCase
     @Environment(PathModel.self) var pathModel
     
     var body: some View {
@@ -242,7 +242,7 @@ private struct SwitchSignUpView: View {
 
 #Preview {
     LoginView(authType: .constant(.signUp))
-        .environment(PreviewHelper.mockLoginUseCase)
+        .environment(PreviewHelper.mockAuthUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PathModel())
 }

@@ -12,13 +12,13 @@ struct AboutPlatSettingsView: View {
     @Environment(InfoUseCase.self) private var infoUseCase
     
     var privacyPolicyInfo: ListSection.Info {
-        return ListSection.Info(title: "개인정보 보호 정책", icon: "rectangle.portrait.and.arrow.right") {
+        return ListSection.Info(title: "개인정보 보호 정책", icon: .imgWeblink) {
             infoUseCase.checkPrivacyPolicy()
         }
     }
     
     var termsOfServiceInfo: ListSection.Info {
-        return ListSection.Info(title: "서비스 이용 약관", icon: "rectangle.portrait.and.arrow.right") {
+        return ListSection.Info(title: "서비스 이용 약관", icon: .imgWeblink) {
             infoUseCase.checkTermsOfService()
         }
     }
