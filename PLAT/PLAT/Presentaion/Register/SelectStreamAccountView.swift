@@ -15,6 +15,8 @@ struct SelectStreamAccountView: View {
         case spotify
     }
     
+    @Environment(AuthUseCase.self) private var authUseCase
+    
     @State var selectedState: SelectedState = .none
     @State var isSheetPresented: Bool = false
     
@@ -35,6 +37,7 @@ struct SelectStreamAccountView: View {
                     isSelected: selectedState == .appleMusic
                 ) {
                     selectedState = .appleMusic
+                    authUseCase.updateIsLoginComplete(true)
                 }
             }
             .overlay {

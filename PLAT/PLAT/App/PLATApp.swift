@@ -12,14 +12,27 @@ struct PLATApp: App {
     
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
+    @State private var pathModel: PathModel = .init()
+    
+    @State private var authUseCase: AuthUseCase = .init(
+        authService: AppleSocialLoginService(),
+        userSessionService: StubUserSessionService() // TODO: Stub 교체
+    )
+    
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
     
     var body: some Scene {
         WindowGroup {
-            OnboardingView()
+            if !authUseCase.state.isLoginComplete {
+                OnboardingView()
+            } else {
+                MainView()
+            }
         }
+        .environment(pathModel)
+        .environment(authUseCase)
         .environment(musicControlUseCase)
     }
 }

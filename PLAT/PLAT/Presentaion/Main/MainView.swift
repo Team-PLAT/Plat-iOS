@@ -39,7 +39,7 @@ struct MainView: View {
                 }
             }
             .tint(.platPurple)
-            .navigationDestination(for: Path.self) { path in
+            .navigationDestination(for: SettingPath.self) { path in
                 switch path {
                 case .nicknameSettingsView:
                     NicknameSettingsView(nicknameText: "")

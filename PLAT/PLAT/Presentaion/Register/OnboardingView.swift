@@ -9,16 +9,14 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    @State private var authUseCase: AuthUseCase = .init(
-        authService: AppleSocialLoginService(),
-        userSessionService: StubUserSessionService() // TODO: Stub 교체
-    )
+    @Environment(PathModel.self) private var pathModel
+    @Environment(AuthUseCase.self) private var authUseCase
     
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
-    @State private var pathModel: PathModel = .init()
     @State private var authType: AuthType = .signUp
     
     var body: some View {
+        @Bindable var pathModel = pathModel
         NavigationStack(path: $pathModel.registerPaths) {
             VStack(spacing: 0) {
                 Image(.imgPlat)
@@ -80,7 +78,7 @@ struct OnboardingView: View {
 // MARK: - LoginButton
 
 private struct LoginButton: View {
-    @Environment(PathModel.self) var pathModel
+    @Environment(PathModel.self) private var pathModel
     @Binding var authType: AuthType
     
     var body: some View {
