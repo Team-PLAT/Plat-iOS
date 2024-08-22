@@ -7,15 +7,39 @@
 
 import Foundation
 
+// MARK: - Preview를 위한 주입용 Mock 객체
+
+#if DEBUG
 enum PreviewHelper {
-    static let mockUserUseCase = UserUseCase(userService: StubUserService())
-    static let mockInfoUseCase = InfoUseCase(infoService: StubInfoService())
-    static let mockStreamAccountUseCase = StreamAccountUseCase(streamAccountService: StubStreamAccountService())
-    static let mockLoginUseCase = LoginUseCase(loginService: LoginService())
-    static let mockTrackDetailUseCase = TrackDetailUseCase(
-        feedTrack: MockDataBuilder.feedTrack, 
-        track: MockDataBuilder.track,
-        trackService: StubTrackService()
+    static let mockUserUseCase = UserUseCase(
+        userService: StubUserService()
     )
-    static let mockTrackMapUseCase = TrackMapUseCase(trackMapService: StubTrackMapService())
+    
+    static let mockInfoUseCase = InfoUseCase(
+        infoService: StubInfoService()
+    )
+    
+    static let mockStreamAccountUseCase = StreamAccountUseCase(
+        streamAccountService: StubStreamAccountService()
+    )
+    
+    static let mockLoginUseCase = LoginUseCase(
+        loginService: LoginService()
+    )
+    
+    static let mockTrackDetailUseCase = TrackDetailUseCase(
+        feedTrack: MockDataBuilder.feedTrack,
+        track: MockDataBuilder.track,
+        trackService: StubTrackService(),
+        trackId: MockDataBuilder.track.id
+    )
+    
+    static let mockTrackMapUseCase = TrackMapUseCase(
+        trackMapService: StubTrackMapService()
+    )
+    
+    static let mockMusicControlUseCase = MusicControlUseCase(
+        musicController: StubMusicController()
+    )
 }
+#endif

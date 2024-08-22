@@ -21,7 +21,24 @@ struct StubTrackMapService: TrackMapServiceInterface {
         print(#function)
     }
     
-    func creatPlatPlaylist(currentLocation: Location) async -> Playlist {
-        MockDataBuilder.playlist
+    func createPlatPlaylist(currentLocation: Location) async -> Playlist {
+        // 현재 위치에서 500m 반경 내에 있는 트랙 필터링
+        let filteredTracks = MockDataBuilder.trackList.filter { track in
+            let trackLocation = CLLocation(latitude: track.location.latitude, longitude: track.location.longitude)
+            let userLocation = CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+            return trackLocation.distance(from: userLocation) <= 500
+        }
+        
+        // TODO: 목 데이터 -> 실제 데이터로 변환
+        let playlistTitle = MockDataBuilder.playlist.title
+        let playlistImageUrl = MockDataBuilder.playlist.imageUrl
+        
+        let playlist = Playlist(
+            title: playlistTitle,
+            imageUrl: playlistImageUrl,
+            trackList: filteredTracks
+        )
+        
+        return playlist
     }
 }

@@ -13,17 +13,20 @@ final class TrackDetailUseCase {
     private(set) var state: State
     private(set) var feedTrack: [Track]
     private(set) var track: Track
+    private(set) var trackId: Track.ID
     
     private var trackService: TrackServiceInterface
     
     init(
         feedTrack: [Track],
         track: Track,
-        trackService: TrackServiceInterface
+        trackService: TrackServiceInterface,
+        trackId: Track.ID
     ) {
         self.feedTrack = feedTrack
         self.track = track
         self.trackService = trackService
+        self.trackId = trackId
         
         // TODO: 교체 예정
         self.state = State(
