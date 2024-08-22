@@ -1,0 +1,299 @@
+//
+//  TrackAppendContentView.swift
+//  PLAT
+//
+//  Created by 박준우 on 8/20/24.
+//
+
+import SwiftUI
+
+enum ContentState {
+    case none
+    case picture
+    case write
+    case pictureAndWrite
+}
+
+struct TrackAppendContentView: View {
+    @State var isAddWriting = false
+    @State var contentText = ""
+    @State var selectedImage: UIImage?
+    @State var isPhotoAlbumSheet = false
+    @State private var state : ContentState = .none
+    @Binding var detent: PresentationDetent
+    @Binding var music: Music
+    @Binding var isTrackAppendViewSheet: Bool
+    
+    
+    var body: some View {
+        
+        VStack {
+            TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
+            
+            TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: contentText, state: $state)
+        }
+        .onAppear {
+            detent = .fraction(0.25)
+        }
+        .onChange(of: state, {
+            if state == .none {
+                detent = .fraction(0.25)
+            }
+            else {
+                detent = .fraction(1)
+            }
+        })
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    // TODO: 게시 기능 추가
+                    isTrackAppendViewSheet = false
+                } label: {
+                    RoundedRectangle(cornerRadius: 14)
+                        .foregroundStyle(.platPurple)
+                        .overlay {
+                            Text("게시")
+                                .font(.Body.body2)
+                                .foregroundStyle(.white)
+                        }
+                        .frame(width: 48, height: 28)
+                }
+                
+            }
+        }
+    }
+}
+
+struct TrackAppendContentMainView: View {
+    @State var isPhotoAlbumSheet = false
+    @Binding var selectedImage: UIImage?
+    @Binding var isAddWriting: Bool
+    @Binding var music: Music
+    @Binding var detent: PresentationDetent
+    @Binding var state: ContentState
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            AsyncImage(url: URL(string: music.albumImageUrl)) { image in
+                if let img = image.image {
+                    img
+                        .resizable()
+                        .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
+                        .cornerRadius(12, corners: .allCorners)
+                        .padding(.leading, 18)
+                } else {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.red)
+                        .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
+                        .padding(.leading, 18)
+                }
+            }
+            VStack(alignment: .leading) {
+                
+                Text("\(music.title)")
+                    .font(.Head.head2)
+                    .lineLimit(1)
+                    .padding(.bottom, 4)
+                Text("\(music.artist)")
+                    .foregroundStyle(.gray7)
+                    .font(.Body.body3)
+                    .padding(.bottom, 24)
+                    .lineLimit(1)
+                
+                HStack {
+                    if selectedImage == nil {
+                        Button {
+                            if state == .write {
+                                state = .pictureAndWrite
+                            }
+                            else {
+                                state = .picture
+                            }
+                            isPhotoAlbumSheet = true
+//                            detent = .fraction(1)
+                        } label: {
+                            Circle()
+                                .foregroundStyle(.gray9)
+                                .overlay {
+                                    Image(systemName: "camera")
+                                }
+                        }
+                        .frame(width: 48, height: 48)
+                    }
+                    if (state != .pictureAndWrite && state != .write) {
+                        Button {
+                            if state == .picture {
+                                state = .pictureAndWrite
+                            }
+                            else {
+                                state = .write
+                            }
+//                            detent = .fraction(1)
+                        } label: {
+                            Circle()
+                                .foregroundStyle(.gray9)
+                                .overlay {
+                                    Image(systemName: "square.and.pencil")
+                                }
+                        }
+                        .frame(width: 48, height: 48)
+                        
+                    }
+                }
+            }
+            .padding(.leading, 18)
+            .sheet(isPresented: $isPhotoAlbumSheet, onDismiss: {
+                if (selectedImage == nil) {
+                    if state == .pictureAndWrite {
+                        state = .write
+                    }
+                    else {
+                        state = .none
+                    }
+                }
+            }) {
+                PhotoPicker(selectedImage: $selectedImage)
+            }
+            Spacer()
+        }
+        .padding(.top)
+    }
+}
+
+struct TrackAppendContentAddView: View {
+    @Binding var selectedImage: UIImage?
+    @Binding var isAddWriting: Bool
+    @State var contentText = ""
+    @Binding var state: ContentState
+    
+    var body: some View {
+        if state == .none {
+            Spacer()
+        } else if state == .pictureAndWrite && selectedImage != nil {
+            HStack {
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 56, height: 56)
+                    .foregroundStyle(.gray9)
+                    .overlay {
+                        VStack {
+                            Image(systemName: "camera")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                            Text("1/1")
+                                .font(.Body.body3)
+                        }
+                        .padding(.vertical, 10)
+                        .foregroundStyle(.gray7)
+                        .font(.Body.body3)
+                    }
+                if let image = selectedImage {
+                    Button {
+                        selectedImage = nil
+                        if state == .pictureAndWrite {
+                            state = .write
+                        } else {
+                            state = .none
+                        }
+                    } label: {
+                        Image(uiImage: image)
+                            .resizable()
+                            .frame(width: 56, height: 56)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
+                            .overlay(alignment: .topTrailing) {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .frame(width: 5, height: 5)
+                                    .foregroundStyle(.gray7)
+                            }
+                    }
+                    Spacer()
+                }
+            }
+            .padding(.top, 10)
+            .padding(.bottom, 26)
+            .padding(.leading, 18)
+            // TODO: 글자수 제한 기능
+            TextEditor(text: $contentText)
+                .scrollContentBackground(.hidden)
+                .padding(.trailing, 78)
+                .frame(width: 357, height: 238)
+                .background(RoundedRectangle(cornerRadius: 8).fill(.gray9))
+                .overlay(alignment: .trailing) {
+                    VStack {
+                        Button {
+                            contentText = ""
+                        } label: {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding(.top, 8)
+                                .padding(.trailing, 8)
+                        }
+                        Spacer()
+                        Text("\(contentText.count)/200")
+                            .font(.Body.body5)
+                            .padding(.bottom, 8)
+                            .padding(.trailing, 8)
+                    }
+                    .foregroundStyle(.gray7)
+                }
+            Spacer()
+        } else if state == .picture && selectedImage != nil {
+            if let image = selectedImage {
+                Button {
+                    selectedImage = nil
+                    state = .none
+                } label: {
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 357, height: 357)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .overlay(alignment: .topTrailing) {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundStyle(.gray7)
+                                .padding(.top, 8)
+                                .padding(.trailing, 8)
+                        }
+                        .padding(.top, 36)
+                        .padding(.horizontal, 18)
+                }
+                Spacer()
+            }
+        } else if state == .write {
+            // TODO: 글자수 제한 기능
+            TextEditor(text: $contentText)
+                .frame(width: 357, height: 238)
+                .scrollContentBackground(.hidden)
+                .padding(.trailing, 78)
+                .background(RoundedRectangle(cornerRadius: 8).fill(.gray9))
+                .overlay(alignment: .trailing) {
+                    VStack {
+                        Button {
+                            contentText = ""
+                        } label: {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding(.top, 8)
+                                .padding(.trailing, 8)
+                        }
+                        Spacer()
+                        Text("\(contentText.count)/200")
+                            .font(.Body.body5)
+                            .padding(.bottom, 8)
+                            .padding(.trailing, 8)
+                    }
+                    .foregroundStyle(.gray7)
+                }
+            Spacer()
+        }
+    }
+}
+
+//#Preview {
+//    TrackAppendContentView(detent: .constant(.fraction(0.25)), music: .constant(Music(isrc: "", title: "no pain", artist: "실리카겔", albumImageUrl: "https://i.namu.wiki/i/1P6LoQ_N9dwT4DZZcNb2MABa80X_AElIyA92uyrI_BTBu47gs1zKq6V1zvLH-J0oA7_KqrWVkqFRWE5Lgg1VUIsVeNYHU21_bTlbBJT-JER3bcCJzbC5mcZZ_LAIZXmVjWjdNSjMqFiOLsPC6Wi3hg.webp", duration: 0)))
+//}

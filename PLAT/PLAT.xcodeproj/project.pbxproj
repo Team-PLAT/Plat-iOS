@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510E363C2C76BFB6009AD4AC /* PhotoAlbumPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */; };
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
+		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
+		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
+		5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */; };
+		5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentView.swift */; };
+		5151BEBE2C74D6F3001DA80F /* TrackAppendSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEBD2C74D6F3001DA80F /* TrackAppendSearchView.swift */; };
 		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
@@ -112,9 +118,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumPicker.swift; sourceTree = "<group>"; };
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
+		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
+		5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackAppendService.swift; sourceTree = "<group>"; };
+		5151BEB72C742119001DA80F /* TrackAppendContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentView.swift; sourceTree = "<group>"; };
+		5151BEBD2C74D6F3001DA80F /* TrackAppendSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendSearchView.swift; sourceTree = "<group>"; };
 		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -240,6 +252,16 @@
 			path = Lotties;
 			sourceTree = "<group>";
 		};
+		5151BEAC2C72700E001DA80F /* TrackAppend */ = {
+			isa = PBXGroup;
+			children = (
+				5151BEB72C742119001DA80F /* TrackAppendContentView.swift */,
+				5151BEBD2C74D6F3001DA80F /* TrackAppendSearchView.swift */,
+				510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */,
+			);
+			path = TrackAppend;
+      sourceTree = "<group>";
+    };
 		5151BEA92C71EAB5001DA80F /* Platting */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +406,7 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
+				5151BEAC2C72700E001DA80F /* TrackAppend */,
 				5151BEA92C71EAB5001DA80F /* Platting */,
 				790AF0682C6DD13F0005FA9A /* TrackMap */,
 				82C06F522C6DD961000FEE3A /* TrackDetail */,
@@ -431,6 +454,7 @@
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
+				5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */,
 				DF6DC99A2C75CB9D004A23F7 /* AppleMusicController.swift */,
 				79842E8B2C7225FD0062F825 /* LocationManager.swift */,
 				DF91BB6B2C479CE800672155 /* AppleMusicAccountService.swift */,
@@ -449,6 +473,7 @@
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
 				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
+				5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */,
 				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 				DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */,
 			);
@@ -465,6 +490,7 @@
 				79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */,
 				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
+				5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */,
 				DF6DC9982C749BA9004A23F7 /* FeedTrackServiceInterface.swift */,
 				791FEF892C771CDE006CBDE0 /* UserSessionServiceInterface.swift */,
 			);
@@ -693,6 +719,7 @@
 				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
+				5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */,
 				DF6DC99F2C75DF4B004A23F7 /* AppleMusicDTO.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */,
@@ -724,12 +751,14 @@
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
+				5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
+				5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */,
 				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
@@ -742,6 +771,8 @@
 				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
 				79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */,
+				510E363C2C76BFB6009AD4AC /* PhotoAlbumPicker.swift in Sources */,
+				5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */,
 				82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,
 				79A09D502C391C4A006F14F4 /* Tab.swift in Sources */,
@@ -757,6 +788,7 @@
 				DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */,
 				82C9A5312C75DD0D00C57916 /* SystemImage.swift in Sources */,
 				82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */,
+				5151BEBE2C74D6F3001DA80F /* TrackAppendSearchView.swift in Sources */,
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				8269334C2C720A5C0004E0B5 /* SpotifyTrackDTO.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
