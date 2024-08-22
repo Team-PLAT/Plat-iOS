@@ -9,8 +9,12 @@ import SwiftUI
 
 struct AccountSettingsView: View {
     
-    @Environment(PathModel.self) var pathModel
+    @Environment(PathModel.self) private var pathModel
     @Environment(UserUseCase.self) private var userUseCase
+    @Environment(AuthUseCase.self) private var authUseCase
+    
+    @State private var isLogoutAlertPresented = false
+    @State private var isAccountDeletionAlertPresented = false
     
     var connectedStreamAccountInfo: ListSection.Info {
         return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: userUseCase.state.user.streamAccount) {
@@ -20,13 +24,13 @@ struct AccountSettingsView: View {
     
     var logoutInfo: ListSection.Info {
         return ListSection.Info(title: "로그아웃", isDestructive: true) {
-            // TODO: 로그아웃 alert
+            isLogoutAlertPresented.toggle()
         }
     }
     
     var accountDeletion: ListSection.Info {
         return ListSection.Info(title: "계정 탈퇴") {
-            // TODO: 계정탈퇴 alert
+            isAccountDeletionAlertPresented.toggle()
         }
     }
     
@@ -40,6 +44,20 @@ struct AccountSettingsView: View {
         .navigationTitle("계정 설정")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
+        .alert("계정을 삭제하시겠어요?", isPresented: $isAccountDeletionAlertPresented) {
+            Button("돌아가기", role: .cancel) { }
+            Button("삭제하기", role: .destructive) {
+                authUseCase.deleteAccount()
+            }
+        } message: {
+            Text("계정을 삭제하면, 그종안 올린 트랙과 프로필,\n플레이리스트 등의 정보가 모두 삭제됩니다.")
+        }
+        .alert("로그아웃 하시겠어요?", isPresented: $isLogoutAlertPresented) {
+            Button("돌아가기", role: .cancel) { }
+            Button("로그아웃", role: .destructive) {
+                authUseCase.logout()
+            }
+        }
     }
 }
 
@@ -47,4 +65,5 @@ struct AccountSettingsView: View {
     AccountSettingsView()
         .environment(PreviewHelper.mockUserUseCase)
         .environment(PathModel())
+        .environment(PreviewHelper.mockAuthUseCase)
 }

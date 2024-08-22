@@ -12,7 +12,7 @@ import Foundation
 #if DEBUG
 enum PreviewHelper {
     static let mockUserUseCase = UserUseCase(
-        userService: StubUserService()
+        userProfileService: StubUserProfileService()
     )
     
     static let mockInfoUseCase = InfoUseCase(
@@ -23,8 +23,9 @@ enum PreviewHelper {
         streamAccountService: StubStreamAccountService()
     )
     
-    static let mockLoginUseCase = LoginUseCase(
-        loginService: LoginService()
+    static let mockAuthUseCase = AuthUseCase(
+        authService: AppleSocialLoginService(),
+        userSessionService: StubUserSessionService()
     )
     
     static let mockTrackDetailUseCase = TrackDetailUseCase(
