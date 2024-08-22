@@ -28,10 +28,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.location = location
-        self.position = MapCameraPosition.region(MKCoordinateRegion(
+        self.position = .region(MKCoordinateRegion(
             center: location.coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)
         ))
+        print(self.position)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

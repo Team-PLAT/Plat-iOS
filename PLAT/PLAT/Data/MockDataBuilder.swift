@@ -14,13 +14,13 @@ struct MockDataBuilder {
         return Playlist(
             title: "지곡동에서의 PLAT",
             imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
-            trackList: Array(repeating: track, count: 6)
+            trackList: trackList
         )
     }
     
     /// Mock trackList 데이터를 반환합니다.
     static var trackList: [Track] {
-        return zip(Array(repeating: music, count: 6), locationList).map { music, location in
+        return zip(musicList, locationList).map { music, location in
             Track(
                 music: music,
                 location: location,
@@ -159,7 +159,7 @@ struct MockDataBuilder {
             Location(latitude: 36.01867120920973, longitude: 129.32409007297255),
             Location(latitude: 36.01695052119649, longitude: 129.3208232860788),
             Location(latitude: 36.01317359607363, longitude: 129.32137789913355),
-            Location(latitude: 36.01269106639098, longitude: 129.32489032489292)
+            Location(latitude: 36.00664365245796, longitude: 129.32451306735135)
         ]
     }
     

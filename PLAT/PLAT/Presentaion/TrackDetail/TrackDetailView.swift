@@ -15,22 +15,16 @@ struct TrackDetailView: View {
     
     // TODO: 이후 상위에서 주입 받기
     // TODO: Stub 객체 교체하기
-    @State private var trackDetailUseCase: TrackDetailUseCase = .init(
-        feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
-        trackService: StubTrackService()
-    )
+    @State private var trackDetailUseCase: TrackDetailUseCase
     
     @State private var isContentSheetPresented = false
-    
-    init(track: Track) {
-        self._trackDetailUseCase = State(
-            initialValue: TrackDetailUseCase(
-                feedTrack: [track],
-                track: track,
-                trackService: StubTrackService()
-//                ,musicController: StubMusicController()
-            )
+
+    init(trackId: Track.ID) {
+        self.trackDetailUseCase = TrackDetailUseCase(
+            feedTrack: MockDataBuilder.feedTrack,
+            track: MockDataBuilder.feedTrack.first { $0.id == trackId } ?? MockDataBuilder.track,
+            trackService: StubTrackService(),
+            trackId: trackId
         )
     }
     
@@ -357,6 +351,6 @@ private struct ProfileContent: View {
             .frame(width: 0)
             .ignoresSafeArea()
         
-        TrackDetailView(track: MockDataBuilder.track)
+        TrackDetailView(trackId: MockDataBuilder.track.id)
     }
 }

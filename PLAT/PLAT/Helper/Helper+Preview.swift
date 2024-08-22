@@ -15,7 +15,8 @@ enum PreviewHelper {
     static let mockTrackDetailUseCase = TrackDetailUseCase(
         feedTrack: MockDataBuilder.feedTrack, 
         track: MockDataBuilder.track,
-        trackService: StubTrackService()
+        trackService: StubTrackService(),
+        trackId: MockDataBuilder.track.id
     )
     static let mockTrackMapUseCase = TrackMapUseCase(trackMapService: StubTrackMapService())
 }
