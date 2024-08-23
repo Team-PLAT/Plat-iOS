@@ -21,11 +21,12 @@ struct PLATApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if !authUseCase.state.isLoginComplete {
-                OnboardingView()
-            } else {
-                MainView()
-            }
+            MainView()
+//            if !authUseCase.state.isLoginComplete {
+//                OnboardingView()
+//            } else {
+//                MainView()
+//            }
         }
         .environment(pathModel)
         .environment(authUseCase)
