@@ -251,4 +251,5 @@ func getMapVisibleCoordinates(mapView: MKMapView) {
 #Preview {
     TrackMapView()
         .environment(PreviewHelper.mockTrackMapUseCase)
+        .environment(PreviewHelper.mockMusicControlUseCase)
 }
