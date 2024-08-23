@@ -14,13 +14,14 @@ final class MusicControlUseCase {
     /// Apple Music or Spotify를 넣기 위한 인터페이스
     private var musicController: MusicControllerInterface
     
-    private(set) var state: State
+    var state: State
     
     private var cancellables = Set<AnyCancellable>()
     
     init(musicController: MusicControllerInterface) {
         self.musicController = musicController
         self.state = State(
+            isStreaming: false,
             isPaused: false,
             currentDuration: 0
         )
@@ -33,6 +34,7 @@ extension MusicControlUseCase {
     
     struct State {
         var music: Music?
+        var isStreaming: Bool
         var isPaused: Bool
         var currentDuration: Double
     }
@@ -52,10 +54,14 @@ extension MusicControlUseCase {
         switch effect {
         case let .setup(music):
             musicController.setup(music)
+            state.isStreaming = true
+            state.isPaused = false
+            musicController.play(music)
             fetchCurrentPlaybackPosition()
             
         case let .play(music):
             cancelPublisher()
+            state.isStreaming = true
             state.isPaused = false
             musicController.play(music)
             fetchCurrentPlaybackPosition()

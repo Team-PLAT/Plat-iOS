@@ -63,9 +63,6 @@ struct TrackMapView: View {
                 }
             }
         }
-        .onChange(of: trackMapUseCase.locationManager.position) { _, newValue in
-            print("얌마 값 바꼈다잉: \(newValue)")
-        }
     }
 }
 
@@ -100,15 +97,35 @@ private struct CustomMarkerView: View {
 // MARK: - MapComponentsView
 
 private struct MapComponentsView: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
     
     var body: some View {
-        HStack(alignment: .top, spacing: 100) {
-            MapAddressView()
-            MapButtonsView(hasNotifications: $hasNotifications, playlist: $playlist)
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 0) {
+                MapAddressView()
+                Spacer()
+                MapButtonsView(
+                    hasNotifications: $hasNotifications,
+                    playlist: $playlist
+                )
                 .padding(.bottom, 22)
+            }
+            
+            if musicControlUseCase.state.isStreaming {
+                // TODO: 더미데이터 변경
+                @Bindable var musicControlUseCase = musicControlUseCase
+                MiniMusicPlayer(
+                    isPaused: $musicControlUseCase.state.isPaused,
+                    track: MockDataBuilder.track
+                )
+                .padding(.bottom, 16)
+            }
         }
+        .padding(.horizontal, 18)
     }
 }
 
@@ -122,7 +139,6 @@ private struct MapAddressView: View {
             Text("포항시 남구 지곡동")
                 .font(.Head.head2)
         }
-        .padding(.leading, 18)
         .padding(.top, 10)
     }
 }
@@ -139,7 +155,7 @@ private struct MapButtonsView: View {
     @Binding var playlist: Playlist?
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Button {
                 // TODO: notificationView로 이동
             } label: {
@@ -150,14 +166,14 @@ private struct MapButtonsView: View {
                         // TODO: 알림이 있을 경우 hasNotifications를 true로 변경
                         if hasNotifications {
                             HStack(alignment: .top, spacing: -5) {
-                                Image(systemName: "bell")
+                                Image(systemName: SystemImage.alert)
                                     .foregroundStyle(.platPurple)
                                 Circle()
                                     .frame(width: 5, height: 5)
                                     .foregroundStyle(Color(.systemRed))
                             }
                         } else {
-                            Image(systemName: "bell")
+                            Image(systemName: SystemImage.alert)
                                 .foregroundStyle(.platPurple)
                         }
                     }
@@ -173,7 +189,7 @@ private struct MapButtonsView: View {
                     .frame(width: 48, height: 48)
                     .foregroundStyle(.platBackground)
                     .overlay {
-                        Image(systemName: "plus.square.on.square")
+                        Image(systemName: SystemImage.letsPlat)
                             .foregroundStyle(.platPurple)
                     }
             }

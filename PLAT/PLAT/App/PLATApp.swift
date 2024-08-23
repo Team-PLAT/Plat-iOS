@@ -19,10 +19,6 @@ struct PLATApp: App {
         userSessionService: StubUserSessionService() // TODO: Stub 교체
     )
     
-    @State private var musicControlUseCase = MusicControlUseCase(
-        musicController: AppleMusicController.shared
-    )
-    
     var body: some Scene {
         WindowGroup {
             if !authUseCase.state.isLoginComplete {
@@ -33,6 +29,5 @@ struct PLATApp: App {
         }
         .environment(pathModel)
         .environment(authUseCase)
-        .environment(musicControlUseCase)
     }
 }

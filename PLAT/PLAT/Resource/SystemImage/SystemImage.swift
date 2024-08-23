@@ -12,4 +12,6 @@ enum SystemImage {
     static let addToPlaylist = "text.badge.plus"
     static let postWithThisMusic = "repeat"
     static let seeMore = "ellipsis.circle"
+    static let alert = "bell"
+    static let letsPlat = "plus.square.on.square"
 }
