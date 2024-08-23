@@ -22,8 +22,8 @@ struct MockDataBuilder {
     static var trackList: [Track] {
         return [
             Track(
-                music: musicList[1],
-                location: currentLocation,
+                music: musicList[0],
+                location: locationList[0],
                 platter: user,
                 content: "안녕하세요 저는 앵지예요 오늘 날씨가 무척 더워서 쇠맛이 나는 노래를 좀 듣고 싶어가지구 박쥐단지 노래를 틀었는데 2003 꽤나 스껄하네요? 다들 들어보세여~",
                 imageUrl: "https://rtlimages.apple.com/cmc/dieter/store/16_9/R692.png?resize=672:378&output-format=jpg&output-quality=85&interpolation=progressive-bicubic",
@@ -32,8 +32,18 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                music: musicList[1],
+                location: locationList[1],
+                platter: friend,
+                content: "회고(回顧)는 단순히 과거를 되돌아보는 것을 넘어, 우리의 경험과 성장을 되새기며 미래를 위한 지혜를 얻는 과정입니다. 회고는 삶의 여정 속에서 순간순간의 의미와 가치를 발견하고, 성공과 실패를 통해 얻은 교훈을 재정리하며, 이를 바탕으로 더 나은 미래를 설계하는 지적이고 감성적인 작업입니다.",
+                imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
+                createdDate: .now,
+                isLike: false,
+                isReported: false
+            ),
+            Track(
                 music: musicList[2],
-                location: currentLocation,
+                location: locationList[2],
                 platter: friend,
                 content: "회고(回顧)는 단순히 과거를 되돌아보는 것을 넘어, 우리의 경험과 성장을 되새기며 미래를 위한 지혜를 얻는 과정입니다. 회고는 삶의 여정 속에서 순간순간의 의미와 가치를 발견하고, 성공과 실패를 통해 얻은 교훈을 재정리하며, 이를 바탕으로 더 나은 미래를 설계하는 지적이고 감성적인 작업입니다.",
                 imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
@@ -43,9 +53,9 @@ struct MockDataBuilder {
             ),
             Track(
                 music: musicList[3],
-                location: currentLocation,
+                location: locationList[3],
                 platter: friend,
-                content: "회고(回顧)는 단순히 과거를 되돌아보는 것을 넘어, 우리의 경험과 성장을 되새기며 미래를 위한 지혜를 얻는 과정입니다. 회고는 삶의 여정 속에서 순간순간의 의미와 가치를 발견하고, 성공과 실패를 통해 얻은 교훈을 재정리하며, 이를 바탕으로 더 나은 미래를 설계하는 지적이고 감성적인 작업입니다.",
+                content: nil,
                 imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
                 createdDate: .now,
                 isLike: false,
@@ -53,7 +63,7 @@ struct MockDataBuilder {
             ),
             Track(
                 music: musicList[4],
-                location: currentLocation,
+                location: locationList[4],
                 platter: friend,
                 content: nil,
                 imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
@@ -63,7 +73,7 @@ struct MockDataBuilder {
             ),
             Track(
                 music: musicList[5],
-                location: currentLocation,
+                location: locationList[5],
                 platter: friend,
                 content: nil,
                 imageUrl: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1",
@@ -212,7 +222,7 @@ struct MockDataBuilder {
         return User(
             nickname: "한톨",
             profileImageUrl: "https://mblogthumb-phinf.pstatic.net/MjAyMjA4MjRfMTgy/MDAxNjYxMzIwNjIzODk5.OWc2z-YXeLFvyvYahPkySEAO2L4HtljLNqmL1y1D5l0g.jE14uKWjrHUYRNX7VfU95-PxStNktetch_hngxM3Q-Eg.JPEG.ages9090/KakaoTalk_20220824_140238973_17.jpg?type=w800",
-            streamAccount: .spotify
+            streamAccount: .appleMusic
         )
     }
     

@@ -8,10 +8,10 @@
 import Foundation
 
 struct MusicCatalogSearchResponse: Codable {
-    let data: [Song]
+    let data: [ResponseSong]
 }
 
-struct Song: Codable {
+struct ResponseSong: Codable {
     let id: String
     let type: String
     let attributes: Attributes

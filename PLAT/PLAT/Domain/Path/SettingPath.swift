@@ -12,20 +12,20 @@ enum RegisterPath: Hashable {
     case selectStreamAccountView
 }
 
-enum Path: Hashable {
+enum TrackAppendPath: Hashable {
+    case trackAppendContentView
+}
+
+enum SettingPath: Hashable {
     case nicknameSettingsView
     case accountSettingsView
     case streamAccountSettingsView
     case aboutPlatSettingsView
 }
 
-enum TrackAppendPath: Hashable {
-    case trackAppendContentView
-}
-
 @Observable
 final class PathModel {
-    var paths: [Path] = []
+    var paths: [SettingPath] = []
     var registerPaths: [RegisterPath] = []
     var trackAppendPaths: [TrackAppendPath] = []
 }

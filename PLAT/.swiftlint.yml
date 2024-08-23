@@ -11,6 +11,10 @@ disabled_rules:
 - large_tuple # 튜플 개수 제한
 - unneeded_synthesized_initializer # 멤버와이즈 이니셜라이저 직접 구현 가능
 - unused_optional_binding # 사용 안하는 옵셔널 바인딩
+- force_unwrapping # 강제 언래핑 제한
+- nesting # 중첩 제한
+- inclusive_language # 포괄적인 언어 제한
+- multiple_closures_with_trailing_closure # 중첩 클로저 제한
 
 # 기본 룰은 아니지만 추가적으로 설정한 Rule
 opt_in_rules:

@@ -18,11 +18,11 @@ struct TrackDetailView: View {
     @State private var trackDetailUseCase: TrackDetailUseCase
     
     @State private var isContentSheetPresented = false
-
+    
     init(trackId: Track.ID) {
         self.trackDetailUseCase = TrackDetailUseCase(
             feedTrack: MockDataBuilder.feedTrack,
-            track: MockDataBuilder.feedTrack.first { $0.id == trackId } ?? MockDataBuilder.track,
+            track: MockDataBuilder.feedTrack.randomElement() ?? MockDataBuilder.track,
             trackService: StubTrackService(),
             trackId: trackId
         )
@@ -42,7 +42,6 @@ struct TrackDetailView: View {
                 MusicControllerView()
                     .padding(.top, 24)
                 
-                // music?.duration ?? 0
                 MusicSeekBar(
                     currentDuration: musicControlUseCase.state.currentDuration,
                     totalDuration: MockDataBuilder.music.duration
@@ -149,11 +148,9 @@ private struct HeaderView: View {
 
 private struct MusicView: View {
     
-    //    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var music: Music? {
-        //        trackDetailUseCase.track.music
         musicControlUseCase.state.music
     }
     
@@ -161,13 +158,11 @@ private struct MusicView: View {
         VStack(spacing: 0) {
             AlbumImage()
             
-//            Text(music?.title ?? "제목업냐")
             Text(MockDataBuilder.music.title)
                 .font(.Head.head2)
                 .foregroundStyle(.white)
                 .padding(.top, 16)
             
-//            Text(music?.artist ?? "아티스트업냐")
             Text(MockDataBuilder.music.artist)
                 .font(.Head.head5)
                 .foregroundStyle(.gray7)
@@ -186,7 +181,6 @@ private struct AlbumImage: View {
     private let cornerRaduis: CGFloat = 12
     
     private var albumImageUrl: URL? {
-//        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
         URL(string: MockDataBuilder.music.albumImageUrl)
     }
     

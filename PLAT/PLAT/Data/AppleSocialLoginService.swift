@@ -21,16 +21,8 @@ struct AppleSocialLoginService: SocialLoginServiceInterface {
         switch authResult {
         case .success(let auth):
             print("성공", auth)
-            
             switch auth.credential {
             case _ as ASAuthorizationAppleIDCredential:
-                // 가져올 수 있는 정보
-//                let userIdentifier = appleIDCredential.user
-//                let fullName = appleIDCredential.fullName
-//                let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
-//                let email = appleIDCredential.email
-//                let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
-//                let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
                 return .success(true)
                 
             default:

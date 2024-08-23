@@ -9,30 +9,52 @@ import SwiftUI
 
 struct FeedView: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
     @State private var feedTrackUseCase: FeedTrackUseCase = .init(
         feedTrack: MockDataBuilder.feedTrack,
         feedTrackService: FeedTrackService()
     )
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Image(.imgFeedlogo)
-                .padding(.leading, 18)
-                .padding(.bottom, 20)
-            
-            ScrollView {
-                ForEach(MockDataBuilder.feedTrack.indices, id: \.self) { index in
-                    FeedRowView(
-                        track: MockDataBuilder.feedTrack[index],
-                        trackIndex: index,
-                        playlistId: " "
+        GeometryReader { proxy in
+            ZStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    Image(.imgFeedlogo)
+                        .padding(.leading, 18)
+                        .padding(.bottom, 20)
+                    
+                    ScrollView {
+                        ForEach(MockDataBuilder.feedTrack.indices, id: \.self) { index in
+                            FeedRowView(
+                                track: MockDataBuilder.feedTrack[index],
+                                trackIndex: index,
+                                playlistId: ""
+                            )
+                        }
+                    }
+                }
+                
+                if musicControlUseCase.state.isStreaming {
+                    // TODO: 더미데이터 변경
+                    @Bindable var musicControlUseCase = musicControlUseCase
+                    MiniMusicPlayer(
+                        isPaused: $musicControlUseCase.state.isPaused,
+                        track: MockDataBuilder.track
+                    )
+                    .padding(.horizontal, 18)
+                    .position(
+                        CGPoint(
+                            x: proxy.size.width / 2,
+                            y: proxy.size.height - 49
+                        )
                     )
                 }
             }
-        }
-        .environment(feedTrackUseCase)
-        .refreshable {
-            // TODO: fetch 한 값 불러오기
+            .environment(feedTrackUseCase)
+            .refreshable {
+                // TODO: fetch 한 값 불러오기
+            }
         }
     }
 }
@@ -40,7 +62,7 @@ struct FeedView: View {
 // MARK: - FeedRowView
 
 private struct FeedRowView: View {
-
+    
     let track: Track
     let trackIndex: Int
     let playlistId: String
@@ -223,7 +245,7 @@ private struct FeedPlayer: View {
                 
                 Button {
                     // TODO: MusicControlUseCase 재생 토글
-//                    musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+                    //                    musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
                 } label: {
                     Image(systemName: isPaused ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
@@ -349,7 +371,7 @@ private struct FeedContentView: View {
                             .padding(.top, 20)
                             .onTapGesture {
                                 self.isExpended.toggle()
-                        }
+                            }
                     }
                 }
             }
@@ -390,19 +412,11 @@ private struct FeedActionView: View {
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 220)
             }
-    
-//            Button {
-//                // TODO: MusicControlUseCase 다시 재생(근데 얘는 없어져야함)
-//            } label: {
-//                Image(systemName: "repeat")
-//                    .foregroundColor(.white)
-//                    .frame(width: 20, height: 20)
-//                    .padding(.trailing, 18)
-//            }
         }
     }
 }
 
 #Preview {
     FeedView()
+        .environment(PreviewHelper.mockMusicControlUseCase)
 }

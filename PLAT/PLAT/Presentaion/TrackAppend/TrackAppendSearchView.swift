@@ -174,6 +174,9 @@ extension View {
     }
 }
 
-//#Preview {
-//    TrackAppendSearchView()
-//}
+#Preview {
+    TrackAppendSearchView(
+        isTrackAppendViewSheet: .constant(false),
+        detent: .constant(.medium)
+    )
+}

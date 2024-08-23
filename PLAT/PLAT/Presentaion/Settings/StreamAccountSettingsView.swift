@@ -43,17 +43,6 @@ struct StreamAccountSettingsView: View {
                 }
             )
             
-            ListRadioButton(
-                state: .radio,
-                title: StreamAccount.spotify.rawValue + connectTitleText(.spotify),
-                content: StreamAccount.spotify.rawValue + connectContentText(.spotify),
-                icon: .icnSpotify,
-                isSelected: userUseCase.state.user.streamAccount == .spotify,
-                tapAction: {
-                    streamAccountUseCase.connect(streamAccount: .spotify)
-                }
-            )
-            
             Spacer()
         }
         .padding(.top, 24)

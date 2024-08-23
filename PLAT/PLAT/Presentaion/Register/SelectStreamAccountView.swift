@@ -15,6 +15,8 @@ struct SelectStreamAccountView: View {
         case spotify
     }
     
+    @Environment(AuthUseCase.self) private var authUseCase
+    
     @State var selectedState: SelectedState = .none
     @State var isSheetPresented: Bool = false
     
@@ -35,17 +37,7 @@ struct SelectStreamAccountView: View {
                     isSelected: selectedState == .appleMusic
                 ) {
                     selectedState = .appleMusic
-                }
-                
-                ListRadioButton(
-                    state: .none,
-                    title: "\(StreamAccount.spotify.rawValue) 연결하기",
-                    content: "선택하면 \(StreamAccount.spotify.rawValue)로 연결돼요",
-                    icon: .icnSpotify,
-                    isSelected: selectedState == .spotify
-                ) {
-                    
-                    selectedState = .spotify
+                    authUseCase.updateIsLoginComplete(true)
                 }
             }
             .overlay {

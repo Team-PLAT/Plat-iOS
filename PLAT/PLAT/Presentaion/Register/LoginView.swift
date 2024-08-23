@@ -73,9 +73,9 @@ private struct AppleSignUpButton: View {
     var body: some View {
         SignInWithAppleButton(
             .signUp,
-            onRequest: { _ in loginUseCase.requestLogin()},
+            onRequest: { _ in loginUseCase.requestSocialLogin()},
             onCompletion: { result in
-                let loginResult = loginUseCase.handleLogin(authResult: result)
+                let loginResult = loginUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
@@ -196,9 +196,9 @@ struct AppleContinueButton: View {
     var body: some View {
         SignInWithAppleButton(
             .continue,
-            onRequest: { _ in loginUseCase.requestLogin()},
+            onRequest: { _ in loginUseCase.requestSocialLogin()},
             onCompletion: { result in
-                let loginResult = loginUseCase.handleLogin(authResult: result)
+                let loginResult = loginUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
                     print("로그인 성공")

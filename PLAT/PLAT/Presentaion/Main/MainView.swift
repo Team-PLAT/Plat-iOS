@@ -14,6 +14,9 @@ struct MainView: View {
     @State private var userUseCase: UserUseCase = .init(userProfileService: StubUserProfileService())
     @State private var streamAccountUseCase: StreamAccountUseCase = .init(streamAccountService: StubStreamAccountService())
     @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
+    @State private var musicControlUseCase = MusicControlUseCase(
+        musicController: AppleMusicController.shared
+    )
     @State private var selectedTab: Tab = .map
     
     var body: some View {
@@ -39,7 +42,7 @@ struct MainView: View {
                 }
             }
             .tint(.platPurple)
-            .navigationDestination(for: Path.self) { path in
+            .navigationDestination(for: SettingPath.self) { path in
                 switch path {
                 case .nicknameSettingsView:
                     NicknameSettingsView(nicknameText: "")
@@ -62,6 +65,7 @@ struct MainView: View {
         .environment(infoUseCase)
         .environment(streamAccountUseCase)
         .environment(trackMapUseCase)
+        .environment(musicControlUseCase)
     }
 }
 
