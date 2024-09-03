@@ -19,6 +19,8 @@ struct SelectStreamAccountView: View {
     
     @State var selectedState: SelectedState = .none
     @State var isSheetPresented: Bool = false
+    @State private var isShowingOffer: Bool = false
+    @State private var updateIsLoginComplete: Bool = false
     
     var body: some View {
         VStack {
@@ -37,7 +39,15 @@ struct SelectStreamAccountView: View {
                     isSelected: selectedState == .appleMusic
                 ) {
                     selectedState = .appleMusic
-                    authUseCase.updateIsLoginComplete(true)
+                    isShowingOffer = true
+                }
+            }
+            .musicSubscriptionOffer(isPresented: $isShowingOffer)
+            .onChange(of: isShowingOffer) {
+                if !isShowingOffer {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        authUseCase.updateIsLoginComplete(true)
+                    }
                 }
             }
             .overlay {
