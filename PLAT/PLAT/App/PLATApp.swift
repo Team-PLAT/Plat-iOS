@@ -23,6 +23,9 @@ struct PLATApp: App {
         WindowGroup {
             if !authUseCase.state.isLoginComplete {
                 OnboardingView()
+                    .onAppear {
+                        TestAPI().test()
+                    }
             } else {
                 MainView()
             }
