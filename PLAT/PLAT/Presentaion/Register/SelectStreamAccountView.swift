@@ -20,7 +20,6 @@ struct SelectStreamAccountView: View {
     @State var selectedState: SelectedState = .none
     @State var isSheetPresented: Bool = false
     @State private var isShowingOffer: Bool = false
-    @State private var updateIsLoginComplete: Bool = false
     
     var body: some View {
         VStack {

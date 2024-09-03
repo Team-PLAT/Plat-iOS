@@ -14,6 +14,8 @@ import MediaPlayer
 
 final class AppleMusicController: NSObject, MusicControllerInterface {
     
+    private var firstSong: ResponseSong?
+    
     var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
     
     static let shared = AppleMusicController()
@@ -84,37 +86,45 @@ extension AppleMusicController {
         return status == .authorized
     }
     
-    /// ISRC값을 이용해 songId를 반환받습니다.
+    /// ISRC값을 이용해 songId를 반환합습니다.
     private func requestSongId(for isrc: String) async -> String? {
-        print("잘 들어오신 isrc", isrc)
-        let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"
-        
-        guard let url = URL(string: urlString) else {
-            print("잘못된 URL")
-            return nil
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(Config.appleMusicToken)", forHTTPHeaderField: "Authorization")
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            print("잘 들어오신 isrc", isrc)
+            let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"
             
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("HTTP 요청 실패: \(response)")
+            guard let url = URL(string: urlString) else {
+                print("잘못된 URL")
                 return nil
             }
             
-            let decoder = JSONDecoder()
-            let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(Config.appleMusicToken)", forHTTPHeaderField: "Authorization")
             
-            return result.data.first?.id
-        } catch {
-            print("에러 발생: \(error)")
-            return nil
+            do {
+                let (data, response) = try await URLSession.shared.data(for: request)
+                
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    print("HTTP 요청 실패: \(response)")
+                    return nil
+                }
+                
+                let decoder = JSONDecoder()
+                let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
+                
+                firstSong = result.data.first
+
+                return firstSong?.id
+                
+            } catch {
+                print("에러 발생: \(error)")
+                return nil
+            }
         }
         
+    /// 현재 song의 기타 세부정보를 반환합니다.
+    func getCurrentSongDetails(for isrc: String) -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+            guard let song = firstSong else { return nil }
+            return (song.attributes.durationInMillis, song.attributes.url, song.attributes.name, song.attributes.artistName)
+        }
     }
-}
