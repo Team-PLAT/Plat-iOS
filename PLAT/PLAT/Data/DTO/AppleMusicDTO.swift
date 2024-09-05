@@ -13,13 +13,17 @@ struct MusicCatalogSearchResponse: Codable {
 
 struct ResponseSong: Codable {
     let id: String
-    let attributes: Attributes
+    var attributes: Attributes
 }
 
 struct Attributes: Codable {
     let durationInMillis: Int?
     let isrc: String?
-    let url: String?
     let name: String?
     let artistName: String?
+    var artwork: Artwork?
+}
+
+struct Artwork: Codable {
+    var url: String?
 }

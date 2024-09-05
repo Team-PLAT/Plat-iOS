@@ -189,7 +189,7 @@ struct MockDataBuilder {
     /// Mock Music 데이터를 반환합니다.
     static var music: Music {
         return Music(
-            isrc: "GBAYE0500605",
+            isrc: "KRA382001452",
             title: "Fix you",
             artist: "ColdPlay",
             albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",

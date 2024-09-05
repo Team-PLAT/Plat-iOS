@@ -113,6 +113,7 @@ extension MusicControlUseCase {
                 artist: musicInfo.artistName ?? music.artist,
                 albumImageUrl: musicInfo.url ?? music.albumImageUrl,
                 duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
+                /// helper 사용해서 고치기
             )
         }
     }

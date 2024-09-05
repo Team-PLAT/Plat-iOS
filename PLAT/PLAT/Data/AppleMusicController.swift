@@ -53,7 +53,7 @@ extension AppleMusicController {
         musicPlayer.pause()
     }
     
-    /// 음악 재생
+    /// 음악 다시 재생
     func resume() {
         musicPlayer.play()
     }
@@ -80,7 +80,7 @@ extension AppleMusicController {
         await requestSongId(for: music.isrc)
         
         if let song = firstSong {
-            return (song.attributes.durationInMillis, song.attributes.url, song.attributes.name, song.attributes.artistName)
+            return (song.attributes.durationInMillis, song.attributes.artwork?.url, song.attributes.name, song.attributes.artistName)
         } else {
             print("첫 번째 노래 정보가 없습니다.")
             return nil
@@ -91,14 +91,14 @@ extension AppleMusicController {
 extension AppleMusicController {
     
     /// 애플 뮤직 권한을 요청합니다.
-    func requestAuthorization() async -> Bool {
+    private func requestAuthorization() async -> Bool {
         let status = await MusicAuthorization.request()
         return status == .authorized
     }
     
     /// ISRC값을 이용해 songId를 반환합습니다
     private func requestSongId(for isrc: String) async {
-
+        
         let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"
         guard let url = URL(string: urlString) else {
             print("잘못된 URL")
@@ -121,14 +121,21 @@ extension AppleMusicController {
             let decoder = JSONDecoder()
             let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
             
-            if let firstSong = result.data.first {
-                print("첫 번째 노래 ID: \(firstSong.id ?? "없음")")
-                print("제목: \(firstSong.attributes.name ?? "없음")")
-                print("아티스트: \(firstSong.attributes.artistName ?? "없음")")
-                print("URL: \(firstSong.attributes.url ?? "없음")")
-                print("지속 시간: \(firstSong.attributes.durationInMillis ?? 0)")
+            if var firstSong = result.data.first {
+                
+                if var artwork = firstSong.attributes.artwork {
+                    if let originalUrl = artwork.url {
+                        let cleanedUrl = originalUrl
+                            .replacingOccurrences(of: "/{w}x{h}bb.jpg", with: "/800x800bb.jpg")
+                        artwork.url = cleanedUrl
+                    }
+                    firstSong.attributes.artwork = artwork
+                }
                 
                 self.firstSong = firstSong
+                
+                print("URL: \(firstSong.attributes.artwork?.url ?? "없음")")
+                
             } else {
                 print("첫 번째 노래 정보가 없습니다.")
             }
