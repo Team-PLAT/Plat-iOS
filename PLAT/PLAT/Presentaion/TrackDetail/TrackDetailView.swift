@@ -44,7 +44,7 @@ struct TrackDetailView: View {
                 
                 MusicSeekBar(
                     currentDuration: musicControlUseCase.state.currentDuration,
-                    totalDuration: MockDataBuilder.music.duration
+                    totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .padding(.top, 36)
                 .padding(.horizontal, 16)
@@ -65,7 +65,9 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-            musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+            Task {
+                await musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+            }
         }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
@@ -158,12 +160,12 @@ private struct MusicView: View {
         VStack(spacing: 0) {
             AlbumImage()
             
-            Text(MockDataBuilder.music.title)
+            Text(music?.title ?? "")
                 .font(.Head.head2)
                 .foregroundStyle(.white)
                 .padding(.top, 16)
             
-            Text(MockDataBuilder.music.artist)
+            Text(music?.artist ?? "")
                 .font(.Head.head5)
                 .foregroundStyle(.gray7)
                 .padding(.top, 4)
@@ -181,7 +183,7 @@ private struct AlbumImage: View {
     private let cornerRaduis: CGFloat = 12
     
     private var albumImageUrl: URL? {
-        URL(string: MockDataBuilder.music.albumImageUrl)
+        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
     }
     
     var body: some View {

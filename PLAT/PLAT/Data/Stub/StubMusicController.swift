@@ -41,4 +41,8 @@ struct StubMusicController: MusicControllerInterface {
     func currentDuration() -> AnyPublisher<Double, Error> {
         return Empty<Double, Error>().eraseToAnyPublisher()
     }
+    
+    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+        return (durationInMillis: nil, url: nil, name: nil, artistName: nil)
+    }
 }

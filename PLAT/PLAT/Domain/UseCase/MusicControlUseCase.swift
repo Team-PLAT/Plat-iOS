@@ -50,10 +50,11 @@ extension MusicControlUseCase {
         case togglePlayback
     }
     
-    func effect(_ effect: Effect) {
+    func effect(_ effect: Effect) async {
         switch effect {
         case let .setup(music):
             musicController.setup(music)
+            await fetchCurrentMusicInfo(music: music)
             state.isStreaming = true
             state.isPaused = false
             musicController.play(music)
@@ -97,5 +98,22 @@ extension MusicControlUseCase {
     
     private func cancelPublisher() {
         cancellables.forEach { $0.cancel() }
+    }
+}
+
+// MARK: - Current Music Info
+
+extension MusicControlUseCase {
+    
+    private func fetchCurrentMusicInfo(music: Music) async {
+        if let musicInfo = await musicController.fetchMusic(music) {
+            state.music = Music(
+                isrc: music.isrc,
+                title: musicInfo.name ?? music.title,
+                artist: musicInfo.artistName ?? music.artist,
+                albumImageUrl: musicInfo.url ?? music.albumImageUrl,
+                duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
+            )
+        }
     }
 }

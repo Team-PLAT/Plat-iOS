@@ -36,17 +36,15 @@ extension AppleMusicController {
             self.play(music)
         }
     }
-
+    
     /// 음악 첫 재생
     func play(_ music: Music) {
-        Task {
-            if let currentSongId = await requestSongId(for: music.isrc) {
-                let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [currentSongId])
-                musicPlayer.setQueue(with: descriptor)
-                musicPlayer.play()
-            } else {
-                print("requestSongId 실패")
-            }
+        if let songId = firstSong?.id {
+            let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songId])
+            musicPlayer.setQueue(with: descriptor)
+            musicPlayer.play()
+        } else {
+            print("음악 재생 오류")
         }
     }
     
@@ -76,6 +74,18 @@ extension AppleMusicController {
             }
             .eraseToAnyPublisher()
     }
+    
+    /// Music 정보 받아오는 함수
+    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+        await requestSongId(for: music.isrc)
+        
+        if let song = firstSong {
+            return (song.attributes.durationInMillis, song.attributes.url, song.attributes.name, song.attributes.artistName)
+        } else {
+            print("첫 번째 노래 정보가 없습니다.")
+            return nil
+        }
+    }
 }
 
 extension AppleMusicController {
@@ -86,45 +96,45 @@ extension AppleMusicController {
         return status == .authorized
     }
     
-    /// ISRC값을 이용해 songId를 반환합습니다.
-    private func requestSongId(for isrc: String) async -> String? {
-            print("잘 들어오신 isrc", isrc)
-            let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"
-            
-            guard let url = URL(string: urlString) else {
-                print("잘못된 URL")
-                return nil
-            }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(Config.appleMusicToken)", forHTTPHeaderField: "Authorization")
-            
-            do {
-                let (data, response) = try await URLSession.shared.data(for: request)
-                
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                    print("HTTP 요청 실패: \(response)")
-                    return nil
-                }
-                
-                let decoder = JSONDecoder()
-                let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
-                
-                firstSong = result.data.first
+    /// ISRC값을 이용해 songId를 반환합습니다
+    private func requestSongId(for isrc: String) async {
 
-                return firstSong?.id
-                
-            } catch {
-                print("에러 발생: \(error)")
-                return nil
-            }
+        let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"
+        guard let url = URL(string: urlString) else {
+            print("잘못된 URL")
+            return
         }
         
-    /// 현재 song의 기타 세부정보를 반환합니다.
-    func getCurrentSongDetails(for isrc: String) -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
-            guard let song = firstSong else { return nil }
-            return (song.attributes.durationInMillis, song.attributes.url, song.attributes.name, song.attributes.artistName)
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(Config.appleMusicToken)", forHTTPHeaderField: "Authorization")
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                print("HTTP 요청 실패: \(response)")
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
+            
+            if let firstSong = result.data.first {
+                print("첫 번째 노래 ID: \(firstSong.id ?? "없음")")
+                print("제목: \(firstSong.attributes.name ?? "없음")")
+                print("아티스트: \(firstSong.attributes.artistName ?? "없음")")
+                print("URL: \(firstSong.attributes.url ?? "없음")")
+                print("지속 시간: \(firstSong.attributes.durationInMillis ?? 0)")
+                
+                self.firstSong = firstSong
+            } else {
+                print("첫 번째 노래 정보가 없습니다.")
+            }
+            
+        } catch {
+            print("에러 발생: \(error)")
         }
     }
+}

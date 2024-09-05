@@ -15,4 +15,5 @@ protocol MusicControllerInterface {
     func resume()
     func repeatPlayback()
     func currentDuration() -> AnyPublisher<Double, Error>
+    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)?
 }
