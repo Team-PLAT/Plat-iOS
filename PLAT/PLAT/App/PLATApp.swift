@@ -19,10 +19,22 @@ struct PLATApp: App {
         userSessionService: StubUserSessionService() // TODO: Stub 교체
     )
     
+    struct ProfileResponse: Decodable {
+        let memberId: Int64
+        let nickname: String
+        let avatar: String
+    }
+    
     var body: some Scene {
         WindowGroup {
             if !authUseCase.state.isLoginComplete {
                 OnboardingView()
+                    .onAppear {
+                        Task {
+                            let response: Result<BaseResponse<ProfileResponse>, Error> =  await NetworkClient().get(url: APIs.Plat.Members.fetchProfile.url
+                            )
+                        }
+                    }
             } else {
                 MainView()
             }

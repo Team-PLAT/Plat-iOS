@@ -9,21 +9,24 @@ import Foundation
 
 class NetworkClient: HTTPMethod {
     
+    /// StatusCode 성공 범위
+    private let successStatusCodeRange = 200...299
+    
     /// GET (쿼리로 데이터 전달)
     func get<T: Decodable>(url: URL) async -> Result<T, Error> {
         do {
             let request = urlToRequest(.get, url: url)
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            guard let httpResponse = response as? HTTPURLResponse else {
+            guard let statusCode = statusCode(to: response) else {
                 return .failure(NetworkError.httpResponseError)
             }
             
-            guard (200...299).contains(httpResponse.statusCode) else {
-                let error = NetworkError.serverError(statusCode: httpResponse.statusCode)
+            guard successStatusCodeRange.contains(statusCode) else {
+                let error = NetworkError.serverError(statusCode: statusCode)
                 NetworkLog.failure(
                     url: url,
-                    statusCode: httpResponse.statusCode,
+                    statusCode: statusCode,
                     error: error
                 )
                 return .failure(error)
@@ -33,14 +36,14 @@ class NetworkClient: HTTPMethod {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 NetworkLog.success(
                     url: url,
-                    statusCode: httpResponse.statusCode,
+                    statusCode: statusCode,
                     data: decodedData
                 )
                 return .success(decodedData)
             } catch {
                 NetworkLog.failure(
                     url: url,
-                    statusCode: httpResponse.statusCode,
+                    statusCode: statusCode,
                     error: error
                 )
                 return .failure(NetworkError.decodingError)
@@ -49,14 +52,14 @@ class NetworkClient: HTTPMethod {
             if let urlError = error as? URLError {
                 NetworkLog.failure(
                     url: url,
-                    statusCode: 000,
+                    statusCode: 999,
                     error: error
                 )
                 return .failure(NetworkError.urlError(urlError))
             } else {
                 NetworkLog.failure(
                     url: url,
-                    statusCode: 000,
+                    statusCode: 999,
                     error: error
                 )
                 return .failure(NetworkError.error(error))
@@ -71,17 +74,50 @@ class NetworkClient: HTTPMethod {
             request.httpBody = try JSONEncoder().encode(body)
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
+            guard let statusCode = statusCode(to: response) else {
+                return .failure(NetworkError.httpResponseError)
             }
             
-            let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return .success(decodedData)
+            guard successStatusCodeRange.contains(statusCode) else {
+                let error = NetworkError.serverError(statusCode: statusCode)
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(error)
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                NetworkLog.success(
+                    url: url,
+                    statusCode: statusCode,
+                    data: decodedData
+                )
+                return .success(decodedData)
+            } catch {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(NetworkError.decodingError)
+            }
         } catch {
             if let urlError = error as? URLError {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
                 return .failure(NetworkError.urlError(urlError))
             } else {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
                 return .failure(NetworkError.error(error))
             }
         }
@@ -95,17 +131,50 @@ class NetworkClient: HTTPMethod {
             
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
+            guard let statusCode = statusCode(to: response) else {
+                return .failure(NetworkError.httpResponseError)
             }
             
-            let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return .success(decodedData)
+            guard successStatusCodeRange.contains(statusCode) else {
+                let error = NetworkError.serverError(statusCode: statusCode)
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(error)
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                NetworkLog.success(
+                    url: url,
+                    statusCode: statusCode,
+                    data: decodedData
+                )
+                return .success(decodedData)
+            } catch {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(NetworkError.decodingError)
+            }
         } catch {
             if let urlError = error as? URLError {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
                 return .failure(NetworkError.urlError(urlError))
             } else {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
                 return .failure(NetworkError.error(error))
             }
         }
@@ -117,17 +186,50 @@ class NetworkClient: HTTPMethod {
             let request = urlToRequest(.delete, url: url)
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
+            guard let statusCode = statusCode(to: response) else {
+                return .failure(NetworkError.httpResponseError)
             }
             
-            let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return .success(decodedData)
+            guard successStatusCodeRange.contains(statusCode) else {
+                let error = NetworkError.serverError(statusCode: statusCode)
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(error)
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                NetworkLog.success(
+                    url: url,
+                    statusCode: statusCode,
+                    data: decodedData
+                )
+                return .success(decodedData)
+            } catch {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(NetworkError.decodingError)
+            }
         } catch {
             if let urlError = error as? URLError {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
                 return .failure(NetworkError.urlError(urlError))
             } else {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
                 return .failure(NetworkError.error(error))
             }
         }
@@ -138,14 +240,14 @@ class NetworkClient: HTTPMethod {
 
 extension NetworkClient {
     
-    enum HTTPMethodList: String {
+    private enum HTTPMethodList: String {
         case get = "GET"
         case post = "POST"
         case patch = "PATCH"
         case delete = "DELETE"
     }
     
-    enum HTTPHeader {
+    private enum HTTPHeader {
         static let mimeTypeHeader = "Content-Type"
         static let mimeTypeValue = "application/json"
         static let authTokenHeader = "Authorization"
@@ -165,11 +267,16 @@ extension NetworkClient {
         )
         
         request.setValue(
-            HTTPHeader.authTokenValue("SOMETOKEN"), // TODO: 액세스 토큰 삽입
+            HTTPHeader.authTokenValue("TOKEN"), // TODO: 액세스 토큰 삽입
             forHTTPHeaderField: HTTPHeader.authTokenHeader
         )
         
         return request
+    }
+    
+    /// StatusCode를 반환합니다.
+    private func statusCode(to response: URLResponse) -> Int? {
+        (response as? HTTPURLResponse)?.statusCode
     }
 }
 
