@@ -22,6 +22,7 @@ struct MockDataBuilder {
     static var trackList: [Track] {
         return [
             Track(
+                id: 000001,
                 music: musicList[0],
                 location: locationList[0],
                 platter: user,
@@ -32,6 +33,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000002,
                 music: musicList[1],
                 location: locationList[1],
                 platter: friend,
@@ -42,6 +44,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000003,
                 music: musicList[2],
                 location: locationList[2],
                 platter: friend,
@@ -52,6 +55,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000004,
                 music: musicList[3],
                 location: locationList[3],
                 platter: friend,
@@ -62,6 +66,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000005,
                 music: musicList[4],
                 location: locationList[4],
                 platter: friend,
@@ -72,6 +77,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000006,
                 music: musicList[5],
                 location: locationList[5],
                 platter: friend,
@@ -88,6 +94,7 @@ struct MockDataBuilder {
     static var feedTrack: [Track] {
         return [
             Track(
+                id: 000001,
                 music: musicList[0],
                 location: currentLocation,
                 platter: friend,
@@ -98,6 +105,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000002,
                 music: musicList[1],
                 location: currentLocation,
                 platter: user,
@@ -108,6 +116,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
+                id: 000003,
                 music: musicList[2],
                 location: currentLocation,
                 platter: friend,
@@ -123,6 +132,7 @@ struct MockDataBuilder {
     /// Mock track 데이터를 반환합니다.
     static var track: Track {
         return Track(
+            id: 00000001,
             music: music,
             location: currentLocation,
             platter: user,
