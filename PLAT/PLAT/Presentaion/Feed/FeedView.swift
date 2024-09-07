@@ -203,6 +203,9 @@ private struct FeedPlayer: View {
     let track: Track
     
     @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var isInitialSetup = true
     
     private var music: Music {
         track.music
@@ -244,13 +247,22 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    // TODO: MusicControlUseCase 재생 토글
-                    //                    musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+                    Task {
+                        if isInitialSetup {
+                            await musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+                            isInitialSetup = false
+                        } else {
+                            await musicControlUseCase.effect(.togglePlayback)
+                        }
+                    }
                 } label: {
                     Image(systemName: isPaused ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
+                        .transaction { transaction in
+                            transaction.animation = nil
+                        }
                 }
             }
             .frame(width: 311, height: 56)
