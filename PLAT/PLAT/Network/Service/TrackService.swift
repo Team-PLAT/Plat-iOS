@@ -8,9 +8,7 @@
 import Foundation
 
 struct TrackService {
-    static let shared = TrackService()
-    
-    func uploadTrack(request: UploadTrackRequest) async -> Result<UploadTrackResponse, Error> {
+    static func uploadTrack(request: UploadTrackRequest) async -> Result<UploadTrackResponse, Error> {
         let client = NetworkClient()
         let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.upload.url
@@ -22,8 +20,9 @@ struct TrackService {
         }
     }
     
-    func reportTrack(request: ReportTrackRequset) async -> Result<ReportTrackResponse, Error> {
+    static func reportTrack(request: ReportTrackRequset) async -> Result<ReportTrackResponse, Error> {
         let client = NetworkClient()
+    
         let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.report(trackId: request.trackId).url
         let response: Result<BaseResponse<ReportTrackResponse>, Error>  = await client.post(url: url, body: request, authToken: authToken)
@@ -34,7 +33,7 @@ struct TrackService {
         }
     }
     
-    func likeTrack(request: LikeTrackRequest) async -> Result<LikeTrackResponse, Error> {
+    static func likeTrack(request: LikeTrackRequest) async -> Result<LikeTrackResponse, Error> {
         let client = NetworkClient()
         let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.like(trackId: request.trackId).url
@@ -46,7 +45,7 @@ struct TrackService {
         }
     }
     
-    func fetchTrackDetail(request: FetchTrackDetailResquest) async -> Result<FetchTrackDetailResponse, Error> {
+    static func fetchTrackDetail(request: FetchTrackDetailResquest) async -> Result<FetchTrackDetailResponse, Error> {
         let client = NetworkClient()
         let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.fetch(trackId: request.trackId).url
@@ -77,7 +76,7 @@ struct TrackService {
         }
     }
     
-    func fetchTrackFeed(request: FetchTrackFeedRequest) async -> Result<FetchTrackFeedResponse, Error> {
+    static func fetchTrackFeed(request: FetchTrackFeedRequest) async -> Result<FetchTrackFeedResponse, Error> {
         let client = NetworkClient()
         let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.fetchFeed.url
