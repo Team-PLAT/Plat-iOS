@@ -43,7 +43,9 @@ struct FeedView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: MockDataBuilder.trackList.first { $0.id == selectedTrackId } ?? MockDataBuilder.track
+                        track: MockDataBuilder.trackList.first { $0.id == musicControlUseCase.state.isPlayingId } ?? MockDataBuilder.track,
+                        currentDuration: musicControlUseCase.state.currentDuration,
+                        totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
                     .padding(.horizontal, 18)
                     .position(
@@ -261,11 +263,14 @@ private struct FeedPlayer: View {
                     if selectedTrackId == trackIndex {
                         Task {
                             await musicControlUseCase.effect(.togglePlayback)
+                            print("🥵🥵🥵눌렀당께@!🥵🥵", isPaused)
                         }
                     } else {
                         Task {
                             await musicControlUseCase.effect(.setup(music: track.music))
                             selectedTrackId = trackIndex
+                            musicControlUseCase.state.isPlayingId = selectedTrackId ?? 0
+                            print("🥵🥵🥵누름데스네🥵🥵", isPaused)
                         }
                     }
                 } label: {

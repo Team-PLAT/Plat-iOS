@@ -34,7 +34,7 @@ final class TrackDetailUseCase {
                 name: "포항공과대학교",
                 address: "대한민국 경상북도 포항시 남구 지곡동"
             ),
-            isPaused: false
+            isPaused: true
         )
     }
 }

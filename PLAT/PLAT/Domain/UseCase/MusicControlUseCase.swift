@@ -23,7 +23,8 @@ final class MusicControlUseCase {
         self.state = State(
             isStreaming: false,
             isPaused: true,
-            currentDuration: 0
+            currentDuration: 0,
+            isPlayingId: 0
         )
     }
 }
@@ -37,6 +38,7 @@ extension MusicControlUseCase {
         var isStreaming: Bool
         var isPaused: Bool
         var currentDuration: Double
+        var isPlayingId: Int64
     }
 }
 

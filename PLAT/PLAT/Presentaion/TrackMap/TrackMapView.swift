@@ -12,6 +12,7 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
@@ -32,6 +33,7 @@ struct TrackMapView: View {
                         CustomMarkerView(track: track)
                             .onTapGesture {
                                 selectedTrackId = track.id
+                                musicControlUseCase.state.isPlayingId = selectedTrackId ?? 0
                                 showTrackDetail.toggle()
                             }
                     }
@@ -121,7 +123,9 @@ private struct MapComponentsView: View {
                 @Bindable var musicControlUseCase = musicControlUseCase
                 MiniMusicPlayer(
                     isPaused: $musicControlUseCase.state.isPaused,
-                    track: MockDataBuilder.trackList.first { $0.id == selectedTrackId } ?? MockDataBuilder.track
+                    track: MockDataBuilder.trackList.first { $0.id == musicControlUseCase.state.isPlayingId } ?? MockDataBuilder.track,
+                    currentDuration: musicControlUseCase.state.currentDuration,
+                    totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .padding(.bottom, 16)
             }

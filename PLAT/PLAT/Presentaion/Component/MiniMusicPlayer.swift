@@ -15,16 +15,23 @@ struct MiniMusicPlayer: View {
     
     let track: Track
     
+    let currentDuration: Double
+    let totalDuration: Double
+    
+    private var progress: Double {
+        currentDuration / totalDuration
+    }
+    
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 14) {
                 AlbumImage(track: track)
                 Content(track: track)
                 Spacer()
-                PlaybackButton(isPaused: $isPaused)
+                PlaybackButton(isPaused: $isPaused, track: track)
             }
             
-            ProgressView(value: 0.5)
+            ProgressView(value: progress)
                 .tint(.platPurple)
                 .background(.platBlack)
         }
@@ -97,11 +104,17 @@ private struct Content: View {
 
 private struct PlaybackButton: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
     @Binding private(set) var isPaused: Bool
+    
+    let track: Track
     
     var body: some View {
         Button {
-            isPaused.toggle()
+            Task {
+                await musicControlUseCase.effect(.togglePlayback)
+            }
         } label: {
             Image(systemName: isPaused ? "play.fill" : "pause.fill")
                 .resizable()
@@ -120,7 +133,9 @@ private struct PlaybackButton: View {
         
         MiniMusicPlayer(
             isPaused: .constant(false),
-            track: MockDataBuilder.track
+            track: MockDataBuilder.track,
+            currentDuration: 0.0,
+            totalDuration: 4.0
         )
     }
 }
