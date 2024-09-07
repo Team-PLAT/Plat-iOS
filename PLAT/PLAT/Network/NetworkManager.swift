@@ -7,15 +7,7 @@
 
 import Foundation
 
-protocol APIMethod {
-    func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error>
-    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error>
-    func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
-    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error>
-    func delete<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error>
-}
-
-class NetworkClient: APIMethod {
+class NetworkClient: HTTPMethod {
     
     /// GET (쿼리로 데이터 전달)
     func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
