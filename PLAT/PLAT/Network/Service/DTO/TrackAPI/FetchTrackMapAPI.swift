@@ -1,5 +1,5 @@
 //
-//  TrackMapAPI.swift
+//  SearchTrackMapAPI.swift
 //  PLAT
 //
 //  Created by 조우현 on 9/7/24.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct TrackMapRequest: Encodable {
+struct FetchTrackMapRequest: Encodable {
     let startLatitude: Double
     let startLongitude: Double
     let endLatitude: Double
     let endLongitude: Double
 }
 
-struct TrackMapResponse: Decodable {
+struct FetchTrackMapResponse: Decodable {
     let tracks: [Track]
     
     struct Track: Decodable {

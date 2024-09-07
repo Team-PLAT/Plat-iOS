@@ -7,15 +7,11 @@
 
 import Foundation
 
-struct TrackDetailRequest: Encodable {
-    let isrc: String
-    let imageUrl: String
-    let content: String
-    let latitude: Double
-    let longitude: Double
+struct FetchTrackDetailResquest: Encodable {
+    let trackId: Int64
 }
 
-struct TrackDetailResponse: Decodable {
+struct FetchTrackDetailResponse: Decodable {
     let trackId: Int64
     let isrc: String
     let createdAt: String
@@ -24,7 +20,7 @@ struct TrackDetailResponse: Decodable {
     let buildingName: String
     let address: String
     let imageUrl: String
-    let context: String
+    let content: String
     let likeCount: Int64
     let isLiked: Bool
     let member: Member
