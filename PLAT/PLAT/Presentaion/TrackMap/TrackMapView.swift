@@ -44,7 +44,7 @@ struct TrackMapView: View {
             }
             
             if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist)
+                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId)
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
@@ -102,6 +102,7 @@ private struct MapComponentsView: View {
     
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
+    @Binding var selectedTrackId: Track.ID?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -120,7 +121,7 @@ private struct MapComponentsView: View {
                 @Bindable var musicControlUseCase = musicControlUseCase
                 MiniMusicPlayer(
                     isPaused: $musicControlUseCase.state.isPaused,
-                    track: MockDataBuilder.track
+                    track: MockDataBuilder.trackList.first { $0.id == selectedTrackId } ?? MockDataBuilder.track
                 )
                 .padding(.bottom, 16)
             }

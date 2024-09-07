@@ -31,7 +31,8 @@ struct FeedView: View {
                             FeedRowView(
                                 track: track,
                                 trackIndex: Int64(track.id),
-                                playlistId: ""
+                                playlistId: "", 
+                                selectedTrackId: $selectedTrackId
                             )
                         }
                     }
@@ -71,6 +72,8 @@ private struct FeedRowView: View {
     let trackIndex: Int64
     let playlistId: String
     
+    @Binding private(set) var selectedTrackId: Int64?
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 6) {
@@ -102,7 +105,8 @@ private struct FeedRowView: View {
                     FeedPlayer(
                         track: track,
                         trackIndex: Int64(trackIndex),
-                        isPaused: $musicControlUseCase.state.isPaused
+                        isPaused: $musicControlUseCase.state.isPaused, 
+                        selectedTrackId: $selectedTrackId
                     )
                     .padding(.bottom, 6)
                     
@@ -211,12 +215,12 @@ private struct FeedPlayer: View {
     
     let track: Track
     var trackIndex: Int64?
-    @State private var beforeIndex: Int64?
     
     @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding private(set) var isPaused: Bool
+    @Binding private(set) var selectedTrackId: Int64?
     
     private var music: Music {
         track.music
@@ -254,30 +258,24 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    guard let selectedTrack = MockDataBuilder.trackList.first(where: { $0.id == trackIndex })
-                    else {
-                        return
-                    }
-                    if musicControlUseCase.state.isStreaming && trackIndex == beforeIndex {
+                    if selectedTrackId == trackIndex {
                         Task {
                             await musicControlUseCase.effect(.togglePlayback)
-                            self.beforeIndex = trackIndex
                         }
                     } else {
                         Task {
                             await musicControlUseCase.effect(.setup(music: track.music))
-                            isPaused = false
-                            self.beforeIndex = trackIndex
+                            selectedTrackId = trackIndex
                         }
                     }
                 } label: {
-                    Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                    Image(systemName: (selectedTrackId == trackIndex && !isPaused) ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
                         .transaction { transaction in
                             transaction.animation = nil
-                        }
+                    }
                 }
             }
             .frame(width: 311, height: 56)
