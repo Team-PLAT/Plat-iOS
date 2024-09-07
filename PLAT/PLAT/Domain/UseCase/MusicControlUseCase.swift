@@ -22,7 +22,7 @@ final class MusicControlUseCase {
         self.musicController = musicController
         self.state = State(
             isStreaming: false,
-            isPaused: false,
+            isPaused: true,
             currentDuration: 0
         )
     }

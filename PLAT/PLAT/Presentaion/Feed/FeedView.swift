@@ -63,6 +63,8 @@ struct FeedView: View {
 
 private struct FeedRowView: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
     let track: Track
     let trackIndex: Int
     let playlistId: String
@@ -94,8 +96,21 @@ private struct FeedRowView: View {
                     }
                     .padding(.bottom, 8)
                     
-                    FeedPlayer(track: track)
+//                    if musicControlUseCase.state.isStreaming {
+//                        @Bindable var musicControlUseCase = musicControlUseCase
+//                        FeedPlayer(
+//                            track: track,
+//                            isPaused: $musicControlUseCase.state.isPaused
+//                        )
+//                        .padding(.bottom, 6)
+//                    } else {
+                        @Bindable var musicControlUseCase = musicControlUseCase
+                        FeedPlayer(
+                            track: track,
+                            isPaused: $musicControlUseCase.state.isPaused
+                        )
                         .padding(.bottom, 6)
+//                    }
                     
                     FeedContentImage(track: track)
                         .padding(.bottom, 6)
@@ -205,14 +220,10 @@ private struct FeedPlayer: View {
     @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var isInitialSetup = true
+    @Binding private(set) var isPaused: Bool
     
     private var music: Music {
         track.music
-    }
-    
-    private var isPaused: Bool {
-        feedTrackUseCase.state.isPaused
     }
     
     var body: some View {
@@ -247,16 +258,26 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    Task {
-                        if isInitialSetup {
-                            await musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
-                            isInitialSetup = false
-                        } else {
+                    if musicControlUseCase.state.isStreaming {
+                        Task {
+                            print("스트리밍 1🍬🍬🍬🍬🍬🍬")
+                            print(isPaused)
                             await musicControlUseCase.effect(.togglePlayback)
+                            print("스트리밍 2🍬🍬🍬🍬🍬🍬")
+                            print(isPaused)
+                        }
+                        
+                    } else {
+                        Task {
+                            print("처음틀어용1🍬🍬🍬🍬🍬🍬🍬")
+                            print(isPaused)
+                            await musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+                            print("처음틀어용2🍬🍬🍬🍬🍬🍬🍬")
+                            print(isPaused)
                         }
                     }
                 } label: {
-                    Image(systemName: isPaused ? "pause.fill" : "play.fill")
+                    Image(systemName: isPaused ? "play.fill" : "pause.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
