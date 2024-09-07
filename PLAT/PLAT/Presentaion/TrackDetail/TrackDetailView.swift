@@ -67,14 +67,8 @@ struct TrackDetailView: View {
         .onAppear {
             Task {
                 let currentTrackId = trackDetailUseCase.trackId
-                print("Current Track ID:", currentTrackId)
-                
-                for track in MockDataBuilder.trackList {
-                    print("Track ID in list:", track.id)
-                }
                 
                 if let track = MockDataBuilder.trackList.first(where: { $0.id == currentTrackId }) {
-                    print("💖💖💖💖", track)
                     await musicControlUseCase.effect(.setup(music: track.music))
                 } else {
                     print("trackId 찾기 오류 \(currentTrackId)")

@@ -12,9 +12,11 @@ struct FeedView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var feedTrackUseCase: FeedTrackUseCase = .init(
-        feedTrack: MockDataBuilder.feedTrack,
+        feedTrack: MockDataBuilder.trackList,
         feedTrackService: FeedTrackService()
     )
+    
+    @State private var selectedTrackId: Int64?
     
     var body: some View {
         GeometryReader { proxy in
@@ -25,10 +27,10 @@ struct FeedView: View {
                         .padding(.bottom, 20)
                     
                     ScrollView {
-                        ForEach(MockDataBuilder.feedTrack.indices, id: \.self) { index in
+                        ForEach(MockDataBuilder.trackList) { track in
                             FeedRowView(
-                                track: MockDataBuilder.feedTrack[index],
-                                trackIndex: index,
+                                track: track,
+                                trackIndex: Int64(track.id),
                                 playlistId: ""
                             )
                         }
@@ -40,7 +42,7 @@ struct FeedView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: MockDataBuilder.track
+                        track: MockDataBuilder.trackList.first { $0.id == selectedTrackId } ?? MockDataBuilder.track
                     )
                     .padding(.horizontal, 18)
                     .position(
@@ -66,7 +68,7 @@ private struct FeedRowView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     let track: Track
-    let trackIndex: Int
+    let trackIndex: Int64
     let playlistId: String
     
     var body: some View {
@@ -85,7 +87,7 @@ private struct FeedRowView: View {
                         Spacer()
                         
                         Button {
-                            // 신고 알럿 창 띄우기
+                            // 알럿창
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.white)
@@ -96,21 +98,13 @@ private struct FeedRowView: View {
                     }
                     .padding(.bottom, 8)
                     
-//                    if musicControlUseCase.state.isStreaming {
-//                        @Bindable var musicControlUseCase = musicControlUseCase
-//                        FeedPlayer(
-//                            track: track,
-//                            isPaused: $musicControlUseCase.state.isPaused
-//                        )
-//                        .padding(.bottom, 6)
-//                    } else {
-                        @Bindable var musicControlUseCase = musicControlUseCase
-                        FeedPlayer(
-                            track: track,
-                            isPaused: $musicControlUseCase.state.isPaused
-                        )
-                        .padding(.bottom, 6)
-//                    }
+                    @Bindable var musicControlUseCase = musicControlUseCase
+                    FeedPlayer(
+                        track: track,
+                        trackIndex: Int64(trackIndex),
+                        isPaused: $musicControlUseCase.state.isPaused
+                    )
+                    .padding(.bottom, 6)
                     
                     FeedContentImage(track: track)
                         .padding(.bottom, 6)
@@ -118,7 +112,7 @@ private struct FeedRowView: View {
                     FeedContentView(track: track)
                         .padding(.bottom, 8)
                     
-                    FeedActionView(trackIndex: trackIndex, playlistId: playlistId)
+                    FeedActionView(trackIndex: Int(trackIndex), playlistId: playlistId)
                         .padding(.bottom, 18)
                 }
             }
@@ -216,6 +210,8 @@ private struct FeedLocationView: View {
 private struct FeedPlayer: View {
     
     let track: Track
+    var trackIndex: Int64?
+    @State private var beforeIndex: Int64?
     
     @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
@@ -258,22 +254,20 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    if musicControlUseCase.state.isStreaming {
+                    guard let selectedTrack = MockDataBuilder.trackList.first(where: { $0.id == trackIndex })
+                    else {
+                        return
+                    }
+                    if musicControlUseCase.state.isStreaming && trackIndex == beforeIndex {
                         Task {
-                            print("스트리밍 1🍬🍬🍬🍬🍬🍬")
-                            print(isPaused)
                             await musicControlUseCase.effect(.togglePlayback)
-                            print("스트리밍 2🍬🍬🍬🍬🍬🍬")
-                            print(isPaused)
+                            self.beforeIndex = trackIndex
                         }
-                        
                     } else {
                         Task {
-                            print("처음틀어용1🍬🍬🍬🍬🍬🍬🍬")
-                            print(isPaused)
-                            await musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
-                            print("처음틀어용2🍬🍬🍬🍬🍬🍬🍬")
-                            print(isPaused)
+                            await musicControlUseCase.effect(.setup(music: track.music))
+                            isPaused = false
+                            self.beforeIndex = trackIndex
                         }
                     }
                 } label: {
