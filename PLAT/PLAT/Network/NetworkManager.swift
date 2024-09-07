@@ -260,6 +260,7 @@ extension NetworkClient {
     /// URL을 URLRequest 타입으로 반환합니다.
     private func urlToRequest(_ httpMethodList: HTTPMethodList, url: URL) -> URLRequest {
         var request = URLRequest(url: url)
+        request.httpMethod = httpMethodList.rawValue
         
         request.setValue(
             HTTPHeader.mimeTypeValue,
