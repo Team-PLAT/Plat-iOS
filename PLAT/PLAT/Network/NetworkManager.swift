@@ -9,11 +9,18 @@ import Foundation
 
 class NetworkClient: HTTPMethod {
     
+    enum HTTPMethodList {
+        static let get = "GET"
+        static let post = "POST"
+        static let patch = "PATCH"
+        static let delete = "DELETE"
+    }
+    
     /// GET (쿼리로 데이터 전달)
     func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
-            request.httpMethod = "GET"
+            request.httpMethod = HTTPMethodList.get
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
             
@@ -72,7 +79,7 @@ class NetworkClient: HTTPMethod {
     func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
-            request.httpMethod = "POST"
+            request.httpMethod = HTTPMethodList.post
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
             
@@ -100,7 +107,7 @@ class NetworkClient: HTTPMethod {
     func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
-            request.httpMethod = "POST"
+            request.httpMethod = HTTPMethodList.post
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             request.httpBody = try JSONEncoder().encode(body)
@@ -127,7 +134,7 @@ class NetworkClient: HTTPMethod {
     func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
-            request.httpMethod = "PATCH"
+            request.httpMethod = HTTPMethodList.patch
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
             
@@ -155,7 +162,7 @@ class NetworkClient: HTTPMethod {
     func delete<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
         do {
             var request = URLRequest(url: url)
-            request.httpMethod = "DELETE"
+            request.httpMethod = HTTPMethodList.delete
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
             
