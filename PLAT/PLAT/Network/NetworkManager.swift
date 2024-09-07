@@ -9,21 +9,10 @@ import Foundation
 
 class NetworkClient: HTTPMethod {
     
-    enum HTTPMethodList {
-        static let get = "GET"
-        static let post = "POST"
-        static let patch = "PATCH"
-        static let delete = "DELETE"
-    }
-    
     /// GET (쿼리로 데이터 전달)
-    func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
+    func get<T: Decodable>(url: URL) async -> Result<T, Error> {
         do {
-            var request = URLRequest(url: url)
-            request.httpMethod = HTTPMethodList.get
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-            
+            let request = urlToRequest(.get, url: url)
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
@@ -76,42 +65,10 @@ class NetworkClient: HTTPMethod {
     }
     
     /// POST (Authorization)
-    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error> {
-        do {
-            var request = URLRequest(url: url)
-            request.httpMethod = HTTPMethodList.post
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-            
-            request.httpBody = try JSONEncoder().encode(body)
-            
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
-            }
-            
-            let decodedData = try JSONDecoder().decode(T.self, from: data)
-            return .success(decodedData)
-        } catch {
-            if let urlError = error as? URLError {
-                return .failure(NetworkError.urlError(urlError))
-            } else {
-                return .failure(NetworkError.error(error))
-            }
-        }
-    }
-    
-    /// POST (login)
     func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
         do {
-            var request = URLRequest(url: url)
-            request.httpMethod = HTTPMethodList.post
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
+            var request = urlToRequest(.post, url: url)
             request.httpBody = try JSONEncoder().encode(body)
-            
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse,
@@ -131,13 +88,9 @@ class NetworkClient: HTTPMethod {
     }
     
     /// PATCH
-    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error> {
+    func patch<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
         do {
-            var request = URLRequest(url: url)
-            request.httpMethod = HTTPMethodList.patch
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-            
+            var request = urlToRequest(.patch, url: url)
             request.httpBody = try JSONEncoder().encode(body)
             
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -159,13 +112,9 @@ class NetworkClient: HTTPMethod {
     }
     
     /// DELETE
-    func delete<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error> {
+    func delete<T: Decodable>(url: URL) async -> Result<T, Error> {
         do {
-            var request = URLRequest(url: url)
-            request.httpMethod = HTTPMethodList.delete
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-            
+            let request = urlToRequest(.delete, url: url)
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse,
@@ -183,4 +132,74 @@ class NetworkClient: HTTPMethod {
             }
         }
     }
+}
+
+// MARK: - Helper
+
+extension NetworkClient {
+    
+    enum HTTPMethodList: String {
+        case get = "GET"
+        case post = "POST"
+        case patch = "PATCH"
+        case delete = "DELETE"
+    }
+    
+    enum HTTPHeader {
+        static let mimeTypeHeader = "Content-Type"
+        static let mimeTypeValue = "application/json"
+        static let authTokenHeader = "Authorization"
+        
+        static func authTokenValue(_ token: String) -> String {
+            "Bearer \(token)"
+        }
+    }
+    
+    /// URL을 URLRequest 타입으로 반환합니다.
+    private func urlToRequest(_ httpMethodList: HTTPMethodList, url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+        
+        request.setValue(
+            HTTPHeader.mimeTypeValue,
+            forHTTPHeaderField: HTTPHeader.mimeTypeHeader
+        )
+        
+        request.setValue(
+            HTTPHeader.authTokenValue("SOMETOKEN"), // TODO: 액세스 토큰 삽입
+            forHTTPHeaderField: HTTPHeader.authTokenHeader
+        )
+        
+        return request
+    }
+}
+
+// MARK: - Legacy
+
+extension NetworkClient {
+    //    /// POST (login)
+    //    func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
+    //        do {
+    //            var request = URLRequest(url: url)
+    //            request.httpMethod = HTTPMethodList.post
+    //            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    //
+    //            request.httpBody = try JSONEncoder().encode(body)
+    //
+    //            let (data, response) = try await URLSession.shared.data(for: request)
+    //
+    //            guard let httpResponse = response as? HTTPURLResponse,
+    //                  (200...299).contains(httpResponse.statusCode) else {
+    //                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
+    //            }
+    //
+    //            let decodedData = try JSONDecoder().decode(T.self, from: data)
+    //            return .success(decodedData)
+    //        } catch {
+    //            if let urlError = error as? URLError {
+    //                return .failure(NetworkError.urlError(urlError))
+    //            } else {
+    //                return .failure(NetworkError.error(error))
+    //            }
+    //        }
+    //    }
 }
