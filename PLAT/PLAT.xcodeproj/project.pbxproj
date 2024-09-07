@@ -49,6 +49,8 @@
 		79842E8C2C7225FD0062F825 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79842E8B2C7225FD0062F825 /* LocationManager.swift */; };
 		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
+		79B0F6E92C8C24FC009140AF /* TrackMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6E82C8C24FC009140AF /* TrackMapAPI.swift */; };
+		79B0F6ED2C8C2720009140AF /* TrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6EC2C8C2720009140AF /* TrackMapService.swift */; };
 		79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* SettingPath.swift */; };
 		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
 		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
@@ -115,8 +117,7 @@
 		DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A152C71E37E002BAD11 /* BaseResponse.swift */; };
 		DFE27A1A2C71E54F002BAD11 /* TrackFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */; };
 		DFE27A202C71E78F002BAD11 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A1F2C71E78F002BAD11 /* Config.swift */; };
-		DFE27A222C71FEE0002BAD11 /* TrackDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackDetailResponse.swift */; };
-		DFE27A282C72048F002BAD11 /* TrackDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A272C72048F002BAD11 /* TrackDetailRequest.swift */; };
+		DFE27A222C71FEE0002BAD11 /* TrackDetailAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* TrackDetailAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,6 +164,8 @@
 		79842E8B2C7225FD0062F825 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		79B0F6E82C8C24FC009140AF /* TrackMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapAPI.swift; sourceTree = "<group>"; };
+		79B0F6EC2C8C2720009140AF /* TrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapService.swift; sourceTree = "<group>"; };
 		79B48AF62C413B5600A73CA0 /* SettingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPath.swift; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
 		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
@@ -231,8 +234,7 @@
 		DFE27A152C71E37E002BAD11 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedService.swift; sourceTree = "<group>"; };
 		DFE27A1F2C71E78F002BAD11 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		DFE27A212C71FEE0002BAD11 /* TrackDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailResponse.swift; sourceTree = "<group>"; };
-		DFE27A272C72048F002BAD11 /* TrackDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailRequest.swift; sourceTree = "<group>"; };
+		DFE27A212C71FEE0002BAD11 /* TrackDetailAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,6 +388,14 @@
 				79A09D4D2C391BA2006F14F4 /* MainView.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		79B0F6E72C8C24D7009140AF /* TrackMap */ = {
+			isa = PBXGroup;
+			children = (
+				79B0F6E82C8C24FC009140AF /* TrackMapAPI.swift */,
+			);
+			path = TrackMap;
 			sourceTree = "<group>";
 		};
 		79B48AF52C413B2B00A73CA0 /* Path */ = {
@@ -612,6 +622,7 @@
 				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
 				DF616E5B2C74277300CCDC9D /* NetworkError.swift */,
 				DFE27A262C720467002BAD11 /* TrackDetail */,
+				79B0F6E72C8C24D7009140AF /* TrackMap */,
 			);
 			name = DTO;
 			path = Service/DTO;
@@ -634,6 +645,7 @@
 			isa = PBXGroup;
 			children = (
 				DFE27A192C71E54F002BAD11 /* TrackFeedService.swift */,
+				79B0F6EC2C8C2720009140AF /* TrackMapService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -641,8 +653,7 @@
 		DFE27A262C720467002BAD11 /* TrackDetail */ = {
 			isa = PBXGroup;
 			children = (
-				DFE27A212C71FEE0002BAD11 /* TrackDetailResponse.swift */,
-				DFE27A272C72048F002BAD11 /* TrackDetailRequest.swift */,
+				DFE27A212C71FEE0002BAD11 /* TrackDetailAPI.swift */,
 			);
 			path = TrackDetail;
 			sourceTree = "<group>";
@@ -784,20 +795,21 @@
 				82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */,
 				82C9A53C2C87228500C57916 /* API.swift in Sources */,
 				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
-				DFE27A222C71FEE0002BAD11 /* TrackDetailResponse.swift in Sources */,
+				DFE27A222C71FEE0002BAD11 /* TrackDetailAPI.swift in Sources */,
 				82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */,
 				791FEF8A2C771CDE006CBDE0 /* UserSessionServiceInterface.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
-				DFE27A282C72048F002BAD11 /* TrackDetailRequest.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
+				79B0F6E92C8C24FC009140AF /* TrackMapAPI.swift in Sources */,
 				5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */,
+				79B0F6ED2C8C2720009140AF /* TrackMapService.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
@@ -984,7 +996,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -1004,7 +1016,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1026,7 +1038,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 9XG4S4XZWN;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -1046,7 +1058,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cabin.plat.thinkyside;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

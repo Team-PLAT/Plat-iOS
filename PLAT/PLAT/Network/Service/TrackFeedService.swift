@@ -11,10 +11,10 @@ class FeedService {
     static let shared = FeedService()
     private init() {}
     
-    func searchTrackFeed() async {
+    func searchTrackFeed(page: Int32, size: Int32) async {
         let client = NetworkClient()
         let authToken = "tokenishere"
-        let url = URL(string: Config.baseURL + "/tracks/feeds")!
+        let url = APIs.Plat.Tracks.fetchFeed.url
         let response: Result<BaseResponse<TrackDetailResponse>, Error> = await client.get(url: url, authToken: authToken)
         print(response)
     }
@@ -22,16 +22,16 @@ class FeedService {
     func searchTrackDetail(trackId: Int64) async {
         let client = NetworkClient()
         let authToken = "tokenishere"
-        let url = URL(string: "\(Config.baseURL)/tracks/\(trackId)")!
+        let url = APIs.Plat.Tracks.fetch(trackId: trackId).url
         let response: Result<BaseResponse<TrackDetailResponse>, Error> = await client.get(url: url, authToken: authToken)
         print(response)
     }
     
-    func postTrackFeed(trackDetail: TrackDetailRequest) async {
+    func postTrackFeed(request: TrackDetailRequest) async {
         let client = NetworkClient()
         let authToken = "tokenishere"
-        let url = URL(string: "\(Config.baseURL)/tracks")!
-        let response: Result<BaseResponse<TrackDetailResponse>, Error>  = await client.post(url: url, body: trackDetail, authToken: authToken)
+        let url = APIs.Plat.Tracks.upload.url
+        let response: Result<BaseResponse<TrackDetailResponse>, Error>  = await client.post(url: url, body: request, authToken: authToken)
         print(response)
     }
 }
