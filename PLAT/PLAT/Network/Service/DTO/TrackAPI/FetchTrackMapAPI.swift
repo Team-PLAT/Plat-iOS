@@ -1,5 +1,5 @@
 //
-//  SearchTrackMapAPI.swift
+//  FetchTrackMapAPI.swift
 //  PLAT
 //
 //  Created by 조우현 on 9/7/24.

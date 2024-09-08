@@ -61,18 +61,23 @@ struct TrackService {
         let client = NetworkClient()
         let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.fetchMap.url
-        var urlComponet = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        urlComponet?.queryItems = [
+        var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        urlComponent?.queryItems = [
             URLQueryItem(name: "startLatitude", value: "\(request.startLatitude)"),
             URLQueryItem(name: "startLongitude", value: "\(request.startLongitude)"),
             URLQueryItem(name: "endLatitude", value: "\(request.endLatitude)"),
             URLQueryItem(name: "endLongitude", value: "\(request.endLongitude)")
         ]
-        let response: Result<BaseResponse<FetchTrackMapResponse>, Error> = await client.get(url: urlComponet!.url!, authToken: authToken)
-        do {
-            return try .success(response.get().result)
-        } catch {
-            return .failure(error)
+        if let urlComponet = urlComponent,
+           let url = urlComponet.url {
+            let response: Result<BaseResponse<FetchTrackMapResponse>, Error> = await client.get(url: url, authToken: authToken)
+            do {
+                return try .success(response.get().result)
+            } catch {
+                return .failure(error)
+            }
+        } else {
+            return .failure(NetworkError.urlComponentsError)
         }
     }
     
@@ -85,11 +90,16 @@ struct TrackService {
             URLQueryItem(name: "page", value: "\(request.page)"),
             URLQueryItem(name: "size", value: "\(request.size)")
         ]
-        let response: Result<BaseResponse<FetchTrackFeedResponse>, Error> = await client.get(url: urlComponet!.url!, authToken: authToken)
-        do {
-            return try .success(response.get().result)
-        } catch {
-            return .failure(error)
+        if let urlComponet = urlComponet,
+           let url = urlComponet.url {
+            let response: Result<BaseResponse<FetchTrackFeedResponse>, Error> = await client.get(url: url, authToken: authToken)
+            do {
+                return try .success(response.get().result)
+            } catch {
+                return .failure(error)
+            }
+        } else {
+            return .failure(NetworkError.urlComponentsError)
         }
     }
 }
