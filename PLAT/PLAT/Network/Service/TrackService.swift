@@ -10,9 +10,8 @@ import Foundation
 struct TrackService {
     static func uploadTrack(request: UploadTrackRequest) async -> Result<UploadTrackResponse, Error> {
         let client = NetworkClient()
-        let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.upload.url
-        let response: Result<BaseResponse<UploadTrackResponse>, Error>  = await client.post(url: url, body: request, authToken: authToken)
+        let response: Result<BaseResponse<UploadTrackResponse>, Error>  = await client.post(url: url, body: request)
         do {
             return try .success(response.get().result)
         } catch {
@@ -22,10 +21,8 @@ struct TrackService {
     
     static func reportTrack(request: ReportTrackRequset) async -> Result<ReportTrackResponse, Error> {
         let client = NetworkClient()
-    
-        let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.report(trackId: request.trackId).url
-        let response: Result<BaseResponse<ReportTrackResponse>, Error>  = await client.post(url: url, body: request, authToken: authToken)
+        let response: Result<BaseResponse<ReportTrackResponse>, Error>  = await client.post(url: url, body: request)
         do {
             return try .success(response.get().result)
         } catch {
@@ -35,9 +32,8 @@ struct TrackService {
     
     static func likeTrack(request: LikeTrackRequest) async -> Result<LikeTrackResponse, Error> {
         let client = NetworkClient()
-        let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.like(trackId: request.trackId).url
-        let response: Result<BaseResponse<LikeTrackResponse>, Error>  = await client.post(url: url, body: request, authToken: authToken)
+        let response: Result<BaseResponse<LikeTrackResponse>, Error>  = await client.post(url: url, body: request)
         do {
             return try .success(response.get().result)
         } catch {
@@ -47,9 +43,8 @@ struct TrackService {
     
     static func fetchTrackDetail(request: FetchTrackDetailResquest) async -> Result<FetchTrackDetailResponse, Error> {
         let client = NetworkClient()
-        let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.fetch(trackId: request.trackId).url
-        let response: Result<BaseResponse<FetchTrackDetailResponse>, Error> = await client.get(url: url, authToken: authToken)
+        let response: Result<BaseResponse<FetchTrackDetailResponse>, Error> = await client.get(url: url)
         do {
             return try .success(response.get().result)
         } catch {
@@ -59,7 +54,6 @@ struct TrackService {
     
     static func fetchTrackMap(request: FetchTrackMapRequest) async -> Result<FetchTrackMapResponse, Error> {
         let client = NetworkClient()
-        let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.fetchMap.url
         var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)
         urlComponent?.queryItems = [
@@ -70,7 +64,7 @@ struct TrackService {
         ]
         if let urlComponet = urlComponent,
            let url = urlComponet.url {
-            let response: Result<BaseResponse<FetchTrackMapResponse>, Error> = await client.get(url: url, authToken: authToken)
+            let response: Result<BaseResponse<FetchTrackMapResponse>, Error> = await client.get(url: url)
             do {
                 return try .success(response.get().result)
             } catch {
@@ -83,7 +77,6 @@ struct TrackService {
     
     static func fetchTrackFeed(request: FetchTrackFeedRequest) async -> Result<FetchTrackFeedResponse, Error> {
         let client = NetworkClient()
-        let authToken = "tokenishere"
         let url = APIs.Plat.Tracks.fetchFeed.url
         var urlComponet = URLComponents(url: url, resolvingAgainstBaseURL: false)
         urlComponet?.queryItems = [
@@ -92,7 +85,7 @@ struct TrackService {
         ]
         if let urlComponet = urlComponet,
            let url = urlComponet.url {
-            let response: Result<BaseResponse<FetchTrackFeedResponse>, Error> = await client.get(url: url, authToken: authToken)
+            let response: Result<BaseResponse<FetchTrackFeedResponse>, Error> = await client.get(url: url)
             do {
                 return try .success(response.get().result)
             } catch {
