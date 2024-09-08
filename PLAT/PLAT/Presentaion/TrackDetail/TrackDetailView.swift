@@ -211,7 +211,7 @@ private struct MusicControllerView: View {
     @State private var isTrackAppendToPlaylistSheetPresented = false
     
     var body: some View {
-        HStack(spacing: 24) {
+        HStack(spacing: 52) {
             MusicControllerCell(
                 systemImage: SystemImage.like,
                 tapAction: {
@@ -223,13 +223,6 @@ private struct MusicControllerView: View {
                 systemImage: SystemImage.addToPlaylist,
                 tapAction: {
                     isTrackAppendToPlaylistSheetPresented.toggle()
-                }
-            )
-            
-            MusicControllerCell(
-                systemImage: SystemImage.postWithThisMusic,
-                tapAction: {
-                    // TODO: 이 음악으로 내가 게시하기(추후 개발)
                 }
             )
             
