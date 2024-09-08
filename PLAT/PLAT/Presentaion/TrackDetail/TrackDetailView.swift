@@ -248,8 +248,6 @@ private struct MusicControllerView: View {
         }
         .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
             TrackAppendToPlaylistSheet()
-                .presentationDragIndicator(.visible)
-                .presentationDetents([.height(286)])
         }
     }
 }
