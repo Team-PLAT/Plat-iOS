@@ -13,11 +13,3 @@ protocol HTTPMethod {
     func patch<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
     func delete<T: Decodable>(url: URL) async -> Result<T, Error>
 }
-
-//protocol APIMethod {
-//    func get<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error>
-//    func post<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error>
-//    func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
-//    func patch<T: Decodable, U: Encodable>(url: URL, body: U, authToken: String) async -> Result<T, Error>
-//    func delete<T: Decodable>(url: URL, authToken: String) async -> Result<T, Error>
-//}

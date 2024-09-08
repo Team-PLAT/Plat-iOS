@@ -76,6 +76,7 @@
 		826933492C7207310004E0B5 /* Helper+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933482C7207310004E0B5 /* Helper+Log.swift */; };
 		82721EE82C8C229E00CA2C9A /* NetworkLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EE72C8C229E00CA2C9A /* NetworkLog.swift */; };
 		82721EEC2C8C3D1E00CA2C9A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */; };
+		82721EEE2C8D624000CA2C9A /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EED2C8D624000CA2C9A /* ToastMessage.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
 		82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */; };
 		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
@@ -193,6 +194,7 @@
 		826933482C7207310004E0B5 /* Helper+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Log.swift"; sourceTree = "<group>"; };
 		82721EE72C8C229E00CA2C9A /* NetworkLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLog.swift; sourceTree = "<group>"; };
 		82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		82721EED2C8D624000CA2C9A /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicController.swift; sourceTree = "<group>"; };
 		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 				82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */,
 				82A825152C6E30D00084D7E8 /* MusicIndicator.swift */,
 				82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */,
+				82721EED2C8D624000CA2C9A /* ToastMessage.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
+				82721EEE2C8D624000CA2C9A /* ToastMessage.swift in Sources */,
 				DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */,
 				DF6DC99B2C75CB9D004A23F7 /* AppleMusicController.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,

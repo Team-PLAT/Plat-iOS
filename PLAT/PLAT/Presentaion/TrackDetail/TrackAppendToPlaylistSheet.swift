@@ -11,7 +11,6 @@ import SwiftUI
 
 struct TrackAppendToPlaylistSheet: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
     @Environment(\.dismiss) private var dismiss
     
     @State private var scrollPosition: Int? = 0
@@ -29,12 +28,14 @@ struct TrackAppendToPlaylistSheet: View {
                     .padding(.bottom, 32)
                 
                 AddButton(title: "\(playlists[scrollPosition ?? 0].title)") {
-                    trackDetailUseCase.effect(.addToPlaylist)
+                    // TODO: 플레이리스트에 추가
                     dismiss()
                 }
                 .padding(.bottom, 16)
             }
         }
+        .presentationDragIndicator(.visible)
+        .presentationDetents([.height(286)])
     }
 }
 
