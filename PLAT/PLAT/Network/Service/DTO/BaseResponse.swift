@@ -5,7 +5,7 @@
 //  Created by 조세연 on 8/18/24.
 //
 
-import Foundation
+import Foundation	
 
 struct BaseResponse<ResultType: Decodable>: Decodable {
     let timeStamp: String
