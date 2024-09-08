@@ -13,6 +13,7 @@ enum NetworkError: Error {
     case serverError(statusCode: Int)
     case urlError(URLError)
     case error(Error)
+    case urlComponentsError
 
     var localizedDescription: String {
         switch self {
@@ -26,6 +27,8 @@ enum NetworkError: Error {
             return urlError.localizedDescription
         case .error(let error):
             return error.localizedDescription
+        case .urlComponentsError:
+            return "🥵 URLComponents 오류"
         }
     }
 }

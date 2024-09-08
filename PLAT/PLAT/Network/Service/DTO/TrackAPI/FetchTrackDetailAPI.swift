@@ -1,0 +1,33 @@
+//
+//  FetchTrackDetailAPI.swift
+//  PLAT
+//
+//  Created by 조세연 on 8/18/24.
+//
+
+import Foundation
+
+struct FetchTrackDetailResquest: Encodable {
+    let trackId: Int64
+}
+
+struct FetchTrackDetailResponse: Decodable {
+    let trackId: Int64
+    let isrc: String
+    let createdAt: String
+    let latitude: Double
+    let longitude: Double
+    let buildingName: String
+    let address: String
+    let imageUrl: String
+    let content: String
+    let likeCount: Int64
+    let isLiked: Bool
+    let member: Member
+    
+    struct Member: Decodable {
+        let memberId: Int64
+        let memberNickname: String
+        let avatar: String
+    }
+}
