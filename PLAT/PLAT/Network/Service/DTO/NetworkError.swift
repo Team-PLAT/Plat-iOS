@@ -8,6 +8,7 @@
 import Foundation
 
 enum NetworkError: Error {
+    case httpResponseError
     case decodingError
     case serverError(statusCode: Int)
     case urlError(URLError)
@@ -15,6 +16,8 @@ enum NetworkError: Error {
 
     var localizedDescription: String {
         switch self {
+        case .httpResponseError:
+            return "🥵 HTTP Response 값 없음"
         case .decodingError:
             return "🥵 디코딩 오류"
         case .serverError(let statusCode):
