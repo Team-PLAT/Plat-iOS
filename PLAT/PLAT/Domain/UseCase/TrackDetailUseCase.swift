@@ -14,6 +14,7 @@ final class TrackDetailUseCase {
     private(set) var feedTrack: [Track]
     private(set) var track: Track
     private(set) var trackId: Track.ID
+    private(set) var playlist: [Playlist]
     
     private var trackService: TrackServiceInterface
     
@@ -27,6 +28,7 @@ final class TrackDetailUseCase {
         self.track = track
         self.trackService = trackService
         self.trackId = trackId
+        self.playlist = [] // TODO: 실제 플레이리스트 받아오기
         
         // TODO: 교체 예정
         self.state = State(
