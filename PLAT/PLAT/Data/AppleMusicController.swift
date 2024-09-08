@@ -62,6 +62,20 @@ extension AppleMusicController {
         print(#function)
     }
     
+    /// 음악 업데이트
+    func updateMusicPlayer(with duration: Double) {
+            if musicPlayer.playbackState == .playing {
+                if duration >= 0 {
+                    musicPlayer.currentPlaybackTime = duration
+                    print("🎀🎀🎀🎀", duration)
+                } else {
+                    print("유효하지 않은 duration 값")
+                }
+            } else {
+                print("음악이 재생 중이지 않음")
+            }
+        }
+    
     /// 현재 음악 시간
     func currentDuration() -> AnyPublisher<Double, Error> {
         return Timer.publish(every: 0.5, on: .main, in: .common)

@@ -11,7 +11,11 @@ import SwiftUI
 
 struct MusicSeekBar: View {
     
-    let currentDuration: Double
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var isEditing = false
+    @State private var currentDuration: Double = 0.0
+
     let totalDuration: Double
     
     private var progress: Double {
@@ -23,29 +27,49 @@ struct MusicSeekBar: View {
     }
     
     var body: some View {
+
+        @Bindable var musicControlUseCase = musicControlUseCase
+        
         VStack(spacing: 12) {
-            ProgressView(value: progress)
-                .tint(.platPurple)
-                .background(.secondary.opacity(0.32))
-                .clipShape(RoundedRectangle(cornerRadius: 100))
-                .scaleEffect(x: 1, y: 1.5, anchor: .center)
+            Slider(
+                value: $musicControlUseCase.state.currentDuration,
+                in: 0...totalDuration,
+                onEditingChanged: { editing in
+                    isEditing = editing
+                    if !editing {
+                        Task {
+                            await musicControlUseCase.effect(.updatePlayer(duration: currentDuration))
+                        }
+                    }
+                }
+            )
+            .onAppear {
+                let thumbImage = UIImage(systemName: "circle.fill")
+                UISlider.appearance().setThumbImage(thumbImage, for: .disabled)
+            }
+            .accentColor(.platPurple)
             
             HStack {
-                Text(currentDuration.musicTimeFormat)
+                Text(musicControlUseCase.state.currentDuration.musicTimeFormat)
                 Spacer()
                 Text("-\(leftDuration.musicTimeFormat)")
             }
             .font(.Body.body5)
             .foregroundStyle(.gray7)
         }
+        .padding()
+        .onAppear {
+           
+            isEditing = false
+        }
     }
 }
 
 // MARK: - Preview
 
-#Preview {
-    MusicSeekBar(
-        currentDuration: 300,
-        totalDuration: 365
-    )
-}
+//#Preview {
+//    MusicSeekBar(
+//        currentDuration: 300,
+//        totalDuration: 365
+//    )
+//}

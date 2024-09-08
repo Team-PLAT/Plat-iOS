@@ -50,6 +50,7 @@ extension MusicControlUseCase {
         case setup(music: Music)
         case play(music: Music)
         case togglePlayback
+        case updatePlayer(duration: Double)
     }
     
     func effect(_ effect: Effect) async {
@@ -79,6 +80,9 @@ extension MusicControlUseCase {
             }
             
             state.isPaused.toggle()
+            
+        case .updatePlayer(duration: let duration):
+            musicController.updateMusicPlayer(with: duration)
         }
     }
 }

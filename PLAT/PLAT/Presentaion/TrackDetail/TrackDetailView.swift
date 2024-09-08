@@ -18,6 +18,7 @@ struct TrackDetailView: View {
     @State private var trackDetailUseCase: TrackDetailUseCase
     
     @State private var isContentSheetPresented = false
+    @State private var isPlaying: Bool = true
     
     init(trackId: Track.ID) {
         self.trackDetailUseCase = TrackDetailUseCase(
@@ -43,9 +44,13 @@ struct TrackDetailView: View {
                     .padding(.top, 24)
                 
                 MusicSeekBar(
-                    currentDuration: musicControlUseCase.state.currentDuration,
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
+//                .onChange(of: currentDuration) {
+//                    Task {
+//                        await musicControlUseCase.effect(.updatePlayer(duration: currentDuration))
+//                    }
+//                }
                 .padding(.top, 36)
                 .padding(.horizontal, 16)
                 
