@@ -14,38 +14,41 @@ struct MusicSeekBar: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isEditing = false
-    @State private var currentDuration: Double = 0.0
-
+    @State private var sliderValue: Double = 0.0
+    
     let totalDuration: Double
     
-    private var progress: Double {
-        currentDuration / totalDuration
-    }
-    
     private var leftDuration: Double {
-        totalDuration - currentDuration
+        totalDuration - musicControlUseCase.state.currentDuration
     }
     
     var body: some View {
-
+        
         @Bindable var musicControlUseCase = musicControlUseCase
         
         VStack(spacing: 12) {
             Slider(
-                value: $musicControlUseCase.state.currentDuration,
+                value: $sliderValue,
                 in: 0...totalDuration,
                 onEditingChanged: { editing in
-                    isEditing = editing
-                    if !editing {
+                    if editing {
                         Task {
-                            await musicControlUseCase.effect(.updatePlayer(duration: currentDuration))
+                            await musicControlUseCase.effect(.updatePlayer(duration: sliderValue))
+                        }
+                        
+                        musicControlUseCase.state.currentDuration = sliderValue
+                        print("수정 끝남")
+                        print(sliderValue)
+                    } else {
+                        Task {
+                            await musicControlUseCase.effect(.updatePlayer(duration: musicControlUseCase.state.currentDuration))
                         }
                     }
                 }
             )
             .onAppear {
                 let thumbImage = UIImage(systemName: "circle.fill")
-                UISlider.appearance().setThumbImage(thumbImage, for: .disabled)
+                UISlider.appearance().setThumbImage(thumbImage, for: .normal)
             }
             .accentColor(.platPurple)
             
@@ -59,7 +62,7 @@ struct MusicSeekBar: View {
         }
         .padding()
         .onAppear {
-           
+            
             isEditing = false
         }
     }

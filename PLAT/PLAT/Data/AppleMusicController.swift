@@ -148,6 +148,7 @@ extension AppleMusicController {
                 
                 self.firstSong = firstSong
                 
+                print(firstSong.id)
                 print("URL: \(firstSong.attributes.artwork?.url ?? "없음")")
                 
             } else {
