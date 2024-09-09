@@ -182,7 +182,6 @@ private struct MapButtonsView: View {
             Spacer()
             
             Button {
-                // TODO: TrackAppendView로 이동(sheet)
                 isTrackAppendViewSheet = true
             } label: {
                 Circle()
