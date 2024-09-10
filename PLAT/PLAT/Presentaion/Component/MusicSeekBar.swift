@@ -23,7 +23,7 @@ struct MusicSeekBar: View {
     }
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 6) {
             Slider(
                 value: $sliderValue,
                 in: 0...totalDuration,
@@ -35,6 +35,13 @@ struct MusicSeekBar: View {
                     }
                 }
             )
+            HStack {
+                Text(musicControlUseCase.state.currentDuration.musicTimeFormat)
+                Spacer()
+                Text("-\(leftDuration.musicTimeFormat)")
+            }
+            .font(.Body.body5)
+            .foregroundStyle(.gray7)
         }
         .onChange(of: musicControlUseCase.state.currentDuration) {
             if !isEditing {
@@ -46,22 +53,11 @@ struct MusicSeekBar: View {
             UISlider.appearance().setThumbImage(thumbImage, for: .normal)
         }
         .accentColor(.platPurple)
-        
-        HStack {
-            Text(musicControlUseCase.state.currentDuration.musicTimeFormat)
-            Spacer()
-            Text("-\(leftDuration.musicTimeFormat)")
-        }
-        .font(.Body.body5)
-        .foregroundStyle(.gray7)
     }
 }
 
 // MARK: - Preview
 
-//#Preview {
-//    MusicSeekBar(
-//        currentDuration: 300,
-//        totalDuration: 365
-//    )
-//}
+#Preview {
+    MusicSeekBar(totalDuration: 378.0)
+}

@@ -243,4 +243,23 @@ struct MockDataBuilder {
             profileImageUrl: "https://p.turbosquid.com/ts-thumb/YS/jomAmS/ulZxDbeh/render01/jpg/1282179377/600x600/fit_q87/edab67ff7df50901ab9f109305d5a692b68477a7/render01.jpg"
         )
     }
+    
+    static var mockTrack: Track {
+        return Track(
+            id: 0000000,
+            music: Music(
+                isrc: " ",
+                title: " ",
+                artist: " ",
+                albumImageUrl: " ",
+                duration: 0.0
+            ),
+            location: Location(
+                latitude: 0.0,
+                longitude: 0.0
+            ),
+            platter: user,
+            createdDate: .now
+        )
+    }
 }

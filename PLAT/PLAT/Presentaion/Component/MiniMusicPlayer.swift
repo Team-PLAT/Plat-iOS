@@ -11,9 +11,11 @@ import SwiftUI
 
 struct MiniMusicPlayer: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
     @Binding private(set) var isPaused: Bool
     
-    let track: Track
+    @State private(set) var track: Track
     
     let currentDuration: Double
     let totalDuration: Double
@@ -127,15 +129,15 @@ private struct PlaybackButton: View {
 
 // MARK: - Preview
 
-#Preview {
-    ZStack {
-        Color.gray6.ignoresSafeArea()
-        
-        MiniMusicPlayer(
-            isPaused: .constant(false),
-            track: MockDataBuilder.track,
-            currentDuration: 0.0,
-            totalDuration: 4.0
-        )
-    }
-}
+//#Preview {
+//    ZStack {
+//        Color.gray6.ignoresSafeArea()
+//        
+//        MiniMusicPlayer(
+//            isPaused: .constant(false),
+//            track: MockDataBuilder.track,
+//            currentDuration: 0.0,
+//            totalDuration: 4.0
+//        )
+//    }
+//}

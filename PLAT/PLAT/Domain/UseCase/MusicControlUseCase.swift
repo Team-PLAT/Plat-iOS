@@ -24,7 +24,8 @@ final class MusicControlUseCase {
             isStreaming: false,
             isPaused: true,
             currentDuration: 0,
-            isPlayingId: 0
+            isPlayingId: 0,
+            isPlayingTrack: nil
         )
     }
 }
@@ -39,6 +40,7 @@ extension MusicControlUseCase {
         var isPaused: Bool
         var currentDuration: Double
         var isPlayingId: Int64
+        var isPlayingTrack: Track?
     }
 }
 
@@ -120,6 +122,20 @@ extension MusicControlUseCase {
                 albumImageUrl: musicInfo.url ?? music.albumImageUrl,
                 duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
             )
+            
+            if var playingTrack = state.isPlayingTrack {
+                playingTrack.music = state.music ?? Music(
+                    isrc: " ",
+                    title: " ",
+                    artist: " ",
+                    albumImageUrl: " ",
+                    duration: 0.0
+                )
+                state.isPlayingTrack = playingTrack
+            }
+            
+            print("✅✅✅", state.isPlayingTrack?.music)
         }
     }
 }
+

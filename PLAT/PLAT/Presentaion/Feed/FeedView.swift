@@ -43,7 +43,7 @@ struct FeedView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: MockDataBuilder.trackList.first { $0.id == musicControlUseCase.state.isPlayingId } ?? MockDataBuilder.track,
+                        track: musicControlUseCase.state.isPlayingTrack ?? MockDataBuilder.mockTrack,
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
