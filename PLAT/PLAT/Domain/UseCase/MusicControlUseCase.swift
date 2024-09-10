@@ -133,9 +133,19 @@ extension MusicControlUseCase {
                 )
                 state.isPlayingTrack = playingTrack
             }
-            
-            print("✅✅✅", state.isPlayingTrack?.music)
         }
     }
+    
+    func fetchMusicInfoApi(music: Music) async -> Music? {
+        if let musicInfo = await musicController.fetchMusic(music) {
+            return Music(
+                isrc: music.isrc,
+                title: musicInfo.name ?? music.title,
+                artist: musicInfo.artistName ?? music.artist,
+                albumImageUrl: musicInfo.url ?? music.albumImageUrl,
+                duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
+            )
+        }
+        return nil
+    }
 }
-

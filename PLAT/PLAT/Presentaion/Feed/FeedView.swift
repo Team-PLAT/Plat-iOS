@@ -31,10 +31,11 @@ struct FeedView: View {
                             FeedRowView(
                                 track: track,
                                 trackIndex: Int64(track.id),
-                                playlistId: "", 
+                                playlistId: "",
                                 selectedTrackId: $selectedTrackId
                             )
                         }
+                        
                     }
                 }
                 
@@ -60,6 +61,7 @@ struct FeedView: View {
             .refreshable {
                 // TODO: fetch 한 값 불러오기
             }
+            
         }
     }
 }
@@ -69,11 +71,12 @@ struct FeedView: View {
 private struct FeedRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    
+        
     let track: Track
     let trackIndex: Int64
     let playlistId: String
     
+    @State private var feedMusic: Music?
     @Binding private(set) var selectedTrackId: Int64?
     
     var body: some View {
@@ -107,8 +110,9 @@ private struct FeedRowView: View {
                     FeedPlayer(
                         track: track,
                         trackIndex: Int64(trackIndex),
-                        isPaused: $musicControlUseCase.state.isPaused, 
-                        selectedTrackId: $selectedTrackId
+                        isPaused: $musicControlUseCase.state.isPaused,
+                        selectedTrackId: $selectedTrackId,
+                        feedMusic: $feedMusic
                     )
                     .padding(.bottom, 6)
                     
@@ -127,6 +131,15 @@ private struct FeedRowView: View {
             Rectangle()
                 .foregroundColor(.gray9)
                 .frame(width: UIScreen.main.bounds.width, height: 1)
+        }
+        .onAppear {
+            Task {
+                if let fetchedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music) {
+                    DispatchQueue.main.async {
+                        feedMusic = fetchedMusic
+                    }
+                }
+            }
         }
     }
 }
@@ -223,9 +236,16 @@ private struct FeedPlayer: View {
     
     @Binding private(set) var isPaused: Bool
     @Binding private(set) var selectedTrackId: Int64?
+    @Binding private(set) var feedMusic: Music?
     
     private var music: Music {
-        track.music
+        feedMusic ?? Music(
+            isrc: "",
+            title: "",
+            artist: "",
+            albumImageUrl: "",
+            duration: 0.0
+        )
     }
     
     var body: some View {
@@ -240,7 +260,8 @@ private struct FeedPlayer: View {
                     .frame(width: 56, height: 56)
                     .foregroundColor(.clear)
                     .background(
-                        FeedAlbumImage(track: track)
+                        FeedAlbumImage(track: track,
+                                       feedMusic: $feedMusic)
                     )
                     .cornerRadius(8, corners: [.topLeft, .bottomLeft])
                     .padding(.trailing, 8)
@@ -263,14 +284,12 @@ private struct FeedPlayer: View {
                     if selectedTrackId == trackIndex {
                         Task {
                             await musicControlUseCase.effect(.togglePlayback)
-                            print("🥵🥵🥵눌렀당께@!🥵🥵", isPaused)
                         }
                     } else {
                         Task {
                             await musicControlUseCase.effect(.setup(music: track.music))
                             selectedTrackId = trackIndex
                             musicControlUseCase.state.isPlayingId = selectedTrackId ?? 0
-                            print("🥵🥵🥵누름데스네🥵🥵", isPaused)
                         }
                     }
                 } label: {
@@ -280,7 +299,7 @@ private struct FeedPlayer: View {
                         .padding(.trailing, 12)
                         .transaction { transaction in
                             transaction.animation = nil
-                    }
+                        }
                 }
             }
             .frame(width: 311, height: 56)
@@ -294,8 +313,20 @@ private struct FeedAlbumImage: View {
     
     let track: Track
     
+    @Binding private(set) var feedMusic: Music?
+    
+    private var music: Music {
+        feedMusic ?? Music(
+            isrc: "",
+            title: "",
+            artist: "",
+            albumImageUrl: "",
+            duration: 0.0
+        )
+    }
+    
     private var albumImageUrl: URL? {
-        URL(string: track.music.albumImageUrl)
+        URL(string: feedMusic?.albumImageUrl ?? "")
     }
     
     var body: some View {
