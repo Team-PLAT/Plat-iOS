@@ -28,11 +28,8 @@ enum PreviewHelper {
         userSessionService: StubUserSessionService()
     )
     
-    static let mockTrackDetailUseCase = TrackDetailUseCase(
-        feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
-        trackService: StubTrackService(),
-        trackId: MockDataBuilder.track.id
+    static let mockTrackDetailUseCase = TrackUseCase(
+        trackService: StubTrackService()
     )
     
     static let mockTrackMapUseCase = TrackMapUseCase(

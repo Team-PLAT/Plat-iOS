@@ -12,19 +12,10 @@ import SwiftUI
 struct TrackDetailView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase: TrackUseCase
     
-    @State private var trackDetailUseCase: TrackDetailUseCase
     @State private var isContentSheetPresented = false
     @State private var isNonePlaylistToastPresented = false
-    
-    init(trackId: Track.ID) {
-        self.trackDetailUseCase = TrackDetailUseCase(
-            feedTrack: MockDataBuilder.feedTrack,
-            track: MockDataBuilder.feedTrack.randomElement() ?? MockDataBuilder.track,
-            trackService: StubTrackService(),
-            trackId: trackId
-        )
-    }
     
     private var music: Music? {
         musicControlUseCase.state.music
@@ -76,7 +67,7 @@ struct TrackDetailView: View {
         }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
-        .environment(trackDetailUseCase)
+        .environment(trackUseCase)
         .onTapGesture {
             withAnimation(.easeInOut) {
                 isContentSheetPresented = false
@@ -89,7 +80,7 @@ struct TrackDetailView: View {
 
 private struct Background: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     var body: some View {
         Group {
@@ -117,7 +108,7 @@ private struct Background: View {
 private struct HeaderView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
@@ -212,7 +203,7 @@ private struct AlbumImage: View {
 
 private struct MusicControllerView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isTrackAppendToPlaylistSheetPresented = false
@@ -285,7 +276,7 @@ private struct MusicControllerCell: View {
 
 private struct BottomView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -327,7 +318,7 @@ private struct BottomView: View {
 
 private struct ProfileHeader: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     /// 프로필 이미지 사이즈
     private let profileImageSize: CGFloat = 40
@@ -376,7 +367,7 @@ private struct ProfileHeader: View {
 
 private struct ProfileContent: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -410,6 +401,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView(trackId: .init())
+    TrackDetailView()
         .environment(PreviewHelper.mockMusicControlUseCase)
 }

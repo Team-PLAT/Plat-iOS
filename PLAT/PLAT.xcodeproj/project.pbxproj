@@ -99,7 +99,7 @@
 		82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailView.swift */; };
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
-		82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */; };
+		82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */; };
 		82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5282C75689E00C57916 /* TrackAppendToPlaylistSheet.swift */; };
 		82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A52D2C75D9D400C57916 /* Constant.swift */; };
 		82C9A5312C75DD0D00C57916 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5302C75DD0D00C57916 /* SystemImage.swift */; };
@@ -223,7 +223,7 @@
 		82C06F532C6DD977000FEE3A /* TrackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailView.swift; sourceTree = "<group>"; };
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
-		82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailUseCase.swift; sourceTree = "<group>"; };
+		82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackUseCase.swift; sourceTree = "<group>"; };
 		82C9A5282C75689E00C57916 /* TrackAppendToPlaylistSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendToPlaylistSheet.swift; sourceTree = "<group>"; };
 		82C9A52D2C75D9D400C57916 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		82C9A5302C75DD0D00C57916 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
@@ -494,8 +494,8 @@
 				820836902C34047C00F6D0CF /* StreamAccountUseCase.swift */,
 				820836942C34050000F6D0CF /* UserUseCase.swift */,
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
+				82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */,
 				79FC51432C6DD63200489507 /* TrackMapUseCase.swift */,
-				82C06F592C6DDECF000FEE3A /* TrackDetailUseCase.swift */,
 				5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */,
 				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 				DF6DC9942C7434EA004A23F7 /* FeedTrackUseCase.swift */,
@@ -818,7 +818,7 @@
 				82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */,
 				791FEF8A2C771CDE006CBDE0 /* UserSessionServiceInterface.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
-				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
+				82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */,
