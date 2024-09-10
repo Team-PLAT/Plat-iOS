@@ -65,12 +65,9 @@ extension AppleMusicController {
     /// 음악 업데이트
     func updateMusicPlayer(with duration: Double) {
             if musicPlayer.playbackState == .playing {
-                if duration >= 0 {
                     musicPlayer.currentPlaybackTime = duration
                     print("🎀🎀🎀🎀", duration)
-                } else {
-                    print("유효하지 않은 duration 값")
-                }
+                
             } else {
                 print("음악이 재생 중이지 않음")
             }
@@ -148,7 +145,7 @@ extension AppleMusicController {
                 
                 self.firstSong = firstSong
                 
-                print(firstSong.id)
+                print("🎵🎵songId입니다용🎵🎵", firstSong.id)
                 print("URL: \(firstSong.attributes.artwork?.url ?? "없음")")
                 
             } else {

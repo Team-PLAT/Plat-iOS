@@ -46,11 +46,6 @@ struct TrackDetailView: View {
                 MusicSeekBar(
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
-//                .onChange(of: currentDuration) {
-//                    Task {
-//                        await musicControlUseCase.effect(.updatePlayer(duration: currentDuration))
-//                    }
-//                }
                 .padding(.top, 36)
                 .padding(.horizontal, 16)
                 

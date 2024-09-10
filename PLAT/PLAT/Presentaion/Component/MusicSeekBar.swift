@@ -23,48 +23,37 @@ struct MusicSeekBar: View {
     }
     
     var body: some View {
-        
-        @Bindable var musicControlUseCase = musicControlUseCase
-        
         VStack(spacing: 12) {
             Slider(
                 value: $sliderValue,
                 in: 0...totalDuration,
                 onEditingChanged: { editing in
-                    if editing {
+                    if !editing {
                         Task {
                             await musicControlUseCase.effect(.updatePlayer(duration: sliderValue))
-                        }
-                        
-                        musicControlUseCase.state.currentDuration = sliderValue
-                        print("수정 끝남")
-                        print(sliderValue)
-                    } else {
-                        Task {
-                            await musicControlUseCase.effect(.updatePlayer(duration: musicControlUseCase.state.currentDuration))
                         }
                     }
                 }
             )
-            .onAppear {
-                let thumbImage = UIImage(systemName: "circle.fill")
-                UISlider.appearance().setThumbImage(thumbImage, for: .normal)
-            }
-            .accentColor(.platPurple)
-            
-            HStack {
-                Text(musicControlUseCase.state.currentDuration.musicTimeFormat)
-                Spacer()
-                Text("-\(leftDuration.musicTimeFormat)")
-            }
-            .font(.Body.body5)
-            .foregroundStyle(.gray7)
         }
-        .padding()
+        .onChange(of: musicControlUseCase.state.currentDuration) {
+            if !isEditing {
+                sliderValue = musicControlUseCase.state.currentDuration
+            }
+        }
         .onAppear {
-            
-            isEditing = false
+            let thumbImage = UIImage(systemName: "circle.fill")
+            UISlider.appearance().setThumbImage(thumbImage, for: .normal)
         }
+        .accentColor(.platPurple)
+        
+        HStack {
+            Text(musicControlUseCase.state.currentDuration.musicTimeFormat)
+            Spacer()
+            Text("-\(leftDuration.musicTimeFormat)")
+        }
+        .font(.Body.body5)
+        .foregroundStyle(.gray7)
     }
 }
 
