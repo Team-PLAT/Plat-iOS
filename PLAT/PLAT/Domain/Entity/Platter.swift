@@ -7,18 +7,7 @@
 
 import Foundation
 
-protocol Platter {
-    var nickname: String { get set }
-    var profileImageUrl: String { get set }
-}
-
-struct User: Platter {
-    var nickname: String
-    var profileImageUrl: String
-    var streamAccount: StreamAccount
-}
-
-struct Friend: Platter {
+struct User {
     var nickname: String
     var profileImageUrl: String
 }

@@ -332,14 +332,14 @@ private struct ProfileHeader: View {
     /// 프로필 이미지 사이즈
     private let profileImageSize: CGFloat = 40
     
-    /// 현재 Track을 업로드한 Platter를 반환합니다.
-    private var platter: Platter {
-        trackDetailUseCase.track.platter
+    /// 현재 Track을 업로드한 User를 반환합니다.
+    private var user: User {
+        trackDetailUseCase.track.user
     }
     
     /// 프로필 이미지 URL을 반환합니다.
     private var profileImageUrl: URL? {
-        let urlString = platter.profileImageUrl
+        let urlString = user.profileImageUrl
         return URL(string: urlString)
     }
     
@@ -359,7 +359,7 @@ private struct ProfileHeader: View {
             .frame(width: profileImageSize, height: profileImageSize)
             
             VStack(alignment: .leading, spacing: 0) {
-                Text(platter.nickname)
+                Text(user.nickname)
                     .font(.Body.body2)
                 
                 Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)

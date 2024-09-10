@@ -9,7 +9,7 @@ import Foundation
 
 struct StubUserProfileService: UserProfileServiceInterface {
     func fetchUserInfo() -> User {
-        return User(nickname: "IPSUM_LOREM", profileImageUrl: "", streamAccount: .appleMusic)
+        return User(nickname: "IPSUM_LOREM", profileImageUrl: "")
     }
     
     func updateProfileImage() {

@@ -16,8 +16,9 @@ struct AccountSettingsView: View {
     @State private var isLogoutAlertPresented = false
     @State private var isAccountDeletionAlertPresented = false
     
+    // TODO: StreamAccount 업데이트
     var connectedStreamAccountInfo: ListSection.Info {
-        return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: userUseCase.state.user.streamAccount) {
+        return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: StreamAccount.appleMusic) {
             pathModel.paths.append(.streamAccountSettingsView)
         }
     }

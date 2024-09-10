@@ -65,23 +65,28 @@ extension TrackDetailUseCase {
     func effect(_ effect: Effect) {
         switch effect {
         case .likeTrack:
-            // TODO: TrackId 업데이트
-            trackService.like(trackId: "")
+            Task {
+                let result = await trackService.like(track: track)
+                switch result {
+                case .success(let success): print("좋아요 성공!")
+                case .failure(let failure): print("좋아요 실패...")
+                }
+            }
             
         case .addToPlaylist:
-            // TODO: TrackId, PlaylistId 업데이트
-            trackService.addToPlaylist(
-                trackId: "",
-                playlistId: ""
-            )
+            print("기능 구현 필요")
             
         case .deleteTrack:
-            // TODO: TrackId 업데이트
-            trackService.delete(trackId: "")
+            print("기능 구현 필요")
             
         case .reportTrack:
-            // TODO: TrackId 업데이트
-            trackService.report(trackId: "")
+            Task {
+                let result = await trackService.report(track: track)
+                switch result {
+                case .success(let success): print("좋아요 성공!")
+                case .failure(let failure): print("좋아요 실패...")
+                }
+            }
         }
     }
 }

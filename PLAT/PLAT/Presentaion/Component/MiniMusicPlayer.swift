@@ -86,7 +86,7 @@ private struct Content: View {
                     .font(.Body.body5)
             }
             
-            Text(track.platter.nickname + "의 트랙")
+            Text(track.user.nickname + "의 트랙")
                 .font(.Body.body2)
         }
         .foregroundStyle(.gray3)
