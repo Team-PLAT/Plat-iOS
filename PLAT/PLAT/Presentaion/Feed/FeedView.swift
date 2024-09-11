@@ -464,6 +464,8 @@ private struct FeedActionView: View {
     
     @State private var isLiked: Bool = false
     
+    @State private var isTrackAppendToPlaylistSheetPresented = false
+    
     var body: some View {
         HStack(spacing: 0) {
             Button {
@@ -477,13 +479,16 @@ private struct FeedActionView: View {
             }
             
             Button {
-                feedTrackUseCase.effect(.addToPlaylist(index: trackIndex, playlistId: playlistId))
+                isTrackAppendToPlaylistSheetPresented.toggle()
             } label: {
                 Image(systemName: "text.badge.plus")
                     .foregroundColor(.white)
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 220)
             }
+        }
+        .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
+            TrackAppendToPlaylistSheet()
         }
     }
 }

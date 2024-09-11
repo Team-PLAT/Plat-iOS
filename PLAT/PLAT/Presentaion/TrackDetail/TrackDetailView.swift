@@ -13,11 +13,9 @@ struct TrackDetailView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    // TODO: 이후 상위에서 주입 받기
-    // TODO: Stub 객체 교체하기
     @State private var trackDetailUseCase: TrackDetailUseCase
-    
     @State private var isContentSheetPresented = false
+    @State private var isNonePlaylistToastPresented = false
     @State private var isPlaying: Bool = true
     
     init(trackId: Track.ID) {
@@ -40,7 +38,7 @@ struct TrackDetailView: View {
             VStack(spacing: 0) {
                 MusicView()
                 
-                MusicControllerView()
+                MusicControllerView(isNonePlaylistToastPresented: $isNonePlaylistToastPresented)
                     .padding(.top, 24)
                 
                 MusicSeekBar(
@@ -62,6 +60,15 @@ struct TrackDetailView: View {
                 BottomView(isContentSheetPresented: $isContentSheetPresented)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 0)
+            }
+            
+            VStack {
+                Spacer()
+                
+                ToastMessage(
+                    message: "트랙을 추가할 플레이리스트가 없어요.",
+                    isToastPresented: $isNonePlaylistToastPresented
+                )
             }
         }
         .onAppear {
@@ -224,8 +231,10 @@ private struct MusicControllerView: View {
     
     @State private var isTrackAppendToPlaylistSheetPresented = false
     
+    @Binding private(set) var isNonePlaylistToastPresented: Bool
+    
     var body: some View {
-        HStack(spacing: 24) {
+        HStack(spacing: 52) {
             MusicControllerCell(
                 systemImage: SystemImage.like,
                 tapAction: {
@@ -236,14 +245,11 @@ private struct MusicControllerView: View {
             MusicControllerCell(
                 systemImage: SystemImage.addToPlaylist,
                 tapAction: {
-                    isTrackAppendToPlaylistSheetPresented.toggle()
-                }
-            )
-            
-            MusicControllerCell(
-                systemImage: SystemImage.postWithThisMusic,
-                tapAction: {
-                    // TODO: 이 음악으로 내가 게시하기(추후 개발)
+                    if trackDetailUseCase.playlist.isEmpty {
+                        isNonePlaylistToastPresented.toggle()
+                    } else {
+                        isTrackAppendToPlaylistSheetPresented.toggle()
+                    }
                 }
             )
             
@@ -256,8 +262,6 @@ private struct MusicControllerView: View {
         }
         .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
             TrackAppendToPlaylistSheet()
-                .presentationDragIndicator(.visible)
-                .presentationDetents([.height(286)])
         }
     }
 }
