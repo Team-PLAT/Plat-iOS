@@ -30,7 +30,7 @@ struct MusicIndicator: View {
             
             Button {
                 Task {
-                    await musicControlerUseCase.effect(.togglePlayback)
+                    musicControlerUseCase.effect(.togglePlayback)
                 }
             } label: {
                 Image(systemName: isPaused ? "play.fill" : "pause.fill")

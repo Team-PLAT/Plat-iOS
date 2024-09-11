@@ -33,7 +33,6 @@ struct TrackMapView: View {
                         CustomMarkerView(track: track)
                             .onTapGesture {
                                 selectedTrackId = track.id
-                                musicControlUseCase.state.isPlayingId = selectedTrackId ?? 0
                                 showTrackDetail.toggle()
                             }
                     }
@@ -46,7 +45,7 @@ struct TrackMapView: View {
             }
             
             if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId)
+                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId, showTrackDetail: $showTrackDetail)
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
@@ -105,6 +104,7 @@ private struct MapComponentsView: View {
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
     @Binding var selectedTrackId: Track.ID?
+    @Binding var showTrackDetail: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -123,14 +123,21 @@ private struct MapComponentsView: View {
                 @Bindable var musicControlUseCase = musicControlUseCase
                 MiniMusicPlayer(
                     isPaused: $musicControlUseCase.state.isPaused,
-                    track: musicControlUseCase.state.isPlayingTrack ?? MockDataBuilder.mockTrack,
+                    track: $musicControlUseCase.state.isPlayingTrack,
                     currentDuration: musicControlUseCase.state.currentDuration,
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .padding(.bottom, 16)
+                .onTapGesture {
+                    // TODO: 이미 틀어졌을 때 터치 -> 현재 currentDuration 넘겨야 함
+                    selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
+                    showTrackDetail.toggle()
+                }
+                
             }
         }
         .padding(.horizontal, 18)
+        
     }
 }
 

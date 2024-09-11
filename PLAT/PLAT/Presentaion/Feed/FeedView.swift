@@ -10,7 +10,7 @@ import SwiftUI
 struct FeedView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    
+        
     @State private var feedTrackUseCase: FeedTrackUseCase = .init(
         feedTrack: MockDataBuilder.trackList,
         feedTrackService: FeedTrackService()
@@ -44,7 +44,7 @@ struct FeedView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: musicControlUseCase.state.isPlayingTrack ?? MockDataBuilder.mockTrack,
+                        track: $musicControlUseCase.state.isPlayingTrack,
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
@@ -134,11 +134,7 @@ private struct FeedRowView: View {
         }
         .onAppear {
             Task {
-                if let fetchedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music) {
-                    DispatchQueue.main.async {
-                        feedMusic = fetchedMusic
-                    }
-                }
+                feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
             }
         }
     }
@@ -281,16 +277,15 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
+                    /// 재생 정지 반복 토글
                     if selectedTrackId == trackIndex {
-                        Task {
-                            await musicControlUseCase.effect(.togglePlayback)
-                        }
+                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.togglePlayback)
                     } else {
-                        Task {
-                            await musicControlUseCase.effect(.setup(music: track.music))
-                            selectedTrackId = trackIndex
-                            musicControlUseCase.state.isPlayingId = selectedTrackId ?? 0
-                        }
+                        /// 처음 재생할 때
+                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.setup(music: track.music))
+                        selectedTrackId = trackIndex
                     }
                 } label: {
                     Image(systemName: (selectedTrackId == trackIndex && !isPaused) ? "pause.fill" : "play.fill")
@@ -299,7 +294,7 @@ private struct FeedPlayer: View {
                         .padding(.trailing, 12)
                         .transaction { transaction in
                             transaction.animation = nil
-                        }
+                    }
                 }
             }
             .frame(width: 311, height: 56)

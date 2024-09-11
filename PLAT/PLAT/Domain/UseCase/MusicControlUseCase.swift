@@ -24,7 +24,6 @@ final class MusicControlUseCase {
             isStreaming: false,
             isPaused: true,
             currentDuration: 0,
-            isPlayingId: 0,
             isPlayingTrack: nil
         )
     }
@@ -39,7 +38,6 @@ extension MusicControlUseCase {
         var isStreaming: Bool
         var isPaused: Bool
         var currentDuration: Double
-        var isPlayingId: Int64
         var isPlayingTrack: Track?
     }
 }
@@ -55,11 +53,13 @@ extension MusicControlUseCase {
         case updatePlayer(duration: Double)
     }
     
-    func effect(_ effect: Effect) async {
+    func effect(_ effect: Effect) {
         switch effect {
         case let .setup(music):
             musicController.setup(music)
-            await fetchCurrentMusicInfo(music: music)
+            Task {
+                await fetchCurrentMusicInfo(music: music)
+            }
             state.isStreaming = true
             state.isPaused = false
             musicController.play(music)
@@ -114,14 +114,8 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     private func fetchCurrentMusicInfo(music: Music) async {
-        if let musicInfo = await musicController.fetchMusic(music) {
-            state.music = Music(
-                isrc: music.isrc,
-                title: musicInfo.name ?? music.title,
-                artist: musicInfo.artistName ?? music.artist,
-                albumImageUrl: musicInfo.url ?? music.albumImageUrl,
-                duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
-            )
+        if let musicInfo = await fetchMusicInfoApi(music: music) {
+            state.music = musicInfo
             
             if var playingTrack = state.isPlayingTrack {
                 playingTrack.music = state.music ?? Music(

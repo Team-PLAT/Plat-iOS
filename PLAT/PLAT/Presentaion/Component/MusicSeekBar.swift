@@ -29,9 +29,7 @@ struct MusicSeekBar: View {
                 in: 0...totalDuration,
                 onEditingChanged: { editing in
                     if !editing {
-                        Task {
-                            await musicControlUseCase.effect(.updatePlayer(duration: sliderValue))
-                        }
+                        musicControlUseCase.effect(.updatePlayer(duration: sliderValue))
                     }
                 }
             )
