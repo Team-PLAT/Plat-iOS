@@ -65,13 +65,16 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-            let currentTrackId = trackDetailUseCase.trackId
-            
-            if let track = MockDataBuilder.trackList.first(where: { $0.id == currentTrackId }) {
-                musicControlUseCase.state.isPlayingTrack = track
-                musicControlUseCase.effect(.setup(music: track.music))
-            } else {
-                print("trackId 찾기 오류 \(currentTrackId)")
+                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackDetailUseCase.trackId }) {
+                    if let isPlayingTrack = musicControlUseCase.state.isPlayingTrack, 
+                        track.id == isPlayingTrack.id {
+                        musicControlUseCase.effect(.updatePlayer(duration: musicControlUseCase.state.currentDuration))
+                    } else {
+                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.setup(music: track.music))
+                    }
+                } else {
+                    print("trackId 찾기 오류")
             }
         }
         .background(.black.opacity(0.6))

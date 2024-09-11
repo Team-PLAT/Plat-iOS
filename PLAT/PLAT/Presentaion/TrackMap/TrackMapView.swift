@@ -129,7 +129,6 @@ private struct MapComponentsView: View {
                 )
                 .padding(.bottom, 16)
                 .onTapGesture {
-                    // TODO: 이미 틀어졌을 때 터치 -> 현재 currentDuration 넘겨야 함
                     selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
                     showTrackDetail.toggle()
                 }

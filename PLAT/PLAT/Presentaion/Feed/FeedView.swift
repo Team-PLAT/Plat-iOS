@@ -17,6 +17,7 @@ struct FeedView: View {
     )
     
     @State private var selectedTrackId: Int64?
+    @State private var showTrackDetail = false
     
     var body: some View {
         GeometryReader { proxy in
@@ -49,12 +50,21 @@ struct FeedView: View {
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
                     .padding(.horizontal, 18)
+                    .onTapGesture {
+                        showTrackDetail.toggle()
+                    }
                     .position(
                         CGPoint(
                             x: proxy.size.width / 2,
                             y: proxy.size.height - 49
                         )
                     )
+                }
+            }
+            .fullScreenCover(isPresented: $showTrackDetail) {
+                if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
+                    TrackDetailView(trackId: trackId)
+                        .presentationBackground(.thinMaterial.opacity(0.5))
                 }
             }
             .environment(feedTrackUseCase)

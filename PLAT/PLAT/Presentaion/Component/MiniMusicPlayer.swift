@@ -40,10 +40,6 @@ struct MiniMusicPlayer: View {
         .padding(.top, 12)
         .background(.platBlack)
         .clipShape(RoundedRectangle(cornerRadius: 8))
-//        .onTapGesture {
-//            print("음악 재생 화면 이동")
-//            // TODO: 음악 재생 화면 이동
-//        }
     }
 }
 
