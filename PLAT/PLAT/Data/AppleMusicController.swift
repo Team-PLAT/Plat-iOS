@@ -33,7 +33,6 @@ extension AppleMusicController {
                 print("권한 없음")
                 return
             }
-            self.play(music)
         }
     }
     
@@ -66,8 +65,6 @@ extension AppleMusicController {
     func updateMusicPlayer(with duration: Double) {
             if musicPlayer.playbackState == .playing {
                     musicPlayer.currentPlaybackTime = duration
-                    print("🎀🎀🎀🎀", duration)
-                
             } else {
                 print("음악이 재생 중이지 않음")
             }

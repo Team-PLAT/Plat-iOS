@@ -59,10 +59,10 @@ extension MusicControlUseCase {
             musicController.setup(music)
             Task {
                 await fetchCurrentMusicInfo(music: music)
+                musicController.play(music)
             }
             state.isStreaming = true
             state.isPaused = false
-            musicController.play(music)
             fetchCurrentPlaybackPosition()
             
         case let .play(music):
