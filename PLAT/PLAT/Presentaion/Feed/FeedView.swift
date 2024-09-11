@@ -118,8 +118,8 @@ private struct FeedRowView: View {
                     
                     @Bindable var musicControlUseCase = musicControlUseCase
                     FeedPlayer(
+                        trackIndex: Int64(trackIndex), 
                         track: track,
-                        trackIndex: Int64(trackIndex),
                         isPaused: $musicControlUseCase.state.isPaused,
                         selectedTrackId: $selectedTrackId,
                         feedMusic: $feedMusic
@@ -234,12 +234,12 @@ private struct FeedLocationView: View {
 
 private struct FeedPlayer: View {
     
-    let track: Track
     var trackIndex: Int64?
     
     @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
+    @State var track: Track
     @Binding private(set) var isPaused: Bool
     @Binding private(set) var selectedTrackId: Int64?
     @Binding private(set) var feedMusic: Music?
@@ -289,10 +289,16 @@ private struct FeedPlayer: View {
                 Button {
                     /// 재생 정지 반복 토글
                     if selectedTrackId == trackIndex {
+                        if let feedMusic {
+                            track.music = feedMusic
+                        }
                         musicControlUseCase.state.isPlayingTrack = track
                         musicControlUseCase.effect(.togglePlayback)
                     } else {
                         /// 처음 재생할 때
+                        if let feedMusic {
+                            track.music = feedMusic
+                        }
                         musicControlUseCase.state.isPlayingTrack = track
                         musicControlUseCase.effect(.setup(music: track.music))
                         selectedTrackId = trackIndex
