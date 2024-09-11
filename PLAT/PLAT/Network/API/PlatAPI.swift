@@ -60,4 +60,16 @@ extension APIs.Plat {
             }
         }
     }
+    
+    enum Images: RawRepresentable, API {
+        static let baseUrl: URL = APIs.Plat.baseURL.appendingPathComponent("images")
+        
+        case upload
+        
+        var rawValue: RawValue {
+            switch self {
+            case .upload: return ""
+            }
+        }
+    }
 }

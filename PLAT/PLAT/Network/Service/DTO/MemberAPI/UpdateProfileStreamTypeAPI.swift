@@ -8,7 +8,12 @@
 import Foundation
 
 struct UpdateProfileStreamTypeRequest: Encodable {
-    let streamType: String
+    enum StreamType: String, Encodable {
+        case appleMusic = "APPLE_MUSIC"
+        case spotify = "SPOTIFY"
+    }
+    
+    let streamType: StreamType
 }
 
 struct UpdateProfileStreamTypeResponse: Decodable {

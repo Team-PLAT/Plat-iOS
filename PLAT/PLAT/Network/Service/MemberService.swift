@@ -8,17 +8,6 @@
 import Foundation
 
 struct MemberService {
-    static func uploadProfileAvatar(request: UploadProfileAvatarRequest) async -> Result<UploadProfileAvatarResponse, Error> {
-        let client = NetworkClient()
-        let url = APIs.Plat.Members.uploadProfileAvatar.url
-        let response: Result<BaseResponse<UploadProfileAvatarResponse>, Error> = await client.post(url: url, body: request)
-        do {
-            return try .success(response.get().result)
-        } catch {
-            return .failure(error)
-        }
-    }
-    
     static func fetchProfileStreamType() async -> Result<FetchProfileStreamTypeResponse, Error> {
         let client = NetworkClient()
         let url = APIs.Plat.Members.fetchProfileStreamType.url
@@ -33,11 +22,20 @@ struct MemberService {
     static func updateProfileStreamType(request: UpdateProfileStreamTypeRequest) async -> Result<UpdateProfileStreamTypeResponse, Error> {
         let client = NetworkClient()
         let url = APIs.Plat.Members.updateProfileStreamType.url
-        let response: Result<BaseResponse<UpdateProfileStreamTypeResponse>, Error> = await client.patch(url: url, body: request)
-        do {
-            return try .success(response.get().result)
-        } catch {
-            return .failure(error)
+        var urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        urlComponent?.queryItems = [
+            URLQueryItem(name: "streamType", value: request.streamType.rawValue)
+        ]
+        if let urlComponent = urlComponent,
+           let url = urlComponent.url {
+            let response: Result<BaseResponse<UpdateProfileStreamTypeResponse>, Error> = await client.patch(url: url, body: request)
+            do {
+                return try .success(response.get().result)
+            } catch {
+                return .failure(error)
+            }
+        } else {
+            return .failure(NetworkError.urlComponentsError)
         }
     }
     
