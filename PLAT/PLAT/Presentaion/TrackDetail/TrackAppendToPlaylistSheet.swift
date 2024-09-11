@@ -15,7 +15,7 @@ struct TrackAppendToPlaylistSheet: View {
     
     @State private var scrollPosition: Int? = 0
     
-    let playlists: [Playlist] = Array(repeating: MockDataBuilder.playlist, count: 20)
+    let playlists = MockDataBuilder.playlist.shuffled()
     
     var body: some View {
         ZStack {

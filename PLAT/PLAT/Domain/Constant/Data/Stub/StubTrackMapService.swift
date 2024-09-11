@@ -30,8 +30,8 @@ struct StubTrackMapService: TrackMapServiceInterface {
         }
         
         // TODO: 목 데이터 -> 실제 데이터로 변환
-        let playlistTitle = MockDataBuilder.playlist.title
-        let playlistImageUrl = MockDataBuilder.playlist.imageUrl
+        let playlistTitle = MockDataBuilder.playlist[0].title
+        let playlistImageUrl = MockDataBuilder.playlist[0].imageUrl
         
         let playlist = Playlist(
             title: playlistTitle,

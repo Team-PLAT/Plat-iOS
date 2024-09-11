@@ -214,5 +214,5 @@ private struct PlattingPlayList: View {
 }
 
 #Preview {
-    PlattingView(playList: .constant(MockDataBuilder.playlist))
+    PlattingView(playList: .constant(MockDataBuilder.playlist[0]))
 }

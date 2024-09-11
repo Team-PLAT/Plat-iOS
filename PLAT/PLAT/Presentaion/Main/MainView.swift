@@ -27,7 +27,7 @@ struct MainView: View {
                         switch tab {
                         case .map: TrackMapView()
                         case .feed: FeedView()
-                        case .playlist: Text("PlaylistView")
+                        case .playlist: PlaylistView(playlist: MockDataBuilder.playlist)
                         case .account: UserDetailView()
                         }
                     }
