@@ -1,5 +1,5 @@
 //
-//  NetworkManager.swift
+//  NetworkClient.swift
 //  PLAT
 //
 //  Created by 조세연 on 8/18/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkClient: HTTPMethod {
+final class NetworkClient: HTTPMethod {
     
     /// StatusCode 성공 범위
     private let successStatusCodeRange = 200...299
@@ -279,35 +279,4 @@ extension NetworkClient {
     private func statusCode(to response: URLResponse) -> Int? {
         (response as? HTTPURLResponse)?.statusCode
     }
-}
-
-// MARK: - Legacy
-
-extension NetworkClient {
-    //    /// POST (login)
-    //    func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
-    //        do {
-    //            var request = URLRequest(url: url)
-    //            request.httpMethod = HTTPMethodList.post
-    //            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    //
-    //            request.httpBody = try JSONEncoder().encode(body)
-    //
-    //            let (data, response) = try await URLSession.shared.data(for: request)
-    //
-    //            guard let httpResponse = response as? HTTPURLResponse,
-    //                  (200...299).contains(httpResponse.statusCode) else {
-    //                return .failure(NetworkError.serverError(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0))
-    //            }
-    //
-    //            let decodedData = try JSONDecoder().decode(T.self, from: data)
-    //            return .success(decodedData)
-    //        } catch {
-    //            if let urlError = error as? URLError {
-    //                return .failure(NetworkError.urlError(urlError))
-    //            } else {
-    //                return .failure(NetworkError.error(error))
-    //            }
-    //        }
-    //    }
 }

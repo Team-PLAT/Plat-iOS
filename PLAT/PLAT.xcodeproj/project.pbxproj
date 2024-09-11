@@ -122,7 +122,7 @@
 		DFDF9DD22C6C989200D5252B /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DD12C6C989200D5252B /* Track.swift */; };
 		DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDF9DD32C6C98FF00D5252B /* Playlist.swift */; };
 		DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDFAE332C43945600DE1EEB /* AuthType.swift */; };
-		DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */; };
+		DFE27A142C71D5B6002BAD11 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A132C71D5B6002BAD11 /* NetworkClient.swift */; };
 		DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A152C71E37E002BAD11 /* BaseResponse.swift */; };
 		DFE27A202C71E78F002BAD11 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A1F2C71E78F002BAD11 /* Config.swift */; };
 		DFE27A222C71FEE0002BAD11 /* FetchTrackDetailAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE27A212C71FEE0002BAD11 /* FetchTrackDetailAPI.swift */; };
@@ -247,7 +247,7 @@
 		DFDF9DD12C6C989200D5252B /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		DFDF9DD32C6C98FF00D5252B /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		DFDFAE332C43945600DE1EEB /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
-		DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		DFE27A132C71D5B6002BAD11 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		DFE27A152C71E37E002BAD11 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		DFE27A1F2C71E78F002BAD11 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		DFE27A212C71FEE0002BAD11 /* FetchTrackDetailAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackDetailAPI.swift; sourceTree = "<group>"; };
@@ -654,7 +654,7 @@
 			isa = PBXGroup;
 			children = (
 				82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */,
-				DFE27A132C71D5B6002BAD11 /* NetworkManager.swift */,
+				DFE27A132C71D5B6002BAD11 /* NetworkClient.swift */,
 				82721EE72C8C229E00CA2C9A /* NetworkLog.swift */,
 				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
 				DF616E592C7340CC00CCDC9D /* Config.xcconfig */,
@@ -828,7 +828,7 @@
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */,
-				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
+				DFE27A142C71D5B6002BAD11 /* NetworkClient.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
 				5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */,
