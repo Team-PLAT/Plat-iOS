@@ -16,6 +16,7 @@ struct SelectStreamAccountView: View {
     }
     
     @Environment(AuthUseCase.self) private var authUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State var selectedState: SelectedState = .none
     @State var isSheetPresented: Bool = false
@@ -38,6 +39,7 @@ struct SelectStreamAccountView: View {
                     isSelected: selectedState == .appleMusic
                 ) {
                     selectedState = .appleMusic
+                    musicControlUseCase.effect(.request)
                     isShowingOffer = true
                 }
             }

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol MusicControllerInterface {
-    func setup(_ music: Music)
+    func setup()
     func play(_ music: Music)
     func pause()
     func resume()

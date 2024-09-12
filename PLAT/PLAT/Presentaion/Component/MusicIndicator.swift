@@ -29,9 +29,7 @@ struct MusicIndicator: View {
             }
             
             Button {
-                Task {
-                    musicControlerUseCase.effect(.togglePlayback)
-                }
+                musicControlerUseCase.effect(.togglePlayback)
             } label: {
                 Image(systemName: isPaused ? "play.fill" : "pause.fill")
                     .resizable()

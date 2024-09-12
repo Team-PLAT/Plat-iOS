@@ -10,7 +10,7 @@ import Combine
 
 struct StubMusicController: MusicControllerInterface {
     
-    func setup(_ music: Music) {
+    func setup() {
         print(#function)
     }
     

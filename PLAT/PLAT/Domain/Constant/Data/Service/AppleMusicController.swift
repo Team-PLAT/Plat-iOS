@@ -26,7 +26,7 @@ final class AppleMusicController: NSObject, MusicControllerInterface {
 extension AppleMusicController {
     
     /// 권한 요청
-    func setup(_ music: Music) {
+    func setup() {
         Task {
             let isAuthorized = await requestAuthorization()
             guard isAuthorized else {

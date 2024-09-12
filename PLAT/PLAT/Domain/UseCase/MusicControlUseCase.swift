@@ -47,6 +47,7 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
+        case request
         case setup(music: Music)
         case play(music: Music)
         case togglePlayback
@@ -55,8 +56,11 @@ extension MusicControlUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
+        case .request:
+            musicController.setup()
+            
         case let .setup(music):
-            musicController.setup(music)
+            musicController.setup()
             Task {
                 await fetchCurrentMusicInfo(music: music)
                 musicController.play(music)
