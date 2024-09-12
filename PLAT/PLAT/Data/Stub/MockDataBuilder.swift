@@ -22,7 +22,7 @@ struct MockDataBuilder {
     static var trackList: [Track] {
         return [
             Track(
-                id: 0,
+                id: 000001,
                 music: musicList[0],
                 location: locationList[0],
                 user: mine,
@@ -33,7 +33,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 1,
+                id: 000002,
                 music: musicList[1],
                 location: locationList[1],
                 user: friend,
@@ -44,7 +44,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 2,
+                id: 000003,
                 music: musicList[2],
                 location: locationList[2],
                 user: mine,
@@ -55,7 +55,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 3,
+                id: 000004,
                 music: musicList[3],
                 location: locationList[3],
                 user: friend,
@@ -66,7 +66,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 4,
+                id: 000005,
                 music: musicList[4],
                 location: locationList[4],
                 user: friend,
@@ -77,7 +77,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 5,
+                id: 000006,
                 music: musicList[5],
                 location: locationList[5],
                 user: friend,
@@ -94,7 +94,7 @@ struct MockDataBuilder {
     static var feedTrack: [Track] {
         return [
             Track(
-                id: 0,
+                id: 000001,
                 music: musicList[0],
                 location: currentLocation,
                 user: mine,
@@ -105,7 +105,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 1,
+                id: 000002,
                 music: musicList[1],
                 location: currentLocation,
                 user: friend,
@@ -116,7 +116,7 @@ struct MockDataBuilder {
                 isReported: false
             ),
             Track(
-                id: 2,
+                id: 000003,
                 music: musicList[2],
                 location: currentLocation,
                 user: mine,
@@ -132,7 +132,7 @@ struct MockDataBuilder {
     /// Mock track 데이터를 반환합니다.
     static var track: Track {
         return Track(
-            id: 0,
+            id: 00000001,
             music: music,
             location: currentLocation,
             user: mine,
@@ -199,7 +199,7 @@ struct MockDataBuilder {
     /// Mock Music 데이터를 반환합니다.
     static var music: Music {
         return Music(
-            isrc: "GBAYE0500605",
+            isrc: "KRA382001452",
             title: "Fix you",
             artist: "ColdPlay",
             albumImageUrl: "https://i.scdn.co/image/ab67616d0000b2734e0362c225863f6ae2432651",

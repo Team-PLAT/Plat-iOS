@@ -10,7 +10,7 @@ import Combine
 
 struct StubMusicController: MusicControllerInterface {
     
-    func setup(_ music: Music) {
+    func setup() {
         print(#function)
     }
     
@@ -34,6 +34,10 @@ struct StubMusicController: MusicControllerInterface {
         print(#function)
     }
     
+    func updateMusicPlayer(with duration: Double) {
+        print(#function)
+    }
+    
     func repeatPlayback() {
         print(#function)
     }
@@ -41,4 +45,9 @@ struct StubMusicController: MusicControllerInterface {
     func currentDuration() -> AnyPublisher<Double, Error> {
         return Empty<Double, Error>().eraseToAnyPublisher()
     }
+    
+    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+        return (durationInMillis: nil, url: nil, name: nil, artistName: nil)
+    }
+    
 }

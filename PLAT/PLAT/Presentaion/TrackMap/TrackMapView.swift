@@ -12,6 +12,7 @@ import MapKit
 
 struct TrackMapView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
@@ -44,7 +45,7 @@ struct TrackMapView: View {
             }
             
             if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist)
+                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId, showTrackDetail: $showTrackDetail)
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
@@ -102,6 +103,8 @@ private struct MapComponentsView: View {
     
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
+    @Binding var selectedTrackId: Track.ID?
+    @Binding var showTrackDetail: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -120,12 +123,20 @@ private struct MapComponentsView: View {
                 @Bindable var musicControlUseCase = musicControlUseCase
                 MiniMusicPlayer(
                     isPaused: $musicControlUseCase.state.isPaused,
-                    track: MockDataBuilder.track
+                    track: $musicControlUseCase.state.isPlayingTrack,
+                    currentDuration: musicControlUseCase.state.currentDuration,
+                    totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .padding(.bottom, 16)
+                .onTapGesture {
+                    selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
+                    showTrackDetail.toggle()
+                }
+                
             }
         }
         .padding(.horizontal, 18)
+        
     }
 }
 
