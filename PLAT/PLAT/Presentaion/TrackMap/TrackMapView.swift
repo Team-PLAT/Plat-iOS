@@ -44,7 +44,10 @@ struct TrackMapView: View {
             }
             
             if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist)
+                MapComponentsView(
+                    hasNotifications: $hasNotifications,
+                    playlist: $playlist
+                )
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
@@ -53,14 +56,25 @@ struct TrackMapView: View {
                     .presentationBackground(.thinMaterial.opacity(0.5))
             }
         }
-        .onAppear {
-            if let location = trackMapUseCase.locationManager.location {
-                print("Current Location: \(location)")
-                trackMapUseCase.fetchTrackList(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
-                Task {
-                    playlist = await trackMapUseCase.createPlatPlaylist(currentLocation: Location(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
-                    print("Playlist created with \(playlist?.trackList.count ?? 0) tracks")
-                }
+        .onChange(
+            of: trackMapUseCase.locationManager.location
+            ?? CLLocation(latitude: 0, longitude: 0
+                         )
+        ) { _, location in
+            trackMapUseCase.fetchTrackList(
+                currentLocation: Location(
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                )
+            )
+            
+            Task {
+                playlist = await trackMapUseCase.createPlatPlaylist(
+                    currentLocation: Location(
+                        latitude: location.coordinate.latitude,
+                        longitude: location.coordinate.longitude
+                    )
+                )
             }
         }
     }
@@ -182,7 +196,6 @@ private struct MapButtonsView: View {
             Spacer()
             
             Button {
-                // TODO: TrackAppendView로 이동(sheet)
                 isTrackAppendViewSheet = true
             } label: {
                 Circle()
@@ -248,6 +261,7 @@ func getMapVisibleCoordinates(mapView: MKMapView) {
 }
 
 // MARK: - Preview
+
 #Preview {
     TrackMapView()
         .environment(PreviewHelper.mockTrackMapUseCase)

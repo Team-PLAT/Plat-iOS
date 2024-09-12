@@ -9,10 +9,11 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+@Observable
+class LocationManager: NSObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
-    @Published var location: CLLocation?
-    @Published var position = MapCameraPosition.region(MKCoordinateRegion(
+    var location: CLLocation?
+    var position = MapCameraPosition.region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)
     ))

@@ -17,7 +17,11 @@ final class TrackMapUseCase {
     
     init(trackMapService: TrackMapServiceInterface) {
         self.trackMapService = trackMapService
-        self.state = State(trackList: [])
+        
+        self.state = State(
+            location: .init(latitude: 0, longitude: 0),
+            trackList: []
+        )
         
         Task {
             let location = trackMapService.currentLocation()
@@ -33,6 +37,7 @@ final class TrackMapUseCase {
 extension TrackMapUseCase {
     
     struct State {
+        var location: Location
         var trackList: [Track]
     }
 }
@@ -47,6 +52,7 @@ extension TrackMapUseCase {
     }
     
     /// 서버에서 트랙 불러오기
+    @MainActor
     func fetchTrackList(currentLocation: Location) {
         Task {
             state.trackList = await trackMapService.fetchTrackList(currentLocation: currentLocation)
@@ -60,6 +66,7 @@ extension TrackMapUseCase {
     }
     
     /// 플레이리스트 생성하기
+    @MainActor
     func createPlatPlaylist(currentLocation: Location) async -> Playlist {
         let playlist = await self.trackMapService.createPlatPlaylist(currentLocation: currentLocation)
         return playlist
