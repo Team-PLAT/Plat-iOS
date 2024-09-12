@@ -9,10 +9,12 @@ import Foundation
 import Combine
 
 protocol MusicControllerInterface {
-    func setup(_ music: Music)
+    func setup()
     func play(_ music: Music)
     func pause()
     func resume()
     func repeatPlayback()
+    func updateMusicPlayer(with duration: Double)
     func currentDuration() -> AnyPublisher<Double, Error>
+    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)?
 }

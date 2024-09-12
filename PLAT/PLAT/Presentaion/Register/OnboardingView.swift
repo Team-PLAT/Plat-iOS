@@ -12,6 +12,10 @@ struct OnboardingView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(AuthUseCase.self) private var authUseCase
     
+    @State private var musicControlUseCase = MusicControlUseCase(
+        musicController: AppleMusicController.shared
+    )
+    
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     @State private var authType: AuthType = .signUp
     
@@ -72,6 +76,7 @@ struct OnboardingView: View {
         .environment(pathModel)
         .environment(authUseCase)
         .environment(infoUseCase)
+        .environment(musicControlUseCase)
     }
 }
 
