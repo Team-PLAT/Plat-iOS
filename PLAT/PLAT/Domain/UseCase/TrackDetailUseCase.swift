@@ -28,7 +28,7 @@ final class TrackDetailUseCase {
         self.track = track
         self.trackService = trackService
         self.trackId = trackId
-        self.playlist = [MockDataBuilder.playlist[0]] // TODO: 실제 플레이리스트 받아오기
+        self.playlist = [MockDataBuilder.playlist] // TODO: 실제 플레이리스트 받아오기
         
         // TODO: 교체 예정
         self.state = State(
