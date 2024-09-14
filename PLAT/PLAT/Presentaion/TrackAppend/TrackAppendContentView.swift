@@ -40,6 +40,7 @@ struct TrackAppendContentView: View {
                 detent = .large
             }
         }
+        .tapDismissesKeyboard()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
