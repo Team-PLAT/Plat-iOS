@@ -8,6 +8,8 @@
 import SwiftUI
 import MusicKit
 
+// MARK: - TrackAppendSearchView
+
 struct TrackAppendSearchView: View {
     @Binding var isTrackAppendViewSheet: Bool
     @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
@@ -43,7 +45,6 @@ struct TrackAppendSearchView: View {
             .onAppear {
                 Task {
                     let status = await MusicAuthorization.request()
-                    print(status == .authorized)
                 }
                 UISearchBar.appearance().showsCancelButton = false
                 detent = .large
@@ -78,6 +79,8 @@ struct TrackAppendSearchView: View {
         }
     }
 }
+
+// MARK: - TrackAppendSearchbar
 
 private struct TrackAppendSearchbar: View {
     @Binding var searchTerm: String
@@ -116,6 +119,8 @@ private struct TrackAppendSearchbar: View {
         .padding(EdgeInsets(top: 10, leading: 18, bottom: 8, trailing: 18))
     }
 }
+
+// MARK: - TrackAppendRecentTermView
 
 private struct TrackAppendRecentTermView: View {
     @Environment(PathModel.self) var pathModel
@@ -171,6 +176,8 @@ private struct TrackAppendRecentTermView: View {
         .frame(height: 32)
     }
 }
+
+// MARK: - TrackAppendMusicListView
 
 private struct TrackAppendMusicListView: View {
     @Environment(PathModel.self) var pathModel
