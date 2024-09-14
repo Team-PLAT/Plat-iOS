@@ -69,7 +69,7 @@ struct TrackAppendSearchView: View {
                     }
                 }
             }
-            .onSubmit(of: .search) {
+            .onSubmit {
                 trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
                 recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
             }
