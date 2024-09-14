@@ -25,10 +25,12 @@ struct TrackAppendContentView: View {
     @Binding var isTrackAppendViewSheet: Bool
     
     var body: some View {
-        VStack {
-            TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
-            
-            TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: contentText, state: $state)
+        ScrollView {
+            VStack {
+                TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
+                
+                TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: contentText, state: $state)
+            }
         }
         .onAppear {
             detent = .fraction(0.25)
