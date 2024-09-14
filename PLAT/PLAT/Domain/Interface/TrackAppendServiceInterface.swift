@@ -8,6 +8,9 @@
 import Foundation
 
 protocol TrackAppendServiceInterface {
+    func updateRecentSearchTermList(searchTerm: String)
+    func fetchRecentSearchTermList() -> [String]
+    func removeRecentSearchTerm(index: Int)
     func searchMusic(term: String) async -> [Music]
     func postTrack(track: Track)
 }

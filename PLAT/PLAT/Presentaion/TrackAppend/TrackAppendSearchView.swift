@@ -16,12 +16,13 @@ struct TrackAppendSearchView: View {
     @State private var musicList: [Music] = []
     @State private var pathModel: PathModel = .init()
     @State private var selectedMusic: Music = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
+    @State private var recentSearchTermList: [String] = []
     @Binding var detent: PresentationDetent
     
     var body: some View {
         NavigationStack(path: $pathModel.trackAppendPaths) {
             VStack {
-                TrackAppendRecentTermView(recentSearchTermList: $recentSearchTermList, trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm)
+                TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
                     .environment(pathModel)
                 
                 Spacer()
@@ -67,14 +68,20 @@ struct TrackAppendSearchView: View {
             // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
             .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
             .searchable(text: $searchTerm, prompt: "아티스트, 노래, 가사 등")
-            
+            .onSubmit(of: .search) {
+                trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
         }
     }
 }
 
 private struct TrackAppendRecentTermView: View {
-    var recentSearchTermList = ["2003", "Sunset Rollercoaster", "Aqua Man", "Snow Man", "2024", "small girl"]
     @Environment(PathModel.self) var pathModel
+    
+    @Binding var trackAppendUseCase: TrackAppendUseCase
+    @Binding var searchTerm: String
+    @Binding var recentSearchTermList: [String]
     
     var body: some View {
         HStack {
@@ -90,12 +97,20 @@ private struct TrackAppendRecentTermView: View {
                 // TODO: 최근 검색어 기능 연결
                 ForEach(recentSearchTermList, id: \.self) { term in
                     HStack(spacing: 8) {
-                        Text(term)
-                            .font(.Body.body5)
-                            .padding(.leading, 12)
                         Button {
-                            // TODO: 최근 검색어 삭제 기능 추가
-                            pathModel.trackAppendPaths.append(.trackAppendContentView)
+                            searchTerm = term
+                        } label: {
+                            Text(term)
+                                .foregroundStyle(.white)
+                                .font(.Body.body5)
+                                .padding(.leading, 12)
+                        }
+                        
+                        Button {
+                            if let index =  recentSearchTermList.firstIndex(of: term) {
+                                trackAppendUseCase.removeRecentSearchTerm(index: index)
+                                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+                            }
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable()
