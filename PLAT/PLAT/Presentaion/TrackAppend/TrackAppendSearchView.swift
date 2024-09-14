@@ -160,7 +160,6 @@ private struct TrackAppendMusicListView: View {
             }
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
-            
         }
         .scrollDismissesKeyboard(.immediately)
     }
