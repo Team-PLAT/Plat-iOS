@@ -22,6 +22,8 @@ struct TrackAppendSearchView: View {
     var body: some View {
         NavigationStack(path: $pathModel.trackAppendPaths) {
             VStack {
+                TrackAppendSearchbar(searchTerm: $searchTerm)
+                
                 TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
                     .environment(pathModel)
                 
@@ -30,6 +32,8 @@ struct TrackAppendSearchView: View {
                 TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
                     .environment(pathModel)
             }
+            // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+            .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
             .navigationDestination(for: TrackAppendPath.self) { path in
                 switch path {
                 case .trackAppendContentView:
@@ -65,14 +69,51 @@ struct TrackAppendSearchView: View {
                     }
                 }
             }
-            // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-            .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-            .searchable(text: $searchTerm, prompt: "아티스트, 노래, 가사 등")
             .onSubmit(of: .search) {
                 trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
                 recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
             }
+            .scrollDismissesKeyboard(.immediately)
+            .tapDismissesKeyboard()
         }
+    }
+}
+
+private struct TrackAppendSearchbar: View {
+    @Binding var searchTerm: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(.gray8)
+                .padding(.leading, 10)
+            
+            TextField("", text: $searchTerm, prompt: Text("아티스트, 노래, 가사 등").foregroundStyle(.gray8).font(.Body.body3))
+                .foregroundStyle(.white)
+                .tint(.platPurple)
+            
+            Spacer()
+            
+            if !searchTerm.isEmpty {
+                Button {
+                    searchTerm = ""
+                } label: {
+                    Image(systemName: "x.circle.fill")
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(.gray8)
+                        .padding(.leading, 10)
+                }
+                .padding(.trailing, 10)
+            }
+        }
+        .frame(height: 42)
+        .background {
+            RoundedRectangle(cornerRadius: 8).fill(.gray9)
+        }
+        .padding(EdgeInsets(top: 10, leading: 18, bottom: 8, trailing: 18))
     }
 }
 
@@ -161,7 +202,6 @@ private struct TrackAppendMusicListView: View {
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
-                        print("\(music.title.wrappedValue)")
                         pathModel.trackAppendPaths.append(.trackAppendContentView)
                         selectedMusic = music.wrappedValue
                     }
@@ -170,7 +210,6 @@ private struct TrackAppendMusicListView: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
         }
-        .scrollDismissesKeyboard(.immediately)
     }
 }
 
