@@ -20,59 +20,53 @@ struct TrackAppendSearchView: View {
     
     var body: some View {
         NavigationStack(path: $pathModel.trackAppendPaths) {
-            if #available(iOS 17.1, *) {
-                VStack {
-                    
-                    TrackAppendRecentTermView()
-                        .environment(pathModel)
-                        
-                    Spacer()
-                    
-                    TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
-                        .environment(pathModel)
-                    
-                }
-                .navigationDestination(for: TrackAppendPath.self) { path in
-                    switch path {
-                    case .trackAppendContentView:
-                        TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
-                    }
-                }
-                .onAppear {
-                    Task {
-                        let status = await MusicAuthorization.request()
-                        print(status == .authorized)
-                    }
-                    UISearchBar.appearance().showsCancelButton = false
-                    detent = .large
-                    searchTerm = ""
-                }
-                .onChange(of: searchTerm) {
-                    searchTimer?.invalidate()
-                    searchTimer = nil
-                    
-                    self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
-                        if searchTerm != "" {
-                            print("검색중")
-                            Task {
-                                musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
-                            }
-                        } else {
-                            print("검색불가")
-                        }
-                    }
-                }
-                // TODO: 상위 컴포넌트에 넣으면 searchable의 X 버튼이 작동을 안함, 여기서는 작동은 하지만 NaivigationTitle부분에서는 키보드 내리기가 작동 안함
-                // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-                .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-                .tapDismissesKeyboard()
-                .searchable(text: $searchTerm, prompt: "아티스트, 노래, 가사 등")
-                // TODO: iOS 17.1 이상만 가능해서 그 이전 버전도 지원되게 해야함
-                .searchPresentationToolbarBehavior(.avoidHidingContent)
+            VStack {
+                TrackAppendRecentTermView(recentSearchTermList: $recentSearchTermList, trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm)
+                    .environment(pathModel)
                 
-            } else {
+                Spacer()
                 
+                TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
+                    .environment(pathModel)
             }
+            .navigationDestination(for: TrackAppendPath.self) { path in
+                switch path {
+                case .trackAppendContentView:
+                    TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
+                }
+            }
+            .onAppear {
+                Task {
+                    let status = await MusicAuthorization.request()
+                    print(status == .authorized)
+                }
+                UISearchBar.appearance().showsCancelButton = false
+                detent = .large
+                searchTerm = ""
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .onDisappear {
+                searchTerm = ""
+                musicList = []
+            }
+            .onChange(of: searchTerm) {
+                searchTimer?.invalidate()
+                searchTimer = nil
+                
+                self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                    if searchTerm != "" {
+                        print("검색중")
+                        Task {
+                            musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
+                        }
+                    } else {
+                        print("검색불가")
+                    }
+                }
+            }
+            // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+            .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
+            .searchable(text: $searchTerm, prompt: "아티스트, 노래, 가사 등")
             
         }
     }
@@ -156,7 +150,6 @@ private struct TrackAppendMusicListView: View {
                         pathModel.trackAppendPaths.append(.trackAppendContentView)
                         selectedMusic = music.wrappedValue
                     }
-
             }
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
