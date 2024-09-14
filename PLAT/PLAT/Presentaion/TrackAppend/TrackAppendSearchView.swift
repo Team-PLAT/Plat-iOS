@@ -136,7 +136,7 @@ private struct TrackAppendRecentTermView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 8) {
                 // TODO: 최근 검색어 기능 연결
-                ForEach(recentSearchTermList, id: \.self) { term in
+                ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
                     HStack(spacing: 8) {
                         Button {
                             searchTerm = term
@@ -148,10 +148,8 @@ private struct TrackAppendRecentTermView: View {
                         }
                         
                         Button {
-                            if let index =  recentSearchTermList.firstIndex(of: term) {
-                                trackAppendUseCase.removeRecentSearchTerm(index: index)
-                                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-                            }
+                            trackAppendUseCase.removeRecentSearchTerm(index: index)
+                            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable()
