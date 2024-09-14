@@ -218,14 +218,6 @@ private struct TrackAppendMusicListView: View {
     }
 }
 
-extension View {
-    func tapDismissesKeyboard() -> some View {
-        self.onTapGesture {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
-    }
-}
-
 #Preview {
     TrackAppendSearchView(
         isTrackAppendViewSheet: .constant(false),
