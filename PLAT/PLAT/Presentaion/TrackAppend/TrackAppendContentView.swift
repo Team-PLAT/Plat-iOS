@@ -14,6 +14,8 @@ enum ContentState {
     case pictureAndWrite
 }
 
+// MARK: - TrackAppendContentView
+
 struct TrackAppendContentView: View {
     @State var isAddWriting = false
     @State var contentText = ""
@@ -63,6 +65,8 @@ struct TrackAppendContentView: View {
         }
     }
 }
+
+// MARK: - TrackAppendContentMainView
 
 struct TrackAppendContentMainView: View {
     @State var isPhotoAlbumSheet = false
@@ -164,6 +168,8 @@ struct TrackAppendContentMainView: View {
         }
     }
 }
+
+// MARK: - TrackAppendContentAddView
 
 struct TrackAppendContentAddView: View {
     @Binding var selectedImage: UIImage?
