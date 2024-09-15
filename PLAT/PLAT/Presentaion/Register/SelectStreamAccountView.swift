@@ -39,15 +39,19 @@ struct SelectStreamAccountView: View {
                     isSelected: selectedState == .appleMusic
                 ) {
                     selectedState = .appleMusic
-                    musicControlUseCase.effect(.request)
                     isShowingOffer = true
                 }
             }
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
             .onChange(of: isShowingOffer) {
                 if !isShowingOffer {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        authUseCase.updateIsLoginComplete(true)
+                    print("들")
+                    if musicControlUseCase.state.status {
+                        print("어")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            print("옴")
+                            authUseCase.updateIsLoginComplete(true)
+                        }
                     }
                 }
             }
@@ -77,6 +81,9 @@ struct SelectStreamAccountView: View {
             }
             .padding(.horizontal, 108)
             .padding(.bottom)
+        }
+        .onAppear {
+            musicControlUseCase.effect(.request)
         }
         .foregroundStyle(.white)
         .background(.platBackground)

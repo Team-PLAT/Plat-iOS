@@ -24,7 +24,8 @@ final class MusicControlUseCase {
             isStreaming: false,
             isPaused: true,
             currentDuration: 0,
-            isPlayingTrack: nil
+            isPlayingTrack: nil,
+            status: false
         )
     }
 }
@@ -39,6 +40,7 @@ extension MusicControlUseCase {
         var isPaused: Bool
         var currentDuration: Double
         var isPlayingTrack: Track?
+        var status: Bool
     }
 }
 
@@ -57,11 +59,14 @@ extension MusicControlUseCase {
     func effect(_ effect: Effect) {
         switch effect {
         case .request:
-            musicController.setup()
+            Task {
+                state.status = await musicController.setup()
+                print("2", state.status)
+            }
             
         case let .setup(music):
-            musicController.setup()
             Task {
+                state.status = await musicController.setup()
                 await fetchCurrentMusicInfo(music: music)
                 musicController.play(music)
             }
