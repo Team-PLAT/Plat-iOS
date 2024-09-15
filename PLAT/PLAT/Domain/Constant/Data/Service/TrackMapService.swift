@@ -8,6 +8,6 @@
 import Foundation
 import Combine
 
-final class TrackMapService: TrackMapServiceInterface {
+final class TrackMapService: MapServiceInterface {
     var location: AnyPublisher<Location, Never>?
 }

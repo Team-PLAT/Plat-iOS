@@ -57,7 +57,7 @@
 		79B0F6FA2C8C42AD009140AF /* LikeTrackAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F92C8C42AD009140AF /* LikeTrackAPI.swift */; };
 		79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* SettingPath.swift */; };
 		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
-		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
+		79FC51462C6DD78B00489507 /* MapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* MapServiceInterface.swift */; };
 		79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51492C6DEA6600489507 /* StubTrackMapService.swift */; };
 		820836772C34001D00F6D0CF /* AppleSocialLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* AppleSocialLoginService.swift */; };
 		8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* AuthUseCase.swift */; };
@@ -180,7 +180,7 @@
 		79B0F6F92C8C42AD009140AF /* LikeTrackAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTrackAPI.swift; sourceTree = "<group>"; };
 		79B48AF62C413B5600A73CA0 /* SettingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPath.swift; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
-		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
+		79FC51452C6DD78B00489507 /* MapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapServiceInterface.swift; sourceTree = "<group>"; };
 		79FC51492C6DEA6600489507 /* StubTrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackMapService.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* AppleSocialLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSocialLoginService.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* Platter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platter.swift; sourceTree = "<group>"; };
@@ -510,7 +510,7 @@
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
-				79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */,
+				79FC51452C6DD78B00489507 /* MapServiceInterface.swift */,
 				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
 				5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */,
@@ -851,7 +851,7 @@
 				820836992C34064400F6D0CF /* StreamAccount.swift in Sources */,
 				820836772C34001D00F6D0CF /* AppleSocialLoginService.swift in Sources */,
 				79842E8C2C7225FD0062F825 /* LocationManager.swift in Sources */,
-				79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */,
+				79FC51462C6DD78B00489507 /* MapServiceInterface.swift in Sources */,
 				8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */,
 				79B0F6F42C8C4111009140AF /* FetchTrackFeedAPI.swift in Sources */,
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,

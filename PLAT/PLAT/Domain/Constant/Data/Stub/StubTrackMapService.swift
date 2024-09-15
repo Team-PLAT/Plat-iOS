@@ -8,6 +8,6 @@
 import Foundation
 import Combine
 
-struct StubTrackMapService: TrackMapServiceInterface {
+struct StubTrackMapService: MapServiceInterface {
     var location: AnyPublisher<Location, Never>?
 }

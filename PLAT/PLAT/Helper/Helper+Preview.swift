@@ -35,10 +35,6 @@ enum PreviewHelper {
         trackId: MockDataBuilder.track.id
     )
     
-    static let mockTrackMapUseCase = TrackMapUseCase(
-        trackMapService: StubTrackMapService()
-    )
-    
     static let mockMusicControlUseCase = MusicControlUseCase(
         musicController: StubMusicController()
     )

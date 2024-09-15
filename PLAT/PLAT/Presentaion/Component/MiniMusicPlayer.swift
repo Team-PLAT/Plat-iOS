@@ -23,15 +23,15 @@ struct MiniMusicPlayer: View {
                 Spacer()
                 PlaybackButton(isPaused: $isPaused)
             }
+            .padding(.horizontal, 12)
             
             ProgressView(value: 0.5)
                 .tint(.platPurple)
                 .background(.platBlack)
         }
-        .padding(.horizontal, 12)
         .padding(.top, 12)
         .background(.platBlack)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        // .clipShape(RoundedRectangle(cornerRadius: 8))
         .onTapGesture {
             print("음악 재생 화면 이동")
             // TODO: 음악 재생 화면 이동

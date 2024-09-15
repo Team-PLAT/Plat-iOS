@@ -11,11 +11,11 @@ import MapKit
 @Observable
 final class TrackMapUseCase {
     
-    private(set) var trackMapService: TrackMapServiceInterface
+    private(set) var mapService: MapServiceInterface
     private(set) var state: State
     
-    init(trackMapService: TrackMapServiceInterface) {
-        self.trackMapService = trackMapService
+    init(mapService: MapServiceInterface) {
+        self.mapService = mapService
         
         self.state = State(
             location: .init(latitude: 0, longitude: 0),

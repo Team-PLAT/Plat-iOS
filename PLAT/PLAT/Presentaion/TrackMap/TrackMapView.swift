@@ -11,7 +11,6 @@ import MapKit
 // MARK: - TrackMapView
 
 struct TrackMapView: View {
-    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: TrackMapService())
     @State private var locationManager = LocationManager()
     @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
@@ -26,7 +25,8 @@ struct TrackMapView: View {
             ) {
                 UserAnnotation()
                 
-                ForEach(trackMapUseCase.state.trackList) { track in
+                // TODO: 실제 데이터로 변경
+                ForEach(MockDataBuilder.trackList) { track in
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                         CustomMarkerView(track: track)
                             .onTapGesture {
@@ -49,7 +49,6 @@ struct TrackMapView: View {
                 )
             }
         }
-        .environment(trackMapUseCase)
         .fullScreenCover(isPresented: $showTrackDetail) {
             if let trackId = selectedTrackId {
                 TrackDetailView(trackId: trackId)
@@ -57,7 +56,14 @@ struct TrackMapView: View {
             }
         }
         .onReceive(locationManager.locationPublisher) { location in
-            print("위치 바뀜!: \(location)")
+            print("""
+            [위치 업데이트]
+            - 위도: \(Double(location.coordinate.latitude).rounded())
+            - 경도: \(Double(location.coordinate.longitude).rounded())
+            """)
+            
+            // TODO: 트랙 리스트 업데이트
+            // TODO: 플레이리스트 생성
         }
     }
 }
@@ -85,7 +91,6 @@ private struct CustomMarkerView: View {
                             .foregroundStyle(.gray3)
                     }
                 }
-                
             }
     }
 }
@@ -93,7 +98,6 @@ private struct CustomMarkerView: View {
 // MARK: - MapComponentsView
 
 private struct MapComponentsView: View {
-    
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding var hasNotifications: Bool
@@ -110,6 +114,7 @@ private struct MapComponentsView: View {
                 )
                 .padding(.bottom, 22)
             }
+            .padding(.horizontal, 18)
             
             if musicControlUseCase.state.isStreaming {
                 // TODO: 더미데이터 변경
@@ -118,10 +123,8 @@ private struct MapComponentsView: View {
                     isPaused: $musicControlUseCase.state.isPaused,
                     track: MockDataBuilder.track
                 )
-                .padding(.bottom, 16)
             }
         }
-        .padding(.horizontal, 18)
     }
 }
 
@@ -142,7 +145,6 @@ private struct MapAddressView: View {
 // MARK: - MapButtonsView
 
 private struct MapButtonsView: View {
-    @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
     @State private var isTrackAppendViewSheet = false
     @State private var detent: PresentationDetent = .fraction(0.25)
     @Binding var hasNotifications: Bool
@@ -223,28 +225,9 @@ private struct MapButtonsView: View {
     }
 }
 
-// MARK: - Functions
-
-func getMapVisibleCoordinates(mapView: MKMapView) {
-    // 현재 보이는 맵의 Rect를 가져옴
-    let visibleMapRect = mapView.visibleMapRect
-    
-    // 최상단 왼쪽 좌표 (북서쪽)
-    let topLeftPoint = MKMapPoint(x: visibleMapRect.minX, y: visibleMapRect.minY)
-    let topLeftCoordinate = topLeftPoint.coordinate
-    
-    // 최하단 오른쪽 좌표 (남동쪽)
-    let bottomRightPoint = MKMapPoint(x: visibleMapRect.maxX, y: visibleMapRect.maxY)
-    let bottomRightCoordinate = bottomRightPoint.coordinate
-    
-    print("Top Left Coordinate: \(topLeftCoordinate.latitude), \(topLeftCoordinate.longitude)")
-    print("Bottom Right Coordinate: \(bottomRightCoordinate.latitude), \(bottomRightCoordinate.longitude)")
-}
-
 // MARK: - Preview
 
 #Preview {
     TrackMapView()
-        .environment(PreviewHelper.mockTrackMapUseCase)
         .environment(PreviewHelper.mockMusicControlUseCase)
 }
