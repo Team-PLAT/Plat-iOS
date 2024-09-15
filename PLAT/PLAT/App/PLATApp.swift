@@ -15,8 +15,8 @@ struct PLATApp: App {
     @State private var pathModel: PathModel = .init()
     
     @State private var authUseCase: AuthUseCase = .init(
-        authService: AppleSocialLoginService(),
-        userSessionService: StubUserSessionService() // TODO: Stub 교체
+        socialLoginServcie: AppleSocialLoginService(),
+        memberService: MemberServiceImpl()
     )
     
     var body: some Scene {

@@ -15,16 +15,22 @@ final class MemberServiceImpl: MemberServiceInterface {
     
     private let memberRepository = MemberRepository()
     
+    /// 로그인을 요청합니다.
     func signIn(socialAccount: SocialAccount) async -> Result<Void, any Error> {
         // TODO: 로그인 기능 구현
         .success(Void())
+    }
+    
+    /// 로그아웃을 진행합니다.
+    func signOut() {
+        // TODO: 로그아웃 기능 구현
     }
     
     /// 회원 탈퇴를 진행합니다.
     func resign() async -> Result<Void, any Error> {
         let result = await memberRepository.resign()
         switch result {
-        case .success(let resignResponse):
+        case .success:
             return .success(Void())
         case .failure(let error):
             return .failure(error)

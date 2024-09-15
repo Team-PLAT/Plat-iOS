@@ -33,7 +33,7 @@
 		790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790AF0692C6DD1640005FA9A /* TrackMapView.swift */; };
 		791FEF8A2C771CDE006CBDE0 /* UserSessionServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FEF892C771CDE006CBDE0 /* UserSessionServiceInterface.swift */; };
 		791FEF8C2C771E7B006CBDE0 /* StubUserProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FEF8B2C771E7B006CBDE0 /* StubUserProfileService.swift */; };
-		791FEF8E2C771FD6006CBDE0 /* StubUserSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FEF8D2C771FD6006CBDE0 /* StubUserSessionService.swift */; };
+		791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FEF8D2C771FD6006CBDE0 /* StubMemberService.swift */; };
 		793278092C2D014500F433F5 /* PLATApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793278082C2D014500F433F5 /* PLATApp.swift */; };
 		7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7932780A2C2D014500F433F5 /* OnboardingView.swift */; };
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
@@ -167,7 +167,7 @@
 		790AF0692C6DD1640005FA9A /* TrackMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapView.swift; sourceTree = "<group>"; };
 		791FEF892C771CDE006CBDE0 /* UserSessionServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionServiceInterface.swift; sourceTree = "<group>"; };
 		791FEF8B2C771E7B006CBDE0 /* StubUserProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubUserProfileService.swift; sourceTree = "<group>"; };
-		791FEF8D2C771FD6006CBDE0 /* StubUserSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubUserSessionService.swift; sourceTree = "<group>"; };
+		791FEF8D2C771FD6006CBDE0 /* StubMemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMemberService.swift; sourceTree = "<group>"; };
 		793278052C2D014500F433F5 /* PLAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		793278082C2D014500F433F5 /* PLATApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLATApp.swift; sourceTree = "<group>"; };
 		7932780A2C2D014500F433F5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -655,7 +655,7 @@
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
 				5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */,
 				791FEF8B2C771E7B006CBDE0 /* StubUserProfileService.swift */,
-				791FEF8D2C771FD6006CBDE0 /* StubUserSessionService.swift */,
+				791FEF8D2C771FD6006CBDE0 /* StubMemberService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
 				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
@@ -857,7 +857,7 @@
 				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
-				791FEF8E2C771FD6006CBDE0 /* StubUserSessionService.swift in Sources */,
+				791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */,
 				7946B9882C918066009B915D /* ImageService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,

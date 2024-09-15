@@ -77,6 +77,14 @@ private struct Content: View {
     
     let track: Track?
     
+    private var userOfTrack: String {
+        if let nickname = track?.user.nickname {
+            return nickname + "의 트랙"
+        } else {
+            return ""
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 4) {
@@ -90,7 +98,7 @@ private struct Content: View {
                     .font(.Body.body5)
             }
             
-            Text(track.user.nickname + "의 트랙")
+            Text(userOfTrack)
                 .font(.Body.body2)
         }
         .foregroundStyle(.gray3)

@@ -12,15 +12,15 @@ import AuthenticationServices
 final class AuthUseCase {
     
     private var socialLoginService: SocialLoginServiceInterface
-    private var userSessionService: UserSessionServiceInterface
+    private var memberService: MemberServiceInterface
     private(set) var state: State
     
     init(
-        authService: SocialLoginServiceInterface,
-        userSessionService: UserSessionServiceInterface
+        socialLoginServcie: SocialLoginServiceInterface,
+        memberService: MemberServiceInterface
     ) {
-        self.socialLoginService = authService
-        self.userSessionService = userSessionService
+        self.socialLoginService = socialLoginServcie
+        self.memberService = memberService
         self.state = State(
             isMember: false,
             isLoginComplete: false
@@ -33,12 +33,102 @@ final class AuthUseCase {
 extension AuthUseCase {
     
     struct State {
+        var user: User?
+        var streamAccount: StreamAccount?
         var isMember: Bool
         var isLoginComplete: Bool
     }
 }
 
-// MARK: - UseCase Method
+// MARK: - Effect Method
+
+extension AuthUseCase {
+    
+    enum Effect {
+        case signIn(socialAccout: SocialAccount)
+        case signOut
+        case resign
+        
+        case fetchProfile
+        case updateProfileNickname(nickname: String)
+        case updateProfileAvatar(imageUrl: String)
+        
+        case fetchStreamAccount
+        case updateStreamAccount(streamAccount: StreamAccount)
+    }
+    
+    func effect(_ effect: Effect) {
+        switch effect {
+        case .signIn(let socialAccount):
+            Task {
+                await memberService.signIn(socialAccount: socialAccount)
+            }
+        case .signOut:
+            memberService.signOut()
+        case .resign:
+            Task {
+                await memberService.resign()
+            }
+        case .fetchProfile:
+            Task {
+                let result = await memberService.fetchProfile()
+                switch result {
+                case .success(let user):
+                    state.user = user
+                case .failure:
+                    // TODO: 에러 처리
+                    break
+                }
+            }
+        case .updateProfileNickname(nickname: let nickname):
+            Task {
+                let result = await memberService.updateProfileNickname(to: nickname)
+                switch result {
+                case .success:
+                    state.user?.nickname = nickname
+                case .failure:
+                    // TODO: 에러 처리
+                    break
+                }
+            }
+        case .updateProfileAvatar(imageUrl: let imageUrl):
+            Task {
+                let result = await memberService.updateProfileAvatar(to: imageUrl)
+                switch result {
+                case .success:
+                    state.user?.profileImageUrl = imageUrl
+                case .failure:
+                    // TODO: 에러 처리
+                    break
+                }
+            }
+        case .fetchStreamAccount:
+            Task {
+                let result = await memberService.fetchStreamAccount()
+                switch result {
+                case .success(let streamAccount):
+                    state.streamAccount = streamAccount
+                case .failure:
+                    // TODO: 에러 처리
+                    break
+                }
+            }
+        case .updateStreamAccount(streamAccount: let streamAccount):
+            Task {
+                let result = await memberService.updateStreamAccount(to: streamAccount)
+                switch result {
+                case .success:
+                    state.streamAccount = streamAccount
+                case .failure:
+                    // TODO: 에러 처리
+                    break
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Social Login (추후 Effect 메서드로 빼기)
 
 extension AuthUseCase {
     
@@ -50,16 +140,6 @@ extension AuthUseCase {
     /// 소셜 로그인 결과 처리하기
     func handleSocialLogin(authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error> {
         return socialLoginService.handleLogin(authResult)
-    }
-    
-    /// 로그아웃하기
-    func logout() {
-        userSessionService.logout()
-    }
-    
-    /// 회원탈퇴
-    func deleteAccount() {
-        userSessionService.deleteAccount()
     }
 }
 

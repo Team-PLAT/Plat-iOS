@@ -63,7 +63,7 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackDetailUseCase.trackId }) {
+                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackUseCase.trackId }) {
                     
                     /// 재생중인 노래
                     if let isPlayingTrack = musicControlUseCase.state.isPlayingTrack,

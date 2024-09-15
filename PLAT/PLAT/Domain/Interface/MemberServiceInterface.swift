@@ -9,6 +9,7 @@ import Foundation
 
 protocol MemberServiceInterface {
     func signIn(socialAccount: SocialAccount) async -> Result<Void, Error>
+    func signOut()
     func resign() async -> Result<Void, Error>
     
     func fetchProfile() async -> Result<User, Error>

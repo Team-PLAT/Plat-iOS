@@ -66,8 +66,8 @@ extension TrackUseCase {
             Task {
                 let result = await trackService.like(track: track)
                 switch result {
-                case .success(let success): print("좋아요 성공!")
-                case .failure(let failure): print("좋아요 실패...")
+                case .success: print("좋아요 성공!")
+                case .failure: print("좋아요 실패...")
                 }
             }
             
@@ -81,8 +81,8 @@ extension TrackUseCase {
             Task {
                 let result = await trackService.report(track: track)
                 switch result {
-                case .success(let success): print("좋아요 성공!")
-                case .failure(let failure): print("좋아요 실패...")
+                case .success: print("좋아요 성공!")
+                case .failure: print("좋아요 실패...")
                 }
             }
         }
