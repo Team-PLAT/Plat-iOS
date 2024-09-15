@@ -17,8 +17,17 @@ final class MemberServiceImpl: MemberServiceInterface {
     
     /// 로그인을 요청합니다.
     func signIn(socialAccount: SocialAccount) async -> Result<Void, any Error> {
-        // TODO: 로그인 기능 구현
-        .success(Void())
+        let request = SignInRequest(
+            encryptedUserIdentifier: "encryptedUserId123", // TODO: 실제 값 넣기
+            socialType: socialAccount.rawValue
+        )
+        let result = await memberRepository.signIn(request: request)
+        switch result {
+        case .success(let signInResponse):
+            return .success(Void())
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     /// 로그아웃을 진행합니다.
@@ -58,7 +67,7 @@ final class MemberServiceImpl: MemberServiceInterface {
         let request = UpdateProfileNicknameRequest(nickname: nickname)
         let result = await memberRepository.updateProfileNickname(request: request)
         switch result {
-        case .success(let updateProfileNicknameResponse):
+        case .success:
             return .success(Void())
         case .failure(let error):
             return .failure(error)
@@ -70,7 +79,7 @@ final class MemberServiceImpl: MemberServiceInterface {
         let request = UpdateProfileAvatarRequest(avatar: imageUrl)
         let result = await memberRepository.updateProfileAvatar(request: request)
         switch result {
-        case .success(let updateProfileAvatarResponse):
+        case .success:
             return .success(Void())
         case .failure(let error):
             return .failure(error)
@@ -100,7 +109,7 @@ final class MemberServiceImpl: MemberServiceInterface {
         let request = UpdateProfileStreamTypeRequest(streamType: streamAccount)
         let result = await memberRepository.updateStreamAccount(request: request)
         switch result {
-        case .success(let updateProfileStreamTypeResponse):
+        case .success:
             return .success(Void())
         case .failure(let error):
             return .failure(error)

@@ -23,6 +23,7 @@ final class AuthUseCase {
         self.memberService = memberService
         self.state = State(
             isMember: false,
+            isSignIn: false,
             isLoginComplete: false
         )
     }
@@ -36,6 +37,7 @@ extension AuthUseCase {
         var user: User?
         var streamAccount: StreamAccount?
         var isMember: Bool
+        var isSignIn: Bool
         var isLoginComplete: Bool
     }
 }
