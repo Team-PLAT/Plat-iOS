@@ -9,7 +9,7 @@ import Foundation
 
 final class MemberRepository {
     
-    private let client = NetworkClient()
+    private let client = NetworkClient.shared
     
     func signIn(request: SignInRequest) async -> Result<SignInResponse, Error> {
         let url = APIs.Plat.Members.signIn.url

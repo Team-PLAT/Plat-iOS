@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ImageServiceInterface {
-    func uploadImage() async -> Result<PlatImage, Error>
+    func uploadImage(imageData: Data) async -> Result<PlatImage, Error>
 }

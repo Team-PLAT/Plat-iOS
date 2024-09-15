@@ -9,6 +9,9 @@ import Foundation
 
 final class NetworkClient: HTTPMethod {
     
+    static let shared = NetworkClient()
+    private init() {}
+    
     /// StatusCode 성공 범위
     private let successStatusCodeRange = 200...299
     
@@ -410,7 +413,7 @@ extension NetworkClient {
         request.setValue(contentType, forHTTPHeaderField: HTTPHeader.mimeTypeHeader)
         
         request.setValue(
-            HTTPHeader.authTokenValue("TOKEN"), // TODO: 액세스 토큰 삽입
+            HTTPHeader.authTokenValue("eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlblR5cGUiOiJhY2Nlc3MiLCJtZW1iZXJJZCI6NCwiY2xpZW50SWQiOiJlbmNyeXB0ZWRVc2VySWQxMjMiLCJwZXJtaXNzaW9uUm9sZSI6IkFETUlOIiwiaWF0IjoxNzI2MDM4MjI5LCJleHAiOjE3MjY5MDIyMjl9.aXr8OPyWkX_k3zHAOfe9PWbzT5Y3dctYgmeSCesurvyYfZCRkOdqTi_UFP_n41uVPu4bVvYjR0XnqRCHaLlXJw"), // TODO: 액세스 토큰 삽입
             forHTTPHeaderField: HTTPHeader.authTokenHeader
         )
         

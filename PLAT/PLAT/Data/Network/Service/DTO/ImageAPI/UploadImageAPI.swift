@@ -8,7 +8,7 @@
 import Foundation
 
 struct UploadImageRequest: Encodable {
-    let image: String
+    let imageData: Data
 }
 
 struct UploadImageResponse: Decodable {

@@ -9,7 +9,7 @@ import Foundation
 
 final class TrackRepository {
     
-    private let client = NetworkClient()
+    private let client = NetworkClient.shared
     
     func fetchTrackMap(request: FetchTrackMapRequest) async -> Result<FetchTrackMapResponse, Error> {
         let url = APIs.Plat.Tracks.fetchMap.url

@@ -93,6 +93,7 @@
 		82204EAE2C9693A800546A5C /* SignInAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAD2C9693A800546A5C /* SignInAPI.swift */; };
 		82204EB02C96A71500546A5C /* ImageServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */; };
 		82204EB22C96A76A00546A5C /* PlatImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB12C96A76A00546A5C /* PlatImage.swift */; };
+		82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -232,6 +233,7 @@
 		82204EAD2C9693A800546A5C /* SignInAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAPI.swift; sourceTree = "<group>"; };
 		82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceInterface.swift; sourceTree = "<group>"; };
 		82204EB12C96A76A00546A5C /* PlatImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatImage.swift; sourceTree = "<group>"; };
+		82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceImpl.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -615,6 +617,42 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		82204EB32C96B3E900546A5C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
+				DF616E5B2C74277300CCDC9D /* NetworkError.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		82204EB62C96B51C00546A5C /* TrackService */ = {
+			isa = PBXGroup;
+			children = (
+				79B0F6F12C8C406E009140AF /* TrackServiceImpl.swift */,
+				82204E5A2C90695400546A5C /* TrackRepository.swift */,
+			);
+			path = TrackService;
+			sourceTree = "<group>";
+		};
+		82204EB72C96B52400546A5C /* MemberService */ = {
+			isa = PBXGroup;
+			children = (
+				82204EAB2C96508200546A5C /* MemberServiceImpl.swift */,
+				79B0F7082C8DBAB5009140AF /* MemberRepository.swift */,
+			);
+			path = MemberService;
+			sourceTree = "<group>";
+		};
+		82204EB82C96B52F00546A5C /* ImageService */ = {
+			isa = PBXGroup;
+			children = (
+				82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */,
+				7946B9872C918062009B915D /* ImageRepository.swift */,
+			);
+			path = ImageService;
+			sourceTree = "<group>";
+		};
 		8269334A2C720A510004E0B5 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,11 +736,10 @@
 		DF616E5A2C741A7F00CCDC9D /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				82204EB32C96B3E900546A5C /* Base */,
 				79B0F7072C8DBA9E009140AF /* MemberAPI */,
 				79B0F6EF2C8C3F22009140AF /* TrackAPI */,
 				7946B9842C917FDC009B915D /* ImageAPI */,
-				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
-				DF616E5B2C74277300CCDC9D /* NetworkError.swift */,
 			);
 			name = DTO;
 			path = Service/DTO;
@@ -726,11 +763,9 @@
 		DFE27A232C720305002BAD11 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				79B0F6F12C8C406E009140AF /* TrackServiceImpl.swift */,
-				82204E5A2C90695400546A5C /* TrackRepository.swift */,
-				82204EAB2C96508200546A5C /* MemberServiceImpl.swift */,
-				79B0F7082C8DBAB5009140AF /* MemberRepository.swift */,
-				7946B9872C918062009B915D /* ImageRepository.swift */,
+				82204EB62C96B51C00546A5C /* TrackService */,
+				82204EB72C96B52400546A5C /* MemberService */,
+				82204EB82C96B52F00546A5C /* ImageService */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -950,6 +985,7 @@
 				79B0F70D2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift in Sources */,
 				DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */,
 				79B0F6F62C8C4269009140AF /* UploadTrackAPI.swift in Sources */,
+				82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */,
 				79B0F70F2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift in Sources */,
 				79B0F6F22C8C406E009140AF /* TrackServiceImpl.swift in Sources */,
 			);
