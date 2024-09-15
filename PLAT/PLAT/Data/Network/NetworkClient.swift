@@ -12,6 +12,69 @@ final class NetworkClient: HTTPMethod {
     /// StatusCode 성공 범위
     private let successStatusCodeRange = 200...299
     
+    /// 로그인 진행(토큰 X, POST)
+    func signIn<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, any Error> {
+        do {
+            var request = URLRequest(url: url)
+            request.httpMethod = HTTPMethodList.post.rawValue
+            
+            request.setValue(
+                HTTPHeader.mimeTypeValue,
+                forHTTPHeaderField: HTTPHeader.mimeTypeHeader
+            )
+            
+            request.httpBody = try JSONEncoder().encode(body)
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let statusCode = statusCode(to: response) else {
+                return .failure(NetworkError.httpResponseError)
+            }
+            
+            guard successStatusCodeRange.contains(statusCode) else {
+                let error = NetworkError.serverError(statusCode: statusCode)
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(error)
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                NetworkLog.success(
+                    url: url,
+                    statusCode: statusCode,
+                    data: decodedData
+                )
+                return .success(decodedData)
+            } catch {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(NetworkError.decodingError)
+            }
+        } catch {
+            if let urlError = error as? URLError {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
+                return .failure(NetworkError.error(error))
+            }
+        }
+    }
+    
     /// GET (쿼리로 데이터 전달)
     func get<T: Decodable>(url: URL) async -> Result<T, Error> {
         do {

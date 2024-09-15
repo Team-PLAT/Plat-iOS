@@ -19,10 +19,23 @@ struct PLATApp: App {
         memberService: MemberServiceImpl()
     )
     
+    // TODO: 테스트 객체
+    private var memberRepository = MemberRepository()
+    
     var body: some Scene {
         WindowGroup {
-            if authUseCase.state.isLoginComplete {
+            if !authUseCase.state.isLoginComplete {
                 OnboardingView()
+                    .onAppear {
+                        Task {
+                            await memberRepository.signIn(
+                                request: SignInRequest(
+                                    encryptedUserIdentifier: "memberRepository",
+                                    socialType: "APPLE"
+                                )
+                            )
+                        }
+                    }
             } else {
                 MainView()
             }

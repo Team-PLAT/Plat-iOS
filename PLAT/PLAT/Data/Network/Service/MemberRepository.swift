@@ -11,6 +11,20 @@ final class MemberRepository {
     
     private let client = NetworkClient()
     
+    func signIn(request: SignInRequest) async -> Result<SignInResponse, Error> {
+        let url = APIs.Plat.Members.signIn.url
+        let response: Result<BaseResponse<SignInResponse>, Error> = await client.signIn(
+            url: url,
+            body: request
+        )
+        
+        do {
+            return try .success(response.get().result)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
     func resign() async -> Result<ResignResponse, Error> {
         let url = APIs.Plat.Members.resign.url
         let response: Result<BaseResponse<ResignResponse>, Error> = await client.delete(url: url)

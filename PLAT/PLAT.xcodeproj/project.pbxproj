@@ -90,6 +90,7 @@
 		82204EA82C95B00500546A5C /* MemberServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EA72C95B00500546A5C /* MemberServiceInterface.swift */; };
 		82204EAA2C95B1FB00546A5C /* SocialAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EA92C95B1FB00546A5C /* SocialAccount.swift */; };
 		82204EAC2C96508200546A5C /* MemberServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAB2C96508200546A5C /* MemberServiceImpl.swift */; };
+		82204EAE2C9693A800546A5C /* SignInAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAD2C9693A800546A5C /* SignInAPI.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -226,6 +227,7 @@
 		82204EA72C95B00500546A5C /* MemberServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberServiceInterface.swift; sourceTree = "<group>"; };
 		82204EA92C95B1FB00546A5C /* SocialAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAccount.swift; sourceTree = "<group>"; };
 		82204EAB2C96508200546A5C /* MemberServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberServiceImpl.swift; sourceTree = "<group>"; };
+		82204EAD2C9693A800546A5C /* SignInAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAPI.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -454,12 +456,13 @@
 		79B0F7072C8DBA9E009140AF /* MemberAPI */ = {
 			isa = PBXGroup;
 			children = (
+				82204EAD2C9693A800546A5C /* SignInAPI.swift */,
+				79B0F7162C8DC44A009140AF /* ResignAPI.swift */,
 				79B0F70C2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift */,
 				79B0F70E2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift */,
 				79B0F7102C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift */,
 				79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */,
 				79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */,
-				79B0F7162C8DC44A009140AF /* ResignAPI.swift */,
 			);
 			path = MemberAPI;
 			sourceTree = "<group>";
@@ -855,6 +858,7 @@
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
 				79B0F7092C8DBAB5009140AF /* MemberRepository.swift in Sources */,
 				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
+				82204EAE2C9693A800546A5C /* SignInAPI.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */,
