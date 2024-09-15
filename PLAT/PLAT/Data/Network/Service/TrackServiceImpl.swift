@@ -68,7 +68,7 @@ final class TrackServiceImpl: TrackServiceInterface {
         
         let result = await trackRepository.uploadTrack(request: request)
         switch result {
-        case .success(let success): return .success(Void())
+        case .success: return .success(Void())
         case .failure(let error): return .failure(error)
         }
     }
@@ -78,7 +78,7 @@ final class TrackServiceImpl: TrackServiceInterface {
         let request = LikeTrackRequest(trackId: track.id, isLiked: track.isLike)
         let result = await trackRepository.likeTrack(request: request)
         switch result {
-        case .success(let success): return .success(Void())
+        case .success: return .success(Void())
         case .failure(let error): return .failure(error)
         }
     }
@@ -88,7 +88,7 @@ final class TrackServiceImpl: TrackServiceInterface {
         let request = ReportTrackRequset(trackId: track.id)
         let result = await trackRepository.reportTrack(request: request)
         switch result {
-        case .success(let success): return .success(Void())
+        case .success: return .success(Void())
         case .failure(let error): return .failure(error)
         }
     }

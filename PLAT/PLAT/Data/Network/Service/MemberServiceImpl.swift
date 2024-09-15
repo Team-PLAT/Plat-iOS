@@ -23,7 +23,7 @@ final class MemberServiceImpl: MemberServiceInterface {
         )
         let result = await memberRepository.signIn(request: request)
         switch result {
-        case .success(let signInResponse):
+        case .success:
             return .success(Void())
         case .failure(let error):
             return .failure(error)

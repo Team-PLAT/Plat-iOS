@@ -11,6 +11,7 @@ protocol HTTPMethod {
     func signIn<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
     func get<T: Decodable>(url: URL) async -> Result<T, Error>
     func post<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
+    func postImage<T: Decodable>(url: URL, imageData: Data) async -> Result<T, Error>
     func patch<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error>
     func delete<T: Decodable>(url: URL) async -> Result<T, Error>
 }

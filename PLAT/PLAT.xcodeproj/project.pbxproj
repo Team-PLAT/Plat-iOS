@@ -40,7 +40,7 @@
 		793278102C2D014600F433F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780F2C2D014600F433F5 /* Preview Assets.xcassets */; };
 		793509C22C393BA40098B073 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793509C12C393BA40098B073 /* ListSection.swift */; };
 		7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9852C917FEE009B915D /* UploadImageAPI.swift */; };
-		7946B9882C918066009B915D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9872C918062009B915D /* ImageService.swift */; };
+		7946B9882C918066009B915D /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9872C918062009B915D /* ImageRepository.swift */; };
 		7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465992C3A5C2400F6DC2D /* Helper+Preview.swift */; };
 		7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */; };
 		7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659D2C3A649600F6DC2D /* PlatTextField.swift */; };
@@ -91,6 +91,8 @@
 		82204EAA2C95B1FB00546A5C /* SocialAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EA92C95B1FB00546A5C /* SocialAccount.swift */; };
 		82204EAC2C96508200546A5C /* MemberServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAB2C96508200546A5C /* MemberServiceImpl.swift */; };
 		82204EAE2C9693A800546A5C /* SignInAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAD2C9693A800546A5C /* SignInAPI.swift */; };
+		82204EB02C96A71500546A5C /* ImageServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */; };
+		82204EB22C96A76A00546A5C /* PlatImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB12C96A76A00546A5C /* PlatImage.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -116,7 +118,7 @@
 		82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5282C75689E00C57916 /* TrackAppendToPlaylistSheet.swift */; };
 		82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A52D2C75D9D400C57916 /* Constant.swift */; };
 		82C9A5312C75DD0D00C57916 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5302C75DD0D00C57916 /* SystemImage.swift */; };
-		82C9A5342C777F1000C57916 /* Platter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* Platter.swift */; };
+		82C9A5342C777F1000C57916 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836782C34002D00F6D0CF /* User.swift */; };
 		82C9A53C2C87228500C57916 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53B2C87228500C57916 /* API.swift */; };
 		82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */; };
 		82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53F2C8729D500C57916 /* PlatAPI.swift */; };
@@ -176,7 +178,7 @@
 		7932780F2C2D014600F433F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		793509C12C393BA40098B073 /* ListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
 		7946B9852C917FEE009B915D /* UploadImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageAPI.swift; sourceTree = "<group>"; };
-		7946B9872C918062009B915D /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		7946B9872C918062009B915D /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		796465992C3A5C2400F6DC2D /* Helper+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Preview.swift"; sourceTree = "<group>"; };
 		7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubInfoService.swift; sourceTree = "<group>"; };
 		7964659D2C3A649600F6DC2D /* PlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatTextField.swift; sourceTree = "<group>"; };
@@ -205,7 +207,7 @@
 		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
 		79FC51492C6DEA6600489507 /* StubTrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackMapService.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* AppleSocialLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSocialLoginService.swift; sourceTree = "<group>"; };
-		820836782C34002D00F6D0CF /* Platter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platter.swift; sourceTree = "<group>"; };
+		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* AuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUseCase.swift; sourceTree = "<group>"; };
 		8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginServiceInterface.swift; sourceTree = "<group>"; };
 		820836802C34030C00F6D0CF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,8 @@
 		82204EA92C95B1FB00546A5C /* SocialAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAccount.swift; sourceTree = "<group>"; };
 		82204EAB2C96508200546A5C /* MemberServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberServiceImpl.swift; sourceTree = "<group>"; };
 		82204EAD2C9693A800546A5C /* SignInAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAPI.swift; sourceTree = "<group>"; };
+		82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceInterface.swift; sourceTree = "<group>"; };
+		82204EB12C96A76A00546A5C /* PlatImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatImage.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -565,6 +569,7 @@
 				791FEF892C771CDE006CBDE0 /* UserSessionServiceInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
 				82204EA72C95B00500546A5C /* MemberServiceInterface.swift */,
+				82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -597,10 +602,11 @@
 				DFDF9DD32C6C98FF00D5252B /* Playlist.swift */,
 				DFDF9DD12C6C989200D5252B /* Track.swift */,
 				DFDF9DCB2C6C959F00D5252B /* Music.swift */,
+				82204EB12C96A76A00546A5C /* PlatImage.swift */,
 				DFDF9DCD2C6C95FD00D5252B /* Location.swift */,
 				82204E5C2C9071BC00546A5C /* RectLocation.swift */,
 				82A36EDA2C6DE8E000F6E6E2 /* Place.swift */,
-				820836782C34002D00F6D0CF /* Platter.swift */,
+				820836782C34002D00F6D0CF /* User.swift */,
 				82204EA92C95B1FB00546A5C /* SocialAccount.swift */,
 				820836982C34064400F6D0CF /* StreamAccount.swift */,
 				DFDFAE332C43945600DE1EEB /* AuthType.swift */,
@@ -724,7 +730,7 @@
 				82204E5A2C90695400546A5C /* TrackRepository.swift */,
 				82204EAB2C96508200546A5C /* MemberServiceImpl.swift */,
 				79B0F7082C8DBAB5009140AF /* MemberRepository.swift */,
-				7946B9872C918062009B915D /* ImageService.swift */,
+				7946B9872C918062009B915D /* ImageRepository.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -830,7 +836,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82204E5D2C9071BC00546A5C /* RectLocation.swift in Sources */,
-				82C9A5342C777F1000C57916 /* Platter.swift in Sources */,
+				82C9A5342C777F1000C57916 /* User.swift in Sources */,
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */,
@@ -862,7 +868,7 @@
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */,
-				7946B9882C918066009B915D /* ImageService.swift in Sources */,
+				7946B9882C918066009B915D /* ImageRepository.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
@@ -875,6 +881,7 @@
 				82C9A53C2C87228500C57916 /* API.swift in Sources */,
 				82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */,
 				82204EAA2C95B1FB00546A5C /* SocialAccount.swift in Sources */,
+				82204EB22C96A76A00546A5C /* PlatImage.swift in Sources */,
 				DFE27A222C71FEE0002BAD11 /* FetchTrackDetailAPI.swift in Sources */,
 				82721EEC2C8C3D1E00CA2C9A /* HTTPMethod.swift in Sources */,
 				82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */,
@@ -932,6 +939,7 @@
 				820836912C34047C00F6D0CF /* StreamAccountUseCase.swift in Sources */,
 				DFDFAE342C43945600DE1EEB /* AuthType.swift in Sources */,
 				DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */,
+				82204EB02C96A71500546A5C /* ImageServiceInterface.swift in Sources */,
 				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,

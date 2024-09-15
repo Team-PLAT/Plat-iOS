@@ -186,6 +186,64 @@ final class NetworkClient: HTTPMethod {
         }
     }
     
+    /// POST: Multipart
+    func postImage<T: Decodable>(url: URL, imageData: Data) async -> Result<T, any Error> {
+        do {
+            let uniqueString = UUID().uuidString
+            let request = urlToImageRequest(url: url, uniqueString: uniqueString)
+            let imageData = preprocessingImageData(imageData: imageData, uniqueString: uniqueString)
+            
+            let (data, response) = try await URLSession.shared.upload(for: request, from: imageData)
+            
+            guard let statusCode = statusCode(to: response) else {
+                return .failure(NetworkError.httpResponseError)
+            }
+            
+            guard successStatusCodeRange.contains(statusCode) else {
+                let error = NetworkError.serverError(statusCode: statusCode)
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(error)
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                NetworkLog.success(
+                    url: url,
+                    statusCode: statusCode,
+                    data: decodedData
+                )
+                return .success(decodedData)
+            } catch {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: statusCode,
+                    error: error
+                )
+                return .failure(NetworkError.decodingError)
+            }
+        } catch {
+            if let urlError = error as? URLError {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
+                return .failure(NetworkError.urlError(urlError))
+            } else {
+                NetworkLog.failure(
+                    url: url,
+                    statusCode: 999,
+                    error: error
+                )
+                return .failure(NetworkError.error(error))
+            }
+        }
+    }
+    
     /// PATCH
     func patch<T: Decodable, U: Encodable>(url: URL, body: U) async -> Result<T, Error> {
         do {
@@ -320,6 +378,11 @@ extension NetworkClient {
         }
     }
     
+    /// StatusCode를 반환합니다.
+    private func statusCode(to response: URLResponse) -> Int? {
+        (response as? HTTPURLResponse)?.statusCode
+    }
+    
     /// URL을 URLRequest 타입으로 반환합니다.
     private func urlToRequest(_ httpMethodList: HTTPMethodList, url: URL) -> URLRequest {
         var request = URLRequest(url: url)
@@ -338,8 +401,31 @@ extension NetworkClient {
         return request
     }
     
-    /// StatusCode를 반환합니다.
-    private func statusCode(to response: URLResponse) -> Int? {
-        (response as? HTTPURLResponse)?.statusCode
+    /// URL을 이미지 전송이 가능한 Multipart URLRequest 타입으로 반환합니다.
+    private func urlToImageRequest(url: URL, uniqueString: String) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethodList.post.rawValue
+        
+        let contentType = "multipart/form-data; boundary=\(uniqueString)"
+        request.setValue(contentType, forHTTPHeaderField: HTTPHeader.mimeTypeHeader)
+        
+        request.setValue(
+            HTTPHeader.authTokenValue("TOKEN"), // TODO: 액세스 토큰 삽입
+            forHTTPHeaderField: HTTPHeader.authTokenHeader
+        )
+        
+        return request
+    }
+    
+    /// 이미지 데이터를 Multipart 통신이 가능한 형태로 가공 후 반환합니다.
+    private func preprocessingImageData(imageData: Data, uniqueString: String) -> Data {
+        var imageData = imageData
+        imageData.append("--\(uniqueString)\r\n".data(using: .utf8)!)
+        imageData.append("Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        imageData.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+        imageData.append(imageData)
+        imageData.append("\r\n".data(using: .utf8)!)
+        imageData.append("--\(uniqueString)--\r\n".data(using: .utf8)!)
+        return imageData
     }
 }

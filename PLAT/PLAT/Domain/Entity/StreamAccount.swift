@@ -11,6 +11,15 @@ enum StreamAccount: String {
     case appleMusic = "APPLE_MUSIC"
     case spotify = "SPOTIFY"
     
+    var title: String {
+        switch self {
+        case .appleMusic:
+            return "Apple Music"
+        case .spotify:
+            return "Spotify"
+        }
+    }
+    
     var icon: ImageResource {
         switch self {
         case .appleMusic: return .icnAppleMusic
