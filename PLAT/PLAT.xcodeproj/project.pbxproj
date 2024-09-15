@@ -40,6 +40,8 @@
 		7932780D2C2D014600F433F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780C2C2D014600F433F5 /* Assets.xcassets */; };
 		793278102C2D014600F433F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7932780F2C2D014600F433F5 /* Preview Assets.xcassets */; };
 		793509C22C393BA40098B073 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793509C12C393BA40098B073 /* ListSection.swift */; };
+		7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9852C917FEE009B915D /* UploadImageAPI.swift */; };
+		7946B9882C918066009B915D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9872C918062009B915D /* ImageService.swift */; };
 		7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465992C3A5C2400F6DC2D /* Helper+Preview.swift */; };
 		7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */; };
 		7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7964659D2C3A649600F6DC2D /* PlatTextField.swift */; };
@@ -56,6 +58,13 @@
 		79B0F6F62C8C4269009140AF /* UploadTrackAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F52C8C4269009140AF /* UploadTrackAPI.swift */; };
 		79B0F6F82C8C4296009140AF /* ReportTrackAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F72C8C4296009140AF /* ReportTrackAPI.swift */; };
 		79B0F6FA2C8C42AD009140AF /* LikeTrackAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F92C8C42AD009140AF /* LikeTrackAPI.swift */; };
+		79B0F7092C8DBAB5009140AF /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7082C8DBAB5009140AF /* MemberService.swift */; };
+		79B0F70D2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F70C2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift */; };
+		79B0F70F2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F70E2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift */; };
+		79B0F7112C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7102C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift */; };
+		79B0F7132C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */; };
+		79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */; };
+		79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7162C8DC44A009140AF /* ResignAPI.swift */; };
 		79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* SettingPath.swift */; };
 		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
 		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
@@ -162,6 +171,8 @@
 		7932780C2C2D014600F433F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7932780F2C2D014600F433F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		793509C12C393BA40098B073 /* ListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
+		7946B9852C917FEE009B915D /* UploadImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageAPI.swift; sourceTree = "<group>"; };
+		7946B9872C918062009B915D /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		796465992C3A5C2400F6DC2D /* Helper+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Preview.swift"; sourceTree = "<group>"; };
 		7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubInfoService.swift; sourceTree = "<group>"; };
 		7964659D2C3A649600F6DC2D /* PlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatTextField.swift; sourceTree = "<group>"; };
@@ -178,6 +189,13 @@
 		79B0F6F52C8C4269009140AF /* UploadTrackAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTrackAPI.swift; sourceTree = "<group>"; };
 		79B0F6F72C8C4296009140AF /* ReportTrackAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTrackAPI.swift; sourceTree = "<group>"; };
 		79B0F6F92C8C42AD009140AF /* LikeTrackAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTrackAPI.swift; sourceTree = "<group>"; };
+		79B0F7082C8DBAB5009140AF /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
+		79B0F70C2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProfileStreamTypeAPI.swift; sourceTree = "<group>"; };
+		79B0F70E2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileStreamTypeAPI.swift; sourceTree = "<group>"; };
+		79B0F7102C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNicknameAPI.swift; sourceTree = "<group>"; };
+		79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileAvatarAPI.swift; sourceTree = "<group>"; };
+		79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProfileAPI.swift; sourceTree = "<group>"; };
+		79B0F7162C8DC44A009140AF /* ResignAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignAPI.swift; sourceTree = "<group>"; };
 		79B48AF62C413B5600A73CA0 /* SettingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPath.swift; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
 		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
@@ -397,6 +415,14 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		7946B9842C917FDC009B915D /* ImageAPI */ = {
+			isa = PBXGroup;
+			children = (
+				7946B9852C917FEE009B915D /* UploadImageAPI.swift */,
+			);
+			path = ImageAPI;
+			sourceTree = "<group>";
+		};
 		79A09D4C2C391B97006F14F4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +442,19 @@
 				79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */,
 			);
 			path = TrackAPI;
+			sourceTree = "<group>";
+		};
+		79B0F7072C8DBA9E009140AF /* MemberAPI */ = {
+			isa = PBXGroup;
+			children = (
+				79B0F70C2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift */,
+				79B0F70E2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift */,
+				79B0F7102C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift */,
+				79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */,
+				79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */,
+				79B0F7162C8DC44A009140AF /* ResignAPI.swift */,
+			);
+			path = MemberAPI;
 			sourceTree = "<group>";
 		};
 		79B48AF52C413B2B00A73CA0 /* Path */ = {
@@ -640,7 +679,9 @@
 		DF616E5A2C741A7F00CCDC9D /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				79B0F7072C8DBA9E009140AF /* MemberAPI */,
 				79B0F6EF2C8C3F22009140AF /* TrackAPI */,
+				7946B9842C917FDC009B915D /* ImageAPI */,
 				DFE27A152C71E37E002BAD11 /* BaseResponse.swift */,
 				DF616E5B2C74277300CCDC9D /* NetworkError.swift */,
 			);
@@ -666,7 +707,9 @@
 		DFE27A232C720305002BAD11 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				79B0F7082C8DBAB5009140AF /* MemberService.swift */,
 				79B0F6F12C8C406E009140AF /* TrackService.swift */,
+				7946B9872C918062009B915D /* ImageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -785,19 +828,23 @@
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
 				5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */,
+				79B0F7132C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift in Sources */,
 				82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */,
 				DF6DC99F2C75DF4B004A23F7 /* AppleMusicDTO.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				79B0F6FA2C8C42AD009140AF /* LikeTrackAPI.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */,
+				7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
+				79B0F7092C8DBAB5009140AF /* MemberService.swift in Sources */,
 				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				791FEF8E2C771FD6006CBDE0 /* StubUserSessionService.swift in Sources */,
+				7946B9882C918066009B915D /* ImageService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
@@ -825,7 +872,10 @@
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */,
+				79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkManager.swift in Sources */,
+				79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */,
+				79B0F7112C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift in Sources */,
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
 				5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */,
@@ -869,8 +919,10 @@
 				791FEF8C2C771E7B006CBDE0 /* StubUserProfileService.swift in Sources */,
 				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
 				826933492C7207310004E0B5 /* Helper+Log.swift in Sources */,
+				79B0F70D2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift in Sources */,
 				DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */,
 				79B0F6F62C8C4269009140AF /* UploadTrackAPI.swift in Sources */,
+				79B0F70F2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift in Sources */,
 				79B0F6F22C8C406E009140AF /* TrackService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

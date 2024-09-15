@@ -8,7 +8,7 @@
 import Foundation
 
 struct Track: Identifiable {
-    let id = UUID()
+    let id: Int64
     var music: Music
     var location: Location
     var platter: Platter
@@ -19,6 +19,7 @@ struct Track: Identifiable {
     var isReported: Bool
     
     init(
+        id: Int64,
         music: Music,
         location: Location,
         platter: Platter,
@@ -28,6 +29,7 @@ struct Track: Identifiable {
         isLike: Bool = false,
         isReported: Bool = false
     ) {
+        self.id = id
         self.music = music
         self.location = location
         self.platter = platter
