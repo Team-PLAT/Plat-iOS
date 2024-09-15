@@ -29,7 +29,8 @@ enum PreviewHelper {
     )
     
     static let mockTrackDetailUseCase = TrackUseCase(
-        trackService: StubTrackService()
+        trackService: StubTrackService(),
+        imageService: StubImageService()
     )
     
     static let mockTrackMapUseCase = TrackMapUseCase(

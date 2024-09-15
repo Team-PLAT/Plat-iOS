@@ -16,11 +16,13 @@ final class TrackUseCase {
     private(set) var playlist: [Playlist]
     
     private var trackService: TrackServiceInterface
+    private var imageService: ImageServiceInterface
     
     private(set) var state: State
     
     init(
-        trackService: TrackServiceInterface
+        trackService: TrackServiceInterface,
+        imageService: ImageServiceInterface
     ) {
         // TODO: 교체 예정
         self.state = State(
@@ -36,6 +38,7 @@ final class TrackUseCase {
         self.trackId = 0
         self.playlist = []
         self.trackService = trackService
+        self.imageService = imageService
     }
 }
 

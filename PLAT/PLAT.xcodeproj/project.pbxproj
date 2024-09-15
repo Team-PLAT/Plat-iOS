@@ -64,7 +64,7 @@
 		79B0F7132C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */; };
 		79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */; };
 		79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7162C8DC44A009140AF /* ResignAPI.swift */; };
-		79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* SettingPath.swift */; };
+		79B48AF72C413B5600A73CA0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B48AF62C413B5600A73CA0 /* Path.swift */; };
 		79FC51442C6DD63200489507 /* TrackMapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* TrackMapUseCase.swift */; };
 		79FC51462C6DD78B00489507 /* TrackMapServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */; };
 		79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51492C6DEA6600489507 /* StubTrackMapService.swift */; };
@@ -94,6 +94,7 @@
 		82204EB02C96A71500546A5C /* ImageServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */; };
 		82204EB22C96A76A00546A5C /* PlatImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB12C96A76A00546A5C /* PlatImage.swift */; };
 		82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */; };
+		82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB92C96CA4100546A5C /* StubImageService.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -203,7 +204,7 @@
 		79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileAvatarAPI.swift; sourceTree = "<group>"; };
 		79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProfileAPI.swift; sourceTree = "<group>"; };
 		79B0F7162C8DC44A009140AF /* ResignAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignAPI.swift; sourceTree = "<group>"; };
-		79B48AF62C413B5600A73CA0 /* SettingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPath.swift; sourceTree = "<group>"; };
+		79B48AF62C413B5600A73CA0 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* TrackMapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapUseCase.swift; sourceTree = "<group>"; };
 		79FC51452C6DD78B00489507 /* TrackMapServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapServiceInterface.swift; sourceTree = "<group>"; };
 		79FC51492C6DEA6600489507 /* StubTrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackMapService.swift; sourceTree = "<group>"; };
@@ -234,6 +235,7 @@
 		82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceInterface.swift; sourceTree = "<group>"; };
 		82204EB12C96A76A00546A5C /* PlatImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatImage.swift; sourceTree = "<group>"; };
 		82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceImpl.swift; sourceTree = "<group>"; };
+		82204EB92C96CA4100546A5C /* StubImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubImageService.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -476,7 +478,7 @@
 		79B48AF52C413B2B00A73CA0 /* Path */ = {
 			isa = PBXGroup;
 			children = (
-				79B48AF62C413B5600A73CA0 /* SettingPath.swift */,
+				79B48AF62C413B5600A73CA0 /* Path.swift */,
 			);
 			path = Path;
 			sourceTree = "<group>";
@@ -708,6 +710,7 @@
 				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
+				82204EB92C96CA4100546A5C /* StubImageService.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -737,8 +740,8 @@
 			isa = PBXGroup;
 			children = (
 				82204EB32C96B3E900546A5C /* Base */,
-				79B0F7072C8DBA9E009140AF /* MemberAPI */,
 				79B0F6EF2C8C3F22009140AF /* TrackAPI */,
+				79B0F7072C8DBA9E009140AF /* MemberAPI */,
 				7946B9842C917FDC009B915D /* ImageAPI */,
 			);
 			name = DTO;
@@ -904,6 +907,7 @@
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */,
 				7946B9882C918066009B915D /* ImageRepository.swift in Sources */,
+				82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
@@ -931,7 +935,7 @@
 				5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
-				79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */,
+				79B48AF72C413B5600A73CA0 /* Path.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkClient.swift in Sources */,
 				79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */,
 				79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */,
