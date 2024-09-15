@@ -6,11 +6,8 @@
 //
 
 import Foundation
-import MapKit
+import Combine
 
 protocol TrackMapServiceInterface {
-    func currentLocation() -> Location
-    func fetchTrackList(currentLocation: Location) async -> [Track]
-    func insertPin(location: Location, track: Track)
-    func createPlatPlaylist(currentLocation: Location) async -> Playlist
+    var location: AnyPublisher<Location, Never>? { get }
 }

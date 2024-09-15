@@ -77,6 +77,7 @@
 		8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369A2C34084B00F6D0CF /* InfoUseCase.swift */; };
 		8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */; };
 		82204E5F2C9167D100546A5C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82204E5E2C9167D100546A5C /* Config.xcconfig */; };
+		82204EBC2C96D00800546A5C /* TrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EBB2C96D00800546A5C /* TrackMapService.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -200,6 +201,7 @@
 		8208369A2C34084B00F6D0CF /* InfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoUseCase.swift; sourceTree = "<group>"; };
 		8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoServiceInterface.swift; sourceTree = "<group>"; };
 		82204E5E2C9167D100546A5C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = PLAT/Data/Network/Config.xcconfig; sourceTree = SOURCE_ROOT; };
+		82204EBB2C96D00800546A5C /* TrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapService.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -360,10 +362,10 @@
 				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
 				51F433472C3411ED00FAFD14 /* Info.plist */,
 				820836702C33FFAE00F6D0CF /* App */,
+				820836742C33FFFC00F6D0CF /* Data */,
 				820836732C33FFF500F6D0CF /* Domain */,
-				DFE27A122C71D43F002BAD11 /* Network */,
-				820836712C33FFD000F6D0CF /* Presentaion */,
 				51F433482C34138600FAFD14 /* Helper */,
+				820836712C33FFD000F6D0CF /* Presentaion */,
 				820836722C33FFDA00F6D0CF /* Resource */,
 				7932780E2C2D014600F433F5 /* Preview Content */,
 			);
@@ -476,11 +478,13 @@
 		820836742C33FFFC00F6D0CF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8269334A2C720A510004E0B5 /* DTO */,
+				DFE27A122C71D43F002BAD11 /* Network */,
 				82C9A5392C87223D00C57916 /* Service */,
 				82C9A5332C77798D00C57916 /* Stub */,
-				8269334A2C720A510004E0B5 /* DTO */,
 			);
-			path = Data;
+			name = Data;
+			path = Domain/Constant/Data;
 			sourceTree = "<group>";
 		};
 		8208367A2C34003D00F6D0CF /* UseCase */ = {
@@ -574,7 +578,6 @@
 		82C9A52C2C75D9C100C57916 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				820836742C33FFFC00F6D0CF /* Data */,
 				82C9A52D2C75D9D400C57916 /* Constant.swift */,
 			);
 			path = Constant;
@@ -622,6 +625,7 @@
 				DF6DC99A2C75CB9D004A23F7 /* AppleMusicController.swift */,
 				79842E8B2C7225FD0062F825 /* LocationManager.swift */,
 				DF6DC9962C749B84004A23F7 /* FeedTrackService.swift */,
+				82204EBB2C96D00800546A5C /* TrackMapService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -791,6 +795,7 @@
 				8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
+				82204EBC2C96D00800546A5C /* TrackMapService.swift in Sources */,
 				826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
 				5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */,
@@ -1011,7 +1016,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -1031,7 +1036,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1052,7 +1057,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -1072,7 +1077,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

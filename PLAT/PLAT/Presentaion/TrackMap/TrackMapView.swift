@@ -11,18 +11,17 @@ import MapKit
 // MARK: - TrackMapView
 
 struct TrackMapView: View {
-    @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
-    
+    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: TrackMapService())
+    @State private var locationManager = LocationManager()
     @State private var selectedTrackId: Track.ID?
     @State private var showTrackDetail = false
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
     
     var body: some View {
-        @Bindable var trackMapUseCase = trackMapUseCase
         ZStack(alignment: .topLeading) {
             Map(
-                position: $trackMapUseCase.locationManager.position,
+                position: $locationManager.position,
                 interactionModes: []
             ) {
                 UserAnnotation()
@@ -37,7 +36,7 @@ struct TrackMapView: View {
                     }
                 }
                 
-                if let location = trackMapUseCase.locationManager.location {
+                if let location = locationManager.location {
                     MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
                         .foregroundStyle(.platDarkpurple.opacity(0.5))
                 }
@@ -50,32 +49,15 @@ struct TrackMapView: View {
                 )
             }
         }
+        .environment(trackMapUseCase)
         .fullScreenCover(isPresented: $showTrackDetail) {
             if let trackId = selectedTrackId {
                 TrackDetailView(trackId: trackId)
                     .presentationBackground(.thinMaterial.opacity(0.5))
             }
         }
-        .onChange(
-            of: trackMapUseCase.locationManager.location
-            ?? CLLocation(latitude: 0, longitude: 0
-                         )
-        ) { _, location in
-            trackMapUseCase.fetchTrackList(
-                currentLocation: Location(
-                    latitude: location.coordinate.latitude,
-                    longitude: location.coordinate.longitude
-                )
-            )
-            
-            Task {
-                playlist = await trackMapUseCase.createPlatPlaylist(
-                    currentLocation: Location(
-                        latitude: location.coordinate.latitude,
-                        longitude: location.coordinate.longitude
-                    )
-                )
-            }
+        .onReceive(locationManager.locationPublisher) { location in
+            print("위치 바뀜!: \(location)")
         }
     }
 }
@@ -165,7 +147,6 @@ private struct MapButtonsView: View {
     @State private var detent: PresentationDetent = .fraction(0.25)
     @Binding var hasNotifications: Bool
     @State private var isPlattingSheet = false
-    // TODO: 목 데이터 제거하고 실제 데이터 연결
     @Binding var playlist: Playlist?
     
     var body: some View {
