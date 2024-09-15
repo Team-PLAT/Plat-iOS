@@ -29,8 +29,11 @@ extension AppleMusicController {
     func setup() async -> Bool {
             let isAuthorized = await requestAuthorization()
             if isAuthorized {
-                print("권한 허용")
-                return true
+                if await checkMusicSubscription() {
+                    return true
+                } else {
+                    return false
+                }
             } else {
                 print("권한 없엉")
                 return false
@@ -105,7 +108,22 @@ extension AppleMusicController {
         return status == .authorized
     }
     
-    /// ISRC값을 이용해 songId를 반환합습니다
+    /// 구독 여부를 Bool값으로 반환받습니다.
+    private func checkMusicSubscription() async -> Bool {
+        do {
+            let currentSubscription = try await MusicSubscription.current
+            if currentSubscription.canPlayCatalogContent {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            print("구독 상태를 가져오는 중 오류 발생: \(error)")
+            return false
+        }
+    }
+
+    /// ISRC값을 이용해 songId를 반환받습니다.
     private func requestSongId(for isrc: String) async {
         
         let urlString = "https://api.music.apple.com/v1/catalog/kr/songs?filter[isrc]=\(isrc)"

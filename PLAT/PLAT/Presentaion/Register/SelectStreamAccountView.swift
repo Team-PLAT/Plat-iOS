@@ -45,11 +45,8 @@ struct SelectStreamAccountView: View {
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
             .onChange(of: isShowingOffer) {
                 if !isShowingOffer {
-                    print("들")
                     if musicControlUseCase.state.status {
-                        print("어")
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            print("옴")
                             authUseCase.updateIsLoginComplete(true)
                         }
                     }
