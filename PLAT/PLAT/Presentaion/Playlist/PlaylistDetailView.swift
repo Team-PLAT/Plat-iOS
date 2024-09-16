@@ -34,6 +34,38 @@ struct PlaylistDetailView: View {
                 .foregroundStyle(.gray7)
                 .font(.Body.body1)
             
+            HStack(spacing: 26) {
+                Button {
+                    // TODO: 재생 기능 구현
+                } label: {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.platBlack)
+                        .overlay {
+                            HStack {
+                                Image(systemName: "play.fill")
+                                Text("재생")
+                            }
+                        }
+                }
+                
+                Button {
+                    // TODO: 임의재생 기능 구현
+                } label: {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.platBlack)
+                        .overlay {
+                            HStack {
+                                Image(systemName: "play.fill")
+                                Text("임의재생")
+                            }
+                        }
+                }
+            }
+            .frame(height: 44)
+            .foregroundStyle(.platPurple)
+            .font(.Body.body2)
+            .padding(EdgeInsets(top: 10, leading: 18, bottom: 40, trailing: 18))
+            
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
@@ -60,7 +92,7 @@ struct PlaylistDetailView: View {
                 }
                 .frame(width: 24, height: 24)
                 .background {
-                    Circle().fill(Color.gray9)
+                    Circle().fill(.gray9)
                 }
             }
             
@@ -77,7 +109,7 @@ struct PlaylistDetailView: View {
                 }
                 .frame(width: 24, height: 24)
                 .background {
-                    Circle().fill(Color.gray9)
+                    Circle().fill(.gray9)
                 }
             }
         }
