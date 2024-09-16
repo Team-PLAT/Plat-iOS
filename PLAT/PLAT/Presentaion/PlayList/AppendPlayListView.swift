@@ -17,59 +17,14 @@ struct AppendPlayListView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Button {
-                    isPhotoAlbumSheet = true
-                } label: {
-                    if let image = playListImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
-                            .aspectRatio(1, contentMode: .fit)
-                    } else {
-                        RoundedRectangle(cornerRadius: 24)
-                            .foregroundStyle(.gray9)
-                            .aspectRatio(1, contentMode: .fit)
-                            .overlay {
-                                Image(systemName: "camera.circle.fill")
-                                    .resizable()
-                                    .foregroundStyle(.platPurple)
-                                    .background {
-                                        Circle()
-                                            .foregroundStyle(.white)
-                                            .padding(1)
-                                    }
-                                    .padding(80)
-                            }
+                AppendPlayListButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playListImage: $playListImage)
+                    .sheet(isPresented: $isPhotoAlbumSheet) {
+                        PhotoPicker(selectedImage: $playListImage)
                     }
-                }
-                .padding(EdgeInsets(top: 35, leading: 86, bottom: 16, trailing: 86))
-                .sheet(isPresented: $isPhotoAlbumSheet) {
-                    PhotoPicker(selectedImage: $playListImage)
-                }
                 
-                TextField("", text: $playListTitle, prompt: Text("플레이리스트 제목")
-                    .foregroundStyle(.gray9)
-                    .font(.Head.head2))
-                .font(.Head.head2)
-                .tint(.platPurple)
-                .multilineTextAlignment(.center)
+                AppendPlayListTitle(playListTitle: $playListTitle)
                 
-                Divider()
-                    .frame(height: 1)
-                    .background {
-                        Color.gray9
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 18, bottom: 8, trailing: 18))
-                
-                HStack {
-                    Text("생성일자")
-                    Spacer()
-                    // TODO: 생성일자 서버 기준으로 표시하기
-                    Text("2024.08.17")
-                }
-                .foregroundStyle(.gray7)
-                .font(.Body.body1)
-                .padding(.horizontal, 18)
+                AppendPlayListDate()
                 
                 Spacer()
             }
@@ -104,6 +59,80 @@ struct AppendPlayListView: View {
     }
 }
 
+// MARK: - AppendPlayListButton
+
+private struct AppendPlayListButton: View {
+    @Binding private(set) var isPhotoAlbumSheet: Bool
+    @Binding private(set) var playListImage: UIImage?
+    
+    var body: some View {
+        Button {
+            isPhotoAlbumSheet = true
+        } label: {
+            if let image = playListImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .aspectRatio(1, contentMode: .fit)
+            } else {
+                RoundedRectangle(cornerRadius: 24)
+                    .foregroundStyle(.gray9)
+                    .aspectRatio(1, contentMode: .fit)
+                    .overlay {
+                        Image(systemName: "camera.circle.fill")
+                            .resizable()
+                            .foregroundStyle(.platPurple)
+                            .background {
+                                Circle()
+                                    .foregroundStyle(.white)
+                                    .padding(1)
+                            }
+                            .padding(80)
+                    }
+            }
+        }
+        .padding(EdgeInsets(top: 35, leading: 86, bottom: 16, trailing: 86))
+    }
+}
+
+// MARK: - AppendPlayListTitle
+
+private struct AppendPlayListTitle: View {
+    @Binding private(set) var playListTitle: String
+    
+    var body: some View {
+        TextField("", text: $playListTitle, prompt: Text("플레이리스트 제목")
+            .foregroundStyle(.gray9)
+            .font(.Head.head2))
+        .font(.Head.head2)
+        .tint(.platPurple)
+        .multilineTextAlignment(.center)
+        
+        Divider()
+            .frame(height: 1)
+            .background {
+                Color.gray9
+            }
+            .padding(EdgeInsets(top: 0, leading: 18, bottom: 8, trailing: 18))
+    }
+}
+
+// MARK: - AppendPlayListDate
+
+private struct AppendPlayListDate: View {
+    
+    var body: some View {
+        HStack {
+            Text("생성일자")
+            Spacer()
+            // TODO: 생성일자 서버 기준으로 표시하기
+            Text("2024.08.17")
+        }
+        .foregroundStyle(.gray7)
+        .font(.Body.body1)
+        .padding(.horizontal, 18)
+    }
+}
 #Preview {
     AppendPlayListView()
 }
