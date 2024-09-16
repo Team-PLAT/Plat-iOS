@@ -9,5 +9,5 @@ import Foundation
 
 protocol TrackAppendServiceInterface {
     func searchMusic(term: String) async -> [Music]
-    func postTrack(track: Track)
+    func postTrack(music: Music, context: String, location: Location) async
 }

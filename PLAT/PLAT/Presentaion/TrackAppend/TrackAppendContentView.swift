@@ -22,6 +22,8 @@ struct TrackAppendContentView: View {
     @State private var selectedImage: UIImage?
     @State private var isPhotoAlbumSheet = false
     @State private var state: ContentState = .none
+    @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
+    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
     @Binding var detent: PresentationDetent
     @Binding var music: Music
     @Binding var isTrackAppendViewSheet: Bool
@@ -49,7 +51,10 @@ struct TrackAppendContentView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    // TODO: 게시 기능 추가
+                    Task {
+                        await trackAppendUseCase.postTrack(music: music, context: contentText, location: trackMapUseCase.currentLocation())
+                    }
+                    
                     isTrackAppendViewSheet = false
                 } label: {
                     RoundedRectangle(cornerRadius: 14)

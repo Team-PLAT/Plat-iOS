@@ -47,7 +47,7 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
         }
     }
     
-    func postTrack(track: Track) {
-        print(#function)
+    func postTrack(music: Music, context: String, location: Location) async {
+        let response = await TrackService.uploadTrack(request: UploadTrackRequest(isrc: music.isrc, imageUrl: music.albumImageUrl, content: context, latitude: location.latitude, longitude: location.longitude))
     }
 }
