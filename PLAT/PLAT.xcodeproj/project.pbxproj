@@ -541,13 +541,11 @@
 			isa = PBXGroup;
 			children = (
 				8269334A2C720A510004E0B5 /* DTO */,
-				DFE27A122C71D43F002BAD11 /* Network */,
 				82C9A5392C87223D00C57916 /* Service */,
 				DFE27A122C71D43F002BAD11 /* Network */,
 				82C9A5332C77798D00C57916 /* Stub */,
 			);
-			name = Data;
-			path = Domain/Constant/Data;
+			path = Data;
 			sourceTree = "<group>";
 		};
 		8208367A2C34003D00F6D0CF /* UseCase */ = {
