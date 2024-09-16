@@ -159,7 +159,7 @@ private struct MapAddressView: View {
 private struct MapButtonsView: View {
     @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
     @State private var isTrackAppendViewSheet = false
-    @State private var detent: PresentationDetent = .fraction(0.25)
+    @State private var detent: PresentationDetent = .large
     @Binding var hasNotifications: Bool
     @State private var isPlattingSheet = false
     // TODO: 목 데이터 제거하고 실제 데이터 연결
@@ -205,11 +205,11 @@ private struct MapButtonsView: View {
             }
             .padding(.bottom, 22)
             .sheet(isPresented: $isTrackAppendViewSheet, onDismiss: {
-                detent = .fraction(0.25)
+                detent = .large
             }) {
                 TrackAppendSearchView(isTrackAppendViewSheet: $isTrackAppendViewSheet, detent: $detent)
                     .presentationDragIndicator(.visible)
-                    .tint(.platPurple)
+                    .tint(.white)
                     .presentationDetents([detent])
             }
             

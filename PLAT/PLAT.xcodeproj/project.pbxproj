@@ -11,6 +11,7 @@
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
+		513DCBDF2C95FC66007CA813 /* Helper+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBDE2C95FC66007CA813 /* Helper+View.swift */; };
 		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
 		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
@@ -151,6 +152,7 @@
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		513DCBDE2C95FC66007CA813 /* Helper+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+View.swift"; sourceTree = "<group>"; };
 		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
 		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				826933482C7207310004E0B5 /* Helper+Log.swift */,
 				DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */,
 				82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */,
+				513DCBDE2C95FC66007CA813 /* Helper+View.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -537,12 +540,14 @@
 		820836742C33FFFC00F6D0CF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8269334A2C720A510004E0B5 /* DTO */,
+				DFE27A122C71D43F002BAD11 /* Network */,
 				82C9A5392C87223D00C57916 /* Service */,
 				DFE27A122C71D43F002BAD11 /* Network */,
 				82C9A5332C77798D00C57916 /* Stub */,
-				8269334A2C720A510004E0B5 /* DTO */,
 			);
-			path = Data;
+			name = Data;
+			path = Domain/Constant/Data;
 			sourceTree = "<group>";
 		};
 		8208367A2C34003D00F6D0CF /* UseCase */ = {
@@ -918,6 +923,7 @@
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
 				DFDF9DCE2C6C95FD00D5252B /* Location.swift in Sources */,
 				8208369B2C34084B00F6D0CF /* InfoUseCase.swift in Sources */,
+				513DCBDF2C95FC66007CA813 /* Helper+View.swift in Sources */,
 				7964659E2C3A649600F6DC2D /* PlatTextField.swift in Sources */,
 				82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */,
 				82C9A53C2C87228500C57916 /* API.swift in Sources */,
