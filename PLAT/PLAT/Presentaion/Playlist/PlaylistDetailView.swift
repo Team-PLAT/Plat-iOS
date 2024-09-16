@@ -59,5 +59,5 @@ struct PlaylistDetailView: View {
 }
 
 #Preview {
-    PlaylistDetailView()
+    PlaylistDetailView(selectedPlaylist: .constant(MockDataBuilder.playlist))
 }
