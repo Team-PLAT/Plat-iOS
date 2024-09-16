@@ -24,6 +24,9 @@ struct PLATApp: App {
                 MainView()
             } else {
                 OnboardingView()
+                    .onAppear {
+                        authUseCase.effect(.signIn(socialAccout: .apple))
+                    }
             }
         }
         .environment(pathModel)

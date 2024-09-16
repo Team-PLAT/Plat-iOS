@@ -95,6 +95,7 @@
 		82204EB22C96A76A00546A5C /* PlatImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB12C96A76A00546A5C /* PlatImage.swift */; };
 		82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */; };
 		82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB92C96CA4100546A5C /* StubImageService.swift */; };
+		8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -236,6 +237,7 @@
 		82204EB12C96A76A00546A5C /* PlatImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatImage.swift; sourceTree = "<group>"; };
 		82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceImpl.swift; sourceTree = "<group>"; };
 		82204EB92C96CA4100546A5C /* StubImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubImageService.swift; sourceTree = "<group>"; };
+		8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSecurityManager.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 			isa = PBXGroup;
 			children = (
 				82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */,
+				8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */,
 				DFE27A132C71D5B6002BAD11 /* NetworkClient.swift */,
 				82721EE72C8C229E00CA2C9A /* NetworkLog.swift */,
 				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
@@ -970,6 +973,7 @@
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
 				79FC514A2C6DEA6600489507 /* StubTrackMapService.swift in Sources */,
+				8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */,
 				DF6DC9992C749BA9004A23F7 /* FeedTrackServiceInterface.swift in Sources */,
 				82C9A5312C75DD0D00C57916 /* SystemImage.swift in Sources */,
 				82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */,

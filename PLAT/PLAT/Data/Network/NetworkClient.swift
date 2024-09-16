@@ -397,7 +397,7 @@ extension NetworkClient {
         )
         
         request.setValue(
-            HTTPHeader.authTokenValue("TOKEN"), // TODO: 액세스 토큰 삽입
+            HTTPHeader.authTokenValue(UserSecurityManager.shared.accessToken),
             forHTTPHeaderField: HTTPHeader.authTokenHeader
         )
         
@@ -413,7 +413,7 @@ extension NetworkClient {
         request.setValue(contentType, forHTTPHeaderField: HTTPHeader.mimeTypeHeader)
         
         request.setValue(
-            HTTPHeader.authTokenValue("Token"), // TODO: 액세스 토큰 삽입
+            HTTPHeader.authTokenValue(UserSecurityManager.shared.accessToken),
             forHTTPHeaderField: HTTPHeader.authTokenHeader
         )
         

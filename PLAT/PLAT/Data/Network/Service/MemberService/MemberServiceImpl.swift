@@ -13,17 +13,20 @@ final class MemberServiceImpl: MemberServiceInterface {
         case streamAccountError
     }
     
+    private let userSecurityManager = UserSecurityManager.shared
     private let memberRepository = MemberRepository()
     
     /// 로그인을 요청합니다.
     func signIn(socialAccount: SocialAccount) async -> Result<Void, any Error> {
         let request = SignInRequest(
-            encryptedUserIdentifier: "encryptedUserId123", // TODO: 실제 값 넣기
+            encryptedUserIdentifier: userSecurityManager.encryptedUserIdentifier,
             socialType: socialAccount.rawValue
         )
         let result = await memberRepository.signIn(request: request)
         switch result {
-        case .success:
+        case .success(let signInResponse):
+            userSecurityManager.updateAccessToken(signInResponse.accessToken)
+            userSecurityManager.updateRefreshToken(signInResponse.refreshToken)
             return .success(Void())
         case .failure(let error):
             return .failure(error)

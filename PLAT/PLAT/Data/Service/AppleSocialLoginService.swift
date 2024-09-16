@@ -20,9 +20,11 @@ struct AppleSocialLoginService: SocialLoginServiceInterface {
     func handleLogin(_ authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error> {
         switch authResult {
         case .success(let auth):
-            print("성공", auth)
+            print("✅ APPLE LOGIN 성공")
+            
             switch auth.credential {
-            case _ as ASAuthorizationAppleIDCredential:
+            case let(credential) as ASAuthorizationAppleIDCredential:
+                UserSecurityManager.shared.updateEncryptedUserIdentifier(credential.user)
                 return .success(true)
                 
             default:
