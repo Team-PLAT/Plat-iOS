@@ -12,6 +12,7 @@ struct AppendPlayListView: View {
     
     @State private var isPhotoAlbumSheet = false
     @State private var playListImage: UIImage?
+    @State private var playListTitle: String = ""
     
     var body: some View {
         NavigationStack {
@@ -46,6 +47,19 @@ struct AppendPlayListView: View {
                     PhotoPicker(selectedImage: $playListImage)
                 }
                 
+                TextField("", text: $playListTitle, prompt: Text("플레이리스트 제목")
+                    .foregroundStyle(.gray9)
+                    .font(.Head.head2))
+                .font(.Head.head2)
+                .tint(.platPurple)
+                .multilineTextAlignment(.center)
+                
+                Divider()
+                    .frame(height: 1)
+                    .background {
+                        Color.gray9
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 18, bottom: 8, trailing: 18))
                 Spacer()
             }
             .navigationTitle("새로운 플레이리스트")
