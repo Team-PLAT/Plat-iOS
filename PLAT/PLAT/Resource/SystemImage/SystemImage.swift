@@ -15,4 +15,9 @@ enum SystemImage {
     static let alert = "bell"
     static let letsPlat = "plus.square.on.square"
     static let exclamationmark = "exclamationmark.circle"
+    static let pencil = "pencil"
+    static let trash = "trash"
+    static let play = "play.fill"
+    static let shuffle = "shuffle"
+    static let moreDetail = "ellipsis"
 }
