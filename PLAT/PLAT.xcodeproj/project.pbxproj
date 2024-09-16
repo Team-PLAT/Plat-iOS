@@ -12,7 +12,7 @@
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
 		513DCBDF2C95FC66007CA813 /* Helper+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBDE2C95FC66007CA813 /* Helper+View.swift */; };
-		513DCBEC2C98480D007CA813 /* AppendPlayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBEB2C98480D007CA813 /* AppendPlayListView.swift */; };
+		513DCBEC2C98480D007CA813 /* AppendPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */; };
 		5151BEAB2C71EB73001DA80F /* PlattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlattingView.swift */; };
 		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
 		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
@@ -143,7 +143,7 @@
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		513DCBDE2C95FC66007CA813 /* Helper+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+View.swift"; sourceTree = "<group>"; };
-		513DCBEB2C98480D007CA813 /* AppendPlayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlayListView.swift; sourceTree = "<group>"; };
+		513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
 		5151BEAA2C71EB73001DA80F /* PlattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlattingView.swift; sourceTree = "<group>"; };
 		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
 		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
@@ -292,12 +292,12 @@
 			path = Lotties;
 			sourceTree = "<group>";
 		};
-		513DCBE02C98234D007CA813 /* PlayList */ = {
+		513DCBE02C98234D007CA813 /* Playlist */ = {
 			isa = PBXGroup;
 			children = (
-				513DCBEB2C98480D007CA813 /* AppendPlayListView.swift */,
+				513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */,
 			);
-			path = PlayList;
+			path = Playlist;
 			sourceTree = "<group>";
 		};
 		5151BEA92C71EAB5001DA80F /* Platting */ = {
@@ -490,7 +490,7 @@
 			children = (
 				793509C02C393B4F0098B073 /* Component */,
 				79A09D4C2C391B97006F14F4 /* Main */,
-				513DCBE02C98234D007CA813 /* PlayList */,
+				513DCBE02C98234D007CA813 /* Playlist */,
 				5151BEAC2C72700E001DA80F /* TrackAppend */,
 				5151BEA92C71EAB5001DA80F /* Platting */,
 				790AF0682C6DD13F0005FA9A /* TrackMap */,
@@ -882,7 +882,7 @@
 				79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */,
 				5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */,
 				820836832C3403A700F6D0CF /* SelectStreamAccountView.swift in Sources */,
-				513DCBEC2C98480D007CA813 /* AppendPlayListView.swift in Sources */,
+				513DCBEC2C98480D007CA813 /* AppendPlaylistView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				79B48AF72C413B5600A73CA0 /* SettingPath.swift in Sources */,
 				79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */,

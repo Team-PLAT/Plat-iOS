@@ -1,5 +1,5 @@
 //
-//  AppendPlayListView.swift
+//  AppendPlaylistView.swift
 //  PLAT
 //
 //  Created by 박준우 on 9/16/24.
@@ -7,24 +7,24 @@
 
 import SwiftUI
 
-struct AppendPlayListView: View {
+struct AppendPlaylistView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var isPhotoAlbumSheet = false
-    @State private var playListImage: UIImage?
-    @State private var playListTitle: String = ""
+    @State private var playlistImage: UIImage?
+    @State private var playlistTitle: String = ""
     
     var body: some View {
         NavigationStack {
             VStack {
-                AppendPlayListButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playListImage: $playListImage)
+                AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
                     .sheet(isPresented: $isPhotoAlbumSheet) {
-                        PhotoPicker(selectedImage: $playListImage)
+                        PhotoPicker(selectedImage: $playlistImage)
                     }
                 
-                AppendPlayListTitle(playListTitle: $playListTitle)
+                AppendPlaylistTitle(playlistTitle: $playlistTitle)
                 
-                AppendPlayListDate()
+                AppendPlaylistDate()
                 
                 Spacer()
             }
@@ -59,17 +59,17 @@ struct AppendPlayListView: View {
     }
 }
 
-// MARK: - AppendPlayListButton
+// MARK: - AppendPlaylistButton
 
-private struct AppendPlayListButton: View {
+private struct AppendPlaylistButton: View {
     @Binding private(set) var isPhotoAlbumSheet: Bool
-    @Binding private(set) var playListImage: UIImage?
+    @Binding private(set) var playlistImage: UIImage?
     
     var body: some View {
         Button {
             isPhotoAlbumSheet = true
         } label: {
-            if let image = playListImage {
+            if let image = playlistImage {
                 Image(uiImage: image)
                     .resizable()
                     .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -95,13 +95,13 @@ private struct AppendPlayListButton: View {
     }
 }
 
-// MARK: - AppendPlayListTitle
+// MARK: - AppendPlaylistTitle
 
-private struct AppendPlayListTitle: View {
-    @Binding private(set) var playListTitle: String
+private struct AppendPlaylistTitle: View {
+    @Binding private(set) var playlistTitle: String
     
     var body: some View {
-        TextField("", text: $playListTitle, prompt: Text("플레이리스트 제목")
+        TextField("", text: $playlistTitle, prompt: Text("플레이리스트 제목")
             .foregroundStyle(.gray9)
             .font(.Head.head2))
         .font(.Head.head2)
@@ -117,9 +117,9 @@ private struct AppendPlayListTitle: View {
     }
 }
 
-// MARK: - AppendPlayListDate
+// MARK: - AppendPlaylistDate
 
-private struct AppendPlayListDate: View {
+private struct AppendPlaylistDate: View {
     
     var body: some View {
         HStack {
@@ -134,5 +134,5 @@ private struct AppendPlayListDate: View {
     }
 }
 #Preview {
-    AppendPlayListView()
+    AppendPlaylistView()
 }
