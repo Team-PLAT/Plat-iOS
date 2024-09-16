@@ -380,10 +380,10 @@
 				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
 				51F433472C3411ED00FAFD14 /* Info.plist */,
 				820836702C33FFAE00F6D0CF /* App */,
+				820836742C33FFFC00F6D0CF /* Data */,
 				820836732C33FFF500F6D0CF /* Domain */,
-				DFE27A122C71D43F002BAD11 /* Network */,
-				820836712C33FFD000F6D0CF /* Presentaion */,
 				51F433482C34138600FAFD14 /* Helper */,
+				820836712C33FFD000F6D0CF /* Presentaion */,
 				820836722C33FFDA00F6D0CF /* Resource */,
 				7932780E2C2D014600F433F5 /* Preview Content */,
 			);
@@ -517,11 +517,13 @@
 		820836742C33FFFC00F6D0CF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8269334A2C720A510004E0B5 /* DTO */,
+				DFE27A122C71D43F002BAD11 /* Network */,
 				82C9A5392C87223D00C57916 /* Service */,
 				82C9A5332C77798D00C57916 /* Stub */,
-				8269334A2C720A510004E0B5 /* DTO */,
 			);
-			path = Data;
+			name = Data;
+			path = Domain/Constant/Data;
 			sourceTree = "<group>";
 		};
 		8208367A2C34003D00F6D0CF /* UseCase */ = {
@@ -615,7 +617,6 @@
 		82C9A52C2C75D9C100C57916 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				820836742C33FFFC00F6D0CF /* Data */,
 				82C9A52D2C75D9D400C57916 /* Constant.swift */,
 			);
 			path = Constant;
