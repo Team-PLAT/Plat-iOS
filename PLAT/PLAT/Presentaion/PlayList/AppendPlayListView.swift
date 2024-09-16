@@ -60,6 +60,17 @@ struct AppendPlayListView: View {
                         Color.gray9
                     }
                     .padding(EdgeInsets(top: 0, leading: 18, bottom: 8, trailing: 18))
+                
+                HStack {
+                    Text("생성일자")
+                    Spacer()
+                    // TODO: 생성일자 서버 기준으로 표시하기
+                    Text("2024.08.17")
+                }
+                .foregroundStyle(.gray7)
+                .font(.Body.body1)
+                .padding(.horizontal, 18)
+                
                 Spacer()
             }
             .navigationTitle("새로운 플레이리스트")
