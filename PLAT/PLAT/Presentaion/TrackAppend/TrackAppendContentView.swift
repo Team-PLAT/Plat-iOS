@@ -17,10 +17,10 @@ enum ContentState {
 // MARK: - TrackAppendContentView
 
 struct TrackAppendContentView: View {
-    @State var isAddWriting = false
-    @State var contentText = ""
-    @State var selectedImage: UIImage?
-    @State var isPhotoAlbumSheet = false
+    @State private var isAddWriting = false
+    @State private var contentText = ""
+    @State private var selectedImage: UIImage?
+    @State private var isPhotoAlbumSheet = false
     @State private var state: ContentState = .none
     @Binding var detent: PresentationDetent
     @Binding var music: Music
@@ -31,7 +31,7 @@ struct TrackAppendContentView: View {
             VStack {
                 TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
                 
-                TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: contentText, state: $state)
+                TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: $contentText, state: $state)
             }
         }
         .onAppear {
@@ -69,7 +69,7 @@ struct TrackAppendContentView: View {
 // MARK: - TrackAppendContentMainView
 
 struct TrackAppendContentMainView: View {
-    @State var isPhotoAlbumSheet = false
+    @State private var isPhotoAlbumSheet = false
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
     @Binding var music: Music
@@ -174,7 +174,7 @@ struct TrackAppendContentMainView: View {
 struct TrackAppendContentAddView: View {
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
-    @State var contentText = ""
+    @Binding var contentText: String
     @Binding var state: ContentState
     @FocusState private var isTextEditorFocused: Bool
     
