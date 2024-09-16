@@ -40,6 +40,7 @@ struct AppendPlayListView: View {
                     }
                 }
         }
+        .presentationDragIndicator(.visible)
     }
 }
 
