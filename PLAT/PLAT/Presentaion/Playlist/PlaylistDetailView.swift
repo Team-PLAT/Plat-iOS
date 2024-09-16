@@ -25,6 +25,16 @@ struct PlaylistDetailView: View {
             }
             .aspectRatio(1, contentMode: .fit)
             .padding(EdgeInsets(top: 8, leading: 86, bottom: 16, trailing: 86))
+            
+            Text(selectedPlaylist.title)
+                .font(.Head.head2)
+                .padding(.bottom, 2)
+            
+            Text(selectedPlaylist.createdDate.yearMonthDayFormat)
+                .foregroundStyle(.gray7)
+                .font(.Body.body1)
+            
+            Spacer()
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
