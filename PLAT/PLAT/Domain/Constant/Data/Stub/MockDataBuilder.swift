@@ -13,7 +13,7 @@ struct MockDataBuilder {
     static var playlist: Playlist {
         return Playlist(
             title: "지곡동에서의 PLAT",
-            imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
+            imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2f/SSG_Landers_insignia.png",
             trackList: trackList
         )
     }

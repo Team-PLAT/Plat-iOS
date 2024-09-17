@@ -22,4 +22,8 @@ enum SystemImage {
     static let moreDetail = "ellipsis"
     static let searchFeed = "quote.bubble"
     static let delete = "minus.circle"
+    static let camera = "camera.fill"
+    static let trackPlus = "plus"
+    static let trackDetail = "line.3.horizontal"
+    static let minus = "minus"
 }

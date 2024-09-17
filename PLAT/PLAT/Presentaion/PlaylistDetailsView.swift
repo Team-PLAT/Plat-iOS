@@ -17,10 +17,13 @@ struct PlaylistDetailsView: View {
         VStack(spacing: 0) {
             PlayListEditButton()
                 .padding(.leading, 300)
+            
             PlayListInfo(playlist: playlist)
                 .padding(.bottom, 10)
+            
             PlayListPlayButton()
                 .padding(.bottom, 10)
+            
             PlayListDetailView(playlist: playlist)
             
             Rectangle()
@@ -42,7 +45,7 @@ private struct PlayListEditButton: View {
     var body: some View {
         HStack(spacing: 12) {
             Button {
-                // TODO: 수정
+                // TODO: 뷰 이동
             } label: {
                 Circle()
                     .frame(width: 24, height: 24)
@@ -195,7 +198,7 @@ private struct PlayListRowView: View {
     
     let track: Track
     
-    // TODO: 음악 재생
+    // TODO: 음악 재생 및 디테일 뷰로 이동
     
     var body: some View {
         VStack(spacing: 0) {
@@ -219,7 +222,7 @@ private struct PlayListRowView: View {
                     }
                     
                     Button {
-                        // TODO: 트랙 피드 조회
+                        // TODO: 음악 재생 및 디테일 뷰로 이동
                     } label: {
                         Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)
                     }
