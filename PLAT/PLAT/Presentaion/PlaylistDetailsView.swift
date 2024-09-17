@@ -8,20 +8,32 @@
 import SwiftUI
 
 struct PlaylistDetailsView: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State var playlist: Playlist = MockDataBuilder.playlist
+    
     var body: some View {
         VStack(spacing: 0) {
             PlayListEditButton()
-            PlayListInfo()
+                .padding(.leading, 300)
+            PlayListInfo(playlist: playlist)
                 .padding(.bottom, 10)
             PlayListPlayButton()
                 .padding(.bottom, 10)
-            PlayListDetailView()
-            PlayListRowView()
-            PlayListRowView()
-            PlayListRowView()
-            PlayListRowView()
-            PlayListRowView()
-            PlayListRowView()
+            PlayListDetailView(playlist: playlist)
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.gray9)
+            
+            ScrollView {
+                VStack(spacing: 0) {
+                    ForEach(playlist.trackList) { track in
+                        PlayListRowView(track: track)
+                    }
+                }
+            }
         }
     }
 }
@@ -62,9 +74,10 @@ private struct PlayListEditButton: View {
 
 private struct PlayListInfo: View {
     
+    let playlist: Playlist
+    
     private var playlistImageUrl: URL? {
-        //        URL(string: )
-        URL(string: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1")
+        URL(string: playlist.imageUrl)
     }
     
     var body: some View {
@@ -84,13 +97,13 @@ private struct PlayListInfo: View {
             }
             .padding(.bottom, 16)
             
-            Text("지곡동에서의 PLAT")
+            Text(playlist.title)
                 .font(.Head.head2)
                 .foregroundStyle(.white)
                 .frame(width: 213, height: 44, alignment: .center)
                 .padding(.bottom, -12)
             
-            Text("2024.07.14")
+            Text(playlist.createdDate.yearMonthDayFormat)
                 .font(.Body.body1)
                 .foregroundStyle(.gray7)
                 .frame(width: 160, height: 44, alignment: .center)
@@ -147,11 +160,20 @@ private struct PlayListPlayButton: View {
 }
 
 private struct PlayListDetailView: View {
+    
+    let playlist: Playlist
+    
+    var totalDurationInMinutes: Int {
+        let totalDurationInSeconds = playlist.trackList.reduce(0) { $0 + $1.music.duration / 1000 }
+        return Int(totalDurationInSeconds) / 60
+    }
+    
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             HStack(spacing: 6) {
-                // TODO: 곡 + 분 처리
-                Text("13곡")
+                Spacer()
+                
+                Text("\(playlist.trackList.count)곡")
                     .font(.Body.body5)
                     .foregroundStyle(.white)
                 
@@ -159,50 +181,71 @@ private struct PlayListDetailView: View {
                     .frame(width: 2, height: 2)
                     .foregroundColor(.gray9)
                 
-                Text("42분")
+                Text("\(totalDurationInMinutes)분")
                     .font(.Body.body5)
                     .foregroundStyle(.white)
             }
             .padding(.trailing, 18)
             .padding(.bottom, 9)
-            
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.gray9)
         }
     }
 }
 
 private struct PlayListRowView: View {
+    
+    let track: Track
+    
+    // TODO: 음악 재생
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                AlbumImage()
+                AlbumImage(track: track)
                     .padding(.trailing, 10)
+                    .padding(.leading, 18)
                 
-                TrackInfo()
+                TrackInfo(track: track)
                     .padding(.trailing, 40)
                 
-                Image(systemName: SystemImage.moreDetail)
-                    .foregroundStyle(.white)
-                    .rotationEffect(Angle(degrees: -90))
+                Spacer()
+                
+                Menu {
+                    Button {
+                        // TODO: 플리에서 제거 및 색 바꾸기 이슈
+                    } label: {
+                        Label("플레이리스트에서 제거", systemImage: SystemImage.delete)
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.red, .red)
+                    }
+                    
+                    Button {
+                        // TODO: 트랙 피드 조회
+                    } label: {
+                        Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)
+                    }
+                    
+                } label: {
+                    Image(systemName: SystemImage.moreDetail)
+                        .rotationEffect(Angle(degrees: -90))
+                }
+                .padding(.trailing, 18)
             }
-            .padding(.bottom, 10)
-            .padding(.top, 8)
-            
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.gray9)
-                .padding(.leading, 46)
         }
+        .padding(.vertical, 10)
+        
+        Rectangle()
+            .frame(height: 1)
+            .foregroundColor(.gray9)
+            .padding(.leading, 46)
     }
 }
 
 private struct AlbumImage: View {
     
+    let track: Track
+    
     private var albumImageUrl: URL? {
-        //        URL(string: )
-        URL(string: "https://stickershop.line-scdn.net/stickershop/v1/product/26725647/LINEStorePC/main.png?v=1")
+        URL(string: track.music.albumImageUrl)
     }
     
     var body: some View {
@@ -223,14 +266,17 @@ private struct AlbumImage: View {
 }
 
 private struct TrackInfo: View {
+    
+    let track: Track
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("너답기기안 (너의 답장을 기다리다가... ")
+            Text(track.music.title)
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text("미노이")
+                Text(track.music.artist)
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 
@@ -238,16 +284,22 @@ private struct TrackInfo: View {
                     .frame(width: 2, height: 2)
                     .foregroundColor(.gray7)
                 
-                // TODO: 분기처리 및 유저 이름 + 의 트랙
-                Text("LoremLorem의 트랙")
-                    .font(.Body.body5)
-                    .foregroundStyle(.gray7)
+                if track.platter is User {
+                    Text("직접 추가됨")
+                        .font(.Body.body5)
+                        .foregroundStyle(.gray7)
+                } else {
+                    Text("\(track.platter.nickname)의 트랙")
+                        .font(.Body.body5)
+                        .foregroundStyle(.gray7)
+                }
+                
             }
         }
-        .frame(width: 238)
     }
 }
 
 #Preview {
     PlaylistDetailsView()
+        .environment(PreviewHelper.mockMusicControlUseCase)
 }

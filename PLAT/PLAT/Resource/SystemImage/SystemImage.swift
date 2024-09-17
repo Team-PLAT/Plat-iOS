@@ -20,4 +20,6 @@ enum SystemImage {
     static let play = "play.fill"
     static let shuffle = "shuffle"
     static let moreDetail = "ellipsis"
+    static let searchFeed = "quote.bubble"
+    static let delete = "minus.circle"
 }
