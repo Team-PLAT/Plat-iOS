@@ -61,7 +61,6 @@ struct PlaylistDetailView: View {
                     Image(systemName: "trash")
                         .resizable()
                         .frame(width: 12, height: 14)
-                    // trash 시스템 이미지는 왜 중간 정렬이 아닐까...
                         .padding(.trailing, 8)
                         .foregroundStyle(.platPurple)
                 }
