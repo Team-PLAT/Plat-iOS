@@ -11,7 +11,8 @@ struct PlaylistDetailsView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State var playlist: Playlist = MockDataBuilder.playlist
+    @State private var playlist: Playlist = MockDataBuilder.playlist
+    @State private var showTrackDetail = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,9 +34,15 @@ struct PlaylistDetailsView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(playlist.trackList) { track in
-                        PlayListRowView(track: track)
+                        PlayListRowView(showTrackDetail: $showTrackDetail, track: track)
                     }
                 }
+            }
+        }
+        .fullScreenCover(isPresented: $showTrackDetail) {
+            if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
+                TrackDetailView(trackId: trackId)
+                    .presentationBackground(.thinMaterial.opacity(0.5))
             }
         }
     }
@@ -45,7 +52,7 @@ private struct PlayListEditButton: View {
     var body: some View {
         HStack(spacing: 12) {
             Button {
-                // TODO: 뷰 이동
+                // TODO: 수정 뷰 이동 & fetch한 애들 넘기기
             } label: {
                 Circle()
                     .frame(width: 24, height: 24)
@@ -59,7 +66,7 @@ private struct PlayListEditButton: View {
             }
             
             Button {
-                // TODO: 삭제
+                // TODO: 플리 삭제
             } label: {
                 Circle()
                     .frame(width: 24, height: 24)
@@ -196,59 +203,82 @@ private struct PlayListDetailView: View {
 
 private struct PlayListRowView: View {
     
-    let track: Track
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    // TODO: 음악 재생 및 디테일 뷰로 이동
+    @State private var playlistMusic: Music?
+    @Binding private(set) var showTrackDetail: Bool
+    
+    let track: Track
     
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                AlbumImage(track: track)
-                    .padding(.trailing, 10)
-                    .padding(.leading, 18)
-                
-                TrackInfo(track: track)
-                    .padding(.trailing, 40)
-                
-                Spacer()
-                
-                Menu {
-                    Button {
-                        // TODO: 플리에서 제거 및 색 바꾸기 이슈
-                    } label: {
-                        Label("플레이리스트에서 제거", systemImage: SystemImage.delete)
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.red, .red)
-                    }
+                HStack(spacing: 0) {
+                    AlbumImage(playlistMusic: $playlistMusic, track: track)
+                        .padding(.trailing, 10)
+                        .padding(.leading, 18)
                     
-                    Button {
-                        // TODO: 음악 재생 및 디테일 뷰로 이동
-                    } label: {
-                        Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)
-                    }
+                    TrackInfo(feedMusic: $playlistMusic, track: track)
+                        .padding(.trailing, 40)
                     
-                } label: {
-                    Image(systemName: SystemImage.moreDetail)
-                        .rotationEffect(Angle(degrees: -90))
+                    Spacer()
                 }
-                .padding(.trailing, 18)
+                .onTapGesture {
+                    musicControlUseCase.state.isPlayingTrack = track
+                    musicControlUseCase.effect(.setup(music: track.music))
+                    showTrackDetail.toggle()
+                }
+                
+                HStack(spacing: 0) {
+                    Menu {
+                        Button {
+                            showTrackDetail.toggle()
+                            musicControlUseCase.state.isPlayingTrack = track
+                            musicControlUseCase.effect(.setup(music: track.music))
+                        } label: {
+                            Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)
+                        }
+                        
+                        Button {
+                            // TODO: 플리에서 제거 및 색 바꾸기 이슈
+                        } label: {
+                            Label("플레이리스트에서 제거", systemImage: SystemImage.delete)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.red, .red)
+                        }
+                        
+                    } label: {
+                        Image(systemName: SystemImage.moreDetail)
+                            .foregroundColor(.white)
+                            .rotationEffect(Angle(degrees: -90))
+                    }
+                    .padding(.trailing, 18)
+                }
+            }
+            .padding(.vertical, 10)
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.gray9)
+                .padding(.leading, 46)
+            
+        }
+        .onAppear {
+            Task {
+                playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
             }
         }
-        .padding(.vertical, 10)
-        
-        Rectangle()
-            .frame(height: 1)
-            .foregroundColor(.gray9)
-            .padding(.leading, 46)
     }
 }
 
 private struct AlbumImage: View {
     
+    @Binding private(set) var playlistMusic: Music?
+    
     let track: Track
     
     private var albumImageUrl: URL? {
-        URL(string: track.music.albumImageUrl)
+        URL(string: playlistMusic?.albumImageUrl ?? "")
     }
     
     var body: some View {
@@ -270,16 +300,18 @@ private struct AlbumImage: View {
 
 private struct TrackInfo: View {
     
+    @Binding private(set) var feedMusic: Music?
+    
     let track: Track
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(track.music.title)
+            Text(feedMusic?.title ?? "")
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text(track.music.artist)
+                Text(feedMusic?.artist ?? "")
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 

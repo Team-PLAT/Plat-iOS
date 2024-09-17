@@ -27,15 +27,24 @@ struct PlaylistDetailsEditView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(playlist.trackList) { track in
-                        PlayListRowView(track: track)
+                        PlayListRowView(track: track, onDelete: { trackToDelete in
+                            deleteTrack(trackToDelete)
+                        })
                     }
                 }
             }
         }
     }
+    // TODO: usecase로 분리!
+    private func deleteTrack(_ track: Track) {
+        playlist.trackList.removeAll { $0.id == track.id }
+    }
 }
 
 private struct PlayListInfo: View {
+    
+    @State private var isPhotoAlbumSheet = false
+    @State private var selectedImage: UIImage?
     
     @Binding var playlist: Playlist
     
@@ -46,31 +55,56 @@ private struct PlayListInfo: View {
     var body: some View {
         VStack( alignment: .center, spacing: 0) {
             Button {
-                // TODO: 사진 바꾸기
+                isPhotoAlbumSheet.toggle()
             } label: {
-                AsyncImage(url: playlistImageUrl) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 220, height: 220)
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
-                    } else {
-                        RoundedRectangle(cornerRadius: 24)
-                            .frame(width: 220, height: 220)
-                            .foregroundStyle(.gray9)
+                if let selectedImage = selectedImage {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 220, height: 220)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .overlay {
+                            Circle()
+                                .frame(width: 61, height: 61)
+                                .foregroundStyle(.platPurple)
+                            
+                            Image(systemName: SystemImage.camera)
+                                .foregroundStyle(.white)
+                        }
+                } else {
+                    AsyncImage(url: playlistImageUrl) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 220, height: 220)
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
+                        } else {
+                            RoundedRectangle(cornerRadius: 24)
+                                .frame(width: 220, height: 220)
+                                .foregroundStyle(.gray9)
+                        }
+                    }
+                    .overlay {
+                        Circle()
+                            .frame(width: 61, height: 61)
+                            .foregroundStyle(.platPurple)
+                        
+                        Image(systemName: SystemImage.camera)
+                            .foregroundStyle(.white)
                     }
                 }
-                .overlay {
-                    Circle()
-                        .frame(width: 61, height: 61)
-                        .foregroundStyle(.platPurple)
-                    
-                    Image(systemName: SystemImage.camera)
-                        .foregroundStyle(.white)
-                }
+                
             }
             .padding(.bottom, 16)
+            .sheet(isPresented: $isPhotoAlbumSheet) {
+                PhotoPicker(selectedImage: $selectedImage)
+                    .onChange(of: selectedImage) {
+                        if selectedImage != nil {
+                            // TODO: 이미지 URL 업로드 로직
+                        }
+                    }
+            }
             
             TextField(" ", text: $playlist.title)
                 .font(.Head.head2)
@@ -114,6 +148,7 @@ private struct NewTrackAdd: View {
         HStack(spacing: 10) {
             Button {
                 // TODO: 트랙 추가
+                
             } label: {
                 Circle()
                     .frame(width: 20, height: 20)
@@ -142,6 +177,7 @@ private struct NewTrackAdd: View {
 private struct PlayListRowView: View {
     
     let track: Track
+    let onDelete: (Track) -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -149,6 +185,7 @@ private struct PlayListRowView: View {
                 
                 Button {
                     // TODO: 트랙 삭제
+                    onDelete(track)
                 } label: {
                     Circle()
                         .frame(width: 20, height: 20)
