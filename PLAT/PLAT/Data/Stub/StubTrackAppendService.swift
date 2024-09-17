@@ -81,7 +81,7 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
                     return musicData
                 }
                 // TODO: artwork 크기 설정
-                guard let musicArtworkURL = song.artwork?.url(width: 72, height: 72) else {
+                guard let musicArtworkURL = song.artwork?.url(width: 256, height: 256) else {
                     // TODO: artworkURL가 nil일 경우 처리
                     return musicData
                 }
@@ -99,7 +99,7 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
         }
     }
     
-    func postTrack(track: Track) {
-        // TODO: 트랙 게시하는 로직 추가
+    func postTrack(music: Music, context: String, location: Location) async {
+        let response = await TrackService.uploadTrack(request: UploadTrackRequest(isrc: music.isrc, imageUrl: music.albumImageUrl, content: context, latitude: location.latitude, longitude: location.longitude))
     }
 }
