@@ -52,6 +52,7 @@
 		79842E8C2C7225FD0062F825 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79842E8B2C7225FD0062F825 /* LocationManager.swift */; };
 		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
+		79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */; };
 		79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */; };
 		79B0F6F22C8C406E009140AF /* TrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F12C8C406E009140AF /* TrackService.swift */; };
 		79B0F6F42C8C4111009140AF /* FetchTrackFeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */; };
@@ -176,6 +177,7 @@
 		79842E8B2C7225FD0062F825 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPlaylistService.swift; sourceTree = "<group>"; };
 		79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackMapAPI.swift; sourceTree = "<group>"; };
 		79B0F6F12C8C406E009140AF /* TrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackService.swift; sourceTree = "<group>"; };
 		79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackFeedAPI.swift; sourceTree = "<group>"; };
@@ -626,6 +628,7 @@
 				79FC51492C6DEA6600489507 /* StubTrackMapService.swift */,
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
+				79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -830,6 +833,7 @@
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackDetailUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
+				79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */,
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,

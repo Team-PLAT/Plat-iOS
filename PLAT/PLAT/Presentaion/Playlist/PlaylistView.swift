@@ -25,18 +25,18 @@ struct PlaylistView: View {
     var body: some View {
         NavigationStack {
             VStack {
-//                HeaderView()
                 ScrollView {
                     CreatePlaylistView()
+                    
                     ForEach(filteredPlaylists) { playlist in
-                        VStack {
-                            PlaylistSectionView(playlist: playlist)
-                                .onTapGesture {
-                                    // TODO: PlaylistDetailView로 이동
-                                    selectedPlaylistId = playlist.id
-                                    showPlaylistDetail.toggle()
-                                }
-                            DividerView()
+                        Button {
+                            selectedPlaylistId = playlist.id
+                            showPlaylistDetail.toggle()
+                        } label: {
+                            VStack {
+                                PlaylistSectionView(playlist: playlist)
+                                DividerView()
+                            }
                         }
                     }
                 }
@@ -50,20 +50,6 @@ struct PlaylistView: View {
         .searchable(text: $searchText, prompt: "플레이리스트에서 찾기")
     }
 }
-
-// MARK: - HeaderView
-
-//private struct HeaderView: View {
-//    var body: some View {
-//        HStack {
-//            Text("플레이리스트")
-//                .font(.Head.head1)
-//                .padding()
-//            
-//            Spacer()
-//        }
-//    }
-//}
 
 // MARK: - PlaylistSectionView
 
@@ -91,13 +77,16 @@ struct PlaylistSectionView: View {
             Spacer()
             
             Button {
-                isShowDetailSheet = true
+                isShowDetailSheet.toggle()
             } label: {
                 Image(.icnVerticalDots)
             }
             .padding(.trailing, 18)
         }
         .frame(maxWidth: .infinity)
+        .sheet(isPresented: $isShowDetailSheet) {
+            DetailSheetView(playlist: playlist)
+        }
     }
 }
 
@@ -121,7 +110,7 @@ private struct CreatePlaylistView: View {
     var body: some View {
         VStack {
             Button {
-                
+                // TODO: AppendPlaylistView로 이동
             } label: {
                 HStack(spacing: 18) {
                     RoundedRectangle(cornerRadius: 12)
@@ -146,8 +135,150 @@ private struct CreatePlaylistView: View {
     }
 }
 
+// MARK: - DetailSheetView
+
+private struct DetailSheetView: View {
+    let playlist: Playlist
+    
+    var body: some View {
+        VStack {
+            DetailPlaylistButtonView(playlist: playlist)
+
+            DetailInfoView()
+            
+            DetailBottonsView(playlist: playlist)
+                .padding()
+        }
+        .presentationDetents([.fraction(0.6)])
+        .presentationDragIndicator(.visible)
+        .presentationCornerRadius(30)
+    }
+}
+
+// MARK: - DetailPlaylistButtonView
+
+private struct DetailPlaylistButtonView: View {
+    let playlist: Playlist
+    @State private var selectedPlaylistId: Playlist.ID?
+    @State private var showPlaylistDetail: Bool = false
+    
+    var body: some View {
+        Button {
+            // TODO: PlaylistDetailView로 이동
+            selectedPlaylistId = playlist.id
+            showPlaylistDetail.toggle()
+        } label: {
+            HStack(spacing: 18) {
+                AsyncImage(url: URL(string: playlist.imageUrl)) { img in
+                    if let image = img.image {
+                        image
+                            .resizable()
+                            .frame(width: 68, height: 68)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    } else {
+                        RoundedRectangle(cornerRadius: 12)
+                            .frame(width: 68, height: 68)
+                    }
+                }
+                
+                Text("\(playlist.title)")
+                    .font(.Body.body2)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .frame(width: 10, height: 16)
+                    .foregroundStyle(.gray8)
+            }
+        }
+        .padding(.horizontal)
+        .padding(.top, 36)
+    }
+}
+
+// MARK: - DetailInfoView
+
+private struct DetailInfoView: View {
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("트랙 PD 정보")
+                    .font(.Body.body4)
+                
+                Text("\(MockDataBuilder.playlist.trackList[0].platter.nickname)")
+                    .font(.Body.body5 )
+                    .foregroundStyle(.gray7)
+            }
+            Spacer()
+        }
+        .padding()
+    }
+}
+
+// MARK: - DetailBottonsView
+
+private struct DetailBottonsView: View {
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    let playlist: Playlist
+    @Environment(\.dismiss) private var dismiss
+    @State private var selectedPlaylistId: Playlist.ID?
+    @State private var showPlaylistDetail: Bool = false
+    
+    var body: some View {
+        VStack(spacing: 32) {
+            Button {
+                playlistUseCase.playOnDevice()
+            } label: {
+                HStack {
+                    Image(systemName: "play.circle")
+                    Text("기기에서 재생")
+                        .font(.Body.body3)
+                    Spacer()
+                }
+            }
+            
+            Button {
+                // TODO: PlaylistDetailView의 편집모드로 바로 이동
+                selectedPlaylistId = playlist.id
+                showPlaylistDetail = true
+            } label: {
+                HStack {
+                    Image(systemName: "pencil")
+                    Text("플레이리스트 편집")
+                        .font(.Body.body3)
+                    Spacer()
+                }
+            }
+            
+            Button {
+                playlistUseCase.deletePlaylist()
+            } label: {
+                HStack {
+                    Image(systemName: "trash")
+                    Text("플레이리스트 삭제")
+                        .font(.Body.body3)
+                    Spacer()
+                }
+            }
+        }
+        Spacer()
+        
+        Divider()
+        
+        Button {
+            dismiss()
+        } label: {
+            Text("닫기")
+                .font(.Body.body1)
+                .frame(maxWidth: .infinity)
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview {
     PlaylistView(playlists: MockDataBuilder.playlists)
+        .environment(PreviewHelper.mockPlaylistUseCase)
 }

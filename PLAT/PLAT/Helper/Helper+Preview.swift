@@ -42,5 +42,9 @@ enum PreviewHelper {
     static let mockMusicControlUseCase = MusicControlUseCase(
         musicController: StubMusicController()
     )
+    
+    static let mockPlaylistUseCase = PlaylistUseCase(
+        playlistService: StubPlaylistService()
+    )
 }
 #endif

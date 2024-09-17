@@ -17,6 +17,7 @@ struct MainView: View {
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
+    @State private var playlistUseCase: PlaylistUseCase = .init(playlistService: StubPlaylistService())
     @State private var selectedTab: Tab = .map
     
     var body: some View {
@@ -66,6 +67,7 @@ struct MainView: View {
         .environment(streamAccountUseCase)
         .environment(trackMapUseCase)
         .environment(musicControlUseCase)
+        .environment(playlistUseCase)
     }
 }
 
