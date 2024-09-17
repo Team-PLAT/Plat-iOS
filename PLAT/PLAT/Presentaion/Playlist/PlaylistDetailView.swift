@@ -66,6 +66,33 @@ struct PlaylistDetailView: View {
             .font(.Body.body2)
             .padding(EdgeInsets(top: 10, leading: 18, bottom: 40, trailing: 18))
             
+            Divider()
+                .frame(height: 1)
+                .background(.gray9)
+            
+            // TODO: 클릭 범위를 HStack으로 할지, + 버튼으로 할지 기획 논의 필요
+            HStack(spacing: 10) {
+                Button {
+                    // TODO: 새로운 트랙 생성 버튼 기능 구현
+                } label: {
+                    RoundedRectangle(cornerRadius: 4)
+                        .foregroundStyle(.platBlack)
+                        .overlay {
+                            Image(systemName: "plus")
+                                .resizable()
+                                .foregroundStyle(.platPurple)
+                                .padding(12)
+                        }
+                }
+                .frame(width: 40, height: 40)
+                
+                Text("새로운 트랙 생성")
+                    .font(.Body.body2)
+                
+                Spacer()
+            }
+            .padding(EdgeInsets(top: 16, leading: 18, bottom: 0, trailing: 18))
+            
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
