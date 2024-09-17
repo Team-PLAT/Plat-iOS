@@ -12,7 +12,6 @@ struct SelectStreamAccountView: View {
     enum SelectedState {
         case none
         case appleMusic
-        case spotify
     }
     
     @Environment(AuthUseCase.self) private var authUseCase
@@ -33,15 +32,16 @@ struct SelectStreamAccountView: View {
             Group {
                 ListRadioButton(
                     state: .none,
-                    title: "\(StreamAccount.appleMusic.rawValue) 연결하기",
-                    content: "선택하면 \(StreamAccount.appleMusic.rawValue)과 연결돼요",
+                    title: "\(StreamAccount.appleMusic.title) 연결하기",
+                    content: "선택하면 \(StreamAccount.appleMusic.title)과 연결돼요",
                     icon: .icnAppleMusic,
-                    isSelected: selectedState == .appleMusic
-                ) {
-                    selectedState = .appleMusic
-                    musicControlUseCase.effect(.request)
-                    isShowingOffer = true
-                }
+                    isSelected: selectedState == .appleMusic,
+                    tapAction: {
+                        selectedState = .appleMusic
+                        musicControlUseCase.effect(.request)
+                        isShowingOffer = true
+                    }
+                )
             }
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
             .onChange(of: isShowingOffer) {

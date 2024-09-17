@@ -201,7 +201,6 @@ struct AppleContinueButton: View {
                 let loginResult = loginUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
-                    print("로그인 성공")
                     pathModel.registerPaths.append(.selectStreamAccountView)
                     
                 case .failure(let error):
