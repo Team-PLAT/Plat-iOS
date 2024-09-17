@@ -8,8 +8,10 @@
 import Foundation
 
 protocol TrackServiceInterface {
-    func like(trackId: String)
-    func delete(trackId: String)
-    func report(trackId: String)
-    func addToPlaylist(trackId: String, playlistId: String)
+    func fetchTrackList(rectLocation: RectLocation) async -> Result<[Track], Error>
+    func fetchTrackList(page: Int) async -> Result<[Track], Error>
+    func fetchDetail(track: Track) async -> Result<Track, Error>
+    func upload(track: Track) async -> Result<Void, Error>
+    func like(track: Track) async -> Result<Void, Error>
+    func report(track: Track) async -> Result<Void, Error>
 }

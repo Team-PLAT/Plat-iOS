@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - OnboardingView
+
 struct OnboardingView: View {
     
     @Environment(PathModel.self) private var pathModel
@@ -16,7 +18,7 @@ struct OnboardingView: View {
         musicController: AppleMusicController.shared
     )
     
-    @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
+    @State private var infoUseCase = InfoUseCase(infoService: StubInfoService())
     @State private var authType: AuthType = .signUp
     
     var body: some View {

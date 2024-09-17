@@ -16,8 +16,9 @@ struct AccountSettingsView: View {
     @State private var isLogoutAlertPresented = false
     @State private var isAccountDeletionAlertPresented = false
     
+    // TODO: StreamAccount 업데이트
     var connectedStreamAccountInfo: ListSection.Info {
-        return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: userUseCase.state.user.streamAccount) {
+        return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: StreamAccount.appleMusic) {
             pathModel.paths.append(.streamAccountSettingsView)
         }
     }
@@ -47,7 +48,7 @@ struct AccountSettingsView: View {
         .alert("계정을 삭제하시겠어요?", isPresented: $isAccountDeletionAlertPresented) {
             Button("돌아가기", role: .cancel) { }
             Button("삭제하기", role: .destructive) {
-                authUseCase.deleteAccount()
+                authUseCase.effect(.resign)
             }
         } message: {
             Text("계정을 삭제하면, 그종안 올린 트랙과 프로필,\n플레이리스트 등의 정보가 모두 삭제됩니다.")
@@ -55,7 +56,7 @@ struct AccountSettingsView: View {
         .alert("로그아웃 하시겠어요?", isPresented: $isLogoutAlertPresented) {
             Button("돌아가기", role: .cancel) { }
             Button("로그아웃", role: .destructive) {
-                authUseCase.logout()
+                authUseCase.effect(.signOut)
             }
         }
     }
