@@ -12,7 +12,7 @@ struct PlaylistDetailView: View {
     @Binding private(set) var selectedPlaylist: Playlist
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             AsyncImage(url: URL(string: selectedPlaylist.imageUrl)) { phase in
                 if let image = phase.image {
                     image
@@ -28,7 +28,7 @@ struct PlaylistDetailView: View {
             
             Text(selectedPlaylist.title)
                 .font(.Head.head2)
-                .padding(.bottom, 2)
+                .padding(.bottom, 8)
             
             Text(selectedPlaylist.createdDate.yearMonthDayFormat)
                 .foregroundStyle(.gray7)
@@ -64,7 +64,7 @@ struct PlaylistDetailView: View {
             .frame(height: 44)
             .foregroundStyle(.platPurple)
             .font(.Body.body2)
-            .padding(EdgeInsets(top: 10, leading: 18, bottom: 40, trailing: 18))
+            .padding(EdgeInsets(top: 24, leading: 18, bottom: 40, trailing: 18))
             
             Divider()
                 .frame(height: 1)
