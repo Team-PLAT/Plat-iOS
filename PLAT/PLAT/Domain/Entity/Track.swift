@@ -8,10 +8,10 @@
 import Foundation
 
 struct Track: Identifiable {
-    let id = UUID()
+    let id: Int64
     var music: Music
     var location: Location
-    var platter: Platter
+    var user: User
     var content: String?
     var imageUrl: String?
     var createdDate: Date
@@ -19,18 +19,20 @@ struct Track: Identifiable {
     var isReported: Bool
     
     init(
+        id: Int64,
         music: Music,
         location: Location,
-        platter: Platter,
+        user: User,
         content: String? = nil,
         imageUrl: String? = nil,
         createdDate: Date,
         isLike: Bool = false,
         isReported: Bool = false
     ) {
+        self.id = id
         self.music = music
         self.location = location
-        self.platter = platter
+        self.user = user
         self.content = content
         self.imageUrl = imageUrl
         self.createdDate = createdDate

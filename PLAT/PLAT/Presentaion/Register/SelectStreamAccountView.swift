@@ -12,13 +12,14 @@ struct SelectStreamAccountView: View {
     enum SelectedState {
         case none
         case appleMusic
-        case spotify
     }
     
     @Environment(AuthUseCase.self) private var authUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State var selectedState: SelectedState = .none
     @State var isSheetPresented: Bool = false
+    @State private var isShowingOffer: Bool = false
     
     var body: some View {
         VStack {
@@ -31,13 +32,23 @@ struct SelectStreamAccountView: View {
             Group {
                 ListRadioButton(
                     state: .none,
-                    title: "\(StreamAccount.appleMusic.rawValue) 연결하기",
-                    content: "선택하면 \(StreamAccount.appleMusic.rawValue)과 연결돼요",
+                    title: "\(StreamAccount.appleMusic.title) 연결하기",
+                    content: "선택하면 \(StreamAccount.appleMusic.title)과 연결돼요",
                     icon: .icnAppleMusic,
-                    isSelected: selectedState == .appleMusic
-                ) {
-                    selectedState = .appleMusic
-                    authUseCase.updateIsLoginComplete(true)
+                    isSelected: selectedState == .appleMusic,
+                    tapAction: {
+                        selectedState = .appleMusic
+                        musicControlUseCase.effect(.request)
+                        isShowingOffer = true
+                    }
+                )
+            }
+            .musicSubscriptionOffer(isPresented: $isShowingOffer)
+            .onChange(of: isShowingOffer) {
+                if !isShowingOffer {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        authUseCase.updateIsLoginComplete(true)
+                    }
                 }
             }
             .overlay {

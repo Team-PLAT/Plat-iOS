@@ -11,9 +11,17 @@ import SwiftUI
 
 struct MiniMusicPlayer: View {
     
-    @Binding private(set) var isPaused: Bool
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    let track: Track
+    @Binding private(set) var isPaused: Bool
+    @Binding private(set) var track: Track?
+    
+    let currentDuration: Double
+    let totalDuration: Double
+    
+    private var progress: Double {
+        currentDuration / totalDuration
+    }
     
     var body: some View {
         VStack(spacing: 10) {
@@ -21,17 +29,16 @@ struct MiniMusicPlayer: View {
                 AlbumImage(track: track)
                 Content(track: track)
                 Spacer()
-                PlaybackButton(isPaused: $isPaused)
+                PlaybackButton(isPaused: $isPaused, track: track)
             }
             .padding(.horizontal, 12)
             
-            ProgressView(value: 0.5)
+            ProgressView(value: progress)
                 .tint(.platPurple)
                 .background(.platBlack)
         }
         .padding(.top, 12)
         .background(.platBlack)
-        // .clipShape(RoundedRectangle(cornerRadius: 8))
         .onTapGesture {
             print("음악 재생 화면 이동")
             // TODO: 음악 재생 화면 이동
@@ -43,10 +50,10 @@ struct MiniMusicPlayer: View {
 
 private struct AlbumImage: View {
     
-    let track: Track
+    let track: Track?
     
     private var muiscImageUrl: URL? {
-        let urlString = track.music.albumImageUrl
+        guard let urlString = track?.music.albumImageUrl else { return nil }
         return URL(string: urlString)
     }
     
@@ -71,22 +78,30 @@ private struct AlbumImage: View {
 
 private struct Content: View {
     
-    let track: Track
+    let track: Track?
+    
+    private var userOfTrack: String {
+        if let nickname = track?.user.nickname {
+            return nickname + "의 트랙"
+        } else {
+            return ""
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 4) {
-                Text(track.music.title)
+                Text(track?.music.title ?? "")
                     .font(.Body.body2)
                 
                 Circle()
                     .frame(width: 2, height: 2)
                 
-                Text(track.music.artist)
+                Text(track?.music.artist ?? "")
                     .font(.Body.body5)
             }
             
-            Text(track.platter.nickname + "의 트랙")
+            Text(userOfTrack)
                 .font(.Body.body2)
         }
         .foregroundStyle(.gray3)
@@ -97,11 +112,15 @@ private struct Content: View {
 
 private struct PlaybackButton: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
     @Binding private(set) var isPaused: Bool
+    
+    let track: Track?
     
     var body: some View {
         Button {
-            isPaused.toggle()
+            musicControlUseCase.effect(.togglePlayback)
         } label: {
             Image(systemName: isPaused ? "play.fill" : "pause.fill")
                 .resizable()
@@ -117,10 +136,12 @@ private struct PlaybackButton: View {
 #Preview {
     ZStack {
         Color.gray6.ignoresSafeArea()
-        
+
         MiniMusicPlayer(
             isPaused: .constant(false),
-            track: MockDataBuilder.track
+            track: .constant(MockDataBuilder.track),
+            currentDuration: 0.0,
+            totalDuration: 4.0
         )
     }
 }

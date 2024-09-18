@@ -22,8 +22,9 @@ final class MusicControlUseCase {
         self.musicController = musicController
         self.state = State(
             isStreaming: false,
-            isPaused: false,
-            currentDuration: 0
+            isPaused: true,
+            currentDuration: 0,
+            isPlayingTrack: nil
         )
     }
 }
@@ -37,6 +38,7 @@ extension MusicControlUseCase {
         var isStreaming: Bool
         var isPaused: Bool
         var currentDuration: Double
+        var isPlayingTrack: Track?
     }
 }
 
@@ -45,18 +47,26 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
+        case request
         case setup(music: Music)
         case play(music: Music)
         case togglePlayback
+        case updatePlayer(duration: Double)
     }
     
     func effect(_ effect: Effect) {
         switch effect {
+        case .request:
+            musicController.setup()
+            
         case let .setup(music):
-            musicController.setup(music)
+            musicController.setup()
+            Task {
+                await fetchCurrentMusicInfo(music: music)
+                musicController.play(music)
+            }
             state.isStreaming = true
             state.isPaused = false
-            musicController.play(music)
             fetchCurrentPlaybackPosition()
             
         case let .play(music):
@@ -76,6 +86,9 @@ extension MusicControlUseCase {
             }
             
             state.isPaused.toggle()
+            
+        case .updatePlayer(duration: let duration):
+            musicController.updateMusicPlayer(with: duration)
         }
     }
 }
@@ -97,5 +110,40 @@ extension MusicControlUseCase {
     
     private func cancelPublisher() {
         cancellables.forEach { $0.cancel() }
+    }
+}
+
+// MARK: - Current Music Info
+
+extension MusicControlUseCase {
+    
+    private func fetchCurrentMusicInfo(music: Music) async {
+        if let musicInfo = await fetchMusicInfoApi(music: music) {
+            state.music = musicInfo
+            
+            if var playingTrack = state.isPlayingTrack {
+                playingTrack.music = state.music ?? Music(
+                    isrc: " ",
+                    title: " ",
+                    artist: " ",
+                    albumImageUrl: " ",
+                    duration: 0.0
+                )
+                state.isPlayingTrack = playingTrack
+            }
+        }
+    }
+    
+    func fetchMusicInfoApi(music: Music) async -> Music? {
+        if let musicInfo = await musicController.fetchMusic(music) {
+            return Music(
+                isrc: music.isrc,
+                title: musicInfo.name ?? music.title,
+                artist: musicInfo.artistName ?? music.artist,
+                albumImageUrl: musicInfo.url ?? music.albumImageUrl,
+                duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
+            )
+        }
+        return nil
     }
 }

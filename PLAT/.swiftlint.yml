@@ -15,6 +15,7 @@ disabled_rules:
 - nesting # 중첩 제한
 - inclusive_language # 포괄적인 언어 제한
 - multiple_closures_with_trailing_closure # 중첩 클로저 제한
+- non_optional_string_data_conversion
 
 # 기본 룰은 아니지만 추가적으로 설정한 Rule
 opt_in_rules:

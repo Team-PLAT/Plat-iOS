@@ -198,7 +198,7 @@ private struct PlattingPlayList: View {
                     VStack(alignment: .leading) {
                         Text("\(track.music.title)")
                             .font(.Body.body3)
-                        Text("\(track.music.artist)・ \(track.platter.nickname)의 트랙")
+                        Text("\(track.music.artist)・ \(track.user.nickname)의 트랙")
                             .font(.Body.body5)
                             .foregroundStyle(.gray7)
                     }

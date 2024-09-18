@@ -12,19 +12,11 @@ import SwiftUI
 struct TrackDetailView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase: TrackUseCase
     
-    @State private var trackDetailUseCase: TrackDetailUseCase
     @State private var isContentSheetPresented = false
     @State private var isNonePlaylistToastPresented = false
-    
-    init(trackId: Track.ID) {
-        self.trackDetailUseCase = TrackDetailUseCase(
-            feedTrack: MockDataBuilder.feedTrack,
-            track: MockDataBuilder.feedTrack.randomElement() ?? MockDataBuilder.track,
-            trackService: StubTrackService(),
-            trackId: trackId
-        )
-    }
+    @State private var isPlaying: Bool = true
     
     private var music: Music? {
         musicControlUseCase.state.music
@@ -41,8 +33,7 @@ struct TrackDetailView: View {
                     .padding(.top, 24)
                 
                 MusicSeekBar(
-                    currentDuration: musicControlUseCase.state.currentDuration,
-                    totalDuration: MockDataBuilder.music.duration
+                    totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .padding(.top, 36)
                 .padding(.horizontal, 16)
@@ -72,11 +63,25 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-            musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackUseCase.trackId }) {
+                    
+                    /// 재생중인 노래
+                    if let isPlayingTrack = musicControlUseCase.state.isPlayingTrack,
+                        track.id == isPlayingTrack.id {
+                        
+                        musicControlUseCase.effect(.updatePlayer(duration: musicControlUseCase.state.currentDuration))
+                    } else {
+                        /// 처음 재생하는 노래
+                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.setup(music: track.music))
+                    }
+                } else {
+                    print("trackId 찾기 오류")
+            }
         }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
-        .environment(trackDetailUseCase)
+        .environment(trackUseCase)
         .onTapGesture {
             withAnimation(.easeInOut) {
                 isContentSheetPresented = false
@@ -89,7 +94,7 @@ struct TrackDetailView: View {
 
 private struct Background: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     var body: some View {
         Group {
@@ -117,7 +122,7 @@ private struct Background: View {
 private struct HeaderView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
@@ -165,12 +170,12 @@ private struct MusicView: View {
         VStack(spacing: 0) {
             AlbumImage()
             
-            Text(MockDataBuilder.music.title)
+            Text(music?.title ?? "")
                 .font(.Head.head2)
                 .foregroundStyle(.white)
                 .padding(.top, 16)
             
-            Text(MockDataBuilder.music.artist)
+            Text(music?.artist ?? "")
                 .font(.Head.head5)
                 .foregroundStyle(.gray7)
                 .padding(.top, 4)
@@ -188,7 +193,7 @@ private struct AlbumImage: View {
     private let cornerRaduis: CGFloat = 12
     
     private var albumImageUrl: URL? {
-        URL(string: MockDataBuilder.music.albumImageUrl)
+        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
     }
     
     var body: some View {
@@ -212,7 +217,7 @@ private struct AlbumImage: View {
 
 private struct MusicControllerView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isTrackAppendToPlaylistSheetPresented = false
@@ -285,7 +290,7 @@ private struct MusicControllerCell: View {
 
 private struct BottomView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -327,19 +332,19 @@ private struct BottomView: View {
 
 private struct ProfileHeader: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     /// 프로필 이미지 사이즈
     private let profileImageSize: CGFloat = 40
     
-    /// 현재 Track을 업로드한 Platter를 반환합니다.
-    private var platter: Platter {
-        trackDetailUseCase.track.platter
+    /// 현재 Track을 업로드한 User를 반환합니다.
+    private var user: User {
+        trackDetailUseCase.track.user
     }
     
     /// 프로필 이미지 URL을 반환합니다.
     private var profileImageUrl: URL? {
-        let urlString = platter.profileImageUrl
+        let urlString = user.profileImageUrl
         return URL(string: urlString)
     }
     
@@ -359,7 +364,7 @@ private struct ProfileHeader: View {
             .frame(width: profileImageSize, height: profileImageSize)
             
             VStack(alignment: .leading, spacing: 0) {
-                Text(platter.nickname)
+                Text(user.nickname)
                     .font(.Body.body2)
                 
                 Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
@@ -376,7 +381,7 @@ private struct ProfileHeader: View {
 
 private struct ProfileContent: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -410,6 +415,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView(trackId: .init())
+    TrackDetailView()
         .environment(PreviewHelper.mockMusicControlUseCase)
 }

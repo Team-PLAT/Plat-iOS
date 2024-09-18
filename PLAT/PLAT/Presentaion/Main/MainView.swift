@@ -13,6 +13,11 @@ struct MainView: View {
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     @State private var userUseCase: UserUseCase = .init(userProfileService: StubUserProfileService())
     @State private var streamAccountUseCase: StreamAccountUseCase = .init(streamAccountService: StubStreamAccountService())
+    @State private var trackUseCase: TrackUseCase = .init(
+        trackService: TrackServiceImpl(),
+        imageService: ImageServiceImpl()
+    )
+    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
@@ -56,6 +61,8 @@ struct MainView: View {
         .environment(userUseCase)
         .environment(infoUseCase)
         .environment(streamAccountUseCase)
+        .environment(trackUseCase)
+        .environment(trackMapUseCase)
         .environment(musicControlUseCase)
     }
     
