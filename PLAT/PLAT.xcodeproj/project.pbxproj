@@ -10,6 +10,7 @@
 		510E363C2C76BFB6009AD4AC /* PhotoAlbumPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */; };
 		51148CCD2C42F6BA00365853 /* plat_finger_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */; };
 		51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */; };
+		512DE28C2C988066002B4622 /* PlaylistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512DE28B2C988066002B4622 /* PlaylistDetailView.swift */; };
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
 		513DCBDF2C95FC66007CA813 /* Helper+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBDE2C95FC66007CA813 /* Helper+View.swift */; };
 		513DCBEC2C98480D007CA813 /* AppendPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */; };
@@ -152,6 +153,7 @@
 		510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumPicker.swift; sourceTree = "<group>"; };
 		51148CCB2C42F6BA00365853 /* plat_finger_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_finger_animation_lottie.json; sourceTree = "<group>"; };
 		51148CCC2C42F6BA00365853 /* plat_map_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = plat_map_animation_lottie.json; sourceTree = "<group>"; };
+		512DE28B2C988066002B4622 /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		513DCBDE2C95FC66007CA813 /* Helper+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+View.swift"; sourceTree = "<group>"; };
 		513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */,
+        512DE28B2C988066002B4622 /* PlaylistDetailView.swift */,
 			);
 			path = Playlist;
 			sourceTree = "<group>";
@@ -927,6 +930,7 @@
 				82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
+				512DE28C2C988066002B4622 /* PlaylistDetailView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
 				DFDF9DCC2C6C959F00D5252B /* Music.swift in Sources */,
 				820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */,
