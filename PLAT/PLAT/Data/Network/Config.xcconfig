@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  PLAT
+//
+//  Created by 김민준 on 8/19/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BASE_URL = https:/$()/plat-server.store
+APPLE_MUSIC_TOKEN = eyJhbGciOiJFUzI1NiIsImtpZCI6IlNYSjZHVUFRWksiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiI0UU1OTTY0UDlaIiwiZXhwIjoxNzI3OTA3MTE1LCJpYXQiOjE3MjQzMDcxMTV9.SSiPdzL2ee9ClMYUUl7zqyfG2h1OE0UuX3OPVFcnUX3FNhuY7efT9kZRy_4FCeOO7b6aWFxS_FPPiuPLcQUFUQ

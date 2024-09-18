@@ -17,7 +17,7 @@ struct MainView: View {
         trackService: TrackServiceImpl(),
         imageService: ImageServiceImpl()
     )
-    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
+    @State private var trackMapUseCase: TrackMapUseCase = .init(mapService: StubTrackMapService())
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )

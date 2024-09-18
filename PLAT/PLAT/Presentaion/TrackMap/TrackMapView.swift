@@ -50,7 +50,7 @@ struct TrackMapView: View {
             }
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
-            if let trackId = selectedTrackId {
+            if let _ = selectedTrackId {
                 TrackDetailView()
                     .presentationBackground(.thinMaterial.opacity(0.5))
             }
