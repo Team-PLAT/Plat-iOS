@@ -21,22 +21,30 @@ struct MainView: View {
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
+    @State private var playlistUseCase: PlaylistUseCase = .init(playlistService: StubPlaylistService())
     @State private var selectedTab: Tab = .map
     
     var body: some View {
         NavigationStack(path: $pathModel.paths) {
             TabView(selection: $selectedTab) {
-                TrackMapView()
-                    .modifier(ConfigureTab(selectedTab: Tab.map))
-                
-                FeedView()
-                    .modifier(ConfigureTab(selectedTab: Tab.feed))
-                
-                Text("PlaylistView")
-                    .modifier(ConfigureTab(selectedTab: Tab.playlist))
-                
-                UserDetailView()
-                    .modifier(ConfigureTab(selectedTab: Tab.account))
+                ForEach(Tab.allCases) { tab in
+                    Group {
+                        switch tab {
+                        case .map: TrackMapView()
+                        case .feed: FeedView()
+                        case .playlist: Text("PlaylistView")
+                        case .account: UserDetailView()
+                        }
+                    }
+                    .tag(tab)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: tab.icon)
+                            Text(tab.title)
+                                .font(.Caption.caption2)
+                        }
+                    }
+                }
             }
             .tint(.platPurple)
             .navigationDestination(for: SettingPath.self) { path in
@@ -64,6 +72,7 @@ struct MainView: View {
         .environment(trackUseCase)
         .environment(trackMapUseCase)
         .environment(musicControlUseCase)
+        .environment(playlistUseCase)
     }
     
     /// Tab 설정을 위한 Custom Modifier

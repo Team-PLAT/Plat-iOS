@@ -9,13 +9,33 @@ import Foundation
 
 struct MockDataBuilder {
     
-    /// Mock playlist 데이터를 반환합니다.
     static var playlist: Playlist {
-        return Playlist(
+        Playlist(
             title: "지곡동에서의 PLAT",
             imageUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fyellowtael%2Ffixyou&psig=AOvVaw1wNBlsAj8UtkxoKljBUAiY&ust=1723793152795000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjqtIa89ocDFQAAAAAdAAAAABAE",
             trackList: trackList
         )
+    }
+    
+    /// Mock playlist 데이터를 반환합니다.
+    static var playlists: [Playlist] {
+        return [
+            Playlist(
+                title: "지곡동에서의 PLAT",
+                imageUrl: "https://i.scdn.co/image/ab67616d0000b2735b558b31b6ba531d48f46007",
+                trackList: trackList
+            ),
+            Playlist(
+                title: "한남동에서의 PLAT",
+                imageUrl: "https://i.scdn.co/image/ab67616d0000b273b48ee14df764cf20d4daed5b",
+                trackList: trackList
+            ),
+            Playlist(
+                title: "동교동에서의 PLAT",
+                imageUrl: "https://i.scdn.co/image/ab67616d0000b27364c8b41faf576a0bab551fb9",
+                trackList: trackList
+            )
+        ]
     }
     
     /// Mock trackList 데이터를 반환합니다.
