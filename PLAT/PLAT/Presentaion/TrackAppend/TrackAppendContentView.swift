@@ -14,21 +14,27 @@ enum ContentState {
     case pictureAndWrite
 }
 
+// MARK: - TrackAppendContentView
+
 struct TrackAppendContentView: View {
-    @State var isAddWriting = false
-    @State var contentText = ""
-    @State var selectedImage: UIImage?
-    @State var isPhotoAlbumSheet = false
+    @State private var isAddWriting = false
+    @State private var contentText = ""
+    @State private var selectedImage: UIImage?
+    @State private var isPhotoAlbumSheet = false
     @State private var state: ContentState = .none
+    @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
+    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
     @Binding var detent: PresentationDetent
     @Binding var music: Music
     @Binding var isTrackAppendViewSheet: Bool
     
     var body: some View {
-        VStack {
-            TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
-            
-            TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: contentText, state: $state)
+        ScrollView {
+            VStack {
+                TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
+                
+                TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: $contentText, state: $state)
+            }
         }
         .onAppear {
             detent = .fraction(0.25)
@@ -37,14 +43,18 @@ struct TrackAppendContentView: View {
             if state == .none {
                 detent = .fraction(0.25)
             } else {
-                detent = .fraction(1)
+                detent = .large
             }
         }
+        .tapDismissesKeyboard()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    // TODO: 게시 기능 추가
+                    Task {
+                        await trackAppendUseCase.postTrack(music: music, context: contentText, location: trackMapUseCase.currentLocation())
+                    }
+                    
                     isTrackAppendViewSheet = false
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
@@ -61,8 +71,10 @@ struct TrackAppendContentView: View {
     }
 }
 
+// MARK: - TrackAppendContentMainView
+
 struct TrackAppendContentMainView: View {
-    @State var isPhotoAlbumSheet = false
+    @State private var isPhotoAlbumSheet = false
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
     @Binding var music: Music
@@ -90,14 +102,14 @@ struct TrackAppendContentMainView: View {
                 Text("\(music.title)")
                     .foregroundStyle(.white)
                     .font(.Head.head2)
-                    .padding(.bottom, 4)
                     .lineLimit(1)
                 
                 Text("\(music.artist)")
                     .foregroundStyle(.gray7)
                     .font(.Body.body3)
-                    .padding(.bottom)
                     .lineLimit(1)
+                
+                Spacer()
                 
                 HStack {
                     if selectedImage == nil {
@@ -113,10 +125,13 @@ struct TrackAppendContentMainView: View {
                                 .foregroundStyle(.gray9)
                                 .overlay {
                                     Image(systemName: "camera")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 18, height: 18)
                                         .foregroundStyle(.gray7)
                                 }
                         }
-                        .frame(width: 48, height: 48)
+                        .frame(width: 38, height: 38)
                     }
                     if state != .pictureAndWrite && state != .write {
                         Button {
@@ -130,13 +145,18 @@ struct TrackAppendContentMainView: View {
                                 .foregroundStyle(.gray9)
                                 .overlay {
                                     Image(systemName: "square.and.pencil")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 18, height: 18)
                                         .foregroundStyle(.gray7)
+                                        .padding(EdgeInsets(top: 0, leading: 2, bottom: 2, trailing: 0))
                                 }
                         }
-                        .frame(width: 48, height: 48)
+                        .frame(width: 38, height: 38)
                     }
                 }
             }
+            .frame(height: 128)
             .padding(.leading, 10)
             .sheet(isPresented: $isPhotoAlbumSheet) {
                 if selectedImage == nil {
@@ -151,14 +171,15 @@ struct TrackAppendContentMainView: View {
             }
             Spacer()
         }
-        .padding(.top)
     }
 }
+
+// MARK: - TrackAppendContentAddView
 
 struct TrackAppendContentAddView: View {
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
-    @State var contentText = ""
+    @Binding var contentText: String
     @Binding var state: ContentState
     @FocusState private var isTextEditorFocused: Bool
     
@@ -216,8 +237,8 @@ struct TrackAppendContentAddView: View {
                     TextEditor(text: $contentText)
                         .font(.Body.body5)
                         .scrollContentBackground(.hidden)
-                        .padding(.init(top: 12, leading: 12, bottom: 12, trailing: 78))
-                        .frame(width: .infinity, height: 238)
+                        .padding(.init(top: 12, leading: 12, bottom: 12, trailing: 44))
+                        .frame(height: 238)
                         .background {
                             if isTextEditorFocused {
                                 RoundedRectangle(cornerRadius: 8).fill(.platBlack).stroke(.platPurple)
@@ -229,7 +250,7 @@ struct TrackAppendContentAddView: View {
                             if contentText.isEmpty && !isTextEditorFocused {
                                 Text("장소, 노래, 상황과 관련된 말을 적어보세요.")
                                     .font(.Body.body5)
-                                    .padding(.init(top: 12, leading: 12, bottom: 0, trailing: 0))
+                                    .padding(.init(top: 14, leading: 12, bottom: 0, trailing: 0))
                                     .foregroundStyle(.gray7)
                             }
                         }
@@ -293,8 +314,8 @@ struct TrackAppendContentAddView: View {
                 TextEditor(text: $contentText)
                     .font(.Body.body5)
                     .scrollContentBackground(.hidden)
-                    .padding(.init(top: 12, leading: 12, bottom: 12, trailing: 78))
-                    .frame(width: .infinity, height: 238)
+                    .padding(.init(top: 12, leading: 12, bottom: 12, trailing: 44))
+                    .frame(height: 238)
                     .background {
                         if isTextEditorFocused {
                             RoundedRectangle(cornerRadius: 8).fill(.platBlack).stroke(.platPurple)
@@ -306,7 +327,7 @@ struct TrackAppendContentAddView: View {
                         if contentText.isEmpty && !isTextEditorFocused {
                             Text("장소, 노래, 상황과 관련된 말을 적어보세요.")
                                 .font(.Body.body5)
-                                .padding(.init(top: 12, leading: 12, bottom: 0, trailing: 0))
+                                .padding(.init(top: 14, leading: 12, bottom: 0, trailing: 0))
                                 .foregroundStyle(.gray7)
                         }
                     }
@@ -350,9 +371,9 @@ struct TrackAppendContentAddView: View {
         music: .constant(
             Music(
                 isrc: "",
-                title: "no pain",
+                title: "NO PAIN",
                 artist: "실리카겔",
-                albumImageUrl: "https://i.namu.wiki/i/1P6LoQ_N9dwT4DZZcNb2MABa80X_AElIyA92uyrI_BTBu47gs1zKq6V1zvLH-J0oA7_KqrWVkqFRWE5Lgg1VUIsVeNYHU21_bTlbBJT-JER3bcCJzbC5mcZZ_LAIZXmVjWjdNSjMqFiOLsPC6Wi3hg.webp",
+                albumImageUrl: "https://i.namu.wiki/i/26jmhUch2o9CbpEuyHqpae358g0EKPSLCd66nexNlH5S3gYemP-xwHYQsl59hzQrLXvg3SgXFsmjj1U8sH2H_2lFmoaFpWdh8I9r_revsT7xFMw_sjMiCiB172Kv56cjR7nPnvnEnqYNg7X1nmzYZQ.webp",
                 duration: 0
             )
         ),

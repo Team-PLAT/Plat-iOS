@@ -12,9 +12,14 @@ struct StreamAccountSettingsView: View {
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(StreamAccountUseCase.self) private var streamAccountUseCase
     
+    // TODO: 기능 구현 전 Stub 스트리밍 계정
+    private var stubStreamAccount: StreamAccount {
+        .appleMusic
+    }
+    
     /// 현재 연결된 스트리밍 계정을 확인후 타이틀 텍스트를 반환합니다.
     func connectTitleText(_ stream: StreamAccount) -> String {
-        if userUseCase.state.user.streamAccount == stream {
+        if stubStreamAccount == stream {
             return " 연결됨"
         } else {
             return " 연결하기"
@@ -23,7 +28,7 @@ struct StreamAccountSettingsView: View {
     
     /// 현재 연결된 스트리밍 계정을 확인후 콘텐트 텍스트를 반환합니다.
     func connectContentText(_ stream: StreamAccount) -> String {
-        if userUseCase.state.user.streamAccount == stream {
+        if stubStreamAccount == stream {
             return " 스트리밍 계정과 연결되어 있어요"
         } else {
             return " 스트리밍 계정과 연결할 수 있어요"
@@ -37,7 +42,7 @@ struct StreamAccountSettingsView: View {
                 title: StreamAccount.appleMusic.rawValue + connectTitleText(.appleMusic),
                 content: StreamAccount.appleMusic.rawValue + connectContentText(.appleMusic),
                 icon: .icnAppleMusic,
-                isSelected: userUseCase.state.user.streamAccount == .appleMusic,
+                isSelected: stubStreamAccount == .appleMusic,
                 tapAction: {
                     streamAccountUseCase.connect(streamAccount: .appleMusic)
                 }

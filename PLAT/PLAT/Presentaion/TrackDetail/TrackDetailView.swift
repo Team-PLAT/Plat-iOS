@@ -12,20 +12,11 @@ import SwiftUI
 struct TrackDetailView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase: TrackUseCase
     
-    @State private var trackDetailUseCase: TrackDetailUseCase
     @State private var isContentSheetPresented = false
     @State private var isNonePlaylistToastPresented = false
     @State private var isPlaying: Bool = true
-    
-    init(trackId: Track.ID) {
-        self.trackDetailUseCase = TrackDetailUseCase(
-            feedTrack: MockDataBuilder.feedTrack,
-            track: MockDataBuilder.feedTrack.randomElement() ?? MockDataBuilder.track,
-            trackService: StubTrackService(),
-            trackId: trackId
-        )
-    }
     
     private var music: Music? {
         musicControlUseCase.state.music
@@ -72,7 +63,7 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackDetailUseCase.trackId }) {
+                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackUseCase.trackId }) {
                     
                     /// 재생중인 노래
                     if let isPlayingTrack = musicControlUseCase.state.isPlayingTrack,
@@ -90,7 +81,7 @@ struct TrackDetailView: View {
         }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
-        .environment(trackDetailUseCase)
+        .environment(trackUseCase)
         .onTapGesture {
             withAnimation(.easeInOut) {
                 isContentSheetPresented = false
@@ -103,7 +94,7 @@ struct TrackDetailView: View {
 
 private struct Background: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     var body: some View {
         Group {
@@ -131,7 +122,7 @@ private struct Background: View {
 private struct HeaderView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
@@ -226,7 +217,7 @@ private struct AlbumImage: View {
 
 private struct MusicControllerView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isTrackAppendToPlaylistSheetPresented = false
@@ -299,7 +290,7 @@ private struct MusicControllerCell: View {
 
 private struct BottomView: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -341,19 +332,19 @@ private struct BottomView: View {
 
 private struct ProfileHeader: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     /// 프로필 이미지 사이즈
     private let profileImageSize: CGFloat = 40
     
-    /// 현재 Track을 업로드한 Platter를 반환합니다.
-    private var platter: Platter {
-        trackDetailUseCase.track.platter
+    /// 현재 Track을 업로드한 User를 반환합니다.
+    private var user: User {
+        trackDetailUseCase.track.user
     }
     
     /// 프로필 이미지 URL을 반환합니다.
     private var profileImageUrl: URL? {
-        let urlString = platter.profileImageUrl
+        let urlString = user.profileImageUrl
         return URL(string: urlString)
     }
     
@@ -373,7 +364,7 @@ private struct ProfileHeader: View {
             .frame(width: profileImageSize, height: profileImageSize)
             
             VStack(alignment: .leading, spacing: 0) {
-                Text(platter.nickname)
+                Text(user.nickname)
                     .font(.Body.body2)
                 
                 Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
@@ -390,7 +381,7 @@ private struct ProfileHeader: View {
 
 private struct ProfileContent: View {
     
-    @Environment(TrackDetailUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -424,6 +415,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView(trackId: .init())
+    TrackDetailView()
         .environment(PreviewHelper.mockMusicControlUseCase)
 }

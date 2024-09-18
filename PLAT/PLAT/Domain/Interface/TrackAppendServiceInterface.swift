@@ -12,5 +12,5 @@ protocol TrackAppendServiceInterface {
     func fetchRecentSearchTermList() -> [String]
     func removeRecentSearchTerm(index: Int)
     func searchMusic(term: String) async -> [Music]
-    func postTrack(track: Track)
+    func postTrack(music: Music, context: String, location: Location) async
 }

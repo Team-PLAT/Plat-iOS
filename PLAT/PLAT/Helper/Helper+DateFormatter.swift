@@ -23,3 +23,20 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+extension String {
+    
+    /// 문자열 ISO 8601 타입을 Date 타입으로 변환합니다.
+    var iso8601ToDate: Date {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [
+            .withInternetDateTime, .withFractionalSeconds
+        ]
+        
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return .now
+        }
+    }
+}

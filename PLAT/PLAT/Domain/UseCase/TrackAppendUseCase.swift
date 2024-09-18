@@ -53,7 +53,7 @@ extension TrackAppendUseCase {
     }
     
     /// 트랙 게시하기
-    func postTrack(track: Track) {
-        trackAppendService.postTrack(track: track)
+    func postTrack(music: Music, context: String, location: Location) async {
+        await trackAppendService.postTrack(music: music, context: context, location: location)
     }
 }
