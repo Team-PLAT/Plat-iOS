@@ -10,11 +10,19 @@ import Combine
 
 struct StubMusicController: MusicControllerInterface {
     
-    func setup() {
-        print(#function)
+    func setup() async -> Bool {
+        return false
     }
     
     func play(_ music: Music) {
+        print(#function)
+    }
+    
+    func playPlaylist(with isrcs: [String]) {
+        print(#function)
+    }
+    
+    func playRandomPlaylist(with isrcs: [String]) {
         print(#function)
     }
     

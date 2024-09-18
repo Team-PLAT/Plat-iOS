@@ -46,8 +46,10 @@ struct SelectStreamAccountView: View {
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
             .onChange(of: isShowingOffer) {
                 if !isShowingOffer {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        authUseCase.updateIsLoginComplete(true)
+                    if musicControlUseCase.state.status {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            authUseCase.updateIsLoginComplete(true)
+                        }
                     }
                 }
             }
@@ -77,6 +79,9 @@ struct SelectStreamAccountView: View {
             }
             .padding(.horizontal, 108)
             .padding(.bottom)
+        }
+        .onAppear {
+            musicControlUseCase.effect(.request)
         }
         .foregroundStyle(.white)
         .background(.platBackground)

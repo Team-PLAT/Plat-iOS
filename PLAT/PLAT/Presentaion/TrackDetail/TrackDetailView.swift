@@ -13,6 +13,7 @@ struct TrackDetailView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(TrackUseCase.self) private var trackUseCase: TrackUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @State private var isContentSheetPresented = false
     @State private var isNonePlaylistToastPresented = false
@@ -63,20 +64,14 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-                if let track = MockDataBuilder.trackList.first(where: { $0.id == trackUseCase.trackId }) {
-                    
-                    /// 재생중인 노래
-                    if let isPlayingTrack = musicControlUseCase.state.isPlayingTrack,
-                        track.id == isPlayingTrack.id {
-                        
-                        musicControlUseCase.effect(.updatePlayer(duration: musicControlUseCase.state.currentDuration))
-                    } else {
-                        /// 처음 재생하는 노래
-                        musicControlUseCase.state.isPlayingTrack = track
-                        musicControlUseCase.effect(.setup(music: track.music))
-                    }
-                } else {
-                    print("trackId 찾기 오류")
+            guard let track = MockDataBuilder.trackList.first(where: { $0.id == trackDetailUseCase.trackId }) else {
+                print("Track Detail View trackId 찾기 오류")
+                return
+            }
+            
+            if musicControlUseCase.state.isPlayingTrack?.id != track.id {
+                musicControlUseCase.state.isPlayingTrack = track
+                musicControlUseCase.effect(.setup(music: track.music))
             }
         }
         .background(.black.opacity(0.6))

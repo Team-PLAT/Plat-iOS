@@ -32,7 +32,7 @@ struct MainView: View {
                         switch tab {
                         case .map: TrackMapView()
                         case .feed: FeedView()
-                        case .playlist: Text("PlaylistView")
+                        case .playlist: Text("플리뷰")
                         case .account: UserDetailView()
                         }
                     }
