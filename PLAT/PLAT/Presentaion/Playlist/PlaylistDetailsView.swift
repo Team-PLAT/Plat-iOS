@@ -145,7 +145,6 @@ private struct PlayListPlayButton: View {
     var body: some View {
         HStack(spacing: 27) {
             Button {
-                // TODO: 재생
                 musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
@@ -166,7 +165,6 @@ private struct PlayListPlayButton: View {
             }
             
             Button {
-                // TODO: 임의재생
                 musicControlUseCase.effect(.playRandomPlaylist(isrcs: isrcs))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
@@ -265,8 +263,8 @@ private struct PlayListRowView: View {
                             Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)
                         }
                         
-                        Button {
-                            // TODO: 플리에서 제거 및 색 바꾸기 이슈
+                        Button(role: .destructive) {
+                            // TODO: 플리에서 제거
                         } label: {
                             Label("플레이리스트에서 제거", systemImage: SystemImage.delete)
                                 .symbolRenderingMode(.palette)
@@ -295,6 +293,7 @@ private struct PlayListRowView: View {
                 
                 if let currentIsrc = playlistMusic?.isrc {
                     isrcs.append(currentIsrc)
+                    print("🍔🍔🍔🍔", isrcs)
                 }
             }
         }
