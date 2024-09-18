@@ -13,10 +13,15 @@ struct MainView: View {
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     @State private var userUseCase: UserUseCase = .init(userProfileService: StubUserProfileService())
     @State private var streamAccountUseCase: StreamAccountUseCase = .init(streamAccountService: StubStreamAccountService())
-    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
+    @State private var trackUseCase: TrackUseCase = .init(
+        trackService: TrackServiceImpl(),
+        imageService: ImageServiceImpl()
+    )
+    @State private var trackMapUseCase: TrackMapUseCase = .init(mapService: StubTrackMapService())
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
+    @State private var playlistUseCase: PlaylistUseCase = .init(playlistService: StubPlaylistService())
     @State private var selectedTab: Tab = .map
     
     var body: some View {
@@ -64,8 +69,28 @@ struct MainView: View {
         .environment(userUseCase)
         .environment(infoUseCase)
         .environment(streamAccountUseCase)
+        .environment(trackUseCase)
         .environment(trackMapUseCase)
         .environment(musicControlUseCase)
+        .environment(playlistUseCase)
+    }
+    
+    /// Tab 설정을 위한 Custom Modifier
+    private struct ConfigureTab: ViewModifier {
+        
+        let selectedTab: Tab
+        
+        func body(content: Content) -> some View {
+            content
+                .tag(selectedTab)
+                .tabItem {
+                    VStack {
+                        Image(systemName: selectedTab.icon)
+                        Text(selectedTab.title)
+                            .font(.Caption.caption2)
+                    }
+                }
+        }
     }
 }
 

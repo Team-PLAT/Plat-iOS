@@ -24,23 +24,21 @@ enum PreviewHelper {
     )
     
     static let mockAuthUseCase = AuthUseCase(
-        authService: AppleSocialLoginService(),
-        userSessionService: StubUserSessionService()
+        socialLoginServcie: AppleSocialLoginService(),
+        memberService: StubMemberService()
     )
     
-    static let mockTrackDetailUseCase = TrackDetailUseCase(
-        feedTrack: MockDataBuilder.feedTrack,
-        track: MockDataBuilder.track,
+    static let mockTrackDetailUseCase = TrackUseCase(
         trackService: StubTrackService(),
-        trackId: MockDataBuilder.track.id
-    )
-    
-    static let mockTrackMapUseCase = TrackMapUseCase(
-        trackMapService: StubTrackMapService()
+        imageService: StubImageService()
     )
     
     static let mockMusicControlUseCase = MusicControlUseCase(
         musicController: StubMusicController()
+    )
+    
+    static let mockPlaylistUseCase = PlaylistUseCase(
+        playlistService: StubPlaylistService()
     )
 }
 #endif

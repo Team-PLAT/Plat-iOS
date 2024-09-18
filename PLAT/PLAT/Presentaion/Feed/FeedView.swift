@@ -63,7 +63,7 @@ struct FeedView: View {
             }
             .fullScreenCover(isPresented: $showTrackDetail) {
                 if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
-                    TrackDetailView(trackId: trackId)
+                    TrackDetailView()
                         .presentationBackground(.thinMaterial.opacity(0.5))
                 }
             }
@@ -156,12 +156,12 @@ private struct FeedProfileImage: View {
     
     let track: Track
     
-    private var platter: Platter {
-        track.platter
+    private var user: User {
+        track.user
     }
     
     private var profileImageUrl: URL? {
-        URL(string: track.platter.profileImageUrl)
+        URL(string: track.user.profileImageUrl)
     }
     
     var body: some View {
@@ -187,13 +187,13 @@ private struct FeedHeaderView: View {
     
     let track: Track
     
-    private var platter: Platter {
-        track.platter
+    private var user: User {
+        track.user
     }
     
     var body: some View {
         HStack(spacing: 8) {
-            Text(platter.nickname)
+            Text(user.nickname)
                 .font(.Body.body2)
                 .foregroundStyle(.white)
             

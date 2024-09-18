@@ -31,15 +31,18 @@ struct MiniMusicPlayer: View {
                 Spacer()
                 PlaybackButton(isPaused: $isPaused, track: track)
             }
+            .padding(.horizontal, 12)
             
             ProgressView(value: progress)
                 .tint(.platPurple)
                 .background(.platBlack)
         }
-        .padding(.horizontal, 12)
         .padding(.top, 12)
         .background(.platBlack)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .onTapGesture {
+            print("음악 재생 화면 이동")
+            // TODO: 음악 재생 화면 이동
+        }
     }
 }
 
@@ -77,6 +80,14 @@ private struct Content: View {
     
     let track: Track?
     
+    private var userOfTrack: String {
+        if let nickname = track?.user.nickname {
+            return nickname + "의 트랙"
+        } else {
+            return ""
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 4) {
@@ -90,7 +101,7 @@ private struct Content: View {
                     .font(.Body.body5)
             }
             
-            Text(track?.platter.nickname ?? "" + "의 트랙")
+            Text(userOfTrack)
                 .font(.Body.body2)
         }
         .foregroundStyle(.gray3)
