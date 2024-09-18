@@ -13,6 +13,7 @@ struct TrackDetailView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(TrackUseCase.self) private var trackUseCase: TrackUseCase
+    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @State private var isContentSheetPresented = false
     @State private var isNonePlaylistToastPresented = false

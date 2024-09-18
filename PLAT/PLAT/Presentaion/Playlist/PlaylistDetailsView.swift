@@ -40,7 +40,8 @@ struct PlaylistDetailsView: View {
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
             if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
-                TrackDetailView(trackId: trackId)
+                TrackDetailView()
+                // TODO: trackId
                     .presentationBackground(.thinMaterial.opacity(0.5))
             }
         }
@@ -352,15 +353,15 @@ private struct TrackInfo: View {
                     .frame(width: 2, height: 2)
                     .foregroundColor(.gray7)
                 
-                if track.platter is User {
+//                if track.platter is User {
                     Text("직접 추가됨")
                         .font(.Body.body5)
                         .foregroundStyle(.gray7)
-                } else {
-                    Text("\(track.platter.nickname)의 트랙")
-                        .font(.Body.body5)
-                        .foregroundStyle(.gray7)
-                }
+//                } else {
+//                    Text("\(track.platter.nickname)의 트랙")
+//                        .font(.Body.body5)
+//                        .foregroundStyle(.gray7)
+//                }
                 
             }
         }
