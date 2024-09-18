@@ -302,7 +302,7 @@ private struct DetailSheetCloseButtonView: View {
 
 /// 트랙PD 정보에서 인원수에 따른 표시방법을 다르게 하기 위한 함수
 private func formatNicknames(_ tracks: [Track]) -> String {
-    let nicknames = tracks.map { $0.platter.nickname }
+    let nicknames = tracks.map { $0.user.nickname }
     let count = nicknames.count
 
     if count > 3 {

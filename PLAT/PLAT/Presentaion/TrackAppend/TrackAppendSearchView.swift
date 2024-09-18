@@ -8,6 +8,8 @@
 import SwiftUI
 import MusicKit
 
+// MARK: - TrackAppendSearchView
+
 struct TrackAppendSearchView: View {
     @Binding var isTrackAppendViewSheet: Bool
     @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
@@ -16,71 +18,116 @@ struct TrackAppendSearchView: View {
     @State private var musicList: [Music] = []
     @State private var pathModel: PathModel = .init()
     @State private var selectedMusic: Music = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
+    @State private var recentSearchTermList: [String] = []
     @Binding var detent: PresentationDetent
     
     var body: some View {
         NavigationStack(path: $pathModel.trackAppendPaths) {
-            if #available(iOS 17.1, *) {
-                VStack {
-                    
-                    TrackAppendRecentTermView()
-                        .environment(pathModel)
-                        
-                    Spacer()
-                    
-                    TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
-                        .environment(pathModel)
-                    
-                }
-                .navigationDestination(for: TrackAppendPath.self) { path in
-                    switch path {
-                    case .trackAppendContentView:
-                        TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
-                    }
-                }
-                .onAppear {
-                    Task {
-                        let status = await MusicAuthorization.request()
-                        print(status == .authorized)
-                    }
-                    UISearchBar.appearance().showsCancelButton = false
-                    detent = .large
-                    searchTerm = ""
-                }
-                .onChange(of: searchTerm) {
-                    searchTimer?.invalidate()
-                    searchTimer = nil
-                    
-                    self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
-                        if searchTerm != "" {
-                            print("검색중")
-                            Task {
-                                musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
-                            }
-                        } else {
-                            print("검색불가")
-                        }
-                    }
-                }
-                // TODO: 상위 컴포넌트에 넣으면 searchable의 X 버튼이 작동을 안함, 여기서는 작동은 하지만 NaivigationTitle부분에서는 키보드 내리기가 작동 안함
-                // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-                .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-                .tapDismissesKeyboard()
-                .searchable(text: $searchTerm, prompt: "아티스트, 노래, 가사 등")
-                // TODO: iOS 17.1 이상만 가능해서 그 이전 버전도 지원되게 해야함
-                .searchPresentationToolbarBehavior(.avoidHidingContent)
+            VStack {
+                TrackAppendSearchbar(searchTerm: $searchTerm)
                 
-            } else {
+                TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
+                    .environment(pathModel)
                 
+                Spacer()
+                
+                TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
+                    .environment(pathModel)
             }
-            
+            // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+            .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
+            .navigationDestination(for: TrackAppendPath.self) { path in
+                switch path {
+                case .trackAppendContentView:
+                    TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
+                }
+            }
+            .onAppear {
+                Task {
+                    let status = await MusicAuthorization.request()
+                }
+                UISearchBar.appearance().showsCancelButton = false
+                detent = .large
+                searchTerm = ""
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .onDisappear {
+                searchTerm = ""
+                musicList = []
+            }
+            .onChange(of: searchTerm) {
+                searchTimer?.invalidate()
+                searchTimer = nil
+                
+                self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                    if searchTerm != "" {
+                        print("검색중")
+                        Task {
+                            musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
+                        }
+                    } else {
+                        print("검색불가")
+                    }
+                }
+            }
+            .onSubmit {
+                trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .scrollDismissesKeyboard(.immediately)
+            .tapDismissesKeyboard()
         }
     }
 }
 
+// MARK: - TrackAppendSearchbar
+
+private struct TrackAppendSearchbar: View {
+    @Binding var searchTerm: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(.gray8)
+                .padding(.leading, 10)
+            
+            TextField("", text: $searchTerm, prompt: Text("아티스트, 노래, 가사 등").foregroundStyle(.gray8).font(.Body.body3))
+                .foregroundStyle(.white)
+                .tint(.platPurple)
+            
+            Spacer()
+            
+            if !searchTerm.isEmpty {
+                Button {
+                    searchTerm = ""
+                } label: {
+                    Image(systemName: "x.circle.fill")
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(.gray8)
+                        .padding(.leading, 10)
+                }
+                .padding(.trailing, 10)
+            }
+        }
+        .frame(height: 42)
+        .background {
+            RoundedRectangle(cornerRadius: 8).fill(.gray9)
+        }
+        .padding(EdgeInsets(top: 10, leading: 18, bottom: 8, trailing: 18))
+    }
+}
+
+// MARK: - TrackAppendRecentTermView
+
 private struct TrackAppendRecentTermView: View {
-    var recentSearchTermList = ["2003", "Sunset Rollercoaster", "Aqua Man", "Snow Man", "2024", "small girl"]
     @Environment(PathModel.self) var pathModel
+    
+    @Binding var trackAppendUseCase: TrackAppendUseCase
+    @Binding var searchTerm: String
+    @Binding var recentSearchTermList: [String]
     
     var body: some View {
         HStack {
@@ -94,14 +141,20 @@ private struct TrackAppendRecentTermView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 8) {
                 // TODO: 최근 검색어 기능 연결
-                ForEach(recentSearchTermList, id: \.self) { term in
+                ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
                     HStack(spacing: 8) {
-                        Text(term)
-                            .font(.Body.body5)
-                            .padding(.leading, 12)
                         Button {
-                            // TODO: 최근 검색어 삭제 기능 추가
-                            pathModel.trackAppendPaths.append(.trackAppendContentView)
+                            searchTerm = term
+                        } label: {
+                            Text(term)
+                                .foregroundStyle(.white)
+                                .font(.Body.body5)
+                                .padding(.leading, 12)
+                        }
+                        
+                        Button {
+                            trackAppendUseCase.removeRecentSearchTerm(index: index)
+                            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable()
@@ -123,6 +176,8 @@ private struct TrackAppendRecentTermView: View {
         .frame(height: 32)
     }
 }
+
+// MARK: - TrackAppendMusicListView
 
 private struct TrackAppendMusicListView: View {
     @Environment(PathModel.self) var pathModel
@@ -152,24 +207,13 @@ private struct TrackAppendMusicListView: View {
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
-                        print("\(music.title.wrappedValue)")
                         pathModel.trackAppendPaths.append(.trackAppendContentView)
                         selectedMusic = music.wrappedValue
                     }
-
             }
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
-            
-        }
-        .scrollDismissesKeyboard(.immediately)
-    }
-}
-
-extension View {
-    func tapDismissesKeyboard() -> some View {
-        self.onTapGesture {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }

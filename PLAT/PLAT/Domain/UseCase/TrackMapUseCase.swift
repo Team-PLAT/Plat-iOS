@@ -11,20 +11,16 @@ import MapKit
 @Observable
 final class TrackMapUseCase {
     
-    private(set) var trackMapService: TrackMapServiceInterface
+    private(set) var mapService: MapServiceInterface
     private(set) var state: State
-    var locationManager = LocationManager()
     
-    init(trackMapService: TrackMapServiceInterface) {
-        self.trackMapService = trackMapService
-        self.state = State(trackList: [])
+    init(mapService: MapServiceInterface) {
+        self.mapService = mapService
         
-        Task {
-            let location = trackMapService.currentLocation()
-            let trackList = await trackMapService.fetchTrackList(currentLocation: location)
-            self.state.trackList = trackList
-            print(state.trackList)
-        }
+        self.state = State(
+            location: .init(latitude: 0, longitude: 0),
+            trackList: []
+        )
     }
 }
 
@@ -33,6 +29,7 @@ final class TrackMapUseCase {
 extension TrackMapUseCase {
     
     struct State {
+        var location: Location?
         var trackList: [Track]
     }
 }
@@ -43,25 +40,25 @@ extension TrackMapUseCase {
     
     /// 현재위치 확인하기
     func currentLocation() -> Location {
-        trackMapService.currentLocation()
+        .init(latitude: 0, longitude: 0)
     }
     
     /// 서버에서 트랙 불러오기
+    @MainActor
     func fetchTrackList(currentLocation: Location) {
         Task {
-            state.trackList = await trackMapService.fetchTrackList(currentLocation: currentLocation)
-            print(state.trackList)
+            
         }
     }
     
     /// 지도에 트랙별 핀 꽂기
     func insertPin(location: Location, track: Track) {
-        trackMapService.insertPin(location: location, track: track)
+        
     }
     
     /// 플레이리스트 생성하기
+    @MainActor
     func createPlatPlaylist(currentLocation: Location) async -> Playlist {
-        let playlist = await self.trackMapService.createPlatPlaylist(currentLocation: currentLocation)
-        return playlist
+        return .init(title: "", imageUrl: "", trackList: [])
     }
 }

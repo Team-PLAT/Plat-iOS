@@ -28,7 +28,7 @@ final class FeedTrackUseCase {
                 name: "",
                 address: "포항시 남구 지곡동"
             ),
-            isPaused: false
+            isPaused: true
         )
     }
 }

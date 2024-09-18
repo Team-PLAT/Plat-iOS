@@ -10,11 +10,14 @@ import SwiftUI
 struct FeedView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    
+        
     @State private var feedTrackUseCase: FeedTrackUseCase = .init(
-        feedTrack: MockDataBuilder.feedTrack,
+        feedTrack: MockDataBuilder.trackList,
         feedTrackService: FeedTrackService()
     )
+    
+    @State private var selectedTrackId: Int64?
+    @State private var showTrackDetail = false
     
     var body: some View {
         GeometryReader { proxy in
@@ -25,13 +28,15 @@ struct FeedView: View {
                         .padding(.bottom, 20)
                     
                     ScrollView {
-                        ForEach(MockDataBuilder.feedTrack.indices, id: \.self) { index in
+                        ForEach(MockDataBuilder.trackList) { track in
                             FeedRowView(
-                                track: MockDataBuilder.feedTrack[index],
-                                trackIndex: index,
-                                playlistId: ""
+                                track: track,
+                                trackIndex: Int64(track.id),
+                                playlistId: "",
+                                selectedTrackId: $selectedTrackId
                             )
                         }
+                        
                     }
                 }
                 
@@ -40,9 +45,14 @@ struct FeedView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: MockDataBuilder.track
+                        track: $musicControlUseCase.state.isPlayingTrack,
+                        currentDuration: musicControlUseCase.state.currentDuration,
+                        totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
                     .padding(.horizontal, 18)
+                    .onTapGesture {
+                        showTrackDetail.toggle()
+                    }
                     .position(
                         CGPoint(
                             x: proxy.size.width / 2,
@@ -51,10 +61,17 @@ struct FeedView: View {
                     )
                 }
             }
+            .fullScreenCover(isPresented: $showTrackDetail) {
+                if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
+                    TrackDetailView()
+                        .presentationBackground(.thinMaterial.opacity(0.5))
+                }
+            }
             .environment(feedTrackUseCase)
             .refreshable {
                 // TODO: fetch 한 값 불러오기
             }
+            
         }
     }
 }
@@ -63,9 +80,14 @@ struct FeedView: View {
 
 private struct FeedRowView: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+        
     let track: Track
-    let trackIndex: Int
+    let trackIndex: Int64
     let playlistId: String
+    
+    @State private var feedMusic: Music?
+    @Binding private(set) var selectedTrackId: Int64?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -83,7 +105,7 @@ private struct FeedRowView: View {
                         Spacer()
                         
                         Button {
-                            // 신고 알럿 창 띄우기
+                            // 알럿창
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.white)
@@ -94,8 +116,15 @@ private struct FeedRowView: View {
                     }
                     .padding(.bottom, 8)
                     
-                    FeedPlayer(track: track)
-                        .padding(.bottom, 6)
+                    @Bindable var musicControlUseCase = musicControlUseCase
+                    FeedPlayer(
+                        trackIndex: Int64(trackIndex), 
+                        track: track,
+                        isPaused: $musicControlUseCase.state.isPaused,
+                        selectedTrackId: $selectedTrackId,
+                        feedMusic: $feedMusic
+                    )
+                    .padding(.bottom, 6)
                     
                     FeedContentImage(track: track)
                         .padding(.bottom, 6)
@@ -103,7 +132,7 @@ private struct FeedRowView: View {
                     FeedContentView(track: track)
                         .padding(.bottom, 8)
                     
-                    FeedActionView(trackIndex: trackIndex, playlistId: playlistId)
+                    FeedActionView(trackIndex: Int(trackIndex), playlistId: playlistId)
                         .padding(.bottom, 18)
                 }
             }
@@ -112,6 +141,11 @@ private struct FeedRowView: View {
             Rectangle()
                 .foregroundColor(.gray9)
                 .frame(width: UIScreen.main.bounds.width, height: 1)
+        }
+        .onAppear {
+            Task {
+                feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+            }
         }
     }
 }
@@ -122,12 +156,12 @@ private struct FeedProfileImage: View {
     
     let track: Track
     
-    private var platter: Platter {
-        track.platter
+    private var user: User {
+        track.user
     }
     
     private var profileImageUrl: URL? {
-        URL(string: track.platter.profileImageUrl)
+        URL(string: track.user.profileImageUrl)
     }
     
     var body: some View {
@@ -153,13 +187,13 @@ private struct FeedHeaderView: View {
     
     let track: Track
     
-    private var platter: Platter {
-        track.platter
+    private var user: User {
+        track.user
     }
     
     var body: some View {
         HStack(spacing: 8) {
-            Text(platter.nickname)
+            Text(user.nickname)
                 .font(.Body.body2)
                 .foregroundStyle(.white)
             
@@ -200,16 +234,24 @@ private struct FeedLocationView: View {
 
 private struct FeedPlayer: View {
     
-    let track: Track
+    var trackIndex: Int64?
     
     @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State var track: Track
+    @Binding private(set) var isPaused: Bool
+    @Binding private(set) var selectedTrackId: Int64?
+    @Binding private(set) var feedMusic: Music?
     
     private var music: Music {
-        track.music
-    }
-    
-    private var isPaused: Bool {
-        feedTrackUseCase.state.isPaused
+        feedMusic ?? Music(
+            isrc: "",
+            title: "",
+            artist: "",
+            albumImageUrl: "",
+            duration: 0.0
+        )
     }
     
     var body: some View {
@@ -224,7 +266,8 @@ private struct FeedPlayer: View {
                     .frame(width: 56, height: 56)
                     .foregroundColor(.clear)
                     .background(
-                        FeedAlbumImage(track: track)
+                        FeedAlbumImage(track: track,
+                                       feedMusic: $feedMusic)
                     )
                     .cornerRadius(8, corners: [.topLeft, .bottomLeft])
                     .padding(.trailing, 8)
@@ -244,13 +287,30 @@ private struct FeedPlayer: View {
                 .padding(.trailing, 70)
                 
                 Button {
-                    // TODO: MusicControlUseCase 재생 토글
-                    //                    musicControlUseCase.effect(.setup(music: MockDataBuilder.music))
+                    /// 재생 정지 반복 토글
+                    if selectedTrackId == trackIndex {
+                        if let feedMusic {
+                            track.music = feedMusic
+                        }
+                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.togglePlayback)
+                    } else {
+                        /// 처음 재생할 때
+                        if let feedMusic {
+                            track.music = feedMusic
+                        }
+                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.setup(music: track.music))
+                        selectedTrackId = trackIndex
+                    }
                 } label: {
-                    Image(systemName: isPaused ? "pause.fill" : "play.fill")
+                    Image(systemName: (selectedTrackId == trackIndex && !isPaused) ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 12)
+                        .transaction { transaction in
+                            transaction.animation = nil
+                    }
                 }
             }
             .frame(width: 311, height: 56)
@@ -264,8 +324,20 @@ private struct FeedAlbumImage: View {
     
     let track: Track
     
+    @Binding private(set) var feedMusic: Music?
+    
+    private var music: Music {
+        feedMusic ?? Music(
+            isrc: "",
+            title: "",
+            artist: "",
+            albumImageUrl: "",
+            duration: 0.0
+        )
+    }
+    
     private var albumImageUrl: URL? {
-        URL(string: track.music.albumImageUrl)
+        URL(string: feedMusic?.albumImageUrl ?? "")
     }
     
     var body: some View {

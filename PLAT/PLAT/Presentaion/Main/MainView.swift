@@ -13,7 +13,11 @@ struct MainView: View {
     @State private var infoUseCase: InfoUseCase = .init(infoService: StubInfoService())
     @State private var userUseCase: UserUseCase = .init(userProfileService: StubUserProfileService())
     @State private var streamAccountUseCase: StreamAccountUseCase = .init(streamAccountService: StubStreamAccountService())
-    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
+    @State private var trackUseCase: TrackUseCase = .init(
+        trackService: TrackServiceImpl(),
+        imageService: ImageServiceImpl()
+    )
+    @State private var trackMapUseCase: TrackMapUseCase = .init(mapService: StubTrackMapService())
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
@@ -28,7 +32,7 @@ struct MainView: View {
                         switch tab {
                         case .map: TrackMapView()
                         case .feed: FeedView()
-                        case .playlist: PlaylistView(playlists: MockDataBuilder.playlists)
+                        case .playlist: Text("PlaylistView")
                         case .account: UserDetailView()
                         }
                     }
@@ -65,9 +69,28 @@ struct MainView: View {
         .environment(userUseCase)
         .environment(infoUseCase)
         .environment(streamAccountUseCase)
+        .environment(trackUseCase)
         .environment(trackMapUseCase)
         .environment(musicControlUseCase)
         .environment(playlistUseCase)
+    }
+    
+    /// Tab 설정을 위한 Custom Modifier
+    private struct ConfigureTab: ViewModifier {
+        
+        let selectedTab: Tab
+        
+        func body(content: Content) -> some View {
+            content
+                .tag(selectedTab)
+                .tabItem {
+                    VStack {
+                        Image(systemName: selectedTab.icon)
+                        Text(selectedTab.title)
+                            .font(.Caption.caption2)
+                    }
+                }
+        }
     }
 }
 

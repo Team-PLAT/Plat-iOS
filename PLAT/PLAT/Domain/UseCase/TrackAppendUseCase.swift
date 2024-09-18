@@ -32,13 +32,28 @@ extension TrackAppendUseCase {
 
 extension TrackAppendUseCase {
     
+    /// 최근 검색어 업데이트
+    func updateRecentSearchTermList(searchTerm: String) {
+        trackAppendService.updateRecentSearchTermList(searchTerm: searchTerm)
+    }
+    
+    /// 최근 검색어 불러오기
+    func fetchRecentSearchTermList() -> [String] {
+        return trackAppendService.fetchRecentSearchTermList()
+    }
+    
+    /// 최근 검색어 삭제
+    func removeRecentSearchTerm(index: Int) {
+        trackAppendService.removeRecentSearchTerm(index: index)
+    }
+    
     /// 음원 검색하기
     func searchMusic(term: String) async -> [Music] {
         await trackAppendService.searchMusic(term: term)
     }
     
     /// 트랙 게시하기
-    func postTrack(track: Track) {
-        trackAppendService.postTrack(track: track)
+    func postTrack(music: Music, context: String, location: Location) async {
+        await trackAppendService.postTrack(music: music, context: context, location: location)
     }
 }
