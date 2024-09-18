@@ -108,7 +108,6 @@
 		82721EEC2C8C3D1E00CA2C9A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */; };
 		82721EEE2C8D624000CA2C9A /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EED2C8D624000CA2C9A /* ToastMessage.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
-		828DB49F2C9B0B2C007D982B /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 828DB49E2C9B0B2C007D982B /* Config.xcconfig */; };
 		82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */; };
 		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
 		82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */; };
@@ -130,6 +129,7 @@
 		82C9A53C2C87228500C57916 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53B2C87228500C57916 /* API.swift */; };
 		82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */; };
 		82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53F2C8729D500C57916 /* PlatAPI.swift */; };
+		82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82E3328A2C9B164700D06A8D /* Config.xcconfig */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF616E5B2C74277300CCDC9D /* NetworkError.swift */; };
@@ -255,7 +255,6 @@
 		82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		82721EED2C8D624000CA2C9A /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		828DB49E2C9B0B2C007D982B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicController.swift; sourceTree = "<group>"; };
 		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
 		82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataBuilder.swift; sourceTree = "<group>"; };
@@ -276,6 +275,7 @@
 		82C9A53B2C87228500C57916 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RawRepresentable.swift"; sourceTree = "<group>"; };
 		82C9A53F2C8729D500C57916 /* PlatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatAPI.swift; sourceTree = "<group>"; };
+		82E3328A2C9B164700D06A8D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
 		DF616E5B2C74277300CCDC9D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */,
-        512DE28B2C988066002B4622 /* PlaylistDetailView.swift */,
+				512DE28B2C988066002B4622 /* PlaylistDetailView.swift */,
 			);
 			path = Playlist;
 			sourceTree = "<group>";
@@ -778,7 +778,7 @@
 				DFE27A132C71D5B6002BAD11 /* NetworkClient.swift */,
 				82721EE72C8C229E00CA2C9A /* NetworkLog.swift */,
 				DFE27A1F2C71E78F002BAD11 /* Config.swift */,
-				828DB49E2C9B0B2C007D982B /* Config.xcconfig */,
+				82E3328A2C9B164700D06A8D /* Config.xcconfig */,
 				82C9A53A2C87227A00C57916 /* API */,
 				DF616E5A2C741A7F00CCDC9D /* DTO */,
 				DFE27A232C720305002BAD11 /* Service */,
@@ -875,7 +875,7 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
-				828DB49F2C9B0B2C007D982B /* Config.xcconfig in Resources */,
+				82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1036,6 +1036,7 @@
 /* Begin XCBuildConfiguration section */
 		793278112C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82E3328A2C9B164700D06A8D /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1099,6 +1100,7 @@
 		};
 		793278122C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82E3328A2C9B164700D06A8D /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1155,6 +1157,7 @@
 		};
 		793278142C2D014600F433F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82E3328A2C9B164700D06A8D /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1196,6 +1199,7 @@
 		};
 		793278152C2D014600F433F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82E3328A2C9B164700D06A8D /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
