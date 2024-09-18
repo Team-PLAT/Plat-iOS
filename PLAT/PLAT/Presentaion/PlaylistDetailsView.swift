@@ -13,16 +13,15 @@ struct PlaylistDetailsView: View {
     
     @State private var playlist: Playlist = MockDataBuilder.playlist
     @State private var showTrackDetail = false
+    @State private var isrcs: [String] = []
     
     var body: some View {
         VStack(spacing: 0) {
-            PlayListEditButton()
-                .padding(.leading, 300)
             
             PlayListInfo(playlist: playlist)
                 .padding(.bottom, 10)
             
-            PlayListPlayButton()
+            PlayListPlayButton(isrcs: $isrcs)
                 .padding(.bottom, 10)
             
             PlayListDetailView(playlist: playlist)
@@ -34,7 +33,7 @@ struct PlaylistDetailsView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(playlist.trackList) { track in
-                        PlayListRowView(showTrackDetail: $showTrackDetail, track: track)
+                        PlayListRowView(showTrackDetail: $showTrackDetail, isrcs: $isrcs, track: track)
                     }
                 }
             }
@@ -45,42 +44,55 @@ struct PlaylistDetailsView: View {
                     .presentationBackground(.thinMaterial.opacity(0.5))
             }
         }
-    }
-}
-
-private struct PlayListEditButton: View {
-    var body: some View {
-        HStack(spacing: 12) {
-            Button {
-                // TODO: 수정 뷰 이동 & fetch한 애들 넘기기
-            } label: {
-                Circle()
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(.gray9)
-                    .overlay {
-                        Image(systemName: SystemImage.pencil)
-                            .resizable()
-                            .frame(width: 12, height: 12)
-                            .foregroundStyle(.platPurple)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    // TODO: 뒤로 가기
+                } label: {
+                    HStack(spacing: 3) {
+                        Image(systemName: SystemImage.back)
                     }
+                    .foregroundStyle(.platPurple)
+                }
             }
             
-            Button {
-                // TODO: 플리 삭제
-            } label: {
-                Circle()
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(.gray9)
-                    .overlay {
-                        Image(systemName: SystemImage.trash)
-                            .resizable()
-                            .frame(width: 12, height: 12)
-                            .foregroundStyle(.platPurple)
-                    }
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    // TODO: PlaylistDetailsEditView 뷰 이동 & fetch한 애들 넘기기
+                } label: {
+                    Circle()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(.gray9)
+                        .overlay {
+                            Image(systemName: SystemImage.pencil)
+                                .resizable()
+                                .frame(width: 12, height: 12)
+                                .foregroundStyle(.platPurple)
+                        }
+                }
+            }
+            
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    // TODO: 플리 삭제
+                } label: {
+                    Circle()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(.gray9)
+                        .overlay {
+                            Image(systemName: SystemImage.trash)
+                                .resizable()
+                                .frame(width: 12, height: 12)
+                                .foregroundStyle(.platPurple)
+                        }
+                }
             }
         }
     }
 }
+
+// MARK: - PlayListInfo
 
 private struct PlayListInfo: View {
     
@@ -122,11 +134,19 @@ private struct PlayListInfo: View {
     }
 }
 
+// MARK: - PlayListPlayButton
+
 private struct PlayListPlayButton: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @Binding var isrcs: [String]
+    
     var body: some View {
         HStack(spacing: 27) {
             Button {
                 // TODO: 재생
+                musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 165, height: 44)
@@ -147,6 +167,7 @@ private struct PlayListPlayButton: View {
             
             Button {
                 // TODO: 임의재생
+                musicControlUseCase.effect(.playRandomPlaylist(isrcs: isrcs))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 165, height: 44)
@@ -168,6 +189,8 @@ private struct PlayListPlayButton: View {
         }
     }
 }
+
+// MARK: - PlayListDetailView
 
 private struct PlayListDetailView: View {
     
@@ -201,12 +224,15 @@ private struct PlayListDetailView: View {
     }
 }
 
+// MARK: - PlayListRowView
+
 private struct PlayListRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var playlistMusic: Music?
     @Binding private(set) var showTrackDetail: Bool
+    @Binding var isrcs: [String]
     
     let track: Track
     
@@ -266,10 +292,16 @@ private struct PlayListRowView: View {
         .onAppear {
             Task {
                 playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                
+                if let currentIsrc = playlistMusic?.isrc {
+                    isrcs.append(currentIsrc)
+                }
             }
         }
     }
 }
+
+// MARK: - AlbumImage
 
 private struct AlbumImage: View {
     
@@ -297,6 +329,8 @@ private struct AlbumImage: View {
         }
     }
 }
+
+// MARK: - TrackInfo
 
 private struct TrackInfo: View {
     

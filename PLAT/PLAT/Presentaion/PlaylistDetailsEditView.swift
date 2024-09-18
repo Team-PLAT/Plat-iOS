@@ -10,7 +10,8 @@ import SwiftUI
 struct PlaylistDetailsEditView: View {
     
     @State var playlist: Playlist = MockDataBuilder.playlist
-    //    @Binding var playlist: Playlist
+
+    @Binding private(set) var playlistMusic: Music?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -29,17 +30,38 @@ struct PlaylistDetailsEditView: View {
                     ForEach(playlist.trackList) { track in
                         PlayListRowView(track: track, onDelete: { trackToDelete in
                             deleteTrack(trackToDelete)
-                        })
+                        }, playlistMusic: $playlistMusic)
                     }
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    // TODO: 뒤로 가기
+                } label: {
+                    Text("취소")
+                    .foregroundStyle(.platPurple)
+                }
+            }
+        
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    // TODO: 완료
+                } label: {
+                    Text("완료")
+                    .foregroundStyle(.platPurple)
+                }
+            }
+        }
     }
-    // TODO: usecase로 분리!
     private func deleteTrack(_ track: Track) {
         playlist.trackList.removeAll { $0.id == track.id }
     }
 }
+
+// MARK: - PlayListInfo
 
 private struct PlayListInfo: View {
     
@@ -142,6 +164,8 @@ private struct PlayListInfo: View {
     }
 }
 
+// MARK: - NewTrackAdd
+
 private struct NewTrackAdd: View {
     
     var body: some View {
@@ -174,10 +198,14 @@ private struct NewTrackAdd: View {
     }
 }
 
+// MARK: - PlayListRowView
+
 private struct PlayListRowView: View {
     
     let track: Track
     let onDelete: (Track) -> Void
+    
+    @Binding private(set) var playlistMusic: Music?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -192,14 +220,15 @@ private struct PlayListRowView: View {
                         .foregroundStyle(.red)
                         .overlay {
                             Image(systemName: SystemImage.minus)
+                                .foregroundColor(.white)
                         }
                 }
                 .padding(.leading, 18)
                 
-                AlbumImage(track: track)
+                AlbumImage(track: track, playlistMusic: $playlistMusic)
                     .padding(.horizontal, 10)
                 
-                TrackInfo(track: track)
+                TrackInfo(track: track, playlistMusic: $playlistMusic)
                     .padding(.trailing, 40)
                 
                 Spacer()
@@ -226,8 +255,10 @@ private struct AlbumImage: View {
     
     let track: Track
     
+    @Binding private(set) var playlistMusic: Music?
+    
     private var albumImageUrl: URL? {
-        URL(string: track.music.albumImageUrl)
+        URL(string: playlistMusic?.albumImageUrl ?? "")
     }
     
     var body: some View {
@@ -247,18 +278,22 @@ private struct AlbumImage: View {
     }
 }
 
+// MARK: - TrackInfo
+
 private struct TrackInfo: View {
     
     let track: Track
     
+    @Binding private(set) var playlistMusic: Music?
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(track.music.title)
+            Text(playlistMusic?.title ?? "")
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text(track.music.artist)
+                Text(playlistMusic?.artist ?? "")
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 
@@ -282,5 +317,5 @@ private struct TrackInfo: View {
 }
 
 #Preview {
-    PlaylistDetailsEditView()
+    PlaylistDetailsEditView(playlistMusic: .constant(MockDataBuilder.track.music))
 }

@@ -27,17 +27,17 @@ extension AppleMusicController {
     
     /// 권한 요청
     func setup() async -> Bool {
-            let isAuthorized = await requestAuthorization()
-            if isAuthorized {
-                if await checkMusicSubscription() {
-                    return true
-                } else {
-                    return false
-                }
+        let isAuthorized = await requestAuthorization()
+        if isAuthorized {
+            if await checkMusicSubscription() {
+                return true
             } else {
-                print("권한 없엉")
                 return false
             }
+        } else {
+            print("권한 없엉")
+            return false
+        }
     }
     
     /// 음악 첫 재생
@@ -48,6 +48,39 @@ extension AppleMusicController {
             musicPlayer.play()
         } else {
             print("음악 재생 오류")
+        }
+    }
+    
+    /// 플리 재생
+    func playPlaylist(with isrcs: [String]) {
+        Task {
+            let songIDs = await requestSongIds(for: isrcs)
+            if !songIDs.isEmpty {
+                let reversedSongIDs = songIDs.reversed()
+                print("🐒🐒", reversedSongIDs)
+                let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: Array(reversedSongIDs))
+                musicPlayer.setQueue(with: descriptor)
+                musicPlayer.play()
+            } else {
+                print("플레이리스트에 곡이 없습니다.")
+            }
+        }
+    }
+    
+    /// 플리 임의 재생
+    func playRandomPlaylist(with isrcs: [String]) {
+        Task {
+            var songIDs = await requestSongIds(for: isrcs)
+            songIDs.shuffle()
+            
+            print("🐒🐒🐒🐒", songIDs)
+            if !songIDs.isEmpty {
+                let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: songIDs)
+                musicPlayer.setQueue(with: descriptor)
+                musicPlayer.play()
+            } else {
+                print("플레이리스트에 곡이 없습니다.")
+            }
         }
     }
     
@@ -67,12 +100,12 @@ extension AppleMusicController {
     
     /// 음악 업데이트
     func updateMusicPlayer(with duration: Double) {
-            if musicPlayer.playbackState == .playing {
-                    musicPlayer.currentPlaybackTime = duration
-            } else {
-                print("음악이 재생 중이지 않음")
-            }
+        if musicPlayer.playbackState == .playing {
+            musicPlayer.currentPlaybackTime = duration
+        } else {
+            print("음악이 재생 중이지 않음")
         }
+    }
     
     /// 현재 음악 시간
     func currentDuration() -> AnyPublisher<Double, Error> {
@@ -122,7 +155,7 @@ extension AppleMusicController {
             return false
         }
     }
-
+    
     /// ISRC값을 이용해 songId를 반환받습니다.
     private func requestSongId(for isrc: String) async {
         
@@ -171,5 +204,18 @@ extension AppleMusicController {
         } catch {
             print("에러 발생: \(error)")
         }
+    }
+    
+    private func requestSongIds(for isrcs: [String]) async -> [String] {
+        var songIDs: [String] = []
+        
+        for isrc in isrcs {
+            await requestSongId(for: isrc)
+            if let songId = self.firstSong?.id {
+                songIDs.append(songId)
+            }
+        }
+        
+        return songIDs
     }
 }

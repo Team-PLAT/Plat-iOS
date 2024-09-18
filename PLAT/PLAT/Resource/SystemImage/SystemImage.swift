@@ -26,4 +26,5 @@ enum SystemImage {
     static let trackPlus = "plus"
     static let trackDetail = "line.3.horizontal"
     static let minus = "minus"
+    static let back = "chevron.backward"
 }

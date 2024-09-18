@@ -52,6 +52,8 @@ extension MusicControlUseCase {
         case request
         case setup(music: Music)
         case play(music: Music)
+        case playPlaylist(isrcs: [String])
+        case playRandomPlaylist(isrcs: [String])
         case togglePlayback
         case updatePlayer(duration: Double)
     }
@@ -79,6 +81,12 @@ extension MusicControlUseCase {
             state.isPaused = false
             musicController.play(music)
             fetchCurrentPlaybackPosition()
+            
+        case .playPlaylist(let isrcs):
+            musicController.playPlaylist(with: isrcs)
+            
+        case .playRandomPlaylist(let isrcs):
+            musicController.playRandomPlaylist(with: isrcs)
             
         case .togglePlayback:
             if state.isPaused {
