@@ -17,7 +17,7 @@ struct MainView: View {
         trackService: TrackServiceImpl(),
         imageService: ImageServiceImpl()
     )
-    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
+    @State private var trackMapUseCase: TrackMapUseCase = .init(mapService: StubTrackMapService())
     @State private var musicControlUseCase = MusicControlUseCase(
         musicController: AppleMusicController.shared
     )
@@ -26,24 +26,17 @@ struct MainView: View {
     var body: some View {
         NavigationStack(path: $pathModel.paths) {
             TabView(selection: $selectedTab) {
-                ForEach(Tab.allCases) { tab in
-                    Group {
-                        switch tab {
-                        case .map: TrackMapView()
-                        case .feed: FeedView()
-                        case .playlist: Text("PlaylistView")
-                        case .account: UserDetailView()
-                        }
-                    }
-                    .tag(tab)
-                    .tabItem {
-                        VStack {
-                            Image(systemName: tab.icon)
-                            Text(tab.title)
-                                .font(.Caption.caption2)
-                        }
-                    }
-                }
+                TrackMapView()
+                    .modifier(ConfigureTab(selectedTab: Tab.map))
+                
+                FeedView()
+                    .modifier(ConfigureTab(selectedTab: Tab.feed))
+                
+                Text("PlaylistView")
+                    .modifier(ConfigureTab(selectedTab: Tab.playlist))
+                
+                UserDetailView()
+                    .modifier(ConfigureTab(selectedTab: Tab.account))
             }
             .tint(.platPurple)
             .navigationDestination(for: SettingPath.self) { path in
@@ -71,6 +64,24 @@ struct MainView: View {
         .environment(trackUseCase)
         .environment(trackMapUseCase)
         .environment(musicControlUseCase)
+    }
+    
+    /// Tab 설정을 위한 Custom Modifier
+    private struct ConfigureTab: ViewModifier {
+        
+        let selectedTab: Tab
+        
+        func body(content: Content) -> some View {
+            content
+                .tag(selectedTab)
+                .tabItem {
+                    VStack {
+                        Image(systemName: selectedTab.icon)
+                        Text(selectedTab.title)
+                            .font(.Caption.caption2)
+                    }
+                }
+        }
     }
 }
 

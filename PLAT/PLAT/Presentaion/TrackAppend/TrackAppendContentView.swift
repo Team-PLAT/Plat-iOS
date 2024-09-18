@@ -23,7 +23,7 @@ struct TrackAppendContentView: View {
     @State private var isPhotoAlbumSheet = false
     @State private var state: ContentState = .none
     @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
-    @State private var trackMapUseCase: TrackMapUseCase = .init(trackMapService: StubTrackMapService())
+    @State private var trackMapUseCase: TrackMapUseCase = .init(mapService: StubTrackMapService())
     @Binding var detent: PresentationDetent
     @Binding var music: Music
     @Binding var isTrackAppendViewSheet: Bool

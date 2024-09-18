@@ -33,10 +33,6 @@ enum PreviewHelper {
         imageService: StubImageService()
     )
     
-    static let mockTrackMapUseCase = TrackMapUseCase(
-        trackMapService: StubTrackMapService()
-    )
-    
     static let mockMusicControlUseCase = MusicControlUseCase(
         musicController: StubMusicController()
     )

@@ -100,6 +100,14 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
     }
     
     func postTrack(music: Music, context: String, location: Location) async {
-        let response = await TrackService.uploadTrack(request: UploadTrackRequest(isrc: music.isrc, imageUrl: music.albumImageUrl, content: context, latitude: location.latitude, longitude: location.longitude))
+        let response = await TrackRepository().uploadTrack(
+            request: UploadTrackRequest(
+                isrc: music.isrc,
+                imageUrl: music.albumImageUrl,
+                content: context,
+                latitude: location.latitude,
+                longitude: location.longitude
+            )
+        )
     }
 }
