@@ -20,7 +20,7 @@ struct PLATApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if !authUseCase.state.isLoginComplete {
+            if authUseCase.state.isLoginComplete {
                 MainView()
             } else {
                 OnboardingView()
