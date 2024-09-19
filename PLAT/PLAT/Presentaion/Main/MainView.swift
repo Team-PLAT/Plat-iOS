@@ -78,11 +78,27 @@ struct MainView: View {
                 .tabItem {
                     VStack {
                         Image(systemName: selectedTab.icon)
+                        
                         Text(selectedTab.title)
                             .font(.Caption.caption2)
                     }
                 }
         }
+    }
+}
+
+private struct AView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Text("하잉")
+                Spacer()
+            }
+            Spacer()
+        }
+        .background(.green)
     }
 }
 

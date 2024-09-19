@@ -44,6 +44,7 @@ struct TrackMapView: View {
                         .foregroundStyle(.platDarkpurple.opacity(0.5))
                 }
             }
+            .toolbarVisibility(.hidden, for: .navigationBar)
             
             if showTrackDetail == false {
                 MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId, showTrackDetail: $showTrackDetail)
@@ -135,7 +136,6 @@ private struct MapComponentsView: View {
             }
         }
         .padding(.horizontal, 18)
-        
     }
 }
 
