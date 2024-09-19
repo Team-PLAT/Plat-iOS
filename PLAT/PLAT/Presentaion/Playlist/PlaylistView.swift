@@ -23,30 +23,28 @@ struct PlaylistView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                ScrollView {
-                    CreatePlaylistView()
-                    
-                    ForEach(filteredPlaylists) { playlist in
-                        Button {
-                            selectedPlaylistId = playlist.id
-                            showPlaylistDetail.toggle()
-                        } label: {
-                            VStack {
-                                PlaylistSectionView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId)
-                                DividerView()
-                            }
+        VStack {
+            ScrollView {
+                CreatePlaylistView()
+                
+                ForEach(filteredPlaylists) { playlist in
+                    Button {
+                        selectedPlaylistId = playlist.id
+                        showPlaylistDetail.toggle()
+                    } label: {
+                        VStack {
+                            PlaylistSectionView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId)
+                            DividerView()
                         }
                     }
                 }
-                .padding(.leading, 18)
-                .padding(.vertical, 5)
             }
-            .background(.platBackground)
-            .tint(.white)
-            .navigationTitle("플레이리스트")
+            .padding(.leading, 18)
+            .padding(.vertical, 5)
         }
+        .background(.platBackground)
+        .tint(.white)
+        .navigationTitle("플레이리스트")
         .searchable(text: $searchText, prompt: "플레이리스트에서 찾기")
     }
 }
@@ -156,7 +154,7 @@ private struct DetailSheetView: View {
     var body: some View {
         VStack {
             DetailPlaylistButtonView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail)
-
+            
             DetailInfoView()
             
             DetailButtonsView(playlist: playlist, selectedPlaylistId: $selectedPlaylistId, showPlaylistDetail: $showPlaylistDetail)
@@ -207,14 +205,14 @@ private struct DetailPlaylistButtonView: View {
 
 private struct DetailInfoView: View {
     let trackList = MockDataBuilder.playlist.trackList
-
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("트랙 PD 정보")
                     .font(.Body.body4)
                     .padding(.bottom, 2)
-
+                
                 Text(formatNicknames(trackList))
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
@@ -304,7 +302,7 @@ private struct DetailSheetCloseButtonView: View {
 private func formatNicknames(_ tracks: [Track]) -> String {
     let nicknames = tracks.map { $0.user.nickname }
     let count = nicknames.count
-
+    
     if count > 3 {
         let displayedNicknames = nicknames.prefix(3).joined(separator: ", ")
         let additionalCount = count - 3

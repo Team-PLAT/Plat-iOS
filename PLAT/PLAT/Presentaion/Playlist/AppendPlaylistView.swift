@@ -15,43 +15,41 @@ struct AppendPlaylistView: View {
     @State private var playlistTitle: String = ""
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
-                    .sheet(isPresented: $isPhotoAlbumSheet) {
-                        PhotoPicker(selectedImage: $playlistImage)
-                    }
-                
-                AppendPlaylistTitle(playlistTitle: $playlistTitle)
-                
-                AppendPlaylistDate()
-                
-                Spacer()
-            }
-            .navigationTitle("새로운 플레이리스트")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        HStack(spacing: 3) {
-                            Image(systemName: "chevron.backward")
-                            Text("취소")
-                                .font(.Body.body2)
-                        }
-                        .foregroundStyle(.platPurple)
-                    }
-                    
+        VStack {
+            AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
+                .sheet(isPresented: $isPhotoAlbumSheet) {
+                    PhotoPicker(selectedImage: $playlistImage)
                 }
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        // TODO: 플레이 생성하기 기능 추가
-                    } label: {
-                        Text("생성")
-                            .foregroundStyle(.platPurple)
+            
+            AppendPlaylistTitle(playlistTitle: $playlistTitle)
+            
+            AppendPlaylistDate()
+            
+            Spacer()
+        }
+        .navigationTitle("새로운 플레이리스트")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack(spacing: 3) {
+                        Image(systemName: "chevron.backward")
+                        Text("취소")
                             .font(.Body.body2)
                     }
+                    .foregroundStyle(.platPurple)
+                }
+                
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    // TODO: 플레이 생성하기 기능 추가
+                } label: {
+                    Text("생성")
+                        .foregroundStyle(.platPurple)
+                        .font(.Body.body2)
                 }
             }
         }

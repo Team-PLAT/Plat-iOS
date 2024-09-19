@@ -27,24 +27,17 @@ struct MainView: View {
     var body: some View {
         NavigationStack(path: $pathModel.paths) {
             TabView(selection: $selectedTab) {
-                ForEach(Tab.allCases) { tab in
-                    Group {
-                        switch tab {
-                        case .map: TrackMapView()
-                        case .feed: FeedView()
-                        case .playlist: Text("플리뷰")
-                        case .account: UserDetailView()
-                        }
-                    }
-                    .tag(tab)
-                    .tabItem {
-                        VStack {
-                            Image(systemName: tab.icon)
-                            Text(tab.title)
-                                .font(.Caption.caption2)
-                        }
-                    }
-                }
+                TrackMapView()
+                    .modifier(ConfigureTab(selectedTab: .map))
+                
+                FeedView()
+                    .modifier(ConfigureTab(selectedTab: .feed))
+                
+                PlaylistView(playlists: MockDataBuilder.playlists)
+                    .modifier(ConfigureTab(selectedTab: .playlist))
+                
+                UserDetailView()
+                    .modifier(ConfigureTab(selectedTab: .account))
             }
             .tint(.platPurple)
             .navigationDestination(for: SettingPath.self) { path in
@@ -61,7 +54,6 @@ struct MainView: View {
                 case .streamAccountSettingsView:
                     StreamAccountSettingsView()
                         .toolbarRole(.editor)
-                    
                 }
             }
         }

@@ -22,61 +22,59 @@ struct TrackAppendSearchView: View {
     @Binding var detent: PresentationDetent
     
     var body: some View {
-        NavigationStack(path: $pathModel.trackAppendPaths) {
-            VStack {
-                TrackAppendSearchbar(searchTerm: $searchTerm)
-                
-                TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
-                    .environment(pathModel)
-                
-                Spacer()
-                
-                TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
-                    .environment(pathModel)
-            }
-            // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-            .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-            .navigationDestination(for: TrackAppendPath.self) { path in
-                switch path {
-                case .trackAppendContentView:
-                    TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
-                }
-            }
-            .onAppear {
-                Task {
-                    let status = await MusicAuthorization.request()
-                }
-                UISearchBar.appearance().showsCancelButton = false
-                detent = .large
-                searchTerm = ""
-                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-            }
-            .onDisappear {
-                searchTerm = ""
-                musicList = []
-            }
-            .onChange(of: searchTerm) {
-                searchTimer?.invalidate()
-                searchTimer = nil
-                
-                self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-                    if searchTerm != "" {
-                        print("검색중")
-                        Task {
-                            musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
-                        }
-                    } else {
-                        print("검색불가")
-                    }
-                }
-            }
-            .onSubmit {
-                trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
-                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-            }
-            .scrollDismissesKeyboard(.immediately)
-            .tapDismissesKeyboard()
+        VStack {
+            TrackAppendSearchbar(searchTerm: $searchTerm)
+            
+            TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
+                .environment(pathModel)
+            
+            Spacer()
+            
+            TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
+                .environment(pathModel)
         }
+        // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+        .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
+        .navigationDestination(for: TrackAppendPath.self) { path in
+            switch path {
+            case .trackAppendContentView:
+                TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
+            }
+        }
+        .onAppear {
+            Task {
+                let status = await MusicAuthorization.request()
+            }
+            UISearchBar.appearance().showsCancelButton = false
+            detent = .large
+            searchTerm = ""
+            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+        }
+        .onDisappear {
+            searchTerm = ""
+            musicList = []
+        }
+        .onChange(of: searchTerm) {
+            searchTimer?.invalidate()
+            searchTimer = nil
+            
+            self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                if searchTerm != "" {
+                    print("검색중")
+                    Task {
+                        musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
+                    }
+                } else {
+                    print("검색불가")
+                }
+            }
+        }
+        .onSubmit {
+            trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
+            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+        }
+        .scrollDismissesKeyboard(.immediately)
+        .tapDismissesKeyboard()
     }
 }
 
