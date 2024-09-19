@@ -144,4 +144,5 @@ private struct PlaybackButton: View {
             totalDuration: 4.0
         )
     }
+    .environment(PreviewHelper.mockMusicControlUseCase)
 }

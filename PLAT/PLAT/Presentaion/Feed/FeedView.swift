@@ -38,27 +38,26 @@ struct FeedView: View {
                         }
                         
                     }
-                }
-                
-                if musicControlUseCase.state.isStreaming {
-                    // TODO: 더미데이터 변경
-                    @Bindable var musicControlUseCase = musicControlUseCase
-                    MiniMusicPlayer(
-                        isPaused: $musicControlUseCase.state.isPaused,
-                        track: $musicControlUseCase.state.isPlayingTrack,
-                        currentDuration: musicControlUseCase.state.currentDuration,
-                        totalDuration: musicControlUseCase.state.music?.duration ?? 0
-                    )
-                    .padding(.horizontal, 18)
-                    .onTapGesture {
-                        showTrackDetail.toggle()
-                    }
-                    .position(
-                        CGPoint(
-                            x: proxy.size.width / 2,
-                            y: proxy.size.height - 49
+                    
+                    if musicControlUseCase.state.isStreaming {
+                        // TODO: 더미데이터 변경
+                        @Bindable var musicControlUseCase = musicControlUseCase
+                        MiniMusicPlayer(
+                            isPaused: $musicControlUseCase.state.isPaused,
+                            track: $musicControlUseCase.state.isPlayingTrack,
+                            currentDuration: musicControlUseCase.state.currentDuration,
+                            totalDuration: musicControlUseCase.state.music?.duration ?? 0
                         )
-                    )
+                        .onTapGesture {
+                            showTrackDetail.toggle()
+                        }
+                }
+//                    .position(
+//                        CGPoint(
+//                            x: proxy.size.width / 2,
+//                            y: proxy.size.height - 49
+//                        )
+//                    )
                 }
             }
             .fullScreenCover(isPresented: $showTrackDetail) {

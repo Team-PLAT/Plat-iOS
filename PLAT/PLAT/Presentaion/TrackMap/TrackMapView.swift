@@ -151,14 +151,12 @@ private struct MapComponentsView: View {
                     currentDuration: musicControlUseCase.state.currentDuration,
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
-                .padding(.bottom, 16)
                 .onTapGesture {
                     selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
                     showTrackDetail.toggle()
                 }
             }
         }
-        .padding(.horizontal, 18)
     }
 }
 
