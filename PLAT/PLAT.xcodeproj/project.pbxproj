@@ -134,6 +134,8 @@
 		82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */; };
 		82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53F2C8729D500C57916 /* PlatAPI.swift */; };
 		82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82E3328A2C9B164700D06A8D /* Config.xcconfig */; };
+		82E332932C9BF50900D06A8D /* AppendPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E332922C9BF50900D06A8D /* AppendPlaylistView.swift */; };
+		82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
 		DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF616E5B2C74277300CCDC9D /* NetworkError.swift */; };
@@ -284,6 +286,8 @@
 		82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RawRepresentable.swift"; sourceTree = "<group>"; };
 		82C9A53F2C8729D500C57916 /* PlatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatAPI.swift; sourceTree = "<group>"; };
 		82E3328A2C9B164700D06A8D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		82E332922C9BF50900D06A8D /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
+		82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsEditView.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RoundedCorner.swift"; sourceTree = "<group>"; };
 		DF616E5B2C74277300CCDC9D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -330,9 +334,11 @@
 		513DCBE02C98234D007CA813 /* Playlist */ = {
 			isa = PBXGroup;
 			children = (
+				82E332922C9BF50900D06A8D /* AppendPlaylistView.swift */,
 				791905A72C905762005571DE /* PlaylistView.swift */,
 				513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */,
 				512DE28B2C988066002B4622 /* PlaylistDetailView.swift */,
+				82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */,
 			);
 			path = Playlist;
 			sourceTree = "<group>";
@@ -928,6 +934,7 @@
 				82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */,
 				82204EA82C95B00500546A5C /* MemberServiceInterface.swift in Sources */,
 				DF6DC99F2C75DF4B004A23F7 /* AppleMusicDTO.swift in Sources */,
+				82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				79B0F6FA2C8C42AD009140AF /* LikeTrackAPI.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */,
@@ -988,6 +995,7 @@
 				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
+				82E332932C9BF50900D06A8D /* AppendPlaylistView.swift in Sources */,
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
 				82721EEE2C8D624000CA2C9A /* ToastMessage.swift in Sources */,
 				DF91BB6C2C479CE800672155 /* AppleMusicAccountService.swift in Sources */,
@@ -1181,7 +1189,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -1201,7 +1209,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.crownjoe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1223,7 +1231,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/Info.plist;
@@ -1243,7 +1251,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.crownjoe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
