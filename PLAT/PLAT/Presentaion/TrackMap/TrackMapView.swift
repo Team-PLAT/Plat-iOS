@@ -22,29 +22,20 @@ struct TrackMapView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Map(
-                position: $locationManager.position,
-                interactionModes: []
-            ) {
-                UserAnnotation()
-                
-                // TODO: 실제 데이터로 변경
-                ForEach(MockDataBuilder.trackList) { track in
-                    Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
-                        CustomMarkerView(track: track)
-                            .onTapGesture {
-                                selectedTrackId = track.id
-                                showTrackDetail.toggle()
-                            }
-                    }
-                }
-                
-                if let location = locationManager.location {
-                    MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
-                        .foregroundStyle(.platDarkpurple.opacity(0.5))
-                }
+            if #available(iOS 18.0, *) {
+                MapView(
+                    locationManager: $locationManager,
+                    selectedTrackId: $selectedTrackId,
+                    showTrackDetail: $showTrackDetail
+                )
+                .toolbarVisibility(.hidden, for: .navigationBar)
+            } else {
+                MapView(
+                    locationManager: $locationManager,
+                    selectedTrackId: $selectedTrackId,
+                    showTrackDetail: $showTrackDetail
+                )
             }
-            .toolbarVisibility(.hidden, for: .navigationBar)
             
             if showTrackDetail == false {
                 MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId, showTrackDetail: $showTrackDetail)
@@ -65,6 +56,38 @@ struct TrackMapView: View {
             
             // TODO: 트랙 리스트 업데이트
             // TODO: 플레이리스트 생성
+        }
+    }
+}
+
+private struct MapView: View {
+    
+    @Binding private(set) var locationManager: LocationManager
+    @Binding private(set) var selectedTrackId: Track.ID?
+    @Binding private(set) var showTrackDetail: Bool
+    
+    var body: some View {
+        Map(
+            position: $locationManager.position,
+            interactionModes: []
+        ) {
+            UserAnnotation()
+            
+            // TODO: 실제 데이터로 변경
+            ForEach(MockDataBuilder.trackList) { track in
+                Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
+                    CustomMarkerView(track: track)
+                        .onTapGesture {
+                            selectedTrackId = track.id
+                            showTrackDetail.toggle()
+                        }
+                }
+            }
+            
+            if let location = locationManager.location {
+                MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
+                    .foregroundStyle(.platDarkpurple.opacity(0.5))
+            }
         }
     }
 }
