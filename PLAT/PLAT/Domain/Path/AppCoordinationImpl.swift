@@ -1,5 +1,5 @@
 //
-//  AppCoordinationmpl.swift
+//  AppCoordinationImpl.swift
 //  PLAT
 //
 //  Created by 김민준 on 9/20/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class AppCoordinatorImpl: AppCoordinationProtocol {
+class AppCoordinationImpl: AppCoordinationProtocol {
     
     @Published var path: NavigationPath = NavigationPath()
     @Published var sheet: Sheet?

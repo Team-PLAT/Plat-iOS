@@ -24,7 +24,7 @@ enum Screen: Identifiable, Hashable {
     
     // 설정
     case userDetail
-    case nicknameSetting
+    case nicknameSetting(_ nickname: String)
     case accountSetting
     case streamAccountSetting
     case aboutPlatSettings

@@ -131,6 +131,7 @@ private struct AppendPlaylistDate: View {
         .padding(.horizontal, 18)
     }
 }
+
 #Preview {
     AppendPlaylistView()
 }

@@ -19,7 +19,6 @@ struct OnboardingView: View {
     )
     
     @State private var infoUseCase = InfoUseCase(infoService: StubInfoService())
-    @State private var authType: AuthType = .signUp
     
     var body: some View {
         @Bindable var pathModel = pathModel
@@ -47,13 +46,13 @@ struct OnboardingView: View {
                 )
                 
                 ActionButton(state: .enabled, title: "시작하기") {
-                    self.authType = .signUp
+                    authUseCase.effect(.toggleAuthType(.signUp))
                     pathModel.registerPaths.append(.loginView)
                 }
                 .padding(.horizontal, 18)
                 .padding(.bottom, 22)
                 
-                LoginButton(authType: $authType)
+                LoginButton()
                     .font(.Head.head5)
                     .foregroundStyle(.platPurple)
                     .padding(.bottom, 30)
@@ -63,8 +62,8 @@ struct OnboardingView: View {
             .navigationDestination(for: RegisterPath.self) { path in
                 switch path {
                 case .loginView:
-                    LoginView(authType: $authType)
-                        .navigationTitle(authType == .signUp ? "회원가입" : "로그인" )
+                    LoginView()
+                        .navigationTitle(authUseCase.state.authType == .signUp ? "회원가입" : "로그인" )
                         .navigationBarTitleDisplayMode(.inline)
                         .toolbarRole(.editor)
                         .tint(.white)
@@ -86,11 +85,11 @@ struct OnboardingView: View {
 
 private struct LoginButton: View {
     @Environment(PathModel.self) private var pathModel
-    @Binding var authType: AuthType
+    @Environment(AuthUseCase.self) private var authUseCase
     
     var body: some View {
         Button {
-            self.authType = .signIn
+            authUseCase.effect(.toggleAuthType(.signIn))
             pathModel.registerPaths.append(.loginView)
         } label: {
             Text("로그인")

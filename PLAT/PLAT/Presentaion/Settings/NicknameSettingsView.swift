@@ -63,6 +63,6 @@ private struct NicknameGuide: View {
 }
 
 #Preview {
-    NicknameSettingsView(nicknameText: "IPSUM_LOREM")
+    NicknameSettingsView(nicknameText: "")
         .environment(PreviewHelper.mockUserUseCase)
 }

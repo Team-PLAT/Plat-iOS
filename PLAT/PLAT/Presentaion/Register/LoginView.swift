@@ -12,13 +12,11 @@ struct LoginView: View {
     @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
-    @Binding var authType: AuthType
-    
     var body: some View {
-        if authType == .signUp {
-            SignUpView(authType: $authType)
+        if authUseCase.state.authType == .signUp {
+            SignUpView()
         } else {
-            LoginView(authType: $authType)
+            SignInView()
         }
     }
 }
@@ -26,7 +24,6 @@ struct LoginView: View {
 // MARK: - SignUpView
 
 private struct SignUpView: View {
-    @Binding var authType: AuthType
     
     var body: some View {
         VStack(spacing: 16) {
@@ -59,7 +56,7 @@ private struct SignUpView: View {
                 .background(.white)
                 .padding(.bottom, 4)
             
-            SwitchSignInView(authType: $authType)
+            SwitchSignInView()
             
         }
         .background(.black)
@@ -130,7 +127,8 @@ private struct PolicyNoticeText: View {
 }
 
 private struct SwitchSignInView: View {
-    @Binding var authType: AuthType
+    
+    @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     
     var body: some View {
         HStack(spacing: 5) {
@@ -147,7 +145,7 @@ private struct SwitchSignInView: View {
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
                 .onTapGesture {
-                    self.authType = .signIn
+                    authUseCase.effect(.toggleAuthType(.signIn))
             }
         }
     }
@@ -156,7 +154,8 @@ private struct SwitchSignInView: View {
 // MARK: - SignInView
 
 private struct SignInView: View {
-    @Binding var authType: AuthType
+    
+    @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     
     var body: some View {
         VStack(spacing: 20) {
@@ -183,22 +182,22 @@ private struct SignInView: View {
                 .frame(width: 316, height: 1)
                 .background(.white)
             
-            SwitchSignUpView(authType: $authType)
+            SwitchSignUpView()
         }
         .background(.black)
     }
 }
 
 struct AppleContinueButton: View {
-    @Environment(AuthUseCase.self) private var loginUseCase
+    @Environment(AuthUseCase.self) private var authUseCase
     @Environment(PathModel.self) var pathModel
     
     var body: some View {
         SignInWithAppleButton(
             .continue,
-            onRequest: { _ in loginUseCase.requestSocialLogin()},
+            onRequest: { _ in authUseCase.requestSocialLogin()},
             onCompletion: { result in
-                let loginResult = loginUseCase.handleSocialLogin(authResult: result)
+                let loginResult = authUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
                     pathModel.registerPaths.append(.selectStreamAccountView)
@@ -216,7 +215,7 @@ struct AppleContinueButton: View {
 }
 
 private struct SwitchSignUpView: View {
-    @Binding var authType: AuthType
+    @Environment(AuthUseCase.self) private var authUseCase
     
     var body: some View {
         HStack(spacing: 5) {
@@ -233,14 +232,14 @@ private struct SwitchSignUpView: View {
                 .font(.Body.body4)
                 .foregroundColor(.platPurple)
                 .onTapGesture {
-                    self.authType = .signUp
+                    authUseCase.effect(.toggleAuthType(.signUp))
             }
         }
     }
 }
 
 #Preview {
-    LoginView(authType: .constant(.signUp))
+    LoginView()
         .environment(PreviewHelper.mockAuthUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PathModel())

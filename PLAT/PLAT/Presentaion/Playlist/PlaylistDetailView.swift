@@ -9,12 +9,10 @@ import SwiftUI
 
 struct PlaylistDetailView: View {
     
-    @Binding private(set) var selectedPlaylist: Playlist
-    
     var body: some View {
         VStack(spacing: 0) {
-            
-            PlaylistDetailDataView(selectedPlaylist: $selectedPlaylist)
+
+            PlaylistDetailDataView()
             
             PlaylistDetailPlayButton()
             
@@ -77,7 +75,19 @@ struct PlaylistDetailView: View {
 
 private struct PlaylistDetailDataView: View {
     
-    @Binding private(set) var selectedPlaylist: Playlist
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    
+    private var selectedPlaylist: Playlist {
+        if let playlist = playlistUseCase.selectedPlaylist {
+            return playlist
+        } else {
+            return Playlist(
+                title: "플레이리스트 가져오기 실패",
+                imageUrl: "",
+                trackList: []
+            )
+        }
+    }
     
     var body: some View {
         AsyncImage(url: URL(string: selectedPlaylist.imageUrl)) { phase in
@@ -173,5 +183,5 @@ private struct PlaylistDetailNewTrackButton: View {
 }
 
 #Preview {
-    PlaylistDetailView(selectedPlaylist: .constant(MockDataBuilder.playlist))
+    PlaylistDetailView()
 }
