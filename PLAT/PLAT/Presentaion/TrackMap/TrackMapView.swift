@@ -250,7 +250,7 @@ private struct MapButtonsView: View {
                     }
             }
             .fullScreenCover(isPresented: $isPlattingSheet) {
-                PlattingView(playList: $playlist)
+                PlatProcessingView(playList: $playlist)
                     .presentationBackground(.black.opacity(0.8))
             }
         }

@@ -1,5 +1,5 @@
 //
-//  FeedView.swift
+//  TrackFeedView.swift
 //  PLAT
 //
 //  Created by 조세연 on 8/14/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FeedView: View {
+struct TrackFeedView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
         
@@ -493,6 +493,6 @@ private struct FeedActionView: View {
 }
 
 #Preview {
-    FeedView()
+    TrackFeedView()
         .environment(PreviewHelper.mockMusicControlUseCase)
 }

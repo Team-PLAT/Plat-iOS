@@ -75,7 +75,7 @@ struct PlaylistSectionView: View {
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isShowDetailSheet) {
-            DetailSheetView(showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            PlaylistInfoSheet(showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
         }
     }
 }
@@ -144,9 +144,9 @@ private struct CreatePlaylistView: View {
     }
 }
 
-// MARK: - DetailSheetView
+// MARK: - PlaylistInfoSheet
 
-private struct DetailSheetView: View {
+private struct PlaylistInfoSheet: View {
     @Binding var showPlaylistDetail: Bool
     @Binding var selectedPlaylistId: Playlist.ID?
     let playlist: Playlist

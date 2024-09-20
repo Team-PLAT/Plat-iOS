@@ -1,5 +1,5 @@
 //
-//  PlattingView.swift
+//  PlatProcessingView.swift
 //  PLAT
 //
 //  Created by 박준우 on 8/18/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlattingView: View {
+struct PlatProcessingView: View {
     @State var isCompleteLoading = false
     @Binding var playList: Playlist?
     
@@ -214,5 +214,5 @@ private struct PlattingPlayList: View {
 }
 
 #Preview {
-    PlattingView(playList: .constant(MockDataBuilder.playlist))
+    PlatProcessingView(playList: .constant(MockDataBuilder.playlist))
 }

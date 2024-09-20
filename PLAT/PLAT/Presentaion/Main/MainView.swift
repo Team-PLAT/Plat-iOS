@@ -30,7 +30,7 @@ struct MainView: View {
                 TrackMapView()
                     .modifier(ConfigureTab(selectedTab: .map))
                 
-                FeedView()
+                TrackFeedView()
                     .modifier(ConfigureTab(selectedTab: .feed))
                 
                 PlaylistView(playlists: MockDataBuilder.playlists)

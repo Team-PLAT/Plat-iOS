@@ -18,7 +18,7 @@ struct LoginView: View {
         if authType == .signUp {
             SignUpView(authType: $authType)
         } else {
-            SignInView(authType: $authType)
+            LoginView(authType: $authType)
         }
     }
 }
