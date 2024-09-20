@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - SelectStreamAccountView
+
 struct SelectStreamAccountView: View {
     
     enum SelectedState {
@@ -14,11 +16,11 @@ struct SelectStreamAccountView: View {
         case appleMusic
     }
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(AuthUseCase.self) private var authUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State var selectedState: SelectedState = .none
-    @State var isSheetPresented: Bool = false
     @State private var isShowingOffer: Bool = false
     
     var body: some View {
@@ -70,8 +72,7 @@ struct SelectStreamAccountView: View {
                 .padding(.bottom)
             
             Button {
-                isSheetPresented.toggle()
-                print("왜 스트리밍 계정을 연결하나요?")
+                pathModel.presentSheet(.whyConnectStreamAccountSheet)
             } label: {
                 Text("왜 스트리밍 계정을 연결하나요?")
                     .font(.Body.body4)
@@ -80,22 +81,20 @@ struct SelectStreamAccountView: View {
             .padding(.horizontal, 108)
             .padding(.bottom)
         }
-        .onAppear {
-            musicControlUseCase.effect(.request)
-        }
         .foregroundStyle(.white)
         .background(.platBackground)
-        .sheet(isPresented: $isSheetPresented) {
-            WhyConnectStreamAccountSheet()
+        .navigationTitle("스트리밍 계정 선택하기")
+        .onAppear {
+            musicControlUseCase.effect(.request)
         }
     }
 }
 
-// MARK: WhyConnectStreamAccountSheet
+// MARK: - WhyConnectStreamAccountSheet
 
-private struct WhyConnectStreamAccountSheet: View {
+struct WhyConnectStreamAccountSheet: View {
+    
     var body: some View {
-        
         VStack(alignment: .leading) {
             
             Text("왜 스트리밍 계정을 연결하나요?")
@@ -103,7 +102,7 @@ private struct WhyConnectStreamAccountSheet: View {
                 .padding(.top, 42)
                 .padding(.bottom, 16)
             
-            Text("스트리밍 서비스는 PLAT의 가장 중요한 음원 재생을 위해 사용됩니다. 계정을 연결하면, 지인과 친구들이 공유한 음원들을 직접 PLAT을 통해 들을 수 있으며, 그 외에도 다양한 기능들을 제공하게 됩니다. 그리고 이를 통해 더 많은 아티스트들을 지원할 수 있게 됩니다.")
+            Text("스트리밍 서비스는 \(Constant.appName)의 가장 중요한 음원 재생을 위해 사용됩니다. 계정을 연결하면, 지인과 친구들이 공유한 음원들을 직접 PLAT을 통해 들을 수 있으며, 그 외에도 다양한 기능들을 제공하게 됩니다. 그리고 이를 통해 더 많은 아티스트들을 지원할 수 있게 됩니다.")
                 .font(.Caption.caption1)
             
             Spacer()
@@ -114,6 +113,8 @@ private struct WhyConnectStreamAccountSheet: View {
         .presentationDragIndicator(.visible)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     SelectStreamAccountView()

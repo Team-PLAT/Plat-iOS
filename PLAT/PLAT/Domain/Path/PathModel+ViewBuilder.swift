@@ -1,5 +1,5 @@
 //
-//  AppCoordinationImpl+ViewBuilder.swift
+//  PathModel+ViewBuilder.swift
 //  PLAT
 //
 //  Created by 김민준 on 9/20/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension AppCoordinationImpl {
+extension PathModel {
     
     @ViewBuilder
     func build(_ screen: Screen) -> some View {
@@ -15,8 +15,8 @@ extension AppCoordinationImpl {
         case .onboarding:
             OnboardingView()
             
-        case .login:
-            LoginView()
+        case .signUpOrIn:
+            SignUpOrInView()
             
         case .selectStreamAccount:
             SelectStreamAccountView()
@@ -47,6 +47,26 @@ extension AppCoordinationImpl {
             
         case .aboutPlatSettings:
             AboutPlatSettingsView()
+        }
+    }
+    
+    @ViewBuilder
+    func build(_ sheet: Sheet) -> some View {
+        switch sheet {
+        case .whyConnectStreamAccountSheet:
+            WhyConnectStreamAccountSheet()
+        case .trackAppendToPlaylistSheet:
+            TrackAppendToPlaylistSheet()
+            
+        default: EmptyView()
+//        case .trackAppend:
+//            <#code#>
+//        case .playlistDetail:
+//            <#code#>
+//        case .playlistInfo:
+//            <#code#>
+//        case .appendPlaylist:
+//            <#code#>
         }
     }
 }

@@ -54,7 +54,7 @@
 		796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */; };
 		796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465A52C3A82A200F6DC2D /* ListRadioButton.swift */; };
 		79842E8C2C7225FD0062F825 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79842E8B2C7225FD0062F825 /* LocationManager.swift */; };
-		79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* MainView.swift */; };
+		79A09D4E2C391BA2006F14F4 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
 		79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */; };
 		79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */; };
@@ -77,7 +77,7 @@
 		820836772C34001D00F6D0CF /* AppleSocialLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* AppleSocialLoginService.swift */; };
 		8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* AuthUseCase.swift */; };
 		8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */; };
-		820836812C34030C00F6D0CF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836802C34030C00F6D0CF /* LoginView.swift */; };
+		820836812C34030C00F6D0CF /* SignUpOrInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836802C34030C00F6D0CF /* SignUpOrInView.swift */; };
 		820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836842C3403B400F6D0CF /* UserDetailView.swift */; };
 		820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836862C3403C600F6D0CF /* NicknameSettingsView.swift */; };
 		820836892C3403DD00F6D0CF /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836882C3403DD00F6D0CF /* AccountSettingsView.swift */; };
@@ -101,12 +101,13 @@
 		82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */; };
 		82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EB92C96CA4100546A5C /* StubImageService.swift */; };
 		82204EBC2C96D00800546A5C /* TrackMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82204EBB2C96D00800546A5C /* TrackMapService.swift */; };
+		822273BC2C9D8FB9001A64DF /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822273BB2C9D8FB9001A64DF /* DIContainer.swift */; };
 		8235A4582C9D6FB400063E27 /* SelectStreamAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4572C9D6FB400063E27 /* SelectStreamAccountView.swift */; };
 		8235A45A2C9D725A00063E27 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4592C9D725A00063E27 /* Sheet.swift */; };
 		8235A45C2C9D726900063E27 /* FullScreenCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45B2C9D726900063E27 /* FullScreenCover.swift */; };
-		8235A45E2C9D83C500063E27 /* AppCoordinationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45D2C9D83C500063E27 /* AppCoordinationProtocol.swift */; };
-		8235A4602C9D84B100063E27 /* AppCoordinationImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45F2C9D84B100063E27 /* AppCoordinationImpl.swift */; };
-		8235A4622C9D850B00063E27 /* AppCoordinationImpl+ViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4612C9D850B00063E27 /* AppCoordinationImpl+ViewBuilder.swift */; };
+		8235A45E2C9D83C500063E27 /* PathModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45D2C9D83C500063E27 /* PathModelProtocol.swift */; };
+		8235A4602C9D84B100063E27 /* PathModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45F2C9D84B100063E27 /* PathModel.swift */; };
+		8235A4622C9D850B00063E27 /* PathModel+ViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4612C9D850B00063E27 /* PathModel+ViewBuilder.swift */; };
 		8235A4642C9D883300063E27 /* AppendPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4632C9D883300063E27 /* AppendPlaylistView.swift */; };
 		8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */; };
 		823CA1162C9D6C670084A90B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CA1152C9D6C670084A90B /* Screen.swift */; };
@@ -212,7 +213,7 @@
 		796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubStreamAccountService.swift; sourceTree = "<group>"; };
 		796465A52C3A82A200F6DC2D /* ListRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRadioButton.swift; sourceTree = "<group>"; };
 		79842E8B2C7225FD0062F825 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		79A09D4D2C391BA2006F14F4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPlaylistService.swift; sourceTree = "<group>"; };
 		79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackMapAPI.swift; sourceTree = "<group>"; };
@@ -236,7 +237,7 @@
 		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8208367B2C34005400F6D0CF /* AuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUseCase.swift; sourceTree = "<group>"; };
 		8208367E2C34012E00F6D0CF /* SocialLoginServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginServiceInterface.swift; sourceTree = "<group>"; };
-		820836802C34030C00F6D0CF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		820836802C34030C00F6D0CF /* SignUpOrInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpOrInView.swift; sourceTree = "<group>"; };
 		820836842C3403B400F6D0CF /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
 		820836862C3403C600F6D0CF /* NicknameSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameSettingsView.swift; sourceTree = "<group>"; };
 		820836882C3403DD00F6D0CF /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
@@ -260,12 +261,13 @@
 		82204EB42C96B4CA00546A5C /* ImageServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceImpl.swift; sourceTree = "<group>"; };
 		82204EB92C96CA4100546A5C /* StubImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubImageService.swift; sourceTree = "<group>"; };
 		82204EBB2C96D00800546A5C /* TrackMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapService.swift; sourceTree = "<group>"; };
+		822273BB2C9D8FB9001A64DF /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		8235A4572C9D6FB400063E27 /* SelectStreamAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStreamAccountView.swift; sourceTree = "<group>"; };
 		8235A4592C9D725A00063E27 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		8235A45B2C9D726900063E27 /* FullScreenCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCover.swift; sourceTree = "<group>"; };
-		8235A45D2C9D83C500063E27 /* AppCoordinationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinationProtocol.swift; sourceTree = "<group>"; };
-		8235A45F2C9D84B100063E27 /* AppCoordinationImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinationImpl.swift; sourceTree = "<group>"; };
-		8235A4612C9D850B00063E27 /* AppCoordinationImpl+ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinationImpl+ViewBuilder.swift"; sourceTree = "<group>"; };
+		8235A45D2C9D83C500063E27 /* PathModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModelProtocol.swift; sourceTree = "<group>"; };
+		8235A45F2C9D84B100063E27 /* PathModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModel.swift; sourceTree = "<group>"; };
+		8235A4612C9D850B00063E27 /* PathModel+ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PathModel+ViewBuilder.swift"; sourceTree = "<group>"; };
 		8235A4632C9D883300063E27 /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
 		8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSecurityManager.swift; sourceTree = "<group>"; };
 		823CA1152C9D6C670084A90B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
@@ -486,12 +488,12 @@
 			path = ImageAPI;
 			sourceTree = "<group>";
 		};
-		79A09D4C2C391B97006F14F4 /* Main */ = {
+		79A09D4C2C391B97006F14F4 /* AppCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				79A09D4D2C391BA2006F14F4 /* MainView.swift */,
+				79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */,
 			);
-			path = Main;
+			path = AppCoordinator;
 			sourceTree = "<group>";
 		};
 		79B0F6EF2C8C3F22009140AF /* TrackAPI */ = {
@@ -528,9 +530,9 @@
 				823CA1152C9D6C670084A90B /* Screen.swift */,
 				8235A4592C9D725A00063E27 /* Sheet.swift */,
 				8235A45B2C9D726900063E27 /* FullScreenCover.swift */,
-				8235A45D2C9D83C500063E27 /* AppCoordinationProtocol.swift */,
-				8235A45F2C9D84B100063E27 /* AppCoordinationImpl.swift */,
-				8235A4612C9D850B00063E27 /* AppCoordinationImpl+ViewBuilder.swift */,
+				8235A45D2C9D83C500063E27 /* PathModelProtocol.swift */,
+				8235A45F2C9D84B100063E27 /* PathModel.swift */,
+				8235A4612C9D850B00063E27 /* PathModel+ViewBuilder.swift */,
 			);
 			path = Path;
 			sourceTree = "<group>";
@@ -541,6 +543,7 @@
 				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
 				51F433472C3411ED00FAFD14 /* Info.plist */,
 				793278082C2D014500F433F5 /* PLATApp.swift */,
+				822273BB2C9D8FB9001A64DF /* DIContainer.swift */,
 				826933442C71FF5B0004E0B5 /* AppDelegate.swift */,
 				826933462C71FFE20004E0B5 /* SceneDelegate.swift */,
 			);
@@ -550,7 +553,7 @@
 		820836712C33FFD000F6D0CF /* Presentaion */ = {
 			isa = PBXGroup;
 			children = (
-				79A09D4C2C391B97006F14F4 /* Main */,
+				79A09D4C2C391B97006F14F4 /* AppCoordinator */,
 				8208368A2C3403EE00F6D0CF /* Register */,
 				790AF0682C6DD13F0005FA9A /* TrackMap */,
 				82C06F522C6DD961000FEE3A /* TrackDetail */,
@@ -638,7 +641,7 @@
 			isa = PBXGroup;
 			children = (
 				7932780A2C2D014500F433F5 /* OnboardingView.swift */,
-				820836802C34030C00F6D0CF /* LoginView.swift */,
+				820836802C34030C00F6D0CF /* SignUpOrInView.swift */,
 				8235A4572C9D6FB400063E27 /* SelectStreamAccountView.swift */,
 			);
 			path = Register;
@@ -939,10 +942,10 @@
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* TrackFeedView.swift in Sources */,
 				DF6DC9952C7434EA004A23F7 /* FeedTrackUseCase.swift in Sources */,
-				8235A4602C9D84B100063E27 /* AppCoordinationImpl.swift in Sources */,
+				8235A4602C9D84B100063E27 /* PathModel.swift in Sources */,
 				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
 				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
-				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
+				820836812C34030C00F6D0CF /* SignUpOrInView.swift in Sources */,
 				8208368F2C34044800F6D0CF /* AboutPlatSettingsView.swift in Sources */,
 				82721EE82C8C229E00CA2C9A /* NetworkLog.swift in Sources */,
 				82C06F542C6DD977000FEE3A /* TrackDetailView.swift in Sources */,
@@ -966,14 +969,14 @@
 				79B0F7092C8DBAB5009140AF /* MemberRepository.swift in Sources */,
 				5151BEAB2C71EB73001DA80F /* PlatProcessingView.swift in Sources */,
 				82204EAE2C9693A800546A5C /* SignInAPI.swift in Sources */,
-				8235A4622C9D850B00063E27 /* AppCoordinationImpl+ViewBuilder.swift in Sources */,
+				8235A4622C9D850B00063E27 /* PathModel+ViewBuilder.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */,
 				7946B9882C918066009B915D /* ImageRepository.swift in Sources */,
 				82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
-				79A09D4E2C391BA2006F14F4 /* MainView.swift in Sources */,
+				79A09D4E2C391BA2006F14F4 /* AppCoordinatorView.swift in Sources */,
 				8235A45A2C9D725A00063E27 /* Sheet.swift in Sources */,
 				512DE28C2C988066002B4622 /* PlaylistDetailView.swift in Sources */,
 				820836872C3403C600F6D0CF /* NicknameSettingsView.swift in Sources */,
@@ -1056,6 +1059,7 @@
 				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
+				822273BC2C9D8FB9001A64DF /* DIContainer.swift in Sources */,
 				791FEF8C2C771E7B006CBDE0 /* StubUserProfileService.swift in Sources */,
 				790AF06A2C6DD1640005FA9A /* TrackMapView.swift in Sources */,
 				82204EAC2C96508200546A5C /* MemberServiceImpl.swift in Sources */,
@@ -1063,7 +1067,7 @@
 				79B0F70D2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift in Sources */,
 				DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */,
 				79B0F6F62C8C4269009140AF /* UploadTrackAPI.swift in Sources */,
-				8235A45E2C9D83C500063E27 /* AppCoordinationProtocol.swift in Sources */,
+				8235A45E2C9D83C500063E27 /* PathModelProtocol.swift in Sources */,
 				82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */,
 				79B0F70F2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift in Sources */,
 				79B0F6F22C8C406E009140AF /* TrackServiceImpl.swift in Sources */,

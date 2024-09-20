@@ -82,25 +82,24 @@ private struct ProfileImageView: View {
 
 private struct SettingListView: View {
     
-    @Environment(PathModel.self) var pathModel
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(InfoUseCase.self) private var infoUseCase
     
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
-            pathModel.paths.append(.nicknameSettingsView)
+            // pathModel.paths.append(.nicknameSettingsView)
         }
     }
     
     var accountSettingsInfo: ListSection.Info {
         return ListSection.Info(title: "계정설정") {
-            pathModel.paths.append(.accountSettingsView)
+            // pathModel.paths.append(.accountSettingsView)
         }
     }
     
     var aboutPlatInfo: ListSection.Info {
         return ListSection.Info(title: "About PLAT") {
-            pathModel.paths.append(.aboutPlatSettingsView)
+            // pathModel.paths.append(.aboutPlatSettingsView)
         }
     }
     
@@ -123,5 +122,4 @@ private struct SettingListView: View {
         .environment(PreviewHelper.mockUserUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PreviewHelper.mockStreamAccountUseCase)
-        .environment(PathModel())
 }

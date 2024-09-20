@@ -1,5 +1,5 @@
 //
-//  AppCoordinationProtocol.swift
+//  PathModelProtocol.swift
 //  PLAT
 //
 //  Created by 김민준 on 9/20/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol AppCoordinationProtocol: ObservableObject {
+protocol PathModelProtocol: ObservableObject {
     var path: NavigationPath { get set }
     var sheet: Sheet? { get set }
     var fullScreenCover: FullScreenCover? { get set }

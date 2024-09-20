@@ -16,7 +16,6 @@ struct TrackAppendSearchView: View {
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
     @State private var musicList: [Music] = []
-    @State private var pathModel: PathModel = .init()
     @State private var selectedMusic: Music = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
     @State private var recentSearchTermList: [String] = []
     @Binding var detent: PresentationDetent
@@ -26,21 +25,19 @@ struct TrackAppendSearchView: View {
             TrackAppendSearchbar(searchTerm: $searchTerm)
             
             TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
-                .environment(pathModel)
             
             Spacer()
             
             TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
-                .environment(pathModel)
         }
         // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-        .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-        .navigationDestination(for: TrackAppendPath.self) { path in
-            switch path {
-            case .trackAppendContentView:
-                TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
-            }
-        }
+        // .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
+//        .navigationDestination(for: TrackAppendPath.self) { path in
+//            switch path {
+//            case .trackAppendContentView:
+//                TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
+//            }
+//        }
         .onAppear {
             Task {
                 let status = await MusicAuthorization.request()
@@ -121,7 +118,6 @@ private struct TrackAppendSearchbar: View {
 // MARK: - TrackAppendRecentTermView
 
 private struct TrackAppendRecentTermView: View {
-    @Environment(PathModel.self) var pathModel
     
     @Binding var trackAppendUseCase: TrackAppendUseCase
     @Binding var searchTerm: String
@@ -178,7 +174,6 @@ private struct TrackAppendRecentTermView: View {
 // MARK: - TrackAppendMusicListView
 
 private struct TrackAppendMusicListView: View {
-    @Environment(PathModel.self) var pathModel
     @Binding var musicList: [Music]
     @Binding var selectedMusic: Music
     
@@ -205,7 +200,7 @@ private struct TrackAppendMusicListView: View {
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
-                        pathModel.trackAppendPaths.append(.trackAppendContentView)
+                        // pathModel.trackAppendPaths.append(.trackAppendContentView)
                         selectedMusic = music.wrappedValue
                     }
             }

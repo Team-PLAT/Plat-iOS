@@ -1,5 +1,5 @@
 //
-//  AppCoordinationImpl.swift
+//  PathModel.swift
 //  PLAT
 //
 //  Created by 김민준 on 9/20/24.
@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-class AppCoordinationImpl: AppCoordinationProtocol {
+@Observable
+final class PathModel: PathModelProtocol {
     
-    @Published var path: NavigationPath = NavigationPath()
-    @Published var sheet: Sheet?
-    @Published var fullScreenCover: FullScreenCover?
+    var path: NavigationPath = NavigationPath()
+    var sheet: Sheet?
+    var fullScreenCover: FullScreenCover?
     
     func push(_ screen: Screen) {
         path.append(screen)

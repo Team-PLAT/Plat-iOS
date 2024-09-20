@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  SignUpOrInView.swift
 //  PLAT
 //
 //  Created by 김민준 on 7/2/24.
@@ -8,16 +8,25 @@
 import SwiftUI
 import AuthenticationServices
 
-struct LoginView: View {
+// MARK: - SignUpOrInView
+
+struct SignUpOrInView: View {
+    
     @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
     var body: some View {
-        if authUseCase.state.authType == .signUp {
-            SignUpView()
-        } else {
-            SignInView()
+        Group {
+            if authUseCase.state.authType == .signUp {
+                SignUpView()
+            } else {
+                SignInView()
+            }
         }
+        .tint(.white)
+        .toolbarRole(.editor)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(authUseCase.state.authType == .signUp ? "회원가입" : "로그인" )
     }
 }
 
@@ -28,7 +37,7 @@ private struct SignUpView: View {
     var body: some View {
         VStack(spacing: 16) {
             
-            Text("PLAT에 오신 것을 \n환영해요")
+            Text("\(Constant.appName)에 오신 것을 \n환영해요")
                 .font(.Head.head1)
                 .foregroundColor(.white)
                 .padding(.bottom, 34)
@@ -63,20 +72,23 @@ private struct SignUpView: View {
     }
 }
 
+// MARK: - AppleSignUpButton
+
 private struct AppleSignUpButton: View {
-    @Environment(AuthUseCase.self) private var loginUseCase
-    @Environment(PathModel.self) var pathModel
+    
+    @Environment(PathModel.self) private var pathModel
+    @Environment(AuthUseCase.self) private var authUseCase
     
     var body: some View {
         SignInWithAppleButton(
             .signUp,
-            onRequest: { _ in loginUseCase.requestSocialLogin()},
+            onRequest: { _ in authUseCase.requestSocialLogin()},
             onCompletion: { result in
-                let loginResult = loginUseCase.handleSocialLogin(authResult: result)
+                let loginResult = authUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
-                    pathModel.registerPaths.append(.selectStreamAccountView)
+                    pathModel.push(.selectStreamAccount)
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -90,7 +102,10 @@ private struct AppleSignUpButton: View {
     }
 }
 
+// MARK: - PolicyNoticeText
+
 private struct PolicyNoticeText: View {
+    
     @Environment(InfoUseCase.self) private var infoUseCase
     
     var body: some View {
@@ -126,6 +141,8 @@ private struct PolicyNoticeText: View {
     }
 }
 
+// MARK: - SwitchSignInView
+
 private struct SwitchSignInView: View {
     
     @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
@@ -146,7 +163,7 @@ private struct SwitchSignInView: View {
                 .foregroundColor(.platPurple)
                 .onTapGesture {
                     authUseCase.effect(.toggleAuthType(.signIn))
-            }
+                }
         }
     }
 }
@@ -160,7 +177,7 @@ private struct SignInView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            Text("또 다시,\nLet's PLAT!")
+            Text("또 다시,\nLet's \(Constant.appName)!")
                 .font(.Head.head1)
                 .foregroundColor(.white)
                 .padding(.bottom, 30)
@@ -188,9 +205,12 @@ private struct SignInView: View {
     }
 }
 
+// MARK: - AppleContinueButton
+
 struct AppleContinueButton: View {
+    
+    @Environment(PathModel.self) private var pathModel
     @Environment(AuthUseCase.self) private var authUseCase
-    @Environment(PathModel.self) var pathModel
     
     var body: some View {
         SignInWithAppleButton(
@@ -200,7 +220,7 @@ struct AppleContinueButton: View {
                 let loginResult = authUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
-                    pathModel.registerPaths.append(.selectStreamAccountView)
+                    pathModel.push(.selectStreamAccount)
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -213,6 +233,8 @@ struct AppleContinueButton: View {
         .padding(.horizontal, 18)
     }
 }
+
+// MARK: - SwitchSignUpView
 
 private struct SwitchSignUpView: View {
     @Environment(AuthUseCase.self) private var authUseCase
@@ -233,14 +255,15 @@ private struct SwitchSignUpView: View {
                 .foregroundColor(.platPurple)
                 .onTapGesture {
                     authUseCase.effect(.toggleAuthType(.signUp))
-            }
+                }
         }
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    LoginView()
+    SignUpOrInView()
         .environment(PreviewHelper.mockAuthUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
-        .environment(PathModel())
 }

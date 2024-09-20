@@ -11,7 +11,7 @@ enum Screen: Identifiable, Hashable {
     
     // 회원가입 및 로그인
     case onboarding
-    case login
+    case signUpOrIn
     case selectStreamAccount
     
     // 트랙

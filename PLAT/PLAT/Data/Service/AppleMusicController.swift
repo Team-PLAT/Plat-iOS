@@ -17,8 +17,6 @@ final class AppleMusicController: NSObject, MusicControllerInterface {
     private var firstSong: ResponseSong?
     
     var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
-    
-    static let shared = AppleMusicController()
 }
 
 // MARK: - Interface Method
