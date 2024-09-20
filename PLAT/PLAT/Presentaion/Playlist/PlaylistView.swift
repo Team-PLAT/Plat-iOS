@@ -24,6 +24,8 @@ struct PlaylistView: View {
     
     var body: some View {
         VStack {
+            HeaderView(searchText: $searchText)
+            
             ScrollView {
                 CreatePlaylistView()
                 
@@ -45,13 +47,62 @@ struct PlaylistView: View {
         .background(.platBackground)
         .tint(.white)
         .navigationTitle("플레이리스트")
-        .searchable(text: $searchText, prompt: "플레이리스트에서 찾기")
+    }
+}
+
+// MARK: - HeaderView
+
+private struct HeaderView: View {
+    @Binding var searchText: String
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Text("플레이리스트")
+                    .font(.Head.head1)
+                Spacer()
+            }
+            
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle(.gray8)
+                    .padding(.leading, 10)
+                
+                TextField("", text: $searchText, prompt: Text("플레이리스트에서 찾기")
+                    .foregroundStyle(.gray8)
+                    .font(.Body.body3))
+                    .foregroundStyle(.white)
+                    .tint(.platPurple)
+                
+                Spacer()
+                
+                if !searchText.isEmpty {
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "x.circle.fill")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundStyle(.gray8)
+                            .padding(.leading, 10)
+                    }
+                    .padding(.trailing, 10)
+                }
+            }
+            .frame(height: 42)
+            .background {
+                RoundedRectangle(cornerRadius: 8).fill(.platBlack)
+            }
+        }
+        .padding()
     }
 }
 
 // MARK: - PlaylistSectionView
 
-struct PlaylistSectionView: View {
+private struct PlaylistSectionView: View {
     let playlist: Playlist
     @State private var isShowDetailSheet: Bool = false
     @Binding var showPlaylistDetail: Bool
@@ -82,7 +133,7 @@ struct PlaylistSectionView: View {
 
 // MARK: - PlaylistImageView
 
-struct PlaylistImageView: View {
+private struct PlaylistImageView: View {
     let imageUrl: String
     var body: some View {
         AsyncImage(url: URL(string: imageUrl)) { img in
