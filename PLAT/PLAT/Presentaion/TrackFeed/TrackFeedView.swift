@@ -10,7 +10,7 @@ import SwiftUI
 struct TrackFeedView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-        
+    
     @State private var feedTrackUseCase: FeedTrackUseCase = .init(
         feedTrack: MockDataBuilder.trackList,
         feedTrackService: FeedTrackService()
@@ -20,57 +20,48 @@ struct TrackFeedView: View {
     @State private var showTrackDetail = false
     
     var body: some View {
-        GeometryReader { proxy in
-            ZStack {
-                VStack(alignment: .leading, spacing: 0) {
-                    Image(.imgFeedlogo)
-                        .padding(.leading, 18)
-                        .padding(.bottom, 20)
-                    
-                    ScrollView {
-                        ForEach(MockDataBuilder.trackList) { track in
-                            FeedRowView(
-                                track: track,
-                                trackIndex: Int64(track.id),
-                                playlistId: "",
-                                selectedTrackId: $selectedTrackId
-                            )
-                        }
-                        
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                Image(.imgFeedlogo)
+                    .padding(.leading, 18)
+                    .padding(.bottom, 20)
+                
+                ScrollView {
+                    ForEach(MockDataBuilder.trackList) { track in
+                        FeedRowView(
+                            track: track,
+                            trackIndex: Int64(track.id),
+                            playlistId: "",
+                            selectedTrackId: $selectedTrackId
+                        )
                     }
                     
-                    if musicControlUseCase.state.isStreaming {
-                        // TODO: 더미데이터 변경
-                        @Bindable var musicControlUseCase = musicControlUseCase
-                        MiniMusicPlayer(
-                            isPaused: $musicControlUseCase.state.isPaused,
-                            track: $musicControlUseCase.state.isPlayingTrack,
-                            currentDuration: musicControlUseCase.state.currentDuration,
-                            totalDuration: musicControlUseCase.state.music?.duration ?? 0
-                        )
-                        .onTapGesture {
-                            showTrackDetail.toggle()
-                        }
                 }
-//                    .position(
-//                        CGPoint(
-//                            x: proxy.size.width / 2,
-//                            y: proxy.size.height - 49
-//                        )
-//                    )
+                
+                if musicControlUseCase.state.isStreaming {
+                    // TODO: 더미데이터 변경
+                    @Bindable var musicControlUseCase = musicControlUseCase
+                    MiniMusicPlayer(
+                        isPaused: $musicControlUseCase.state.isPaused,
+                        track: $musicControlUseCase.state.isPlayingTrack,
+                        currentDuration: musicControlUseCase.state.currentDuration,
+                        totalDuration: musicControlUseCase.state.music?.duration ?? 0
+                    )
+                    .onTapGesture {
+                        showTrackDetail.toggle()
+                    }
                 }
             }
-            .fullScreenCover(isPresented: $showTrackDetail) {
-                if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
-                    TrackDetailView()
-                        .presentationBackground(.thinMaterial.opacity(0.5))
-                }
+        }
+        .fullScreenCover(isPresented: $showTrackDetail) {
+            if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
+                TrackDetailView()
+                    .presentationBackground(.thinMaterial.opacity(0.5))
             }
-            .environment(feedTrackUseCase)
-            .refreshable {
-                // TODO: fetch 한 값 불러오기
-            }
-            
+        }
+        .environment(feedTrackUseCase)
+        .refreshable {
+            // TODO: fetch 한 값 불러오기
         }
     }
 }
@@ -80,7 +71,7 @@ struct TrackFeedView: View {
 private struct FeedRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-        
+    
     let track: Track
     let trackIndex: Int64
     let playlistId: String
@@ -117,7 +108,7 @@ private struct FeedRowView: View {
                     
                     @Bindable var musicControlUseCase = musicControlUseCase
                     FeedPlayer(
-                        trackIndex: Int64(trackIndex), 
+                        trackIndex: Int64(trackIndex),
                         track: track,
                         isPaused: $musicControlUseCase.state.isPaused,
                         selectedTrackId: $selectedTrackId,
@@ -309,7 +300,7 @@ private struct FeedPlayer: View {
                         .padding(.trailing, 12)
                         .transaction { transaction in
                             transaction.animation = nil
-                    }
+                        }
                 }
             }
             .frame(width: 311, height: 56)

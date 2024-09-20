@@ -185,7 +185,7 @@
 		51F4333B2C3411D500FAFD14 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		51F4333C2C3411D500FAFD14 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		51F4333D2C3411D500FAFD14 /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
-		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		51F433472C3411ED00FAFD14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51F433492C3413CB00FAFD14 /* Helper+PretendardFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+PretendardFont.swift"; sourceTree = "<group>"; };
 		790AF0692C6DD1640005FA9A /* TrackMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMapView.swift; sourceTree = "<group>"; };
 		791905A72C905762005571DE /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
@@ -436,8 +436,6 @@
 		793278072C2D014500F433F5 /* PLAT */ = {
 			isa = PBXGroup;
 			children = (
-				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
-				51F433472C3411ED00FAFD14 /* Info.plist */,
 				820836702C33FFAE00F6D0CF /* App */,
 				820836732C33FFF500F6D0CF /* Domain */,
 				820836742C33FFFC00F6D0CF /* Data */,
@@ -532,6 +530,8 @@
 		820836702C33FFAE00F6D0CF /* App */ = {
 			isa = PBXGroup;
 			children = (
+				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
+				51F433472C3411ED00FAFD14 /* Info.plist */,
 				793278082C2D014500F433F5 /* PLATApp.swift */,
 				826933442C71FF5B0004E0B5 /* AppDelegate.swift */,
 				826933462C71FFE20004E0B5 /* SceneDelegate.swift */,
@@ -1197,14 +1197,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = PLAT/PLAT.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PLAT/App/PLAT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
 				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PLAT/Info.plist;
+				INFOPLIST_FILE = PLAT/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PLAT;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
@@ -1239,14 +1239,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = PLAT/PLAT.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PLAT/App/PLAT.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
 				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PLAT/Info.plist;
+				INFOPLIST_FILE = PLAT/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PLAT;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "미디어 접근을 허용해주세요";
