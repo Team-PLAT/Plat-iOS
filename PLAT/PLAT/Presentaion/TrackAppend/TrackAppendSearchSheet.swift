@@ -1,5 +1,5 @@
 //
-//  TrackAppendSearchView.swift
+//  TrackAppendSearchSheet.swift
 //  PLAT
 //
 //  Created by 박준우 on 8/20/24.
@@ -8,17 +8,15 @@
 import SwiftUI
 import MusicKit
 
-// MARK: - TrackAppendSearchView
+// MARK: - TrackAppendSearchSheet
 
-struct TrackAppendSearchView: View {
-    @Binding var isTrackAppendViewSheet: Bool
+struct TrackAppendSearchSheet: View {
     @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
     @State private var musicList: [Music] = []
     @State private var selectedMusic: Music = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
     @State private var recentSearchTermList: [String] = []
-    @Binding var detent: PresentationDetent
     
     var body: some View {
         VStack {
@@ -30,6 +28,9 @@ struct TrackAppendSearchView: View {
             
             TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
         }
+        .tint(.white)
+        .presentationDragIndicator(.visible)
+        .presentationDetents([.large])
         // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
         // .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
 //        .navigationDestination(for: TrackAppendPath.self) { path in
@@ -43,7 +44,7 @@ struct TrackAppendSearchView: View {
                 let status = await MusicAuthorization.request()
             }
             UISearchBar.appearance().showsCancelButton = false
-            detent = .large
+            // detent = .large
             searchTerm = ""
             recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
         }
@@ -212,8 +213,5 @@ private struct TrackAppendMusicListView: View {
 }
 
 #Preview {
-    TrackAppendSearchView(
-        isTrackAppendViewSheet: .constant(false),
-        detent: .constant(.medium)
-    )
+    TrackAppendSearchSheet()
 }

@@ -72,7 +72,7 @@ struct SelectStreamAccountView: View {
                 .padding(.bottom)
             
             Button {
-                pathModel.presentSheet(.whyConnectStreamAccountSheet)
+                pathModel.presentSheet(.whyConnectStreamAccount)
             } label: {
                 Text("왜 스트리밍 계정을 연결하나요?")
                     .font(.Body.body4)

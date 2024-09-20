@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+// MARK: - NicknameSettingsView
+
 struct NicknameSettingsView: View {
     
     @Environment(UserUseCase.self) private var userUseCase
-    @State private(set) var nicknameText: String
+    @State private var nicknameText: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -62,7 +64,9 @@ private struct NicknameGuide: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    NicknameSettingsView(nicknameText: "")
+    NicknameSettingsView()
         .environment(PreviewHelper.mockUserUseCase)
 }

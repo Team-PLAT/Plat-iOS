@@ -11,6 +11,7 @@ import SwiftUI
 
 struct MiniMusicPlayer: View {
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding private(set) var isPaused: Bool
@@ -40,8 +41,7 @@ struct MiniMusicPlayer: View {
         .padding(.top, 12)
         .background(.platBlack)
         .onTapGesture {
-            print("음악 재생 화면 이동")
-            // TODO: 음악 재생 화면 이동
+            pathModel.presentFullScreenCover(.trackDetail)
         }
     }
 }

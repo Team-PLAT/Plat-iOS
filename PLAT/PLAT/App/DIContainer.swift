@@ -13,6 +13,11 @@ struct DIContainerModifier: ViewModifier {
     private let memberService: MemberServiceInterface
     private let musicControlService: MusicControllerInterface
     private let infoService: InfoServiceInterface
+    private let trackService: TrackServiceInterface
+    private let imageService: ImageServiceInterface
+    private let playlistService: PlaylistServiceInterface
+    private let userProfileService: UserProfileServiceInterface
+    private let streamAccountService: StreamAccountServiceInterface
     
     /// 생성 및 주입
     init() {
@@ -20,11 +25,26 @@ struct DIContainerModifier: ViewModifier {
         self.memberService = MemberServiceImpl()
         self.musicControlService = AppleMusicController()
         self.infoService = StubInfoService() // TODO: Stub 교체
+        self.trackService = TrackServiceImpl()
+        self.imageService = ImageServiceImpl()
+        self.playlistService = StubPlaylistService() // TODO: Stub 교체
+        self.userProfileService = StubUserProfileService() // TODO: Stub 교체
+        self.streamAccountService = StubStreamAccountService() // TODO: Stub 교체
     }
     
     func body(content: Content) -> some View {
         content
             .environment(PathModel())
+            .environment(MapUseCase())
+            .environment(PlaylistUseCase(playlistService: playlistService))
+            .environment(UserUseCase(userProfileService: userProfileService))
+            .environment(StreamAccountUseCase(streamAccountService: streamAccountService))
+            .environment(
+                TrackUseCase(
+                    trackService: trackService,
+                    imageService: imageService
+                )
+            )
             .environment(
                 AuthUseCase(
                     socialLoginServcie: socialLoinService,

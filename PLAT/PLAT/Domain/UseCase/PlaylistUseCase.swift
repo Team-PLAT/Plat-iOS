@@ -10,7 +10,7 @@ import Foundation
 @Observable
 final class PlaylistUseCase {
     
-    private(set) var playlistService: PlaylistServiceInterface
+    private let playlistService: PlaylistServiceInterface
     
     private(set) var state: State
     

@@ -1,5 +1,5 @@
 //
-//  TrackDetailView.swift
+//  TrackDetailFullScreen.swift
 //  PLAT
 //
 //  Created by 김민준 on 8/15/24.
@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-// MARK: - TrackDetailView
+// MARK: - TrackDetailFullScreen
 
-struct TrackDetailView: View {
+struct TrackDetailFullScreen: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    @Environment(TrackUseCase.self) private var trackUseCase: TrackUseCase
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
-    @State private var isContentSheetPresented = false
+    @State private var isContentAreaPresented = false
     @State private var isNonePlaylistToastPresented = false
     @State private var isPlaying: Bool = true
     
@@ -49,7 +48,7 @@ struct TrackDetailView: View {
                 
                 Spacer()
                 
-                BottomView(isContentSheetPresented: $isContentSheetPresented)
+                BottomView(isContentAreaPresented: $isContentAreaPresented)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 0)
             }
@@ -64,7 +63,10 @@ struct TrackDetailView: View {
             }
         }
         .onAppear {
-            guard let track = MockDataBuilder.trackList.first(where: { $0.id == trackDetailUseCase.trackId }) else {
+            guard let track = MockDataBuilder.trackList.first(
+                where: {
+                    $0.id == trackUseCase.trackId
+                }) else {
                 print("Track Detail View trackId 찾기 오류")
                 return
             }
@@ -76,10 +78,9 @@ struct TrackDetailView: View {
         }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
-        .environment(trackUseCase)
         .onTapGesture {
             withAnimation(.easeInOut) {
-                isContentSheetPresented = false
+                isContentAreaPresented = false
             }
         }
     }
@@ -89,12 +90,12 @@ struct TrackDetailView: View {
 
 private struct Background: View {
     
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     var body: some View {
         Group {
             // TODO: 만약 Track에 이미지가 있다면 다른 이미지로 처리하기
-            if let imageString = trackDetailUseCase.track.imageUrl,
+            if let imageString = trackUseCase.track.imageUrl,
                let imageURL = URL(string: imageString) {
                 AsyncImage(url: imageURL) { phase in
                     if let image = phase.image {
@@ -117,7 +118,7 @@ private struct Background: View {
 private struct HeaderView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
@@ -126,11 +127,11 @@ private struct HeaderView: View {
                 Image(.imgMarker)
                 
                 Group {
-                    if let placeName = trackDetailUseCase.state.place.name {
+                    if let placeName = trackUseCase.state.place.name {
                         Text(placeName)
                         
                     } else {
-                        Text(trackDetailUseCase.state.place.address)
+                        Text(trackUseCase.state.place.address)
                     }
                 }
                 .font(.Head.head2)
@@ -143,7 +144,7 @@ private struct HeaderView: View {
                 }
             }
             
-            Text(trackDetailUseCase.state.place.address)
+            Text(trackUseCase.state.place.address)
                 .font(.Body.body3)
                 .foregroundStyle(.white)
                 .padding(.leading, 24)
@@ -212,7 +213,8 @@ private struct AlbumImage: View {
 
 private struct MusicControllerView: View {
     
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isTrackAppendToPlaylistSheetPresented = false
@@ -224,14 +226,14 @@ private struct MusicControllerView: View {
             MusicControllerCell(
                 systemImage: SystemImage.like,
                 tapAction: {
-                    trackDetailUseCase.effect(.likeTrack)
+                    trackUseCase.effect(.likeTrack)
                 }
             )
             
             MusicControllerCell(
                 systemImage: SystemImage.addToPlaylist,
                 tapAction: {
-                    if trackDetailUseCase.playlist.isEmpty {
+                    if trackUseCase.playlist.isEmpty {
                         isNonePlaylistToastPresented.toggle()
                     } else {
                         isTrackAppendToPlaylistSheetPresented.toggle()
@@ -285,14 +287,14 @@ private struct MusicControllerCell: View {
 
 private struct BottomView: View {
     
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
-    @Binding private(set) var isContentSheetPresented: Bool
+    @Binding private(set) var isContentAreaPresented: Bool
     
     /// 현재 Track의 Content를 반환합니다.
     private var content: String? {
-        let origin = trackDetailUseCase.track.content
-        if isContentSheetPresented {
+        let origin = trackUseCase.track.content
+        if isContentAreaPresented {
             return origin
         } else {
             if let safeOrigin = origin {
@@ -315,7 +317,7 @@ private struct BottomView: View {
             
             if let content = content {
                 ProfileContent(
-                    isContentSheetPresented: $isContentSheetPresented,
+                    isContentSheetPresented: $isContentAreaPresented,
                     content: content
                 )
             }
@@ -327,14 +329,14 @@ private struct BottomView: View {
 
 private struct ProfileHeader: View {
     
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     /// 프로필 이미지 사이즈
     private let profileImageSize: CGFloat = 40
     
     /// 현재 Track을 업로드한 User를 반환합니다.
     private var user: User {
-        trackDetailUseCase.track.user
+        trackUseCase.track.user
     }
     
     /// 프로필 이미지 URL을 반환합니다.
@@ -362,7 +364,7 @@ private struct ProfileHeader: View {
                 Text(user.nickname)
                     .font(.Body.body2)
                 
-                Text(trackDetailUseCase.track.createdDate.yearMonthDayFormat)
+                Text(trackUseCase.track.createdDate.yearMonthDayFormat)
                     .font(.Body.body5)
             }
             .foregroundStyle(.white)
@@ -375,8 +377,6 @@ private struct ProfileHeader: View {
 // MARK: - ProfileContent
 
 private struct ProfileContent: View {
-    
-    @Environment(TrackUseCase.self) private var trackDetailUseCase
     
     @Binding private(set) var isContentSheetPresented: Bool
     
@@ -410,6 +410,6 @@ private struct ProfileContent: View {
 // MARK: - Preview
 
 #Preview {
-    TrackDetailView()
+    TrackDetailFullScreen()
         .environment(PreviewHelper.mockMusicControlUseCase)
 }

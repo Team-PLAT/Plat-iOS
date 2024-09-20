@@ -10,11 +10,11 @@ import Foundation
 enum Sheet: Identifiable, Hashable {
     
     // 회원가입 및 로그인
-    case whyConnectStreamAccountSheet
+    case whyConnectStreamAccount
     
     // 트랙
-    case trackAppendToPlaylistSheet
-    case trackAppend
+    case trackAppendToPlaylist
+    case trackAppendSearch
     
     // 플레이리스트
     case playlistDetail

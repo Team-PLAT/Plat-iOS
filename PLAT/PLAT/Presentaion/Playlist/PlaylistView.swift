@@ -124,6 +124,9 @@ private struct DividerView: View {
 // MARK: - CreatePlaylistView
 
 private struct CreatePlaylistView: View {
+    
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         VStack {
             Button {

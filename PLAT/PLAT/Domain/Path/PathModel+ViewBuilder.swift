@@ -36,8 +36,8 @@ extension PathModel {
         case .userDetail:
             UserDetailView()
             
-        case .nicknameSetting(let nickname):
-            NicknameSettingsView(nicknameText: nickname)
+        case .nicknameSetting:
+            NicknameSettingsView()
             
         case .accountSetting:
             AccountSettingsView()
@@ -53,20 +53,34 @@ extension PathModel {
     @ViewBuilder
     func build(_ sheet: Sheet) -> some View {
         switch sheet {
-        case .whyConnectStreamAccountSheet:
+        case .whyConnectStreamAccount:
             WhyConnectStreamAccountSheet()
-        case .trackAppendToPlaylistSheet:
+            
+        case .trackAppendToPlaylist:
             TrackAppendToPlaylistSheet()
             
-        default: EmptyView()
-//        case .trackAppend:
-//            <#code#>
-//        case .playlistDetail:
-//            <#code#>
-//        case .playlistInfo:
-//            <#code#>
-//        case .appendPlaylist:
-//            <#code#>
+        case .trackAppendSearch:
+            TrackAppendSearchSheet()
+            
+        case .playlistDetail:
+            EmptyView()
+        
+        case .playlistInfo:
+            EmptyView()
+        
+        case .appendPlaylist:
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    func build(_ fullScreenCover: FullScreenCover) -> some View {
+        switch fullScreenCover {
+        case .trackDetail:
+            TrackDetailFullScreen()
+            
+        case .platProcessing:
+            PlatProcessingFullScreen(playList: .constant(MockDataBuilder.playlist))
         }
     }
 }

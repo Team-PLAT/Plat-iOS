@@ -1,5 +1,5 @@
 //
-//  PlatProcessingView.swift
+//  PlatProcessingFullScreen.swift
 //  PLAT
 //
 //  Created by 박준우 on 8/18/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlatProcessingView: View {
+struct PlatProcessingFullScreen: View {
     @State var isCompleteLoading = false
     @Binding var playList: Playlist?
     
@@ -29,6 +29,7 @@ struct PlatProcessingView: View {
                 }
             }
         }
+        .presentationBackground(.black.opacity(0.8))
         
         // TODO: 플래팅로딩뷰에서 플래팅플레이리스트뷰로 넘어가는 로직 구현하기
         .onAppear {
@@ -214,5 +215,5 @@ private struct PlattingPlayList: View {
 }
 
 #Preview {
-    PlatProcessingView(playList: .constant(MockDataBuilder.playlist))
+    PlatProcessingFullScreen(playList: .constant(MockDataBuilder.playlist))
 }

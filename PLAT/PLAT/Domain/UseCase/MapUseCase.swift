@@ -1,5 +1,5 @@
 //
-//  TrackMapUseCase.swift
+//  MapUseCase.swift
 //  PLAT
 //
 //  Created by 조우현 on 8/15/24.
@@ -9,14 +9,11 @@ import Foundation
 import MapKit
 
 @Observable
-final class TrackMapUseCase {
+final class MapUseCase {
     
-    private(set) var mapService: MapServiceInterface
     private(set) var state: State
     
-    init(mapService: MapServiceInterface) {
-        self.mapService = mapService
-        
+    init() {
         self.state = State(
             location: .init(latitude: 0, longitude: 0),
             trackList: []
@@ -26,7 +23,7 @@ final class TrackMapUseCase {
 
 // MARK: - State
 
-extension TrackMapUseCase {
+extension MapUseCase {
     
     struct State {
         var location: Location?
@@ -36,7 +33,7 @@ extension TrackMapUseCase {
 
 // MARK: - UseCase Method
 
-extension TrackMapUseCase {
+extension MapUseCase {
     
     /// 현재위치 확인하기
     func currentLocation() -> Location {

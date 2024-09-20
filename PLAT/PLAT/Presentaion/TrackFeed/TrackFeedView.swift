@@ -9,15 +9,10 @@ import SwiftUI
 
 struct TrackFeedView: View {
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var feedTrackUseCase: FeedTrackUseCase = .init(
-        feedTrack: MockDataBuilder.trackList,
-        feedTrackService: FeedTrackService()
-    )
-    
     @State private var selectedTrackId: Int64?
-    @State private var showTrackDetail = false
     
     var body: some View {
         ZStack {
@@ -48,18 +43,11 @@ struct TrackFeedView: View {
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
                     .onTapGesture {
-                        showTrackDetail.toggle()
+                        pathModel.presentFullScreenCover(.trackDetail)
                     }
                 }
             }
         }
-        .fullScreenCover(isPresented: $showTrackDetail) {
-            if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
-                TrackDetailView()
-                    .presentationBackground(.thinMaterial.opacity(0.5))
-            }
-        }
-        .environment(feedTrackUseCase)
         .refreshable {
             // TODO: fetch 한 값 불러오기
         }
@@ -202,7 +190,7 @@ private struct FeedHeaderView: View {
 
 private struct FeedLocationView: View {
     
-    @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     var body: some View {
         HStack(spacing: 4) {
@@ -212,10 +200,9 @@ private struct FeedLocationView: View {
                 .frame(width: 12, height: 16)
             
             // TODO: 주소 처리
-            Text(feedTrackUseCase.state.place.address)
+            Text(trackUseCase.state.place.address)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
-            
         }
     }
 }
@@ -226,7 +213,6 @@ private struct FeedPlayer: View {
     
     var trackIndex: Int64?
     
-    @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State var track: Track
@@ -447,20 +433,19 @@ private struct FeedContentView: View {
 
 private struct FeedActionView: View {
     
-    var trackIndex: Int
-    var playlistId: String
+    let trackIndex: Int
+    let playlistId: String
     
-    @Environment(FeedTrackUseCase.self) private var feedTrackUseCase
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     @State private var isLiked: Bool = false
-    
-    @State private var isTrackAppendToPlaylistSheetPresented = false
     
     var body: some View {
         HStack(spacing: 0) {
             Button {
                 isLiked.toggle()
-                feedTrackUseCase.effect(.likeTrack(index: trackIndex))
+                trackUseCase.effect(.likeTrack)
             } label: {
                 Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
                     .foregroundColor(.white)
@@ -469,7 +454,7 @@ private struct FeedActionView: View {
             }
             
             Button {
-                isTrackAppendToPlaylistSheetPresented.toggle()
+                pathModel.presentSheet(.trackAppendToPlaylist)
             } label: {
                 Image(systemName: "text.badge.plus")
                     .foregroundColor(.white)
@@ -477,11 +462,10 @@ private struct FeedActionView: View {
                     .padding(.trailing, 220)
             }
         }
-        .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
-            TrackAppendToPlaylistSheet()
-        }
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     TrackFeedView()
