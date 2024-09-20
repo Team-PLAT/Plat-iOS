@@ -12,7 +12,7 @@ import MapKit
 
 struct TrackMapView: View {
     
-    @State private var locationManager = LocationManager()
+    @State private var locationManager = MapKitLocationServiceImpl()
     @State private var selectedTrackId: Track.ID?
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
@@ -57,7 +57,7 @@ private struct MapView: View {
     
     @Environment(PathModel.self) private var pathModel
     
-    @Binding private(set) var locationManager: LocationManager
+    @Binding private(set) var locationManager: MapKitLocationServiceImpl
     @Binding private(set) var selectedTrackId: Track.ID?
     
     var body: some View {

@@ -21,9 +21,9 @@ struct DIContainerModifier: ViewModifier {
     
     /// 생성 및 주입
     init() {
-        self.socialLoinService = AppleSocialLoginService()
+        self.socialLoinService = AppleSocialLoginServiceImpl()
         self.memberService = MemberServiceImpl()
-        self.musicControlService = AppleMusicController()
+        self.musicControlService = AppleMusicControllerServiceImpl()
         self.infoService = StubInfoService() // TODO: Stub 교체
         self.trackService = TrackServiceImpl()
         self.imageService = ImageServiceImpl()
@@ -39,6 +39,8 @@ struct DIContainerModifier: ViewModifier {
             .environment(PlaylistUseCase(playlistService: playlistService))
             .environment(UserUseCase(userProfileService: userProfileService))
             .environment(StreamAccountUseCase(streamAccountService: streamAccountService))
+            .environment(MusicControlUseCase(musicController: musicControlService))
+            .environment(InfoUseCase(infoService: infoService))
             .environment(
                 TrackUseCase(
                     trackService: trackService,
@@ -49,16 +51,6 @@ struct DIContainerModifier: ViewModifier {
                 AuthUseCase(
                     socialLoginServcie: socialLoinService,
                     memberService: memberService
-                )
-            )
-            .environment(
-                MusicControlUseCase(
-                    musicController: musicControlService
-                )
-            )
-            .environment(
-                InfoUseCase(
-                    infoService: infoService
                 )
             )
     }

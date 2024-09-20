@@ -1,5 +1,5 @@
 //
-//  AppleMusicController.swift
+//  AppleMusicControllerServiceImpl.swift
 //  PLAT
 //
 //  Created by 조세연 on 8/21/24.
@@ -12,7 +12,7 @@ import MediaPlayer
 
 // MARK: - AppleMusicController
 
-final class AppleMusicController: NSObject, MusicControllerInterface {
+final class AppleMusicControllerServiceImpl: NSObject, MusicControllerInterface {
     
     private var firstSong: ResponseSong?
     
@@ -21,7 +21,7 @@ final class AppleMusicController: NSObject, MusicControllerInterface {
 
 // MARK: - Interface Method
 
-extension AppleMusicController {
+extension AppleMusicControllerServiceImpl {
     
     /// 권한 요청
     func setup() async -> Bool {
@@ -131,7 +131,7 @@ extension AppleMusicController {
     }
 }
 
-extension AppleMusicController {
+extension AppleMusicControllerServiceImpl {
     
     /// 애플 뮤직 권한을 요청합니다.
     private func requestAuthorization() async -> Bool {

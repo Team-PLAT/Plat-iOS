@@ -1,5 +1,5 @@
 //
-//  LocationManager.swift
+//  MapKitLocationServiceImpl.swift
 //  PLAT
 //
 //  Created by 조우현 on 8/18/24.
@@ -10,7 +10,7 @@ import Combine
 import MapKit
 
 @Observable
-final class LocationManager: NSObject {
+final class MapKitLocationServiceImpl: NSObject {
     
     private let locationManager = CLLocationManager()
     private static let refreshTime: Double = 10
@@ -33,8 +33,8 @@ final class LocationManager: NSObject {
             MKCoordinateRegion(
                 center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
                 span: MKCoordinateSpan(
-                    latitudeDelta: LocationManager.coordinateSpan,
-                    longitudeDelta: LocationManager.coordinateSpan
+                    latitudeDelta: MapKitLocationServiceImpl.coordinateSpan,
+                    longitudeDelta: MapKitLocationServiceImpl.coordinateSpan
                 )
             )
         )
@@ -48,7 +48,7 @@ final class LocationManager: NSObject {
         
         // 10초마다 CLLocation 값 방출
         timerCancellable = Timer.publish(
-            every: LocationManager.refreshTime,
+            every: MapKitLocationServiceImpl.refreshTime,
             on: .main,
             in: .common
         )
@@ -68,7 +68,7 @@ final class LocationManager: NSObject {
 
 // MARK: - CLLocationManagerDelegate
 
-extension LocationManager: CLLocationManagerDelegate {
+extension MapKitLocationServiceImpl: CLLocationManagerDelegate {
     
     /// Location 정보가 업데이트 될 때 호출되는 Delegate 메서드입니다.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -86,8 +86,8 @@ extension LocationManager: CLLocationManagerDelegate {
             MKCoordinateRegion(
                 center: location.coordinate,
                 span: MKCoordinateSpan(
-                    latitudeDelta: LocationManager.coordinateSpan,
-                    longitudeDelta: LocationManager.coordinateSpan
+                    latitudeDelta: MapKitLocationServiceImpl.coordinateSpan,
+                    longitudeDelta: MapKitLocationServiceImpl.coordinateSpan
                 )
             )
         )
