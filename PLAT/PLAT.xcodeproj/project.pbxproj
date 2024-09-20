@@ -105,6 +105,8 @@
 		8235A4582C9D6FB400063E27 /* SelectStreamAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4572C9D6FB400063E27 /* SelectStreamAccountView.swift */; };
 		8235A45A2C9D725A00063E27 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4592C9D725A00063E27 /* Sheet.swift */; };
 		8235A45C2C9D726900063E27 /* FullScreenCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45B2C9D726900063E27 /* FullScreenCover.swift */; };
+		8235A45E2C9D83C500063E27 /* AppCoordinationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45D2C9D83C500063E27 /* AppCoordinationProtocol.swift */; };
+		8235A4602C9D84B100063E27 /* AppCoordinationmpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45F2C9D84B100063E27 /* AppCoordinationmpl.swift */; };
 		8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */; };
 		823CA1162C9D6C670084A90B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CA1152C9D6C670084A90B /* Screen.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
@@ -261,6 +263,8 @@
 		8235A4572C9D6FB400063E27 /* SelectStreamAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStreamAccountView.swift; sourceTree = "<group>"; };
 		8235A4592C9D725A00063E27 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		8235A45B2C9D726900063E27 /* FullScreenCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenCover.swift; sourceTree = "<group>"; };
+		8235A45D2C9D83C500063E27 /* AppCoordinationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinationProtocol.swift; sourceTree = "<group>"; };
+		8235A45F2C9D84B100063E27 /* AppCoordinationmpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinationmpl.swift; sourceTree = "<group>"; };
 		8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSecurityManager.swift; sourceTree = "<group>"; };
 		823CA1152C9D6C670084A90B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
@@ -523,6 +527,8 @@
 				823CA1152C9D6C670084A90B /* Screen.swift */,
 				8235A4592C9D725A00063E27 /* Sheet.swift */,
 				8235A45B2C9D726900063E27 /* FullScreenCover.swift */,
+				8235A45D2C9D83C500063E27 /* AppCoordinationProtocol.swift */,
+				8235A45F2C9D84B100063E27 /* AppCoordinationmpl.swift */,
 			);
 			path = Path;
 			sourceTree = "<group>";
@@ -930,6 +936,7 @@
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* TrackFeedView.swift in Sources */,
 				DF6DC9952C7434EA004A23F7 /* FeedTrackUseCase.swift in Sources */,
+				8235A4602C9D84B100063E27 /* AppCoordinationmpl.swift in Sources */,
 				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
 				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
 				820836812C34030C00F6D0CF /* LoginView.swift in Sources */,
@@ -1054,6 +1061,7 @@
 				79B0F70D2C8DBB25009140AF /* FetchProfileStreamTypeAPI.swift in Sources */,
 				DF6DC9972C749B84004A23F7 /* FeedTrackService.swift in Sources */,
 				79B0F6F62C8C4269009140AF /* UploadTrackAPI.swift in Sources */,
+				8235A45E2C9D83C500063E27 /* AppCoordinationProtocol.swift in Sources */,
 				82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */,
 				79B0F70F2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift in Sources */,
 				79B0F6F22C8C406E009140AF /* TrackServiceImpl.swift in Sources */,
