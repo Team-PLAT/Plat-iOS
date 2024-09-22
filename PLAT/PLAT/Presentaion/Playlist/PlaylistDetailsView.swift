@@ -40,7 +40,7 @@ struct PlaylistDetailsView: View {
         }
         .fullScreenCover(isPresented: $showTrackDetail) {
             if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
-                TrackDetailView()
+//                TrackDetailView()
                 // TODO: trackId
                     .presentationBackground(.thinMaterial.opacity(0.5))
             }

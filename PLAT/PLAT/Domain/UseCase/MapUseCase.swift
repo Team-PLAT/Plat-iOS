@@ -56,6 +56,6 @@ extension MapUseCase {
     /// 플레이리스트 생성하기
     @MainActor
     func createPlatPlaylist(currentLocation: Location) async -> Playlist {
-        return .init(title: "", imageUrl: "", trackList: [])
+        return .init(id: 0001, title: "", imageUrl: "", trackList: [])
     }
 }

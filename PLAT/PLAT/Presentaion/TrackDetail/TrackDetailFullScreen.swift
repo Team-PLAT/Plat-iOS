@@ -62,20 +62,6 @@ struct TrackDetailFullScreen: View {
                 )
             }
         }
-        .onAppear {
-            guard let track = MockDataBuilder.trackList.first(
-                where: {
-                    $0.id == trackUseCase.trackId
-                }) else {
-                print("Track Detail View trackId 찾기 오류")
-                return
-            }
-            
-            if musicControlUseCase.state.isPlayingTrack?.id != track.id {
-                musicControlUseCase.state.isPlayingTrack = track
-                musicControlUseCase.effect(.setup(music: track.music))
-            }
-        }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
         .onTapGesture {
@@ -159,7 +145,7 @@ private struct MusicView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var music: Music? {
-        musicControlUseCase.state.music
+        musicControlUseCase.state.isPlayingTrack?.music
     }
     
     var body: some View {
@@ -189,7 +175,7 @@ private struct AlbumImage: View {
     private let cornerRaduis: CGFloat = 12
     
     private var albumImageUrl: URL? {
-        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
+        URL(string: musicControlUseCase.state.isPlayingTrack?.music.albumImageUrl ?? "")
     }
     
     var body: some View {

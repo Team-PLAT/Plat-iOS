@@ -13,7 +13,6 @@ import MapKit
 struct TrackMapView: View {
     
     @State private var locationManager = MapKitLocationServiceImpl()
-    @State private var selectedTrackId: Track.ID?
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
     @State private var isShowToastMessage: Bool = false
@@ -23,21 +22,19 @@ struct TrackMapView: View {
             ZStack(alignment: .topLeading) {
                 if #available(iOS 18.0, *) {
                     MapView(
-                        locationManager: $locationManager,
-                        selectedTrackId: $selectedTrackId
+                        locationManager: $locationManager
                     )
                     .toolbarVisibility(.hidden, for: .navigationBar)
                 } else {
                     MapView(
-                        locationManager: $locationManager,
-                        selectedTrackId: $selectedTrackId
+                        locationManager: $locationManager
                     )
                 }
                 
                 MapComponentsView(
                     hasNotifications: $hasNotifications,
                     playlist: $playlist,
-                    selectedTrackId: $selectedTrackId, isShowToastMessage: $isShowToastMessage
+                    isShowToastMessage: $isShowToastMessage
                 )
             }
             .onReceive(locationManager.locationPublisher) { location in
@@ -61,9 +58,9 @@ struct TrackMapView: View {
 private struct MapView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding private(set) var locationManager: MapKitLocationServiceImpl
-    @Binding private(set) var selectedTrackId: Track.ID?
     
     var body: some View {
         Map(
@@ -77,7 +74,8 @@ private struct MapView: View {
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
-                            selectedTrackId = track.id
+                            musicControlUseCase.state.isPlayingTrack = track
+                            musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         }
                 }
@@ -127,7 +125,6 @@ private struct MapComponentsView: View {
     
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
-    @Binding var selectedTrackId: Track.ID?
     @Binding var isShowToastMessage: Bool
     
     var body: some View {
@@ -152,7 +149,6 @@ private struct MapComponentsView: View {
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .onTapGesture {
-                    selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
                     pathModel.presentFullScreenCover(.trackDetail)
                 }
             }

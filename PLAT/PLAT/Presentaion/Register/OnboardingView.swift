@@ -80,4 +80,5 @@ private struct LoginButton: View {
 
 #Preview {
     OnboardingView()
+        .injectDIContainer()
 }
