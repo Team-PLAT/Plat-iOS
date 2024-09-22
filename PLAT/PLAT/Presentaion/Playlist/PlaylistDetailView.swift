@@ -18,6 +18,7 @@ struct PlaylistDetailView: View {
             return playlist
         } else {
             return Playlist(
+                id: 0001,
                 title: "플레이리스트 가져오기 실패",
                 imageUrl: "",
                 trackList: []
@@ -29,6 +30,7 @@ struct PlaylistDetailView: View {
     @State private var isrcs: [String] = []
     
     var body: some View {
+        ScrollView {
         VStack(spacing: 0) {
             
             PlayListInfo(playlist: selectedPlaylist)
@@ -51,7 +53,6 @@ struct PlaylistDetailView: View {
                 .foregroundColor(.gray9)
                 .padding(.leading, 46)
             
-            ScrollView {
                 VStack(spacing: 0) {
                     ForEach(selectedPlaylist.trackList) { track in
                         PlayListRowView(showTrackDetail: $showTrackDetail, isrcs: $isrcs, track: track)
