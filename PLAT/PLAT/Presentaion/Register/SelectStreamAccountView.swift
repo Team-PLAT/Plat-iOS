@@ -41,14 +41,6 @@ struct SelectStreamAccountView: View {
                     tapAction: {
                         selectedState = .appleMusic
                         isShowingOffer = true
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
-                            print("🐭", isShowingOffer)
-                            if musicControlUseCase.state.status && !isShowingOffer {
-                                print("⚾️")
-                                authUseCase.updateIsLoginComplete(true)
-                            }
-                        }
                     }
                 )
             }
@@ -60,6 +52,15 @@ struct SelectStreamAccountView: View {
             }
             .padding(.horizontal, 18)
             .padding(.bottom, 16)
+            
+            Button {
+                pathModel.popToRoot()
+                authUseCase.updateIsLoginComplete(true)
+            } label: {
+                Text("안녕")
+            }
+            .opacity(musicControlUseCase.state.status ? 1 : 0.3)
+            .disabled(!musicControlUseCase.state.status)
             
             Spacer()
             

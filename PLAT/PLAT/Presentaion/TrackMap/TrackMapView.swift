@@ -56,6 +56,7 @@ struct TrackMapView: View {
 private struct MapView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding private(set) var locationManager: MapKitLocationServiceImpl
     @Binding private(set) var selectedTrackId: Track.ID?
@@ -72,7 +73,8 @@ private struct MapView: View {
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
-                            selectedTrackId = track.id
+                            musicControlUseCase.state.isPlayingTrack = track
+                            musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         }
                 }

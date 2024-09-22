@@ -15,7 +15,7 @@ struct AppCoordinatorView: View {
     
     var body: some View {
         if authUseCase.state.isLoginComplete {
-            PlatMainView()
+             PlatMainView()
         } else {
             LoginView()
         }

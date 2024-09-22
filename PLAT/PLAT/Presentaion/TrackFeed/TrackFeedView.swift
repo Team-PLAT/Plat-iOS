@@ -30,7 +30,6 @@ struct TrackFeedView: View {
                             selectedTrackId: $selectedTrackId
                         )
                     }
-                    
                 }
                 
                 if musicControlUseCase.state.isStreaming {
@@ -42,9 +41,9 @@ struct TrackFeedView: View {
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
-                    .onTapGesture {
-                        pathModel.presentFullScreenCover(.trackDetail)
-                    }
+//                    .onTapGesture {
+//                        pathModel.presentFullScreenCover(.trackDetail)
+//                    }
                 }
             }
         }
