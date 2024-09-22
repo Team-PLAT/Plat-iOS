@@ -211,6 +211,7 @@ private struct TrackAppendMusicList: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
         }
+        .contentMargins(.top, 0, for: .scrollContent)
     }
 }
 
