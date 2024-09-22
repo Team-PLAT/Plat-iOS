@@ -19,6 +19,8 @@ struct TrackAppendSearchSheet: View {
     @State private var musicList: [Music] = []
     @State private var recentSearchTermList: [String] = []
     
+    @FocusState private var isTextFieldFocused: Bool
+    
     var body: some View {
         @Bindable var pathModel = pathModel
         
@@ -73,6 +75,7 @@ struct TrackAppendSearchSheet: View {
 
 private struct TrackAppendSearchbar: View {
     @Binding var searchTerm: String
+    private(set) var isTextEditorFocused: FocusState<Bool>.Binding
     
     var body: some View {
         HStack {
@@ -85,6 +88,7 @@ private struct TrackAppendSearchbar: View {
             TextField("", text: $searchTerm, prompt: Text("아티스트, 노래, 가사 등").foregroundStyle(.gray8).font(.Body.body3))
                 .foregroundStyle(.white)
                 .tint(.platPurple)
+                .focused(isTextEditorFocused)
             
             Spacer()
             
@@ -114,8 +118,10 @@ private struct TrackAppendSearchbar: View {
 private struct TrackAppendRecentTerm: View {
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     
-    @Binding var searchTerm: String
-    @Binding var recentSearchTermList: [String]
+    @Binding private(set) var searchTerm: String
+    @Binding private(set) var recentSearchTermList: [String]
+    
+    private(set) var isTextEditorFocused: FocusState<Bool>.Binding
     
     var body: some View {
         HStack {
