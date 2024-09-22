@@ -18,6 +18,7 @@ struct DIContainerModifier: ViewModifier {
     private let playlistService: PlaylistServiceInterface
     private let userProfileService: UserProfileServiceInterface
     private let streamAccountService: StreamAccountServiceInterface
+    private let trackAppendService: TrackAppendServiceInterface
     
     /// 생성 및 주입
     init() {
@@ -30,6 +31,7 @@ struct DIContainerModifier: ViewModifier {
         self.playlistService = StubPlaylistService() // TODO: Stub 교체
         self.userProfileService = StubUserProfileService() // TODO: Stub 교체
         self.streamAccountService = StubStreamAccountService() // TODO: Stub 교체
+        self.trackAppendService = StubTrackAppendService() // TODO: Stub 교체
     }
     
     func body(content: Content) -> some View {
@@ -53,6 +55,7 @@ struct DIContainerModifier: ViewModifier {
                     memberService: memberService
                 )
             )
+            .environment(TrackAppendUseCase(trackAppendService: trackAppendService))
     }
 }
 
