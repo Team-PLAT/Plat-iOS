@@ -39,8 +39,9 @@ struct SelectStreamAccountView: View {
                     icon: .icnAppleMusic,
                     isSelected: selectedState == .appleMusic,
                     tapAction: {
-                        selectedState = .appleMusic
                         isShowingOffer = true
+                        selectedState = .appleMusic
+                        musicControlUseCase.effect(.request)
                     }
                 )
             }
@@ -53,22 +54,7 @@ struct SelectStreamAccountView: View {
             .padding(.horizontal, 18)
             .padding(.bottom, 16)
             
-            Button {
-                pathModel.popToRoot()
-                authUseCase.updateIsLoginComplete(true)
-            } label: {
-                Text("안녕")
-            }
-            .opacity(musicControlUseCase.state.status ? 1 : 0.3)
-            .disabled(!musicControlUseCase.state.status)
-            
             Spacer()
-            
-            Divider()
-                .frame(height: 2)
-                .background(.white)
-                .padding(.horizontal, 38)
-                .padding(.bottom)
             
             Button {
                 pathModel.presentSheet(.whyConnectStreamAccount)
@@ -78,14 +64,19 @@ struct SelectStreamAccountView: View {
                     .underline()
             }
             .padding(.horizontal, 108)
-            .padding(.bottom)
+            .padding(.bottom, 24)
+            
+            ActionButton(state: musicControlUseCase.state.status ? .enabled : .disabled, title: "시작하기") {
+                pathModel.popToRoot()
+                authUseCase.updateIsLoginComplete(true)
+            }
+            .disabled(!musicControlUseCase.state.status)
+            .padding(.horizontal, 18)
+            .padding(.bottom, 30)
         }
         .foregroundStyle(.white)
         .background(.platBackground)
         .navigationTitle("스트리밍 계정 선택하기")
-        .onAppear {
-            musicControlUseCase.effect(.request)
-        }
     }
 }
 
@@ -117,4 +108,5 @@ struct WhyConnectStreamAccountSheet: View {
 
 #Preview {
     SelectStreamAccountView()
+        .injectDIContainer()
 }
