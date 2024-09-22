@@ -124,50 +124,51 @@ private struct TrackAppendRecentTerm: View {
     private(set) var isTextEditorFocused: FocusState<Bool>.Binding
     
     var body: some View {
-        HStack {
-            Text("최근 검색어")
-                .font(.Body.body3)
-                .foregroundStyle(.gray7)
-                .padding(.leading, 18)
-            Spacer()
-        }
-        
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 8) {
-                // TODO: 최근 검색어 기능 연결
-                ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
-                    HStack(spacing: 8) {
-                        Button {
-                            searchTerm = term
-                        } label: {
-                            Text(term)
-                                .foregroundStyle(.white)
-                                .font(.Body.body5)
-                                .padding(.leading, 12)
-                        }
-                        
-                        Button {
-                            trackAppendUseCase.removeRecentSearchTerm(index: index)
-                            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 12, height: 12)
-                                .foregroundStyle(.gray7)
-                                .padding(.trailing, 8)
-                        }
-                    }
-                    .padding(.vertical, 8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .foregroundStyle(.gray9)
-                    )
-                    .fixedSize()
-                }
+        if !recentSearchTermList.isEmpty && !isTextEditorFocused.wrappedValue {
+            HStack {
+                Text("최근 검색어")
+                    .font(.Body.body3)
+                    .foregroundStyle(.gray7)
+                    .padding(.leading, 18)
+                Spacer()
             }
-            .padding(.leading, 18)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 8) {
+                    ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
+                        HStack(spacing: 8) {
+                            Button {
+                                searchTerm = term
+                            } label: {
+                                Text(term)
+                                    .foregroundStyle(.white)
+                                    .font(.Body.body5)
+                                    .padding(.leading, 12)
+                            }
+                            
+                            Button {
+                                trackAppendUseCase.removeRecentSearchTerm(index: index)
+                                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .foregroundStyle(.gray7)
+                                    .padding(.trailing, 8)
+                            }
+                        }
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.gray9)
+                        )
+                        .fixedSize()
+                    }
+                }
+                .padding(.leading, 18)
+            }
+            .frame(height: 32)
         }
-        .frame(height: 32)
     }
 }
 
