@@ -63,6 +63,7 @@ extension MusicControlUseCase {
         case .request:
             Task {
                 state.status = await musicController.setup()
+                print("🎀", state.status )
             }
             
         case let .setup(music):

@@ -40,21 +40,19 @@ struct SelectStreamAccountView: View {
                     isSelected: selectedState == .appleMusic,
                     tapAction: {
                         selectedState = .appleMusic
-                        musicControlUseCase.effect(.request)
                         isShowingOffer = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
+                            print("🐭", isShowingOffer)
+                            if musicControlUseCase.state.status && !isShowingOffer {
+                                print("⚾️")
+                                authUseCase.updateIsLoginComplete(true)
+                            }
+                        }
                     }
                 )
             }
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
-            .onChange(of: isShowingOffer) {
-                if !isShowingOffer {
-                    if musicControlUseCase.state.status {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            authUseCase.updateIsLoginComplete(true)
-                        }
-                    }
-                }
-            }
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(lineWidth: 1)
