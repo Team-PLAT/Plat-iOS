@@ -50,7 +50,9 @@ struct AccountSettingsView: View {
         .alert("계정을 삭제하시겠어요?", isPresented: $isAccountDeletionAlertPresented) {
             Button("돌아가기", role: .cancel) { }
             Button("삭제하기", role: .destructive) {
-                authUseCase.effect(.resign)
+                authUseCase.effect(.resign) {
+                    pathModel.popToRoot()
+                }
             }
         } message: {
             Text("계정을 삭제하면, 그종안 올린 트랙과 프로필,\n플레이리스트 등의 정보가 모두 삭제됩니다.")

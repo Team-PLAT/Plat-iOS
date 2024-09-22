@@ -135,7 +135,6 @@
 		82C9A53C2C87228500C57916 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53B2C87228500C57916 /* API.swift */; };
 		82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */; };
 		82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53F2C8729D500C57916 /* PlatAPI.swift */; };
-		82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82E3328A2C9B164700D06A8D /* Config.xcconfig */; };
 		82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* TrackFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* TrackFeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
@@ -879,7 +878,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					793278042C2D014500F433F5 = {
 						CreatedOnToolsVersion = 15.4;
@@ -918,7 +917,6 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
-				82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1211,7 +1209,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1231,7 +1229,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1253,7 +1251,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1273,7 +1271,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

@@ -88,7 +88,9 @@ private struct AppleSignUpButton: View {
                 switch loginResult {
                 case .success:
                     print("로그인 성공")
-                    pathModel.push(.selectStreamAccount)
+                    authUseCase.effect(.signIn(socialAccout: .apple)) {
+                        pathModel.push(.selectStreamAccount)
+                    }
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
@@ -220,7 +222,9 @@ struct AppleContinueButton: View {
                 let loginResult = authUseCase.handleSocialLogin(authResult: result)
                 switch loginResult {
                 case .success:
-                    pathModel.push(.selectStreamAccount)
+                    authUseCase.effect(.signIn(socialAccout: .apple)) {
+                        pathModel.push(.selectStreamAccount)
+                    }
                     
                 case .failure(let error):
                     print("로그인 실패 \(error.localizedDescription)")
