@@ -15,7 +15,7 @@ struct PlaylistDetailsEditView: View {
     var body: some View {
         VStack(spacing: 0) {
             
-            PlayListInfo(playlist: $playlist)
+            PlayListEditInfo(playlist: $playlist)
                 .padding(.bottom, 17)
             
             NewTrackAdd()
@@ -60,9 +60,9 @@ struct PlaylistDetailsEditView: View {
     }
 }
 
-// MARK: - PlayListInfo
+// MARK: - PlayListEditInfo
 
-private struct PlayListInfo: View {
+private struct PlayListEditInfo: View {
     
     @State private var isPhotoAlbumSheet = false
     @State private var selectedImage: UIImage?

@@ -13,7 +13,6 @@ import MapKit
 struct TrackMapView: View {
     
     @State private var locationManager = MapKitLocationServiceImpl()
-    @State private var selectedTrackId: Track.ID?
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
     
@@ -21,21 +20,18 @@ struct TrackMapView: View {
         ZStack(alignment: .topLeading) {
             if #available(iOS 18.0, *) {
                 MapView(
-                    locationManager: $locationManager,
-                    selectedTrackId: $selectedTrackId
+                    locationManager: $locationManager
                 )
                 .toolbarVisibility(.hidden, for: .navigationBar)
             } else {
                 MapView(
-                    locationManager: $locationManager,
-                    selectedTrackId: $selectedTrackId
+                    locationManager: $locationManager
                 )
             }
             
             MapComponentsView(
                 hasNotifications: $hasNotifications,
-                playlist: $playlist,
-                selectedTrackId: $selectedTrackId
+                playlist: $playlist
             )
         }
         .onReceive(locationManager.locationPublisher) { location in
@@ -59,7 +55,6 @@ private struct MapView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding private(set) var locationManager: MapKitLocationServiceImpl
-    @Binding private(set) var selectedTrackId: Track.ID?
     
     var body: some View {
         Map(
@@ -124,7 +119,6 @@ private struct MapComponentsView: View {
     
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
-    @Binding var selectedTrackId: Track.ID?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -148,7 +142,6 @@ private struct MapComponentsView: View {
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
                 .onTapGesture {
-                    selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
                     pathModel.presentFullScreenCover(.trackDetail)
                 }
             }
