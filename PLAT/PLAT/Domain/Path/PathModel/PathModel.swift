@@ -11,11 +11,17 @@ import SwiftUI
 final class PathModel: PathModelProtocol {
     
     var path: NavigationPath = NavigationPath()
+    var sheetPath: NavigationPath = NavigationPath()
     var sheet: Sheet?
+    var sheetDetent: PresentationDetent = .large
     var fullScreenCover: FullScreenCover?
     
     func push(_ screen: Screen) {
         path.append(screen)
+    }
+    
+    func pushSheet(_ sheet: Sheet) {
+        sheetPath.append(sheet)
     }
     
     func presentSheet(_ sheet: Sheet) {

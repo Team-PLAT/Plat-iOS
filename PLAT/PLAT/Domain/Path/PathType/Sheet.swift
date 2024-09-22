@@ -15,6 +15,7 @@ enum Sheet: Identifiable, Hashable {
     // 트랙
     case trackAppendToPlaylist
     case trackAppendSearch
+    case trackAppendContent
     
     // 플레이리스트
     case playlistDetail
