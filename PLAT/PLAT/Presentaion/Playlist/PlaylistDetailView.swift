@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PlaylistDetailView: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         VStack(spacing: 0) {
 
@@ -28,7 +30,7 @@ struct PlaylistDetailView: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
-                    // TODO: 뒤로가기 기능 구현
+                    pathModel.pop()
                 } label: {
                     HStack(spacing: 3) {
                         Image(systemName: "chevron.backward")
@@ -184,4 +186,5 @@ private struct PlaylistDetailNewTrackButton: View {
 
 #Preview {
     PlaylistDetailView()
+        .injectDIContainer()
 }
