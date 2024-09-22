@@ -9,7 +9,12 @@ import Foundation
 
 final class TrackServiceImpl: TrackServiceInterface {
     
+    private let imageService: ImageServiceInterface
     private let trackRepository = TrackRepository()
+    
+    init(imageService: ImageServiceInterface) {
+        self.imageService = imageService
+    }
     
     /// 현재 위치의 사각형을 기준으로 TrackList를 반환합니다.
     func fetchTrackList(rectLocation: RectLocation) async -> Result<[Track], any Error> {
@@ -44,8 +49,8 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// Track 정보를 패치합니다.
-    func fetchDetail(track: Track) async -> Result<Track, any Error> {
-        let request = FetchTrackDetailResquest(trackId: track.id)
+    func fetchCurrent(trackId: Int) async -> Result<Track, any Error> {
+        let request = FetchTrackDetailResquest(trackId: Int64(trackId))
         let result = await trackRepository.fetchTrackDetail(request: request)
         switch result {
         case .success(let fetchTrackDetailResponse):
@@ -57,25 +62,37 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 트랙을 게시합니다.
-    func upload(track: Track) async -> Result<Void, any Error> {
-        let request = UploadTrackRequest(
-            isrc: track.music.isrc,
-            imageUrl: track.imageUrl ?? "",
-            content: track.content ?? "",
-            latitude: track.location.latitude,
-            longitude: track.location.longitude
+    func uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location) async -> Result<Void, Error> {
+        
+        var imageUrl = ""
+        
+        if let imageData = imageData {
+            let imageResult = await imageService.uploadImage(imageData: imageData)
+            switch imageResult {
+            case .success(let platImage): imageUrl = platImage.imageUrl
+            case .failure(let imageError): return .failure(imageError)
+            }
+        }
+        
+        let result = await trackRepository.uploadTrack(
+            request: .init(
+                isrc: isrc,
+                imageUrl: imageUrl,
+                content: content ?? "",
+                latitude: location.latitude,
+                longitude: location.longitude
+            )
         )
         
-        let result = await trackRepository.uploadTrack(request: request)
         switch result {
         case .success: return .success(Void())
-        case .failure(let error): return .failure(error)
+        case .failure(let uploadError): return .failure(uploadError)
         }
     }
     
     /// 트랙에 좋아요를 표시합니다.
-    func like(track: Track) async -> Result<Void, any Error> {
-        let request = LikeTrackRequest(trackId: track.id, isLiked: track.isLike)
+    func like(trackId: Int, isLike: Bool) async -> Result<Void, any Error> {
+        let request = LikeTrackRequest(trackId: Int64(trackId), isLiked: isLike)
         let result = await trackRepository.likeTrack(request: request)
         switch result {
         case .success: return .success(Void())
@@ -84,8 +101,8 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 트랙을 신고합니다.
-    func report(track: Track) async -> Result<Void, any Error> {
-        let request = ReportTrackRequset(trackId: track.id)
+    func report(trackId: Int) async -> Result<Void, any Error> {
+        let request = ReportTrackRequset(trackId: Int64(trackId))
         let result = await trackRepository.reportTrack(request: request)
         switch result {
         case .success: return .success(Void())

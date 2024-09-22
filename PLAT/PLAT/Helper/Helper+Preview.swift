@@ -28,10 +28,7 @@ enum PreviewHelper {
         memberService: StubMemberService()
     )
     
-    static let mockTrackDetailUseCase = TrackUseCase(
-        trackService: StubTrackService(),
-        imageService: StubImageService()
-    )
+    static let mockTrackDetailUseCase = TrackUseCase(trackService: StubTrackService())
     
     static let mockMusicControlUseCase = MusicControlUseCase(
         musicController: StubMusicController()
