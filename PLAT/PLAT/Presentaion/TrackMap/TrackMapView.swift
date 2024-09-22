@@ -22,21 +22,19 @@ struct TrackMapView: View {
             ZStack(alignment: .topLeading) {
                 if #available(iOS 18.0, *) {
                     MapView(
-                        locationManager: $locationManager,
-                        selectedTrackId: $selectedTrackId
+                        locationManager: $locationManager
                     )
                     .toolbarVisibility(.hidden, for: .navigationBar)
                 } else {
                     MapView(
-                        locationManager: $locationManager,
-                        selectedTrackId: $selectedTrackId
+                        locationManager: $locationManager
                     )
                 }
                 
                 MapComponentsView(
                     hasNotifications: $hasNotifications,
                     playlist: $playlist,
-                    selectedTrackId: $selectedTrackId, isShowToastMessage: $isShowToastMessage
+                    isShowToastMessage: $isShowToastMessage
                 )
             }
             .onReceive(locationManager.locationPublisher) { location in
@@ -127,7 +125,6 @@ private struct MapComponentsView: View {
     
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
-    @Binding var selectedTrackId: Track.ID?
     @Binding var isShowToastMessage: Bool
     
     var body: some View {
