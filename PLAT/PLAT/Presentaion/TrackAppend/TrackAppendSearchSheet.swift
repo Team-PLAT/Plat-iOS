@@ -20,60 +20,52 @@ struct TrackAppendSearchSheet: View {
     @State private var recentSearchTermList: [String] = []
     
     var body: some View {
-        VStack {
-            TrackAppendSearchbar(searchTerm: $searchTerm)
-            
-            TrackAppendRecentTerm(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
-            
-            Spacer()
-            
-            TrackAppendMusicList(musicList: $musicList, selectedMusic: $selectedMusic)
-        }
-        .tint(.white)
-        .presentationDragIndicator(.visible)
-        .presentationDetents([.large])
-        // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-        // .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-//        .navigationDestination(for: TrackAppendPath.self) { path in
-//            switch path {
-//            case .trackAppendContentView:
-//                TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
-//            }
-//        }
-        .onAppear {
-            Task {
-                let status = await MusicAuthorization.request()
+        @Bindable var pathModel = pathModel
+        
+        NavigationStack(path: $pathModel.sheetPath) {
+            VStack {
+                TrackAppendSearchbar(searchTerm: $searchTerm, isTextEditorFocused: $isTextFieldFocused)
+                
+                TrackAppendRecentTerm(searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList, isTextEditorFocused: $isTextFieldFocused)
+                
+                Spacer()
+                
+                TrackAppendMusicList(musicList: $musicList)
             }
-            UISearchBar.appearance().showsCancelButton = false
-            // detent = .large
-            searchTerm = ""
-            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-        }
-        .onDisappear {
-            searchTerm = ""
-            musicList = []
-        }
-        .onChange(of: searchTerm) {
-            searchTimer?.invalidate()
-            searchTimer = nil
-            
-            self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-                if searchTerm != "" {
-                    print("검색중")
+            .tint(.white)
+            // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+            .navigationTitle(pathModel.sheetPath.isEmpty ? "검색" : "음악 선택")
+            .navigationDestination(for: Sheet.self) { sheet in
+                pathModel.build(sheet)
+            }
+            .onAppear {
+                pathModel.sheetDetent = .large
+                searchTerm = ""
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .onDisappear {
+                searchTerm = ""
+                musicList = []
+            }
+            .onChange(of: searchTerm) {
+                searchTimer?.invalidate()
+                searchTimer = nil
+                
+                self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
                     Task {
                         musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
                     }
-                } else {
-                    print("검색불가")
                 }
             }
+            .onSubmit {
+                trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .scrollDismissesKeyboard(.immediately)
+            .tapDismissesKeyboard()
         }
-        .onSubmit {
-            trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
-            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-        }
-        .scrollDismissesKeyboard(.immediately)
-        .tapDismissesKeyboard()
+        .presentationDragIndicator(.visible)
+        .presentationDetents([pathModel.sheetDetent])
     }
 }
 
@@ -205,6 +197,7 @@ private struct TrackAppendMusicList: View {
                     .foregroundStyle(.gray8)
                     .onTapGesture {
                         trackAppendUseCase.selectMusic(music: music.wrappedValue)
+                        pathModel.pushSheet(.trackAppendContent)
                     }
             }
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))

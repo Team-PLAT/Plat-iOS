@@ -20,6 +20,7 @@ struct TrackAppendContentSheet: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(\.dismiss) private var dismiss
     
     @State private var isAddWriting = false
     @State private var contentText = ""
