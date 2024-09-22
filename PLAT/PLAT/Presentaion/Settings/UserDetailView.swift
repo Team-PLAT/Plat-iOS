@@ -54,6 +54,7 @@ private struct ProfileImageView: View {
                 if let selectedImage = selectedImage {
                     Image(uiImage: selectedImage)
                         .resizable()
+                        .scaledToFill()
                         .frame(width: 160, height: 160)
                         .clipShape(Circle())
                 } else {
@@ -61,6 +62,7 @@ private struct ProfileImageView: View {
                         if let image = phase.image {
                             image
                                 .resizable()
+                                .scaledToFill()
                                 .frame(width: 160, height: 160)
                                 .clipShape(Circle())
                         } else {
