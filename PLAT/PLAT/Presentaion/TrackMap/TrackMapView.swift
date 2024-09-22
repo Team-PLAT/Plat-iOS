@@ -16,37 +16,42 @@ struct TrackMapView: View {
     @State private var selectedTrackId: Track.ID?
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
+    @State private var isShowToastMessage: Bool = false
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            if #available(iOS 18.0, *) {
-                MapView(
-                    locationManager: $locationManager,
-                    selectedTrackId: $selectedTrackId
-                )
-                .toolbarVisibility(.hidden, for: .navigationBar)
-            } else {
-                MapView(
-                    locationManager: $locationManager,
-                    selectedTrackId: $selectedTrackId
+        ZStack(alignment: .bottom) {
+            ZStack(alignment: .topLeading) {
+                if #available(iOS 18.0, *) {
+                    MapView(
+                        locationManager: $locationManager,
+                        selectedTrackId: $selectedTrackId
+                    )
+                    .toolbarVisibility(.hidden, for: .navigationBar)
+                } else {
+                    MapView(
+                        locationManager: $locationManager,
+                        selectedTrackId: $selectedTrackId
+                    )
+                }
+                
+                MapComponentsView(
+                    hasNotifications: $hasNotifications,
+                    playlist: $playlist,
+                    selectedTrackId: $selectedTrackId, isShowToastMessage: $isShowToastMessage
                 )
             }
-            
-            MapComponentsView(
-                hasNotifications: $hasNotifications,
-                playlist: $playlist,
-                selectedTrackId: $selectedTrackId
-            )
-        }
-        .onReceive(locationManager.locationPublisher) { location in
-            print("""
+            .onReceive(locationManager.locationPublisher) { location in
+                print("""
             [위치 업데이트]
             - 위도: \(Double(location.coordinate.latitude).rounded())
             - 경도: \(Double(location.coordinate.longitude).rounded())
             """)
+                
+                // TODO: 트랙 리스트 업데이트
+                // TODO: 플레이리스트 생성
+            }
             
-            // TODO: 트랙 리스트 업데이트
-            // TODO: 플레이리스트 생성
+            ToastMessage(message: "플레이리스트를 생성할 트랙이 없어요", isToastPresented: $isShowToastMessage)
         }
     }
 }
@@ -123,6 +128,7 @@ private struct MapComponentsView: View {
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
     @Binding var selectedTrackId: Track.ID?
+    @Binding var isShowToastMessage: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -130,7 +136,7 @@ private struct MapComponentsView: View {
                 MapAddressView()
                 Spacer()
                 MapButtonsView(
-                    hasNotifications: $hasNotifications,
+                    isShowToastMessage: $isShowToastMessage, hasNotifications: $hasNotifications,
                     playlist: $playlist
                 )
                 .padding(.bottom, 22)
@@ -174,8 +180,13 @@ private struct MapButtonsView: View {
     
     @Environment(PathModel.self) private var pathModel
     
+    @Binding var isShowToastMessage: Bool
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
+    
+    var isTrackListEmpty: Bool {
+        playlist?.trackList.isEmpty ?? true
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -218,19 +229,22 @@ private struct MapButtonsView: View {
             .padding(.bottom, 22)
             
             Button {
-                pathModel.presentFullScreenCover(.platProcessing)
+                if isTrackListEmpty {
+                    isShowToastMessage = true
+                } else {
+                    pathModel.presentFullScreenCover(.platProcessing)
+                }
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
                     .foregroundStyle(.platBackground)
                     .overlay {
-                        Image(.imgLetsplat)
+                        Image(isTrackListEmpty ? .imgLetsplatDis : .imgLetsplat)
                             .frame(width: 22, height: 30)
-                            .foregroundStyle(.platPurple)
                             .padding(.bottom, 4)
                             .overlay {
                                 Text("\(playlist?.trackList.count ?? 0)")
-                                    .foregroundStyle(.platPurple)
+                                    .foregroundStyle(isTrackListEmpty ? .gray7 : .platPurple)
                                     .font(.Body.body4)
                             }
                     }
@@ -244,4 +258,5 @@ private struct MapButtonsView: View {
 #Preview {
     TrackMapView()
         .environment(PreviewHelper.mockMusicControlUseCase)
+        .injectDIContainer()
 }
