@@ -30,8 +30,14 @@ extension PathModel {
         case .playlist:
             PlaylistView()
             
+        case .appendPlaylistView:
+            AppendPlaylistView()
+            
         case .playlistDetail:
             PlaylistDetailView()
+            
+        case .playlistDetailsEditView:
+            PlaylistDetailsEditView()
             
         case .userDetail:
             UserDetailView()

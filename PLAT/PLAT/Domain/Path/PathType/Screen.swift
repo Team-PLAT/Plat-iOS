@@ -20,7 +20,9 @@ enum Screen: Identifiable, Hashable {
     
     // 플레이리스트
     case playlist
+    case appendPlaylistView
     case playlistDetail
+    case playlistDetailsEditView
     
     // 설정
     case userDetail

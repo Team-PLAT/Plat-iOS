@@ -10,9 +10,11 @@ import SwiftUI
 // MARK: - PlaylistView
 
 struct PlaylistView: View {
+    
     @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Environment(PathModel.self) private var pathModel
+    
     @State private var selectedPlaylistId: Playlist.ID?
-    @State private var showPlaylistDetail: Bool = false
     @State private var searchText: String = ""
     var filteredPlaylists: [Playlist] {
         if searchText.isEmpty {
@@ -32,10 +34,10 @@ struct PlaylistView: View {
                 ForEach(filteredPlaylists) { playlist in
                     Button {
                         selectedPlaylistId = playlist.id
-                        showPlaylistDetail.toggle()
+                        pathModel.push(.playlistDetail)
                     } label: {
                         VStack {
-                            PlaylistSectionView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId)
+                            PlaylistSectionView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
                             DividerView()
                         }
                     }
@@ -53,6 +55,7 @@ struct PlaylistView: View {
 // MARK: - HeaderView
 
 private struct HeaderView: View {
+    
     @Binding var searchText: String
     
     var body: some View {
@@ -103,10 +106,11 @@ private struct HeaderView: View {
 // MARK: - PlaylistSectionView
 
 private struct PlaylistSectionView: View {
-    let playlist: Playlist
+    
     @State private var isShowDetailSheet: Bool = false
-    @Binding var showPlaylistDetail: Bool
     @Binding var selectedPlaylistId: Playlist.ID?
+    
+    let playlist: Playlist
     
     var body: some View {
         HStack(spacing: 18) {
@@ -126,7 +130,7 @@ private struct PlaylistSectionView: View {
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isShowDetailSheet) {
-            DetailSheetView(showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            DetailSheetView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
         }
     }
 }
@@ -134,7 +138,9 @@ private struct PlaylistSectionView: View {
 // MARK: - PlaylistImageView
 
 private struct PlaylistImageView: View {
+    
     let imageUrl: String
+    
     var body: some View {
         AsyncImage(url: URL(string: imageUrl)) { img in
             if let image = img.image {
@@ -153,6 +159,7 @@ private struct PlaylistImageView: View {
 // MARK: - DividerView
 
 private struct DividerView: View {
+    
     var body: some View {
         HStack {
             Spacer()
@@ -173,7 +180,7 @@ private struct CreatePlaylistView: View {
     var body: some View {
         VStack {
             Button {
-                // TODO: AppendPlaylistView로 이동
+                pathModel.push(.appendPlaylistView)
             } label: {
                 HStack(spacing: 18) {
                     RoundedRectangle(cornerRadius: 12)
@@ -201,17 +208,18 @@ private struct CreatePlaylistView: View {
 // MARK: - DetailSheetView
 
 private struct DetailSheetView: View {
-    @Binding var showPlaylistDetail: Bool
+    
     @Binding var selectedPlaylistId: Playlist.ID?
+    
     let playlist: Playlist
     
     var body: some View {
         VStack {
-            DetailPlaylistButtonView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail)
+            DetailPlaylistButtonView(playlist: playlist)
             
             DetailInfoView()
             
-            DetailButtonsView(playlist: playlist, selectedPlaylistId: $selectedPlaylistId, showPlaylistDetail: $showPlaylistDetail)
+            DetailButtonsView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
             
             Spacer()
             
@@ -226,15 +234,19 @@ private struct DetailSheetView: View {
 // MARK: - DetailPlaylistButtonView
 
 private struct DetailPlaylistButtonView: View {
-    let playlist: Playlist
-    @State private var selectedPlaylistId: Playlist.ID?
-    @Binding var showPlaylistDetail: Bool
     
+    @Environment(PathModel.self) private var pathModel
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var selectedPlaylistId: Playlist.ID?
+    
+    let playlist: Playlist
+
     var body: some View {
         Button {
-            // TODO: PlaylistDetailView로 이동
             selectedPlaylistId = playlist.id
-            showPlaylistDetail.toggle()
+            pathModel.push(.playlistDetail)
+            dismiss()
         } label: {
             HStack(spacing: 18) {
                 PlaylistImageView(imageUrl: playlist.imageUrl)
@@ -258,6 +270,7 @@ private struct DetailPlaylistButtonView: View {
 // MARK: - DetailInfoView
 
 private struct DetailInfoView: View {
+    
     let trackList = MockDataBuilder.playlist.trackList
     
     var body: some View {
@@ -280,10 +293,14 @@ private struct DetailInfoView: View {
 // MARK: - DetailButtonsView
 
 private struct DetailButtonsView: View {
+    
     @Environment(PlaylistUseCase.self) private var playlistUseCase
-    let playlist: Playlist
+    @Environment(PathModel.self) private var pathModel
+    @Environment(\.dismiss) private var dismiss
+    
     @Binding var selectedPlaylistId: Playlist.ID?
-    @Binding var showPlaylistDetail: Bool
+    
+    let playlist: Playlist
     
     var body: some View {
         VStack(spacing: 32) {
@@ -299,9 +316,9 @@ private struct DetailButtonsView: View {
             }
             
             Button {
-                // TODO: PlaylistDetailView의 편집모드로 바로 이동
                 selectedPlaylistId = playlist.id
-                showPlaylistDetail = true
+                pathModel.push(.playlistDetailsEditView)
+                dismiss()
             } label: {
                 HStack {
                     Image(systemName: "pencil")
@@ -329,6 +346,7 @@ private struct DetailButtonsView: View {
 // MARK: - DetailSheetCloseButtonView
 
 private struct DetailSheetCloseButtonView: View {
+    
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -354,6 +372,7 @@ private struct DetailSheetCloseButtonView: View {
 
 /// 트랙PD 정보에서 인원수에 따른 표시방법을 다르게 하기 위한 함수
 private func formatNicknames(_ tracks: [Track]) -> String {
+    
     let nicknames = tracks.map { $0.user.nickname }
     let count = nicknames.count
     
@@ -370,6 +389,5 @@ private func formatNicknames(_ tracks: [Track]) -> String {
 
 #Preview {
     PlaylistView()
-        .environment(PreviewHelper.mockPlaylistUseCase)
         .injectDIContainer()
 }
