@@ -9,13 +9,25 @@ import SwiftUI
 
 struct PlaylistDetailsEditView: View {
     @Environment(PathModel.self) private var pathModel
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
-    @State var playlist: Playlist = MockDataBuilder.playlist
+    private var selectedPlaylist: Playlist {
+        if let playlist = playlistUseCase.selectedPlaylist {
+            return playlist
+        } else {
+            return Playlist(
+                id: 0001,
+                title: "플레이리스트 가져오기 실패",
+                imageUrl: "",
+                trackList: []
+            )
+        }
+    }
     
     var body: some View {
         VStack(spacing: 0) {
             
-            PlayListEditInfo(playlist: $playlist)
+            PlayListEditInfo(playlist: selectedPlaylist)
                 .padding(.bottom, 17)
             
             NewTrackAdd()
@@ -26,9 +38,9 @@ struct PlaylistDetailsEditView: View {
             
             ScrollView {
                 VStack(spacing: 0) {
-                    ForEach(playlist.trackList) { track in
+                    ForEach(selectedPlaylist.trackList) { track in
                         PlayListRowView(track: track, onDelete: { trackToDelete in
-                            deleteTrack(trackToDelete)
+//                            deleteTrack(trackToDelete)
                         })
                     }
                 }
@@ -55,9 +67,9 @@ struct PlaylistDetailsEditView: View {
             }
         }
     }
-    private func deleteTrack(_ track: Track) {
-        playlist.trackList.removeAll { $0.id == track.id }
-    }
+//    private func deleteTrack(_ track: Track) {
+//        selectedPlaylist.trackList.removeAll { $0.id == track.id }
+//    }
 }
 
 // MARK: - PlayListEditInfo
@@ -66,12 +78,11 @@ private struct PlayListEditInfo: View {
     
     @State private var isPhotoAlbumSheet = false
     @State private var selectedImage: UIImage?
+    @State private var playlistTitle: String = ""
     
-    @Binding var playlist: Playlist
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
-    private var playlistImageUrl: URL? {
-        URL(string: playlist.imageUrl)
-    }
+    let playlist: Playlist
     
     var body: some View {
         VStack( alignment: .center, spacing: 0) {
@@ -93,7 +104,7 @@ private struct PlayListEditInfo: View {
                                 .foregroundStyle(.white)
                         }
                 } else {
-                    AsyncImage(url: playlistImageUrl) { phase in
+                    AsyncImage(url: URL(string: playlist.imageUrl)) { phase in
                         if let image = phase.image {
                             image
                                 .resizable()
@@ -103,7 +114,7 @@ private struct PlayListEditInfo: View {
                         } else {
                             RoundedRectangle(cornerRadius: 24)
                                 .frame(width: 220, height: 220)
-                                .foregroundStyle(.gray9)
+                                .foregroundStyle(LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
                         }
                     }
                     .overlay {
@@ -127,7 +138,7 @@ private struct PlayListEditInfo: View {
                     }
             }
             
-            TextField(" ", text: $playlist.title)
+            TextField(" ", text: $playlistTitle)
                 .font(.Head.head2)
                 .frame(height: 44, alignment: .center)
                 .multilineTextAlignment(.center)
@@ -160,6 +171,9 @@ private struct PlayListEditInfo: View {
                 .frame(height: 1)
                 .foregroundColor(.gray9)
         }
+        .onAppear {
+                    self.playlistTitle = playlist.title
+                }
     }
 }
 
@@ -201,6 +215,10 @@ private struct NewTrackAdd: View {
 
 private struct PlayListRowView: View {
     
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var playlistMusic: Music?
+    
     let track: Track
     let onDelete: (Track) -> Void
     
@@ -222,10 +240,10 @@ private struct PlayListRowView: View {
                 }
                 .padding(.leading, 18)
                 
-                AlbumImage(track: track)
+                AlbumImageEdit(playlistMusic: $playlistMusic)
                     .padding(.horizontal, 10)
                 
-                TrackInfo(track: track)
+                TrackInfoEdit(playlistMusic: $playlistMusic, track: track)
                     .padding(.trailing, 40)
                 
                 Spacer()
@@ -239,6 +257,11 @@ private struct PlayListRowView: View {
                 .padding(.trailing, 18)
             }
         }
+        .onAppear {
+            Task {
+                playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+            }
+        }
         .padding(.vertical, 10)
         
         Rectangle()
@@ -248,12 +271,14 @@ private struct PlayListRowView: View {
     }
 }
 
-private struct AlbumImage: View {
+// MARK: - AlbumImageEdit
+
+private struct AlbumImageEdit: View {
     
-    let track: Track
+    @Binding private(set) var playlistMusic: Music?
     
     private var albumImageUrl: URL? {
-        URL(string: track.music.albumImageUrl)
+        URL(string: playlistMusic?.albumImageUrl ?? "")
     }
     
     var body: some View {
@@ -273,20 +298,22 @@ private struct AlbumImage: View {
     }
 }
 
-// MARK: - TrackInfo
+// MARK: - TrackInfoEdit
 
-private struct TrackInfo: View {
+private struct TrackInfoEdit: View {
+    
+    @Binding private(set) var playlistMusic: Music?
     
     let track: Track
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(track.music.title)
+            Text(playlistMusic?.title ?? "")
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text(track.music.artist)
+                Text(playlistMusic?.artist ?? "")
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 

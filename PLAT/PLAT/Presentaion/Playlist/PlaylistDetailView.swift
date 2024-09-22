@@ -31,41 +31,40 @@ struct PlaylistDetailView: View {
     
     var body: some View {
         ScrollView {
-        VStack(spacing: 0) {
-            
-            PlayListInfo(playlist: selectedPlaylist)
-                .padding(.bottom, 10)
-            
-            PlayListPlayButton(isrcs: $isrcs)
-                .padding(.bottom, 10)
-            
-            PlayListDetailView(playlist: selectedPlaylist)
-            
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.gray9)
-            
-            PlaylistDetailNewTrackButton()
-                .padding(.vertical, 10)
-            
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(.gray9)
-                .padding(.leading, 46)
-            
+            VStack(spacing: 0) {
+                
+                PlayListInfo(playlist: selectedPlaylist)
+                    .padding(.bottom, 10)
+                
+                PlayListPlayButton(isrcs: $isrcs)
+                    .padding(.bottom, 10)
+                
+                PlayListDetailView(playlist: selectedPlaylist)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.gray9)
+                
+                PlaylistDetailNewTrackButton()
+                    .padding(.vertical, 10)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.gray9)
+                    .padding(.leading, 46)
+                
                 VStack(spacing: 0) {
                     ForEach(selectedPlaylist.trackList) { track in
-                        PlayListRowView(showTrackDetail: $showTrackDetail, isrcs: $isrcs, track: track)
+                        PlayListRowView(isrcs: $isrcs, track: track)
+                            .onTapGesture {
+                                musicControlUseCase.state.isPlayingTrack = track
+                                musicControlUseCase.effect(.setup(music: track.music))
+                                pathModel.presentFullScreenCover(.trackDetail)
+                            }
                     }
                 }
             }
         }
-        //        .fullScreenCover(isPresented: $showTrackDetail) {
-        //            if let trackId = musicControlUseCase.state.isPlayingTrack?.id {
-        //                TrackDetailView(trackId: trackId)
-        //                    .presentationBackground(.thinMaterial.opacity(0.5))
-        //            }
-        //        }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -81,6 +80,7 @@ struct PlaylistDetailView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
+                    pathModel.push(.playlistDetailsEditView)
                     // TODO: PlaylistDetailsEditView 뷰 이동 & fetch한 애들 넘기기
                 } label: {
                     Circle()
@@ -278,9 +278,9 @@ private struct PlaylistDetailNewTrackButton: View {
 private struct PlayListRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PathModel.self) private var pathModel
     
     @State private var playlistMusic: Music?
-    @Binding private(set) var showTrackDetail: Bool
     @Binding var isrcs: [String]
     
     let track: Track
@@ -289,27 +289,22 @@ private struct PlayListRowView: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    AlbumImage(playlistMusic: $playlistMusic, track: track)
+                    AlbumImage(playlistMusic: $playlistMusic)
                         .padding(.trailing, 10)
                         .padding(.leading, 18)
                     
-                    TrackInfo(feedMusic: $playlistMusic, track: track)
+                    TrackInfo(playlistMusic: $playlistMusic)
                         .padding(.trailing, 40)
                     
                     Spacer()
-                }
-                .onTapGesture {
-                    musicControlUseCase.state.isPlayingTrack = track
-                    musicControlUseCase.effect(.setup(music: track.music))
-                    showTrackDetail.toggle()
                 }
                 
                 HStack(spacing: 0) {
                     Menu {
                         Button {
-                            showTrackDetail.toggle()
                             musicControlUseCase.state.isPlayingTrack = track
                             musicControlUseCase.effect(.setup(music: track.music))
+                            pathModel.presentFullScreenCover(.trackDetail)
                         } label: {
                             Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)
                         }
@@ -357,8 +352,6 @@ private struct AlbumImage: View {
     
     @Binding private(set) var playlistMusic: Music?
     
-    let track: Track
-    
     private var albumImageUrl: URL? {
         URL(string: playlistMusic?.albumImageUrl ?? "")
     }
@@ -384,18 +377,16 @@ private struct AlbumImage: View {
 
 private struct TrackInfo: View {
     
-    @Binding private(set) var feedMusic: Music?
-    
-    let track: Track
+    @Binding private(set) var playlistMusic: Music?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(feedMusic?.title ?? "")
+            Text(playlistMusic?.title ?? "")
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text(feedMusic?.artist ?? "")
+                Text(playlistMusic?.artist ?? "")
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 
