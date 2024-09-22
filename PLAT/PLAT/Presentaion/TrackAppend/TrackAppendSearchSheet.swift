@@ -11,11 +11,12 @@ import MusicKit
 // MARK: - TrackAppendSearchSheet
 
 struct TrackAppendSearchSheet: View {
-    @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
     @State private var musicList: [Music] = []
-    @State private var selectedMusic: Music = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
     @State private var recentSearchTermList: [String] = []
     
     var body: some View {
@@ -119,8 +120,8 @@ private struct TrackAppendSearchbar: View {
 // MARK: - TrackAppendRecentTerm
 
 private struct TrackAppendRecentTerm: View {
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     
-    @Binding var trackAppendUseCase: TrackAppendUseCase
     @Binding var searchTerm: String
     @Binding var recentSearchTermList: [String]
     
@@ -175,8 +176,10 @@ private struct TrackAppendRecentTerm: View {
 // MARK: - TrackAppendMusicList
 
 private struct TrackAppendMusicList: View {
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    
     @Binding var musicList: [Music]
-    @Binding var selectedMusic: Music
     
     var body: some View {
         List($musicList, id: \.self.isrc) { music in
@@ -201,8 +204,7 @@ private struct TrackAppendMusicList: View {
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
-                        // pathModel.trackAppendPaths.append(.trackAppendContentView)
-                        selectedMusic = music.wrappedValue
+                        trackAppendUseCase.selectMusic(music: music.wrappedValue)
                     }
             }
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
