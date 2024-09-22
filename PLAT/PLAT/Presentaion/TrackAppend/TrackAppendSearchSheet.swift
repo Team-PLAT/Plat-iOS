@@ -22,16 +22,16 @@ struct TrackAppendSearchSheet: View {
         VStack {
             TrackAppendSearchbar(searchTerm: $searchTerm)
             
-            TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
+            TrackAppendRecentTerm(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
             
             Spacer()
             
-            TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
+            TrackAppendMusicList(musicList: $musicList, selectedMusic: $selectedMusic)
         }
         .tint(.white)
         .presentationDragIndicator(.visible)
         .presentationDetents([.large])
-        // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+        // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
         // .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
 //        .navigationDestination(for: TrackAppendPath.self) { path in
 //            switch path {
@@ -116,9 +116,9 @@ private struct TrackAppendSearchbar: View {
     }
 }
 
-// MARK: - TrackAppendRecentTermView
+// MARK: - TrackAppendRecentTerm
 
-private struct TrackAppendRecentTermView: View {
+private struct TrackAppendRecentTerm: View {
     
     @Binding var trackAppendUseCase: TrackAppendUseCase
     @Binding var searchTerm: String
@@ -172,9 +172,9 @@ private struct TrackAppendRecentTermView: View {
     }
 }
 
-// MARK: - TrackAppendMusicListView
+// MARK: - TrackAppendMusicList
 
-private struct TrackAppendMusicListView: View {
+private struct TrackAppendMusicList: View {
     @Binding var musicList: [Music]
     @Binding var selectedMusic: Music
     

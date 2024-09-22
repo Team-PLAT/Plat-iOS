@@ -17,7 +17,7 @@
 		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
 		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
 		5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */; };
-		5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentView.swift */; };
+		5151BEB82C742119001DA80F /* TrackAppendContentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */; };
 		5151BEBE2C74D6F3001DA80F /* TrackAppendSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
@@ -166,7 +166,7 @@
 		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
 		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
 		5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackAppendService.swift; sourceTree = "<group>"; };
-		5151BEB72C742119001DA80F /* TrackAppendContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentView.swift; sourceTree = "<group>"; };
+		5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentSheet.swift; sourceTree = "<group>"; };
 		5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendSearchSheet.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -349,9 +349,8 @@
 		5151BEAC2C72700E001DA80F /* TrackAppend */ = {
 			isa = PBXGroup;
 			children = (
-				5151BEB72C742119001DA80F /* TrackAppendContentView.swift */,
+				5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */,
 				5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */,
-				510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */,
 			);
 			path = TrackAppend;
 			sourceTree = "<group>";
@@ -448,6 +447,7 @@
 		793509C02C393B4F0098B073 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */,
 				793509C12C393BA40098B073 /* ListSection.swift */,
 				7964659D2C3A649600F6DC2D /* PlatTextField.swift */,
 				7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */,
@@ -1006,7 +1006,7 @@
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */,
 				79501FD22C93185F00FB8143 /* PlaylistUseCase.swift in Sources */,
-				5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */,
+				5151BEB82C742119001DA80F /* TrackAppendContentSheet.swift in Sources */,
 				8235A4582C9D6FB400063E27 /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkClient.swift in Sources */,

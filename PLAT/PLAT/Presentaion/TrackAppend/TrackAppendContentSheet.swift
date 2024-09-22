@@ -1,5 +1,5 @@
 //
-//  TrackAppendContentView.swift
+//  TrackAppendContentSheet.swift
 //  PLAT
 //
 //  Created by 박준우 on 8/20/24.
@@ -14,9 +14,9 @@ enum ContentState {
     case pictureAndWrite
 }
 
-// MARK: - TrackAppendContentView
+// MARK: - TrackAppendContentSheet
 
-struct TrackAppendContentView: View {
+struct TrackAppendContentSheet: View {
     
     @Environment(MapUseCase.self) private var mapUseCase
     
@@ -33,9 +33,9 @@ struct TrackAppendContentView: View {
     var body: some View {
         ScrollView {
             VStack {
-                TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
+                TrackAppendContentMainSheet(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
                 
-                TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: $contentText, state: $state)
+                TrackAppendContentAddSheet(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: $contentText, state: $state)
             }
         }
         .onAppear {
@@ -73,9 +73,9 @@ struct TrackAppendContentView: View {
     }
 }
 
-// MARK: - TrackAppendContentMainView
+// MARK: - TrackAppendContentMainSheet
 
-struct TrackAppendContentMainView: View {
+struct TrackAppendContentMainSheet: View {
     @State private var isPhotoAlbumSheet = false
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
@@ -176,9 +176,9 @@ struct TrackAppendContentMainView: View {
     }
 }
 
-// MARK: - TrackAppendContentAddView
+// MARK: - TrackAppendContentAddSheet
 
-struct TrackAppendContentAddView: View {
+struct TrackAppendContentAddSheet: View {
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
     @Binding var contentText: String
@@ -368,7 +368,7 @@ struct TrackAppendContentAddView: View {
 }
 
 #Preview {
-    TrackAppendContentView(
+    TrackAppendContentSheet(
         detent: .constant(.fraction(0.25)),
         music: .constant(
             Music(
