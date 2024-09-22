@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PlaylistDetailsEditView: View {
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
     @Environment(PathModel.self) private var pathModel
     
     @State var playlist: Playlist = MockDataBuilder.playlist
@@ -205,8 +204,6 @@ private struct PlayListRowView: View {
     let track: Track
     let onDelete: (Track) -> Void
     
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
-    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -252,12 +249,11 @@ private struct PlayListRowView: View {
 }
 
 private struct AlbumImage: View {
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     let track: Track
     
     private var albumImageUrl: URL? {
-        URL(string: playlistUseCase.selectedPlaylist?.imageUrl ?? "")
+        URL(string: track.music.albumImageUrl)
     }
     
     var body: some View {
@@ -280,7 +276,6 @@ private struct AlbumImage: View {
 // MARK: - TrackInfo
 
 private struct TrackInfo: View {
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     let track: Track
     
