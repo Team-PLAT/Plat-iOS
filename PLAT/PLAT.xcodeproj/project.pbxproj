@@ -135,7 +135,7 @@
 		82C9A53C2C87228500C57916 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53B2C87228500C57916 /* API.swift */; };
 		82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */; };
 		82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53F2C8729D500C57916 /* PlatAPI.swift */; };
-		82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82E3328A2C9B164700D06A8D /* Config.xcconfig */; };
+		82CF06962CA04DC70039C2FF /* PlatProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF06952CA04DC70039C2FF /* PlatProgressView.swift */; };
 		82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* TrackFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* TrackFeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
@@ -285,6 +285,7 @@
 		82C9A53B2C87228500C57916 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RawRepresentable.swift"; sourceTree = "<group>"; };
 		82C9A53F2C8729D500C57916 /* PlatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatAPI.swift; sourceTree = "<group>"; };
+		82CF06952CA04DC70039C2FF /* PlatProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatProgressView.swift; sourceTree = "<group>"; };
 		82E3328A2C9B164700D06A8D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsEditView.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* TrackFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedView.swift; sourceTree = "<group>"; };
@@ -458,6 +459,7 @@
 				82A825152C6E30D00084D7E8 /* MusicIndicator.swift */,
 				82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */,
 				82721EED2C8D624000CA2C9A /* ToastMessage.swift */,
+				82CF06952CA04DC70039C2FF /* PlatProgressView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -879,7 +881,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					793278042C2D014500F433F5 = {
 						CreatedOnToolsVersion = 15.4;
@@ -918,7 +920,6 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
-				82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1054,6 +1055,7 @@
 				DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */,
 				82204EB02C96A71500546A5C /* ImageServiceInterface.swift in Sources */,
 				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
+				82CF06962CA04DC70039C2FF /* PlatProgressView.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 				822273BC2C9D8FB9001A64DF /* DIContainer.swift in Sources */,
@@ -1211,7 +1213,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1231,7 +1233,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1253,7 +1255,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1273,7 +1275,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
