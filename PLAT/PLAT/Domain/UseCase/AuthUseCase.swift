@@ -43,13 +43,26 @@ extension AuthUseCase {
     }
 }
 
+// MARK: - UseCase Method
+
+extension AuthUseCase {
+    
+    /// 로그인을 요청합니다.
+    func signIn(socialAccount: SocialAccount) async -> Result<Void, Error> {
+        let result = await memberService.signIn(socialAccount: socialAccount)
+        switch result {
+        case .success: return .success(())
+        case .failure(let error): return .failure(error)
+        }
+    }
+}
+
 // MARK: - Effect Method
 
 extension AuthUseCase {
     
     enum Effect {
         case toggleAuthType(_ authType: AuthType)
-        case signIn(socialAccout: SocialAccount)
         case signOut
         case resign
         
@@ -66,15 +79,6 @@ extension AuthUseCase {
         case .toggleAuthType(let authType):
             state.authType = authType
             completion?()
-            
-        case .signIn(let socialAccount):
-            Task {
-                let result = await memberService.signIn(socialAccount: socialAccount)
-                switch result {
-                case .success: completion?()
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
             
         case .signOut:
             memberService.signOut()
