@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct PlaylistDetailsEditView: View {
+    @Environment(PathModel.self) private var pathModel
     
     @State var playlist: Playlist = MockDataBuilder.playlist
-
-    @Binding private(set) var playlistMusic: Music?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -30,7 +29,7 @@ struct PlaylistDetailsEditView: View {
                     ForEach(playlist.trackList) { track in
                         PlayListRowView(track: track, onDelete: { trackToDelete in
                             deleteTrack(trackToDelete)
-                        }, playlistMusic: $playlistMusic)
+                        })
                     }
                 }
             }
@@ -39,7 +38,7 @@ struct PlaylistDetailsEditView: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
-                    // TODO: 뒤로 가기
+                    pathModel.pop()
                 } label: {
                     Text("취소")
                     .foregroundStyle(.platPurple)
@@ -205,8 +204,6 @@ private struct PlayListRowView: View {
     let track: Track
     let onDelete: (Track) -> Void
     
-    @Binding private(set) var playlistMusic: Music?
-    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -225,10 +222,10 @@ private struct PlayListRowView: View {
                 }
                 .padding(.leading, 18)
                 
-                AlbumImage(track: track, playlistMusic: $playlistMusic)
+                AlbumImage(track: track)
                     .padding(.horizontal, 10)
                 
-                TrackInfo(track: track, playlistMusic: $playlistMusic)
+                TrackInfo(track: track)
                     .padding(.trailing, 40)
                 
                 Spacer()
@@ -255,10 +252,8 @@ private struct AlbumImage: View {
     
     let track: Track
     
-    @Binding private(set) var playlistMusic: Music?
-    
     private var albumImageUrl: URL? {
-        URL(string: playlistMusic?.albumImageUrl ?? "")
+        URL(string: track.music.albumImageUrl)
     }
     
     var body: some View {
@@ -284,16 +279,14 @@ private struct TrackInfo: View {
     
     let track: Track
     
-    @Binding private(set) var playlistMusic: Music?
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(playlistMusic?.title ?? "")
+            Text(track.music.title)
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text(playlistMusic?.artist ?? "")
+                Text(track.music.artist)
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 
@@ -317,5 +310,6 @@ private struct TrackInfo: View {
 }
 
 #Preview {
-    PlaylistDetailsEditView(playlistMusic: .constant(MockDataBuilder.track.music))
+    PlaylistDetailsEditView()
+        .injectDIContainer()
 }
