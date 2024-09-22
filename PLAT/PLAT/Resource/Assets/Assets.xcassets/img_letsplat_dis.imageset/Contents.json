@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "img_letsplat.svg",
+      "filename" : "Frame 449.svg",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "localizable" : true
   }
 }

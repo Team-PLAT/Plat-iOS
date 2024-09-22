@@ -1,5 +1,5 @@
 //
-//  TrackAppendContentView.swift
+//  TrackAppendContentSheet.swift
 //  PLAT
 //
 //  Created by 박준우 on 8/20/24.
@@ -14,50 +14,46 @@ enum ContentState {
     case pictureAndWrite
 }
 
-// MARK: - TrackAppendContentView
+// MARK: - TrackAppendContentSheet
 
-struct TrackAppendContentView: View {
+struct TrackAppendContentSheet: View {
     
-    @Environment(MapUseCase.self) private var mapUseCase
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(\.dismiss) private var dismiss
     
     @State private var isAddWriting = false
     @State private var contentText = ""
     @State private var selectedImage: UIImage?
     @State private var isPhotoAlbumSheet = false
     @State private var state: ContentState = .none
-    @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
-    @Binding var detent: PresentationDetent
-    @Binding var music: Music
-    @Binding var isTrackAppendViewSheet: Bool
     
     var body: some View {
         ScrollView {
             VStack {
-                TrackAppendContentMainView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, music: $music, detent: $detent, state: $state)
+                TrackAppendContentMainSheet(selectedImage: $selectedImage, isAddWriting: $isAddWriting, state: $state)
                 
-                TrackAppendContentAddView(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: $contentText, state: $state)
+                TrackAppendContentAddSheet(selectedImage: $selectedImage, isAddWriting: $isAddWriting, contentText: $contentText, state: $state)
             }
         }
         .onAppear {
-            detent = .fraction(0.25)
+            pathModel.sheetDetent = .fraction(0.25)
         }
         .onChange(of: state) {
             if state == .none {
-                detent = .fraction(0.25)
+                pathModel.sheetDetent = .fraction(0.25)
             } else {
-                detent = .large
+                pathModel.sheetDetent = .large
             }
         }
+        .presentationDetents([pathModel.sheetDetent])
         .tapDismissesKeyboard()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    Task {
-                        await trackAppendUseCase.postTrack(music: music, context: contentText, location: mapUseCase.currentLocation())
-                    }
-                    
-                    isTrackAppendViewSheet = false
+                    // TODO: 게시하기 기능 구현
+                    dismiss()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundStyle(.platPurple)
@@ -73,19 +69,19 @@ struct TrackAppendContentView: View {
     }
 }
 
-// MARK: - TrackAppendContentMainView
+// MARK: - TrackAppendContentMainSheet
 
-struct TrackAppendContentMainView: View {
+struct TrackAppendContentMainSheet: View {
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    
     @State private var isPhotoAlbumSheet = false
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
-    @Binding var music: Music
-    @Binding var detent: PresentationDetent
     @Binding var state: ContentState
     
     var body: some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: music.albumImageUrl)) { image in
+            AsyncImage(url: URL(string: trackAppendUseCase.state.selectedMusic.albumImageUrl)) { image in
                 if let img = image.image {
                     img
                         .resizable()
@@ -101,12 +97,12 @@ struct TrackAppendContentMainView: View {
             }
             VStack(alignment: .leading) {
                 
-                Text("\(music.title)")
+                Text("\(trackAppendUseCase.state.selectedMusic.title)")
                     .foregroundStyle(.white)
                     .font(.Head.head2)
                     .lineLimit(1)
                 
-                Text("\(music.artist)")
+                Text("\(trackAppendUseCase.state.selectedMusic.artist)")
                     .foregroundStyle(.gray7)
                     .font(.Body.body3)
                     .lineLimit(1)
@@ -176,9 +172,9 @@ struct TrackAppendContentMainView: View {
     }
 }
 
-// MARK: - TrackAppendContentAddView
+// MARK: - TrackAppendContentAddSheet
 
-struct TrackAppendContentAddView: View {
+struct TrackAppendContentAddSheet: View {
     @Binding var selectedImage: UIImage?
     @Binding var isAddWriting: Bool
     @Binding var contentText: String
@@ -368,17 +364,5 @@ struct TrackAppendContentAddView: View {
 }
 
 #Preview {
-    TrackAppendContentView(
-        detent: .constant(.fraction(0.25)),
-        music: .constant(
-            Music(
-                isrc: "",
-                title: "NO PAIN",
-                artist: "실리카겔",
-                albumImageUrl: "https://i.namu.wiki/i/26jmhUch2o9CbpEuyHqpae358g0EKPSLCd66nexNlH5S3gYemP-xwHYQsl59hzQrLXvg3SgXFsmjj1U8sH2H_2lFmoaFpWdh8I9r_revsT7xFMw_sjMiCiB172Kv56cjR7nPnvnEnqYNg7X1nmzYZQ.webp",
-                duration: 0
-            )
-        ),
-        isTrackAppendViewSheet: .constant(false)
-    )
+    TrackAppendContentSheet()
 }

@@ -39,21 +39,54 @@ private struct ProfileImageView: View {
     
     @Environment(UserUseCase.self) private var userUseCase
     
+    @State private var isPhotoAlbumSheet = false
+    @State private var selectedImage: UIImage?
+    
+    private var profileImageUrl: URL? {
+        URL(string: userUseCase.state.user.profileImageUrl)
+    }
+    
     var body: some View {
         Button {
-            userUseCase.updateProfileImage()
+            isPhotoAlbumSheet.toggle()
         } label: {
             ZStack(alignment: .bottomTrailing) {
-                Image(systemName: "")
-                    .resizable()
-                    .frame(width: 160, height: 160)
-                    .background(.gray4)
-                    .clipShape(Circle())
+                if let selectedImage = selectedImage {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 160, height: 160)
+                        .clipShape(Circle())
+                } else {
+                    AsyncImage(url: profileImageUrl) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 160, height: 160)
+                                .clipShape(Circle())
+                        } else {
+                            Image(systemName: "")
+                                .resizable()
+                                .frame(width: 160, height: 160)
+                                .background(.gray4)
+                                .clipShape(Circle())
+                        }
+                    }
+                }
                 
                 CameraButton()
                     .padding(.trailing, -10)
                     .padding(.bottom, -5)
             }
+        }
+        .sheet(isPresented: $isPhotoAlbumSheet) {
+            PhotoPicker(selectedImage: $selectedImage)
+                .onChange(of: selectedImage) {
+                    if selectedImage != nil {
+                        userUseCase.updateProfileImage()
+                    }
+                }
         }
     }
     
@@ -124,7 +157,5 @@ private struct SettingListView: View {
 
 #Preview {
     UserDetailView()
-        .environment(PreviewHelper.mockUserUseCase)
-        .environment(PreviewHelper.mockInfoUseCase)
-        .environment(PreviewHelper.mockStreamAccountUseCase)
+        .injectDIContainer()
 }

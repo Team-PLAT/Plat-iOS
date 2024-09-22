@@ -11,68 +11,63 @@ import MusicKit
 // MARK: - TrackAppendSearchSheet
 
 struct TrackAppendSearchSheet: View {
-    @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
     @State private var musicList: [Music] = []
-    @State private var selectedMusic: Music = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
     @State private var recentSearchTermList: [String] = []
     
+    @FocusState private var isTextFieldFocused: Bool
+    
     var body: some View {
-        VStack {
-            TrackAppendSearchbar(searchTerm: $searchTerm)
-            
-            TrackAppendRecentTermView(trackAppendUseCase: $trackAppendUseCase, searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList)
-            
-            Spacer()
-            
-            TrackAppendMusicListView(musicList: $musicList, selectedMusic: $selectedMusic)
-        }
-        .tint(.white)
-        .presentationDragIndicator(.visible)
-        .presentationDetents([.large])
-        // TODO: ContentView로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
-        // .navigationTitle(pathModel.trackAppendPaths.isEmpty ? "검색" : "음악 선택")
-//        .navigationDestination(for: TrackAppendPath.self) { path in
-//            switch path {
-//            case .trackAppendContentView:
-//                TrackAppendContentView(detent: $detent, music: $selectedMusic, isTrackAppendViewSheet: $isTrackAppendViewSheet)
-//            }
-//        }
-        .onAppear {
-            Task {
-                let status = await MusicAuthorization.request()
+        @Bindable var pathModel = pathModel
+        
+        NavigationStack(path: $pathModel.sheetPath) {
+            VStack {
+                TrackAppendSearchbar(searchTerm: $searchTerm, isTextEditorFocused: $isTextFieldFocused)
+                
+                TrackAppendRecentTerm(searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList, isTextEditorFocused: $isTextFieldFocused)
+                
+                Spacer()
+                
+                TrackAppendMusicList(musicList: $musicList)
             }
-            UISearchBar.appearance().showsCancelButton = false
-            // detent = .large
-            searchTerm = ""
-            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-        }
-        .onDisappear {
-            searchTerm = ""
-            musicList = []
-        }
-        .onChange(of: searchTerm) {
-            searchTimer?.invalidate()
-            searchTimer = nil
-            
-            self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-                if searchTerm != "" {
-                    print("검색중")
+            .tint(.white)
+            // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
+            .navigationTitle(pathModel.sheetPath.isEmpty ? "검색" : "음악 선택")
+            .navigationDestination(for: Sheet.self) { sheet in
+                pathModel.build(sheet)
+            }
+            .onAppear {
+                pathModel.sheetDetent = .large
+                searchTerm = ""
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .onDisappear {
+                searchTerm = ""
+                musicList = []
+            }
+            .onChange(of: searchTerm) {
+                searchTimer?.invalidate()
+                searchTimer = nil
+                
+                self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
                     Task {
                         musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
                     }
-                } else {
-                    print("검색불가")
                 }
             }
+            .onSubmit {
+                trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
+                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+            }
+            .scrollDismissesKeyboard(.immediately)
+            .tapDismissesKeyboard()
         }
-        .onSubmit {
-            trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
-            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-        }
-        .scrollDismissesKeyboard(.immediately)
-        .tapDismissesKeyboard()
+        .presentationDragIndicator(.visible)
+        .presentationDetents([pathModel.sheetDetent])
     }
 }
 
@@ -80,6 +75,7 @@ struct TrackAppendSearchSheet: View {
 
 private struct TrackAppendSearchbar: View {
     @Binding var searchTerm: String
+    private(set) var isTextEditorFocused: FocusState<Bool>.Binding
     
     var body: some View {
         HStack {
@@ -92,6 +88,7 @@ private struct TrackAppendSearchbar: View {
             TextField("", text: $searchTerm, prompt: Text("아티스트, 노래, 가사 등").foregroundStyle(.gray8).font(.Body.body3))
                 .foregroundStyle(.white)
                 .tint(.platPurple)
+                .focused(isTextEditorFocused)
             
             Spacer()
             
@@ -116,67 +113,72 @@ private struct TrackAppendSearchbar: View {
     }
 }
 
-// MARK: - TrackAppendRecentTermView
+// MARK: - TrackAppendRecentTerm
 
-private struct TrackAppendRecentTermView: View {
+private struct TrackAppendRecentTerm: View {
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     
-    @Binding var trackAppendUseCase: TrackAppendUseCase
-    @Binding var searchTerm: String
-    @Binding var recentSearchTermList: [String]
+    @Binding private(set) var searchTerm: String
+    @Binding private(set) var recentSearchTermList: [String]
+    
+    private(set) var isTextEditorFocused: FocusState<Bool>.Binding
     
     var body: some View {
-        HStack {
-            Text("최근 검색어")
-                .font(.Body.body3)
-                .foregroundStyle(.gray7)
-                .padding(.leading, 18)
-            Spacer()
-        }
-        
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 8) {
-                // TODO: 최근 검색어 기능 연결
-                ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
-                    HStack(spacing: 8) {
-                        Button {
-                            searchTerm = term
-                        } label: {
-                            Text(term)
-                                .foregroundStyle(.white)
-                                .font(.Body.body5)
-                                .padding(.leading, 12)
-                        }
-                        
-                        Button {
-                            trackAppendUseCase.removeRecentSearchTerm(index: index)
-                            recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 12, height: 12)
-                                .foregroundStyle(.gray7)
-                                .padding(.trailing, 8)
-                        }
-                    }
-                    .padding(.vertical, 8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .foregroundStyle(.gray9)
-                    )
-                    .fixedSize()
-                }
+        if !recentSearchTermList.isEmpty && !isTextEditorFocused.wrappedValue {
+            HStack {
+                Text("최근 검색어")
+                    .font(.Body.body3)
+                    .foregroundStyle(.gray7)
+                    .padding(.leading, 18)
+                Spacer()
             }
-            .padding(.leading, 18)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 8) {
+                    ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
+                        HStack(spacing: 8) {
+                            Button {
+                                searchTerm = term
+                            } label: {
+                                Text(term)
+                                    .foregroundStyle(.white)
+                                    .font(.Body.body5)
+                                    .padding(.leading, 12)
+                            }
+                            
+                            Button {
+                                trackAppendUseCase.removeRecentSearchTerm(index: index)
+                                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .foregroundStyle(.gray7)
+                                    .padding(.trailing, 8)
+                            }
+                        }
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.gray9)
+                        )
+                        .fixedSize()
+                    }
+                }
+                .padding(.leading, 18)
+            }
+            .frame(height: 32)
         }
-        .frame(height: 32)
     }
 }
 
-// MARK: - TrackAppendMusicListView
+// MARK: - TrackAppendMusicList
 
-private struct TrackAppendMusicListView: View {
+private struct TrackAppendMusicList: View {
+    @Environment(PathModel.self) private var pathModel
+    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    
     @Binding var musicList: [Music]
-    @Binding var selectedMusic: Music
     
     var body: some View {
         List($musicList, id: \.self.isrc) { music in
@@ -201,14 +203,15 @@ private struct TrackAppendMusicListView: View {
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
-                        // pathModel.trackAppendPaths.append(.trackAppendContentView)
-                        selectedMusic = music.wrappedValue
+                        trackAppendUseCase.selectMusic(music: music.wrappedValue)
+                        pathModel.pushSheet(.trackAppendContent)
                     }
             }
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
         }
+        .contentMargins(.top, 0, for: .scrollContent)
     }
 }
 

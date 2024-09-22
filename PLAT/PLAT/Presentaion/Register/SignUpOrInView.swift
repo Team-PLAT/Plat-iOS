@@ -15,24 +15,43 @@ struct SignUpOrInView: View {
     @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     @Environment(InfoUseCase.self) private var infoUseCase: InfoUseCase
     
+    @State private var isLoading = false
+    @State private var isLoginFailedAlertPresented = false
+    
     var body: some View {
-        Group {
+        ZStack {
             if authUseCase.state.authType == .signUp {
-                SignUpView()
+                SignUpView(
+                    isLoading: $isLoading,
+                    isLoginFailedAlertPresented: $isLoginFailedAlertPresented
+                )
             } else {
-                SignInView()
+                SignInView(
+                    isLoading: $isLoading,
+                    isLoginFailedAlertPresented: $isLoginFailedAlertPresented
+                )
+            }
+            
+            if isLoading {
+                PlatProgressView()
             }
         }
         .tint(.white)
         .toolbarRole(.editor)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(authUseCase.state.authType == .signUp ? "회원가입" : "로그인" )
+        .alert("일시적인 오류로 로그인에 실패했습니다. 다시 시도해주세요.", isPresented: $isLoginFailedAlertPresented) {
+            Button("확인", role: .none) {}
+        }
     }
 }
 
 // MARK: - SignUpView
 
 private struct SignUpView: View {
+    
+    @Binding private(set) var isLoading: Bool
+    @Binding private(set) var isLoginFailedAlertPresented: Bool
     
     var body: some View {
         VStack(spacing: 16) {
@@ -54,7 +73,10 @@ private struct SignUpView: View {
             
             Spacer()
             
-            AppleSignUpButton()
+            AppleSignUpButton(
+                isLoading: $isLoading,
+                isLoginFailedAlertPresented: $isLoginFailedAlertPresented
+            )
             
             PolicyNoticeText()
                 .multilineTextAlignment(.leading)
@@ -79,26 +101,41 @@ private struct AppleSignUpButton: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(AuthUseCase.self) private var authUseCase
     
+    @Binding private(set) var isLoading: Bool
+    @Binding private(set) var isLoginFailedAlertPresented: Bool
+    
     var body: some View {
         SignInWithAppleButton(
             .signUp,
-            onRequest: { _ in authUseCase.requestSocialLogin()},
-            onCompletion: { result in
-                let loginResult = authUseCase.handleSocialLogin(authResult: result)
-                switch loginResult {
-                case .success:
-                    print("로그인 성공")
-                    pathModel.push(.selectStreamAccount)
-                    
-                case .failure(let error):
-                    print("로그인 실패 \(error.localizedDescription)")
-                }
-            }
+            onRequest: { _ in authUseCase.requestSocialLogin() },
+            onCompletion: { appleLoginCompletion($0) }
         )
         .signInWithAppleButtonStyle(.white)
         .frame(height: 54)
         .cornerRadius(8)
         .padding(.horizontal, 18)
+    }
+    
+    /// 애플 로그인이 완료 된 후 호출되는 Completion 함수입니다.
+    private func appleLoginCompletion(_ result: Result<ASAuthorization, any Error>) {
+        let loginResult = authUseCase.handleSocialLogin(authResult: result)
+        switch loginResult {
+        case .success: signIn()
+        case .failure(let error): print(error)
+        }
+    }
+    
+    /// 로그인을 요청합니다.
+    private func signIn() {
+        Task {
+            isLoading = true
+            let result = await authUseCase.signIn(socialAccount: .apple)
+            switch result {
+            case .success: pathModel.push(.selectStreamAccount)
+            case .failure: isLoginFailedAlertPresented.toggle()
+            }
+            isLoading = false
+        }
     }
 }
 
@@ -174,6 +211,9 @@ private struct SignInView: View {
     
     @Environment(AuthUseCase.self) private var authUseCase: AuthUseCase
     
+    @Binding private(set) var isLoading: Bool
+    @Binding private(set) var isLoginFailedAlertPresented: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -191,8 +231,11 @@ private struct SignInView: View {
             
             Spacer()
             
-            AppleContinueButton()
-                .padding(.bottom, 62)
+            AppleContinueButton(
+                isLoading: $isLoading,
+                isLoginFailedAlertPresented: $isLoginFailedAlertPresented
+            )
+            .padding(.bottom, 62)
             
             Rectangle()
                 .foregroundColor(.clear)
@@ -212,25 +255,41 @@ struct AppleContinueButton: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(AuthUseCase.self) private var authUseCase
     
+    @Binding private(set) var isLoading: Bool
+    @Binding private(set) var isLoginFailedAlertPresented: Bool
+    
     var body: some View {
         SignInWithAppleButton(
             .continue,
-            onRequest: { _ in authUseCase.requestSocialLogin()},
-            onCompletion: { result in
-                let loginResult = authUseCase.handleSocialLogin(authResult: result)
-                switch loginResult {
-                case .success:
-                    pathModel.push(.selectStreamAccount)
-                    
-                case .failure(let error):
-                    print("로그인 실패 \(error.localizedDescription)")
-                }
-            }
+            onRequest: { _ in authUseCase.requestSocialLogin() },
+            onCompletion: { appleLoginCompletion($0) }
         )
         .signInWithAppleButtonStyle(.white)
         .frame(height: 54)
         .cornerRadius(8)
         .padding(.horizontal, 18)
+    }
+    
+    /// 애플 로그인이 완료 된 후 호출되는 Completion 함수입니다.
+    private func appleLoginCompletion(_ result: Result<ASAuthorization, any Error>) {
+        let loginResult = authUseCase.handleSocialLogin(authResult: result)
+        switch loginResult {
+        case .success: signIn()
+        case .failure(let error): print(error)
+        }
+    }
+    
+    /// 로그인을 요청합니다.
+    private func signIn() {
+        Task {
+            isLoading = true
+            let result = await authUseCase.signIn(socialAccount: .apple)
+            switch result {
+            case .success: pathModel.push(.selectStreamAccount)
+            case .failure: isLoginFailedAlertPresented.toggle()
+            }
+            isLoading = false
+        }
     }
 }
 
