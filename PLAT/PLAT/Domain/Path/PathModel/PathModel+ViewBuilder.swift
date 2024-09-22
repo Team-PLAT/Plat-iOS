@@ -62,6 +62,9 @@ extension PathModel {
         case .trackAppendSearch:
             TrackAppendSearchSheet()
             
+        case .trackAppendContent:
+            TrackAppendContentSheet()
+            
         case .playlistDetail:
             EmptyView()
         

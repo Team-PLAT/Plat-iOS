@@ -13,10 +13,11 @@ protocol PathModelProtocol: ObservableObject {
     var fullScreenCover: FullScreenCover? { get set }
     
     func push(_ screen: Screen)
-        func presentSheet(_ sheet: Sheet)
-        func presentFullScreenCover(_ fullScreenCover: FullScreenCover)
-        func pop()
-        func popToRoot()
-        func dismissSheet()
-        func dismissFullScreenCover()
+    func pushSheet(_ sheet: Sheet)
+    func presentSheet(_ sheet: Sheet)
+    func presentFullScreenCover(_ fullScreenCover: FullScreenCover)
+    func pop()
+    func popToRoot()
+    func dismissSheet()
+    func dismissFullScreenCover()
 }
