@@ -16,19 +16,19 @@ struct StubTrackService: TrackServiceInterface {
         return .success(MockDataBuilder.trackList)
     }
     
-    func fetchDetail(track: Track) async -> Result<Track, any Error> {
+    func fetchCurrent(trackId: Int) async -> Result<Track, any Error> {
         return .success(MockDataBuilder.track)
     }
     
-    func upload(track: Track) async -> Result<Void, any Error> {
+    func uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location) async -> Result<Void, Error> {
         return .success(Void())
     }
     
-    func like(track: Track) async -> Result<Void, any Error> {
+    func like(trackId: Int, isLike: Bool) async -> Result<Void, Error> {
         return .success(Void())
     }
     
-    func report(track: Track) async -> Result<Void, any Error> {
+    func report(trackId: Int) async -> Result<Void, any Error> {
         return .success(Void())
     }
 }

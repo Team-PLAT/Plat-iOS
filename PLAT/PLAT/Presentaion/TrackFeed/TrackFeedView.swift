@@ -445,7 +445,9 @@ private struct FeedActionView: View {
         HStack(spacing: 0) {
             Button {
                 isLiked.toggle()
-                trackUseCase.effect(.likeTrack)
+                
+                // TODO: 실제 데이터 넣기
+                trackUseCase.effect(.likeTrack(trackId: 0, isLike: true))
             } label: {
                 Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
                     .foregroundColor(.white)

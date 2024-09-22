@@ -14,7 +14,6 @@ struct DIContainerModifier: ViewModifier {
     private let musicControlService: MusicControllerInterface
     private let infoService: InfoServiceInterface
     private let trackService: TrackServiceInterface
-    private let imageService: ImageServiceInterface
     private let playlistService: PlaylistServiceInterface
     private let userProfileService: UserProfileServiceInterface
     private let streamAccountService: StreamAccountServiceInterface
@@ -25,8 +24,7 @@ struct DIContainerModifier: ViewModifier {
         self.memberService = MemberServiceImpl()
         self.musicControlService = AppleMusicControllerServiceImpl()
         self.infoService = StubInfoService() // TODO: Stub 교체
-        self.trackService = TrackServiceImpl()
-        self.imageService = ImageServiceImpl()
+        self.trackService = TrackServiceImpl(imageService: ImageServiceImpl())
         self.playlistService = StubPlaylistService() // TODO: Stub 교체
         self.userProfileService = StubUserProfileService() // TODO: Stub 교체
         self.streamAccountService = StubStreamAccountService() // TODO: Stub 교체
@@ -41,12 +39,7 @@ struct DIContainerModifier: ViewModifier {
             .environment(StreamAccountUseCase(streamAccountService: streamAccountService))
             .environment(MusicControlUseCase(musicController: musicControlService))
             .environment(InfoUseCase(infoService: infoService))
-            .environment(
-                TrackUseCase(
-                    trackService: trackService,
-                    imageService: imageService
-                )
-            )
+            .environment(TrackUseCase(trackService: trackService))
             .environment(
                 AuthUseCase(
                     socialLoginServcie: socialLoinService,
