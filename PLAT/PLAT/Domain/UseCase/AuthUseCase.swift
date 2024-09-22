@@ -74,21 +74,19 @@ extension AuthUseCase {
         case updateStreamAccount(streamAccount: StreamAccount)
     }
     
-    func effect(_ effect: Effect, completion: (() -> Void)? = nil) {
+    func effect(_ effect: Effect) {
         switch effect {
         case .toggleAuthType(let authType):
             state.authType = authType
-            completion?()
             
         case .signOut:
             memberService.signOut()
-            completion?()
             
         case .resign:
             Task {
                 let result = await memberService.resign()
                 switch result {
-                case .success: completion?()
+                case .success: break
                 case .failure(let error): print(error) // TODO: 에러 처리
                 }
             }
@@ -99,7 +97,6 @@ extension AuthUseCase {
                 switch result {
                 case .success(let user):
                     state.user = user
-                    completion?()
                     
                 case .failure(let error):
                     print(error) // TODO: 에러 처리
@@ -112,7 +109,6 @@ extension AuthUseCase {
                 switch result {
                 case .success:
                     state.user?.nickname = nickname
-                    completion?()
                     
                 case .failure(let error):
                     print(error) // TODO: 에러 처리
@@ -125,7 +121,6 @@ extension AuthUseCase {
                 switch result {
                 case .success:
                     state.user?.profileImageUrl = imageUrl
-                    completion?()
                     
                 case .failure(let error):
                     print(error) // TODO: 에러 처리
@@ -138,7 +133,6 @@ extension AuthUseCase {
                 switch result {
                 case .success(let streamAccount):
                     state.streamAccount = streamAccount
-                    completion?()
                     
                 case .failure(let error):
                     print(error) // TODO: 에러 처리
@@ -151,7 +145,6 @@ extension AuthUseCase {
                 switch result {
                 case .success:
                     state.streamAccount = streamAccount
-                    completion?()
                     
                 case .failure(let error):
                     print(error) // TODO: 에러 처리
