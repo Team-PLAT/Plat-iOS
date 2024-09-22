@@ -10,7 +10,7 @@ import Foundation
 @Observable
 final class PlaylistUseCase {
     
-    private(set) var playlistService: PlaylistServiceInterface
+    private let playlistService: PlaylistServiceInterface
     
     private(set) var state: State
     
@@ -25,13 +25,35 @@ final class PlaylistUseCase {
 extension PlaylistUseCase {
     
     struct State {
-        
+        var playlists: [Playlist] = []
+        var selectedPlaylistId: Playlist.ID?
+    }
+}
+
+// MARK: - Effect
+
+extension PlaylistUseCase {
+    
+    enum Effect {
+        case updateSelectedPlaylistId(Playlist.ID)
+    }
+    
+    func effect(_ effect: Effect) {
+        switch effect {
+        case .updateSelectedPlaylistId(let id):
+            state.selectedPlaylistId = id
+        }
     }
 }
 
 // MARK: - UseCase Method
 
 extension PlaylistUseCase {
+    
+    /// 선택된 플레이리스트 반환
+    var selectedPlaylist: Playlist? {
+        state.playlists.filter { $0.id == state.selectedPlaylistId }.first
+    }
     
     /// 플레이리스트를 기기에서 재생
     func playOnDevice() {

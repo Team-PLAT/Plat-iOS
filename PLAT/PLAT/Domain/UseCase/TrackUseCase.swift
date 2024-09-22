@@ -36,7 +36,7 @@ final class TrackUseCase {
         self.feedTrack = []
         self.track = MockDataBuilder.track
         self.trackId = 0
-        self.playlist = []
+        self.playlist = MockDataBuilder.playlists
         self.trackService = trackService
         self.imageService = imageService
     }

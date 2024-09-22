@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - StreamAccountSettingsView
+
 struct StreamAccountSettingsView: View {
     
     @Environment(UserUseCase.self) private var userUseCase
@@ -18,7 +20,7 @@ struct StreamAccountSettingsView: View {
     }
     
     /// 현재 연결된 스트리밍 계정을 확인후 타이틀 텍스트를 반환합니다.
-    func connectTitleText(_ stream: StreamAccount) -> String {
+    private func connectTitleText(_ stream: StreamAccount) -> String {
         if stubStreamAccount == stream {
             return " 연결됨"
         } else {
@@ -27,7 +29,7 @@ struct StreamAccountSettingsView: View {
     }
     
     /// 현재 연결된 스트리밍 계정을 확인후 콘텐트 텍스트를 반환합니다.
-    func connectContentText(_ stream: StreamAccount) -> String {
+    private func connectContentText(_ stream: StreamAccount) -> String {
         if stubStreamAccount == stream {
             return " 스트리밍 계정과 연결되어 있어요"
         } else {
@@ -39,8 +41,8 @@ struct StreamAccountSettingsView: View {
         VStack(spacing: 16) {
             ListRadioButton(
                 state: .radio,
-                title: StreamAccount.appleMusic.rawValue + connectTitleText(.appleMusic),
-                content: StreamAccount.appleMusic.rawValue + connectContentText(.appleMusic),
+                title: StreamAccount.appleMusic.title + connectTitleText(.appleMusic),
+                content: StreamAccount.appleMusic.title + connectContentText(.appleMusic),
                 icon: .icnAppleMusic,
                 isSelected: stubStreamAccount == .appleMusic,
                 tapAction: {
@@ -55,9 +57,10 @@ struct StreamAccountSettingsView: View {
         .navigationTitle("연결된 스트리밍 계정")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
-
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     StreamAccountSettingsView()

@@ -35,6 +35,7 @@ extension AuthUseCase {
     
     struct State {
         var user: User?
+        var authType: AuthType = .signUp
         var streamAccount: StreamAccount?
         var isMember: Bool
         var isSignIn: Bool
@@ -47,6 +48,7 @@ extension AuthUseCase {
 extension AuthUseCase {
     
     enum Effect {
+        case toggleAuthType(_ authType: AuthType)
         case signIn(socialAccout: SocialAccount)
         case signOut
         case resign
@@ -61,6 +63,8 @@ extension AuthUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
+        case .toggleAuthType(let authType):
+            state.authType = authType
         case .signIn(let socialAccount):
             Task {
                 await memberService.signIn(socialAccount: socialAccount)

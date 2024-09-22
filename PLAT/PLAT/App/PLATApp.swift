@@ -12,24 +12,10 @@ struct PLATApp: App {
     
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
-    @State private var pathModel = PathModel()
-    @State private var authUseCase = AuthUseCase(
-        socialLoginServcie: AppleSocialLoginService(),
-        memberService: MemberServiceImpl()
-    )
-    
     var body: some Scene {
         WindowGroup {
-            if authUseCase.state.isLoginComplete {
-                MainView()
-            } else {
-                OnboardingView()
-                    .onAppear {
-                        authUseCase.effect(.signIn(socialAccout: .apple))
-                    }
-            }
+            AppCoordinatorView()
+                .injectDIContainer()
         }
-        .environment(pathModel)
-        .environment(authUseCase)
     }
 }

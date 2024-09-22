@@ -17,13 +17,15 @@ enum ContentState {
 // MARK: - TrackAppendContentView
 
 struct TrackAppendContentView: View {
+    
+    @Environment(MapUseCase.self) private var mapUseCase
+    
     @State private var isAddWriting = false
     @State private var contentText = ""
     @State private var selectedImage: UIImage?
     @State private var isPhotoAlbumSheet = false
     @State private var state: ContentState = .none
     @State private var trackAppendUseCase: TrackAppendUseCase = .init(trackAppendService: StubTrackAppendService())
-    @State private var trackMapUseCase: TrackMapUseCase = .init(mapService: StubTrackMapService())
     @Binding var detent: PresentationDetent
     @Binding var music: Music
     @Binding var isTrackAppendViewSheet: Bool
@@ -52,7 +54,7 @@ struct TrackAppendContentView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task {
-                        await trackAppendUseCase.postTrack(music: music, context: contentText, location: trackMapUseCase.currentLocation())
+                        await trackAppendUseCase.postTrack(music: music, context: contentText, location: mapUseCase.currentLocation())
                     }
                     
                     isTrackAppendViewSheet = false

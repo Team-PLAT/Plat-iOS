@@ -10,7 +10,8 @@ import Foundation
 @Observable
 final class UserUseCase {
     
-    private(set) var userProfileService: UserProfileServiceInterface
+    private var userProfileService: UserProfileServiceInterface
+    
     private(set) var state: State
     
     init(userProfileService: UserProfileServiceInterface) {

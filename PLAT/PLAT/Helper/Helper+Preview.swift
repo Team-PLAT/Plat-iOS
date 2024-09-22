@@ -24,7 +24,7 @@ enum PreviewHelper {
     )
     
     static let mockAuthUseCase = AuthUseCase(
-        socialLoginServcie: AppleSocialLoginService(),
+        socialLoginServcie: AppleSocialLoginServiceImpl(),
         memberService: StubMemberService()
     )
     

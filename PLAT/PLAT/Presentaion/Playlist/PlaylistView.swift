@@ -10,11 +10,14 @@ import SwiftUI
 // MARK: - PlaylistView
 
 struct PlaylistView: View {
-    @State var playlists: [Playlist]
-    @State private var selectedPlaylistId: Playlist.ID?
+    
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    
     @State private var showPlaylistDetail: Bool = false
     @State private var searchText: String = ""
-    var filteredPlaylists: [Playlist] {
+    
+    private var filteredPlaylists: [Playlist] {
+        let playlists = playlistUseCase.state.playlists
         if searchText.isEmpty {
             return playlists
         } else {
@@ -29,11 +32,14 @@ struct PlaylistView: View {
                 
                 ForEach(filteredPlaylists) { playlist in
                     Button {
-                        selectedPlaylistId = playlist.id
+                        playlistUseCase.effect(.updateSelectedPlaylistId(playlist.id))
                         showPlaylistDetail.toggle()
                     } label: {
                         VStack {
-                            PlaylistSectionView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId)
+                            PlaylistSectionView(
+                                playlist: playlist,
+                                showPlaylistDetail: $showPlaylistDetail
+                            )
                             DividerView()
                         }
                     }
@@ -55,7 +61,6 @@ struct PlaylistSectionView: View {
     let playlist: Playlist
     @State private var isShowDetailSheet: Bool = false
     @Binding var showPlaylistDetail: Bool
-    @Binding var selectedPlaylistId: Playlist.ID?
     
     var body: some View {
         HStack(spacing: 18) {
@@ -75,7 +80,10 @@ struct PlaylistSectionView: View {
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isShowDetailSheet) {
-            DetailSheetView(showPlaylistDetail: $showPlaylistDetail, selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            PlaylistInfoSheet(
+                showPlaylistDetail: $showPlaylistDetail,
+                playlist: playlist
+            )
         }
     }
 }
@@ -116,6 +124,9 @@ private struct DividerView: View {
 // MARK: - CreatePlaylistView
 
 private struct CreatePlaylistView: View {
+    
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         VStack {
             Button {
@@ -144,20 +155,25 @@ private struct CreatePlaylistView: View {
     }
 }
 
-// MARK: - DetailSheetView
+// MARK: - PlaylistInfoSheet
 
-private struct DetailSheetView: View {
+private struct PlaylistInfoSheet: View {
     @Binding var showPlaylistDetail: Bool
-    @Binding var selectedPlaylistId: Playlist.ID?
     let playlist: Playlist
     
     var body: some View {
         VStack {
-            DetailPlaylistButtonView(playlist: playlist, showPlaylistDetail: $showPlaylistDetail)
+            DetailPlaylistButtonView(
+                playlist: playlist,
+                showPlaylistDetail: $showPlaylistDetail
+            )
             
             DetailInfoView()
             
-            DetailButtonsView(playlist: playlist, selectedPlaylistId: $selectedPlaylistId, showPlaylistDetail: $showPlaylistDetail)
+            DetailButtonsView(
+                playlist: playlist,
+                showPlaylistDetail: $showPlaylistDetail
+            )
             
             Spacer()
             
@@ -226,9 +242,10 @@ private struct DetailInfoView: View {
 // MARK: - DetailButtonsView
 
 private struct DetailButtonsView: View {
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
     let playlist: Playlist
-    @Binding var selectedPlaylistId: Playlist.ID?
+    
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    
     @Binding var showPlaylistDetail: Bool
     
     var body: some View {
@@ -246,7 +263,7 @@ private struct DetailButtonsView: View {
             
             Button {
                 // TODO: PlaylistDetailView의 편집모드로 바로 이동
-                selectedPlaylistId = playlist.id
+                playlistUseCase.effect(.updateSelectedPlaylistId(playlist.id))
                 showPlaylistDetail = true
             } label: {
                 HStack {
@@ -315,6 +332,6 @@ private func formatNicknames(_ tracks: [Track]) -> String {
 // MARK: - Preview
 
 #Preview {
-    PlaylistView(playlists: MockDataBuilder.playlists)
+    PlaylistView()
         .environment(PreviewHelper.mockPlaylistUseCase)
 }

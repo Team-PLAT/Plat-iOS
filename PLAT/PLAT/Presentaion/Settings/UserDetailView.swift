@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - UserDetailView
+
 struct UserDetailView: View {
     
     @Environment(UserUseCase.self) private var userUseCase: UserUseCase
@@ -26,8 +28,8 @@ struct UserDetailView: View {
             SettingListView()
             Spacer()
         }
-        .background(.platBackground)
         .tint(.white)
+        .background(.platBackground)
     }
 }
 
@@ -82,25 +84,25 @@ private struct ProfileImageView: View {
 
 private struct SettingListView: View {
     
-    @Environment(PathModel.self) var pathModel
+    @Environment(PathModel.self) private var pathModel
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(InfoUseCase.self) private var infoUseCase
     
     var nicknameInfo: ListSection.Info {
         return ListSection.Info(title: "닉네임") {
-            pathModel.paths.append(.nicknameSettingsView)
+            pathModel.push(.nicknameSetting)
         }
     }
     
     var accountSettingsInfo: ListSection.Info {
         return ListSection.Info(title: "계정설정") {
-            pathModel.paths.append(.accountSettingsView)
+            pathModel.push(.accountSetting)
         }
     }
     
     var aboutPlatInfo: ListSection.Info {
         return ListSection.Info(title: "About PLAT") {
-            pathModel.paths.append(.aboutPlatSettingsView)
+            pathModel.push(.aboutPlatSettings)
         }
     }
     
@@ -118,10 +120,11 @@ private struct SettingListView: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
     UserDetailView()
         .environment(PreviewHelper.mockUserUseCase)
         .environment(PreviewHelper.mockInfoUseCase)
         .environment(PreviewHelper.mockStreamAccountUseCase)
-        .environment(PathModel())
 }

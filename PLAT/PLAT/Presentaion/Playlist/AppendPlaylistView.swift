@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AppendPlaylistView: View {
-    @Environment(\.dismiss) private var dismiss
+    
+    @Environment(PathModel.self) private var pathModel
     
     @State private var isPhotoAlbumSheet = false
     @State private var playlistImage: UIImage?
@@ -32,7 +33,7 @@ struct AppendPlaylistView: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
-                    dismiss()
+                    pathModel.pop()
                 } label: {
                     HStack(spacing: 3) {
                         Image(systemName: "chevron.backward")
@@ -131,6 +132,7 @@ private struct AppendPlaylistDate: View {
         .padding(.horizontal, 18)
     }
 }
+
 #Preview {
     AppendPlaylistView()
 }

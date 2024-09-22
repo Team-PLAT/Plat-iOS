@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - AccountSettingsView
+
 struct AccountSettingsView: View {
     
     @Environment(PathModel.self) private var pathModel
@@ -19,7 +21,7 @@ struct AccountSettingsView: View {
     // TODO: StreamAccount 업데이트
     var connectedStreamAccountInfo: ListSection.Info {
         return ListSection.Info(title: "연동된 스트리밍 계정", streamAccount: StreamAccount.appleMusic) {
-            pathModel.paths.append(.streamAccountSettingsView)
+            pathModel.push(.streamAccountSetting)
         }
     }
     
@@ -62,9 +64,10 @@ struct AccountSettingsView: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
     AccountSettingsView()
         .environment(PreviewHelper.mockUserUseCase)
-        .environment(PathModel())
         .environment(PreviewHelper.mockAuthUseCase)
 }

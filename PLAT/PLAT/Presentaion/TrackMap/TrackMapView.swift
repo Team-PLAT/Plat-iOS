@@ -11,12 +11,9 @@ import MapKit
 // MARK: - TrackMapView
 
 struct TrackMapView: View {
-    @Environment(TrackMapUseCase.self) private var trackMapUseCase: TrackMapUseCase
-    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var locationManager = LocationManager()
+    @State private var locationManager = MapKitLocationServiceImpl()
     @State private var selectedTrackId: Track.ID?
-    @State private var showTrackDetail = false
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
     
@@ -25,27 +22,21 @@ struct TrackMapView: View {
             if #available(iOS 18.0, *) {
                 MapView(
                     locationManager: $locationManager,
-                    selectedTrackId: $selectedTrackId,
-                    showTrackDetail: $showTrackDetail
+                    selectedTrackId: $selectedTrackId
                 )
                 .toolbarVisibility(.hidden, for: .navigationBar)
             } else {
                 MapView(
                     locationManager: $locationManager,
-                    selectedTrackId: $selectedTrackId,
-                    showTrackDetail: $showTrackDetail
+                    selectedTrackId: $selectedTrackId
                 )
             }
             
-            if showTrackDetail == false {
-                MapComponentsView(hasNotifications: $hasNotifications, playlist: $playlist, selectedTrackId: $selectedTrackId, showTrackDetail: $showTrackDetail)
-            }
-        }
-        .fullScreenCover(isPresented: $showTrackDetail) {
-            if let _ = selectedTrackId {
-                TrackDetailView()
-                    .presentationBackground(.thinMaterial.opacity(0.5))
-            }
+            MapComponentsView(
+                hasNotifications: $hasNotifications,
+                playlist: $playlist,
+                selectedTrackId: $selectedTrackId
+            )
         }
         .onReceive(locationManager.locationPublisher) { location in
             print("""
@@ -60,11 +51,14 @@ struct TrackMapView: View {
     }
 }
 
+// MARK: - MapView
+
 private struct MapView: View {
     
-    @Binding private(set) var locationManager: LocationManager
+    @Environment(PathModel.self) private var pathModel
+    
+    @Binding private(set) var locationManager: MapKitLocationServiceImpl
     @Binding private(set) var selectedTrackId: Track.ID?
-    @Binding private(set) var showTrackDetail: Bool
     
     var body: some View {
         Map(
@@ -79,7 +73,7 @@ private struct MapView: View {
                     CustomMarkerView(track: track)
                         .onTapGesture {
                             selectedTrackId = track.id
-                            showTrackDetail.toggle()
+                            pathModel.presentFullScreenCover(.trackDetail)
                         }
                 }
             }
@@ -122,12 +116,13 @@ private struct CustomMarkerView: View {
 // MARK: - MapComponentsView
 
 private struct MapComponentsView: View {
+    
+    @Environment(PathModel.self) private var pathModel
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding var hasNotifications: Bool
     @Binding var playlist: Playlist?
     @Binding var selectedTrackId: Track.ID?
-    @Binding var showTrackDetail: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -143,7 +138,6 @@ private struct MapComponentsView: View {
             .padding(.horizontal, 18)
             
             if musicControlUseCase.state.isStreaming {
-                // TODO: 더미데이터 변경
                 @Bindable var musicControlUseCase = musicControlUseCase
                 MiniMusicPlayer(
                     isPaused: $musicControlUseCase.state.isPaused,
@@ -153,7 +147,7 @@ private struct MapComponentsView: View {
                 )
                 .onTapGesture {
                     selectedTrackId = musicControlUseCase.state.isPlayingTrack?.id
-                    showTrackDetail.toggle()
+                    pathModel.presentFullScreenCover(.trackDetail)
                 }
             }
         }
@@ -177,10 +171,10 @@ private struct MapAddressView: View {
 // MARK: - MapButtonsView
 
 private struct MapButtonsView: View {
-    @State private var isTrackAppendViewSheet = false
-    @State private var detent: PresentationDetent = .large
+    
+    @Environment(PathModel.self) private var pathModel
+    
     @Binding var hasNotifications: Bool
-    @State private var isPlattingSheet = false
     @Binding var playlist: Playlist?
     
     var body: some View {
@@ -211,7 +205,7 @@ private struct MapButtonsView: View {
             Spacer()
             
             Button {
-                isTrackAppendViewSheet = true
+                pathModel.presentSheet(.trackAppendSearch)
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
@@ -222,17 +216,9 @@ private struct MapButtonsView: View {
                     }
             }
             .padding(.bottom, 22)
-            .sheet(isPresented: $isTrackAppendViewSheet, onDismiss: {
-                detent = .large
-            }) {
-                TrackAppendSearchView(isTrackAppendViewSheet: $isTrackAppendViewSheet, detent: $detent)
-                    .presentationDragIndicator(.visible)
-                    .tint(.white)
-                    .presentationDetents([detent])
-            }
             
             Button {
-                isPlattingSheet.toggle()
+                pathModel.presentFullScreenCover(.platProcessing)
             } label: {
                 Circle()
                     .frame(width: 48, height: 48)
@@ -248,10 +234,6 @@ private struct MapButtonsView: View {
                                     .font(.Body.body4)
                             }
                     }
-            }
-            .fullScreenCover(isPresented: $isPlattingSheet) {
-                PlattingView(playList: $playlist)
-                    .presentationBackground(.black.opacity(0.8))
             }
         }
     }

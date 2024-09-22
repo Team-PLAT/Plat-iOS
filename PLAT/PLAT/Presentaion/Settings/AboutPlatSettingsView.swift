@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: - AboutPlatSettingsView
+
 struct AboutPlatSettingsView: View {
     
     @Environment(InfoUseCase.self) private var infoUseCase
@@ -29,11 +31,13 @@ struct AboutPlatSettingsView: View {
             Spacer()
         }
         .padding(.top, 24)
-        .navigationTitle("About PLAT")
+        .navigationTitle("About \(Constant.appName)")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     AboutPlatSettingsView()
