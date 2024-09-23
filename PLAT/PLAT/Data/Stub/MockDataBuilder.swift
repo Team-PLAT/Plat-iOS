@@ -11,6 +11,7 @@ struct MockDataBuilder {
     
     static var playlist: Playlist {
         Playlist(
+            id: 0,
             title: "지곡동에서의 PLAT",
             imageUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2f/SSG_Landers_insignia.png",
             trackList: trackList
@@ -21,16 +22,19 @@ struct MockDataBuilder {
     static var playlists: [Playlist] {
         return [
             Playlist(
+                id: 0,
                 title: "지곡동에서의 PLAT",
                 imageUrl: "https://i.scdn.co/image/ab67616d0000b2735b558b31b6ba531d48f46007",
                 trackList: trackList
             ),
             Playlist(
+                id: 1,
                 title: "한남동에서의 PLAT",
                 imageUrl: "https://i.scdn.co/image/ab67616d0000b273b48ee14df764cf20d4daed5b",
                 trackList: trackList
             ),
             Playlist(
+                id: 2,
                 title: "동교동에서의 PLAT",
                 imageUrl: "https://i.scdn.co/image/ab67616d0000b27364c8b41faf576a0bab551fb9",
                 trackList: trackList

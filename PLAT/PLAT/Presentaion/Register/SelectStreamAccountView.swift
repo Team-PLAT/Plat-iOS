@@ -39,22 +39,13 @@ struct SelectStreamAccountView: View {
                     icon: .icnAppleMusic,
                     isSelected: selectedState == .appleMusic,
                     tapAction: {
+                        isShowingOffer = true
                         selectedState = .appleMusic
                         musicControlUseCase.effect(.request)
-                        isShowingOffer = true
                     }
                 )
             }
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
-            .onChange(of: isShowingOffer) {
-                if !isShowingOffer {
-                    if musicControlUseCase.state.status {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            authUseCase.updateIsLoginComplete(true)
-                        }
-                    }
-                }
-            }
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(lineWidth: 1)
@@ -65,12 +56,6 @@ struct SelectStreamAccountView: View {
             
             Spacer()
             
-            Divider()
-                .frame(height: 2)
-                .background(.white)
-                .padding(.horizontal, 38)
-                .padding(.bottom)
-            
             Button {
                 pathModel.presentSheet(.whyConnectStreamAccount)
             } label: {
@@ -79,14 +64,19 @@ struct SelectStreamAccountView: View {
                     .underline()
             }
             .padding(.horizontal, 108)
-            .padding(.bottom)
+            .padding(.bottom, 24)
+            
+            ActionButton(state: musicControlUseCase.state.status ? .enabled : .disabled, title: "시작하기") {
+                pathModel.popToRoot()
+                authUseCase.updateIsLoginComplete(true)
+            }
+            .disabled(!musicControlUseCase.state.status)
+            .padding(.horizontal, 18)
+            .padding(.bottom, 30)
         }
         .foregroundStyle(.white)
         .background(.platBackground)
         .navigationTitle("스트리밍 계정 선택하기")
-        .onAppear {
-            musicControlUseCase.effect(.request)
-        }
     }
 }
 
@@ -118,4 +108,5 @@ struct WhyConnectStreamAccountSheet: View {
 
 #Preview {
     SelectStreamAccountView()
+        .injectDIContainer()
 }

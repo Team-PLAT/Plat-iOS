@@ -30,7 +30,6 @@ struct TrackFeedView: View {
                             selectedTrackId: $selectedTrackId
                         )
                     }
-                    
                 }
                 
                 if musicControlUseCase.state.isStreaming {
@@ -42,11 +41,9 @@ struct TrackFeedView: View {
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
-                    .onTapGesture {
-                        pathModel.presentFullScreenCover(.trackDetail)
-                    }
                 }
             }
+            .background(.platBackground)
         }
         .refreshable {
             // TODO: fetch 한 값 불러오기
@@ -445,7 +442,9 @@ private struct FeedActionView: View {
         HStack(spacing: 0) {
             Button {
                 isLiked.toggle()
-                trackUseCase.effect(.likeTrack)
+                
+                // TODO: 실제 데이터 넣기
+                trackUseCase.effect(.likeTrack(trackId: 0, isLike: true))
             } label: {
                 Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
                     .foregroundColor(.white)

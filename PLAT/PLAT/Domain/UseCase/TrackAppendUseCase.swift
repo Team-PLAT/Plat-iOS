@@ -15,7 +15,7 @@ final class TrackAppendUseCase {
     
     init(trackAppendService: TrackAppendServiceInterface) {
         self.trackAppendService = trackAppendService
-        self.state = State()
+        self.state = State(selectedMusic: Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0))
     }
 }
 
@@ -24,13 +24,18 @@ final class TrackAppendUseCase {
 extension TrackAppendUseCase {
     
     struct State {
-        
+        var selectedMusic: Music
     }
 }
 
 // MARK: - TrackAppendUseCase Method
 
 extension TrackAppendUseCase {
+    
+    /// 음악 선택
+    func selectMusic(music: Music) {
+        self.state.selectedMusic = music
+    }
     
     /// 최근 검색어 업데이트
     func updateRecentSearchTermList(searchTerm: String) {

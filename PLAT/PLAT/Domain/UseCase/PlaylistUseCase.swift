@@ -25,7 +25,7 @@ final class PlaylistUseCase {
 extension PlaylistUseCase {
     
     struct State {
-        var playlists: [Playlist] = []
+        var playlists: [Playlist] = MockDataBuilder.playlists
         var selectedPlaylistId: Playlist.ID?
     }
 }
@@ -52,7 +52,7 @@ extension PlaylistUseCase {
     
     /// 선택된 플레이리스트 반환
     var selectedPlaylist: Playlist? {
-        state.playlists.filter { $0.id == state.selectedPlaylistId }.first
+        return state.playlists.filter { $0.id == state.selectedPlaylistId }.first
     }
     
     /// 플레이리스트를 기기에서 재생

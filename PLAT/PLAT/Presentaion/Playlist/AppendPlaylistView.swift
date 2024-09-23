@@ -30,6 +30,7 @@ struct AppendPlaylistView: View {
         }
         .navigationTitle("새로운 플레이리스트")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
@@ -135,4 +136,5 @@ private struct AppendPlaylistDate: View {
 
 #Preview {
     AppendPlaylistView()
+        .injectDIContainer()
 }

@@ -45,13 +45,26 @@ extension AuthUseCase {
     }
 }
 
+// MARK: - UseCase Method
+
+extension AuthUseCase {
+    
+    /// 로그인을 요청합니다.
+    func signIn(socialAccount: SocialAccount) async -> Result<Void, Error> {
+        let result = await memberService.signIn(socialAccount: socialAccount)
+        switch result {
+        case .success: return .success(())
+        case .failure(let error): return .failure(error)
+        }
+    }
+}
+
 // MARK: - Effect Method
 
 extension AuthUseCase {
     
     enum Effect {
         case toggleAuthType(_ authType: AuthType)
-        case signIn(socialAccout: SocialAccount)
         case signOut
         case resign
         
@@ -67,69 +80,76 @@ extension AuthUseCase {
         switch effect {
         case .toggleAuthType(let authType):
             state.authType = authType
-        case .signIn(let socialAccount):
-            Task {
-                await memberService.signIn(socialAccount: socialAccount)
-            }
+            
         case .signOut:
             memberService.signOut()
+            
         case .resign:
             Task {
-                await memberService.resign()
+                let result = await memberService.resign()
+                switch result {
+                case .success: break
+                case .failure(let error): print(error) // TODO: 에러 처리
+                }
             }
+            
         case .fetchProfile:
             Task {
                 let result = await memberService.fetchProfile()
                 switch result {
                 case .success(let user):
                     state.user = user
-                case .failure:
-                    // TODO: 에러 처리
-                    break
+                    
+                case .failure(let error):
+                    print(error) // TODO: 에러 처리
                 }
             }
+            
         case .updateProfileNickname(nickname: let nickname):
             Task {
                 let result = await memberService.updateProfileNickname(to: nickname)
                 switch result {
                 case .success:
                     state.user?.nickname = nickname
-                case .failure:
-                    // TODO: 에러 처리
-                    break
+                    
+                case .failure(let error):
+                    print(error) // TODO: 에러 처리
                 }
             }
+            
         case .updateProfileAvatar(imageUrl: let imageUrl):
             Task {
                 let result = await memberService.updateProfileAvatar(to: imageUrl)
                 switch result {
                 case .success:
                     state.user?.profileImageUrl = imageUrl
-                case .failure:
-                    // TODO: 에러 처리
-                    break
+                    
+                case .failure(let error):
+                    print(error) // TODO: 에러 처리
                 }
             }
+            
         case .fetchStreamAccount:
             Task {
                 let result = await memberService.fetchStreamAccount()
                 switch result {
                 case .success(let streamAccount):
                     state.streamAccount = streamAccount
-                case .failure:
-                    // TODO: 에러 처리
-                    break
+                    
+                case .failure(let error):
+                    print(error) // TODO: 에러 처리
                 }
             }
+            
         case .updateStreamAccount(streamAccount: let streamAccount):
             Task {
                 let result = await memberService.updateStreamAccount(to: streamAccount)
                 switch result {
                 case .success:
                     state.streamAccount = streamAccount
-                case .failure:
-                    // TODO: 에러 처리
-                    break
+                    
+                case .failure(let error):
+                    print(error) // TODO: 에러 처리
                 }
             }
         }

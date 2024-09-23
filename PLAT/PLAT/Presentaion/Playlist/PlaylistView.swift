@@ -12,34 +12,33 @@ import SwiftUI
 struct PlaylistView: View {
     
     @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Environment(PathModel.self) private var pathModel
     
-    @State private var showPlaylistDetail: Bool = false
+    @State private var selectedPlaylistId: Playlist.ID?
     @State private var searchText: String = ""
-    
-    private var filteredPlaylists: [Playlist] {
-        let playlists = playlistUseCase.state.playlists
+    var filteredPlaylists: [Playlist] {
         if searchText.isEmpty {
-            return playlists
+            return playlistUseCase.state.playlists
         } else {
-            return playlists.filter { $0.title.localizedStandardContains(searchText.lowercased()) }
+            return playlistUseCase.state.playlists.filter { $0.title.localizedStandardContains(searchText.lowercased()) }
         }
     }
     
     var body: some View {
         VStack {
+            HeaderView(searchText: $searchText)
+            
             ScrollView {
                 CreatePlaylistView()
                 
                 ForEach(filteredPlaylists) { playlist in
                     Button {
-                        playlistUseCase.effect(.updateSelectedPlaylistId(playlist.id))
-                        showPlaylistDetail.toggle()
+                        selectedPlaylistId = playlist.id
+                        playlistUseCase.effect(.updateSelectedPlaylistId(selectedPlaylistId ?? 0))
+                        pathModel.push(.playlistDetail)
                     } label: {
                         VStack {
-                            PlaylistSectionView(
-                                playlist: playlist,
-                                showPlaylistDetail: $showPlaylistDetail
-                            )
+                            PlaylistSectionView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
                             DividerView()
                         }
                     }
@@ -51,16 +50,68 @@ struct PlaylistView: View {
         .background(.platBackground)
         .tint(.white)
         .navigationTitle("플레이리스트")
-        .searchable(text: $searchText, prompt: "플레이리스트에서 찾기")
+    }
+}
+
+// MARK: - HeaderView
+
+private struct HeaderView: View {
+    
+    @Binding var searchText: String
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Text("플레이리스트")
+                    .font(.Head.head1)
+                Spacer()
+            }
+            
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle(.gray8)
+                    .padding(.leading, 10)
+                
+                TextField("", text: $searchText, prompt: Text("플레이리스트에서 찾기")
+                    .foregroundStyle(.gray8)
+                    .font(.Body.body3))
+                    .foregroundStyle(.white)
+                    .tint(.platPurple)
+                
+                Spacer()
+                
+                if !searchText.isEmpty {
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "x.circle.fill")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundStyle(.gray8)
+                            .padding(.leading, 10)
+                    }
+                    .padding(.trailing, 10)
+                }
+            }
+            .frame(height: 42)
+            .background {
+                RoundedRectangle(cornerRadius: 8).fill(.platBlack)
+            }
+        }
+        .padding()
     }
 }
 
 // MARK: - PlaylistSectionView
 
-struct PlaylistSectionView: View {
-    let playlist: Playlist
+private struct PlaylistSectionView: View {
+    
     @State private var isShowDetailSheet: Bool = false
-    @Binding var showPlaylistDetail: Bool
+    @Binding var selectedPlaylistId: Playlist.ID?
+    
+    let playlist: Playlist
     
     var body: some View {
         HStack(spacing: 18) {
@@ -80,18 +131,17 @@ struct PlaylistSectionView: View {
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isShowDetailSheet) {
-            PlaylistInfoSheet(
-                showPlaylistDetail: $showPlaylistDetail,
-                playlist: playlist
-            )
+            DetailSheetView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
         }
     }
 }
 
 // MARK: - PlaylistImageView
 
-struct PlaylistImageView: View {
+private struct PlaylistImageView: View {
+    
     let imageUrl: String
+    
     var body: some View {
         AsyncImage(url: URL(string: imageUrl)) { img in
             if let image = img.image {
@@ -110,6 +160,7 @@ struct PlaylistImageView: View {
 // MARK: - DividerView
 
 private struct DividerView: View {
+    
     var body: some View {
         HStack {
             Spacer()
@@ -130,7 +181,7 @@ private struct CreatePlaylistView: View {
     var body: some View {
         VStack {
             Button {
-                // TODO: AppendPlaylistView로 이동
+                pathModel.push(.appendPlaylistView)
             } label: {
                 HStack(spacing: 18) {
                     RoundedRectangle(cornerRadius: 12)
@@ -155,25 +206,21 @@ private struct CreatePlaylistView: View {
     }
 }
 
-// MARK: - PlaylistInfoSheet
+// MARK: - DetailSheetView
 
-private struct PlaylistInfoSheet: View {
-    @Binding var showPlaylistDetail: Bool
+private struct DetailSheetView: View {
+    
+    @Binding var selectedPlaylistId: Playlist.ID?
+    
     let playlist: Playlist
     
     var body: some View {
         VStack {
-            DetailPlaylistButtonView(
-                playlist: playlist,
-                showPlaylistDetail: $showPlaylistDetail
-            )
+            DetailPlaylistButtonView(playlist: playlist)
             
             DetailInfoView()
             
-            DetailButtonsView(
-                playlist: playlist,
-                showPlaylistDetail: $showPlaylistDetail
-            )
+            DetailButtonsView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
             
             Spacer()
             
@@ -188,15 +235,19 @@ private struct PlaylistInfoSheet: View {
 // MARK: - DetailPlaylistButtonView
 
 private struct DetailPlaylistButtonView: View {
-    let playlist: Playlist
-    @State private var selectedPlaylistId: Playlist.ID?
-    @Binding var showPlaylistDetail: Bool
     
+    @Environment(PathModel.self) private var pathModel
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var selectedPlaylistId: Playlist.ID?
+    
+    let playlist: Playlist
+
     var body: some View {
         Button {
-            // TODO: PlaylistDetailView로 이동
             selectedPlaylistId = playlist.id
-            showPlaylistDetail.toggle()
+            pathModel.push(.playlistDetail)
+            dismiss()
         } label: {
             HStack(spacing: 18) {
                 PlaylistImageView(imageUrl: playlist.imageUrl)
@@ -220,6 +271,7 @@ private struct DetailPlaylistButtonView: View {
 // MARK: - DetailInfoView
 
 private struct DetailInfoView: View {
+    
     let trackList = MockDataBuilder.playlist.trackList
     
     var body: some View {
@@ -242,11 +294,14 @@ private struct DetailInfoView: View {
 // MARK: - DetailButtonsView
 
 private struct DetailButtonsView: View {
-    let playlist: Playlist
     
     @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Environment(PathModel.self) private var pathModel
+    @Environment(\.dismiss) private var dismiss
     
-    @Binding var showPlaylistDetail: Bool
+    @Binding var selectedPlaylistId: Playlist.ID?
+    
+    let playlist: Playlist
     
     var body: some View {
         VStack(spacing: 32) {
@@ -262,9 +317,9 @@ private struct DetailButtonsView: View {
             }
             
             Button {
-                // TODO: PlaylistDetailView의 편집모드로 바로 이동
-                playlistUseCase.effect(.updateSelectedPlaylistId(playlist.id))
-                showPlaylistDetail = true
+                selectedPlaylistId = playlist.id
+                pathModel.push(.playlistDetailsEditView)
+                dismiss()
             } label: {
                 HStack {
                     Image(systemName: "pencil")
@@ -292,6 +347,7 @@ private struct DetailButtonsView: View {
 // MARK: - DetailSheetCloseButtonView
 
 private struct DetailSheetCloseButtonView: View {
+    
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -317,6 +373,7 @@ private struct DetailSheetCloseButtonView: View {
 
 /// 트랙PD 정보에서 인원수에 따른 표시방법을 다르게 하기 위한 함수
 private func formatNicknames(_ tracks: [Track]) -> String {
+    
     let nicknames = tracks.map { $0.user.nickname }
     let count = nicknames.count
     
@@ -333,5 +390,5 @@ private func formatNicknames(_ tracks: [Track]) -> String {
 
 #Preview {
     PlaylistView()
-        .environment(PreviewHelper.mockPlaylistUseCase)
+        .injectDIContainer()
 }

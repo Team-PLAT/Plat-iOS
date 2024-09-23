@@ -17,7 +17,7 @@
 		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
 		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
 		5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */; };
-		5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentView.swift */; };
+		5151BEB82C742119001DA80F /* TrackAppendContentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */; };
 		5151BEBE2C74D6F3001DA80F /* TrackAppendSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
 		51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B4784F2C4379E00008EB37 /* Helper+Text.swift */; };
@@ -135,7 +135,7 @@
 		82C9A53C2C87228500C57916 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53B2C87228500C57916 /* API.swift */; };
 		82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */; };
 		82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A53F2C8729D500C57916 /* PlatAPI.swift */; };
-		82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 82E3328A2C9B164700D06A8D /* Config.xcconfig */; };
+		82CF06962CA04DC70039C2FF /* PlatProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF06952CA04DC70039C2FF /* PlatProgressView.swift */; };
 		82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */; };
 		DF2D4DDA2C6CF74F005FCA44 /* TrackFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DD92C6CF74F005FCA44 /* TrackFeedView.swift */; };
 		DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */; };
@@ -166,7 +166,7 @@
 		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
 		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
 		5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackAppendService.swift; sourceTree = "<group>"; };
-		5151BEB72C742119001DA80F /* TrackAppendContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentView.swift; sourceTree = "<group>"; };
+		5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentSheet.swift; sourceTree = "<group>"; };
 		5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendSearchSheet.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
 		51F433312C340DB200FAFD14 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -285,6 +285,7 @@
 		82C9A53B2C87228500C57916 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+RawRepresentable.swift"; sourceTree = "<group>"; };
 		82C9A53F2C8729D500C57916 /* PlatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatAPI.swift; sourceTree = "<group>"; };
+		82CF06952CA04DC70039C2FF /* PlatProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatProgressView.swift; sourceTree = "<group>"; };
 		82E3328A2C9B164700D06A8D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsEditView.swift; sourceTree = "<group>"; };
 		DF2D4DD92C6CF74F005FCA44 /* TrackFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackFeedView.swift; sourceTree = "<group>"; };
@@ -349,9 +350,8 @@
 		5151BEAC2C72700E001DA80F /* TrackAppend */ = {
 			isa = PBXGroup;
 			children = (
-				5151BEB72C742119001DA80F /* TrackAppendContentView.swift */,
+				5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */,
 				5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */,
-				510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */,
 			);
 			path = TrackAppend;
 			sourceTree = "<group>";
@@ -448,6 +448,7 @@
 		793509C02C393B4F0098B073 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				510E363B2C76BFB6009AD4AC /* PhotoAlbumPicker.swift */,
 				793509C12C393BA40098B073 /* ListSection.swift */,
 				7964659D2C3A649600F6DC2D /* PlatTextField.swift */,
 				7964659F2C3A6F2E00F6DC2D /* ActionButton.swift */,
@@ -458,6 +459,7 @@
 				82A825152C6E30D00084D7E8 /* MusicIndicator.swift */,
 				82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */,
 				82721EED2C8D624000CA2C9A /* ToastMessage.swift */,
+				82CF06952CA04DC70039C2FF /* PlatProgressView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -879,7 +881,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					793278042C2D014500F433F5 = {
 						CreatedOnToolsVersion = 15.4;
@@ -918,7 +920,6 @@
 				796465A22C3A79BD00F6DC2D /* Icons.xcassets in Resources */,
 				51148CCE2C42F6BA00365853 /* plat_map_animation_lottie.json in Resources */,
 				51F433452C3411D500FAFD14 /* Pretendard-Regular.ttf in Resources */,
-				82E3328B2C9B164700D06A8D /* Config.xcconfig in Resources */,
 				827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */,
 				51F433322C340DB200FAFD14 /* Colors.xcassets in Resources */,
 				51F4333E2C3411D500FAFD14 /* Pretendard-SemiBold.ttf in Resources */,
@@ -1006,7 +1007,7 @@
 				820836852C3403B400F6D0CF /* UserDetailView.swift in Sources */,
 				79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */,
 				79501FD22C93185F00FB8143 /* PlaylistUseCase.swift in Sources */,
-				5151BEB82C742119001DA80F /* TrackAppendContentView.swift in Sources */,
+				5151BEB82C742119001DA80F /* TrackAppendContentSheet.swift in Sources */,
 				8235A4582C9D6FB400063E27 /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkClient.swift in Sources */,
@@ -1054,6 +1055,7 @@
 				DF616E5C2C74277300CCDC9D /* NetworkError.swift in Sources */,
 				82204EB02C96A71500546A5C /* ImageServiceInterface.swift in Sources */,
 				DFE27A162C71E37E002BAD11 /* BaseResponse.swift in Sources */,
+				82CF06962CA04DC70039C2FF /* PlatProgressView.swift in Sources */,
 				820836972C3405B000F6D0CF /* UserProfileServiceInterface.swift in Sources */,
 				793509C22C393BA40098B073 /* ListSection.swift in Sources */,
 				822273BC2C9D8FB9001A64DF /* DIContainer.swift in Sources */,

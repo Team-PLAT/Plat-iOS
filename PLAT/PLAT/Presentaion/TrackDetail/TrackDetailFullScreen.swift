@@ -95,7 +95,7 @@ private struct Background: View {
     var body: some View {
         Group {
             // TODO: 만약 Track에 이미지가 있다면 다른 이미지로 처리하기
-            if let imageString = trackUseCase.track.imageUrl,
+            if let imageString = trackUseCase.currentTrack.imageUrl,
                let imageURL = URL(string: imageString) {
                 AsyncImage(url: imageURL) { phase in
                     if let image = phase.image {
@@ -159,7 +159,7 @@ private struct MusicView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var music: Music? {
-        musicControlUseCase.state.music
+        musicControlUseCase.state.isPlayingTrack?.music
     }
     
     var body: some View {
@@ -189,7 +189,7 @@ private struct AlbumImage: View {
     private let cornerRaduis: CGFloat = 12
     
     private var albumImageUrl: URL? {
-        URL(string: musicControlUseCase.state.music?.albumImageUrl ?? "")
+        URL(string: musicControlUseCase.state.isPlayingTrack?.music.albumImageUrl ?? "")
     }
     
     var body: some View {
@@ -215,6 +215,7 @@ private struct MusicControllerView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isTrackAppendToPlaylistSheetPresented = false
@@ -226,14 +227,16 @@ private struct MusicControllerView: View {
             MusicControllerCell(
                 systemImage: SystemImage.like,
                 tapAction: {
-                    trackUseCase.effect(.likeTrack)
+                    
+                    // TODO: 실제 데이터 넣기
+                    trackUseCase.effect(.likeTrack(trackId: 0, isLike: true))
                 }
             )
             
             MusicControllerCell(
                 systemImage: SystemImage.addToPlaylist,
                 tapAction: {
-                    if trackUseCase.playlist.isEmpty {
+                    if playlistUseCase.state.playlists.isEmpty {
                         isNonePlaylistToastPresented.toggle()
                     } else {
                         isTrackAppendToPlaylistSheetPresented.toggle()
@@ -293,7 +296,7 @@ private struct BottomView: View {
     
     /// 현재 Track의 Content를 반환합니다.
     private var content: String? {
-        let origin = trackUseCase.track.content
+        let origin = trackUseCase.currentTrack.content
         if isContentAreaPresented {
             return origin
         } else {
@@ -336,7 +339,7 @@ private struct ProfileHeader: View {
     
     /// 현재 Track을 업로드한 User를 반환합니다.
     private var user: User {
-        trackUseCase.track.user
+        trackUseCase.currentTrack.user
     }
     
     /// 프로필 이미지 URL을 반환합니다.
@@ -364,7 +367,7 @@ private struct ProfileHeader: View {
                 Text(user.nickname)
                     .font(.Body.body2)
                 
-                Text(trackUseCase.track.createdDate.yearMonthDayFormat)
+                Text(trackUseCase.currentTrack.createdDate.yearMonthDayFormat)
                     .font(.Body.body5)
             }
             .foregroundStyle(.white)

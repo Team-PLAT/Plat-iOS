@@ -10,20 +10,16 @@ import Foundation
 @Observable
 final class TrackUseCase {
     
-    private(set) var feedTrack: [Track]
-    private(set) var track: Track
+    private(set) var currentTrack: Track
+    private(set) var mapTrackList: [Track]
+    private(set) var feedTrackList: [Track]
     private(set) var trackId: Track.ID
-    private(set) var playlist: [Playlist]
     
     private var trackService: TrackServiceInterface
-    private var imageService: ImageServiceInterface
     
     private(set) var state: State
     
-    init(
-        trackService: TrackServiceInterface,
-        imageService: ImageServiceInterface
-    ) {
+    init(trackService: TrackServiceInterface) {
         // TODO: 교체 예정
         self.state = State(
             place: Place(
@@ -33,12 +29,11 @@ final class TrackUseCase {
             isPaused: true
         )
         
-        self.feedTrack = []
-        self.track = MockDataBuilder.track
+        self.mapTrackList = []
+        self.feedTrackList = []
+        self.currentTrack = MockDataBuilder.track
         self.trackId = 0
-        self.playlist = MockDataBuilder.playlists
         self.trackService = trackService
-        self.imageService = imageService
     }
 }
 
@@ -57,35 +52,72 @@ extension TrackUseCase {
 extension TrackUseCase {
     
     enum Effect {
-        case likeTrack
-        case addToPlaylist
-        case deleteTrack
-        case reportTrack
+        case fetchMapTrackList(rectLocation: RectLocation)
+        case fetchFeedTrackList(page: Int)
+        case fetchCurrentTrack(id: Int)
+        case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
+        case likeTrack(trackId: Int, isLike: Bool)
+        case reportTrack(trackId: Int)
     }
     
     func effect(_ effect: Effect) {
         switch effect {
-        case .likeTrack:
+        case .fetchMapTrackList(let rectLocation):
             Task {
-                let result = await trackService.like(track: track)
+                let result = await trackService.fetchTrackList(rectLocation: rectLocation)
                 switch result {
-                case .success: print("좋아요 성공!")
-                case .failure: print("좋아요 실패...")
+                case .success(let trackList): self.mapTrackList = trackList
+                case .failure(let error): print(error) // TODO: 에러 처리
                 }
             }
             
-        case .addToPlaylist:
-            print("기능 구현 필요")
-            
-        case .deleteTrack:
-            print("기능 구현 필요")
-            
-        case .reportTrack:
+        case .fetchFeedTrackList(let page):
             Task {
-                let result = await trackService.report(track: track)
+                let result = await trackService.fetchTrackList(page: page)
                 switch result {
-                case .success: print("좋아요 성공!")
-                case .failure: print("좋아요 실패...")
+                case .success(let trackList): self.feedTrackList = trackList
+                case .failure(let error): print(error) // TODO: 에러 처리
+                }
+            }
+            
+        case .fetchCurrentTrack(let id):
+            Task {
+                let result = await trackService.fetchCurrent(trackId: id)
+                switch result {
+                case .success(let track): self.currentTrack = track
+                case .failure(let error): print(error) // TODO: 에러 처리
+                }
+            }
+            
+        case .uploadTrack(let isrc, let imageData, let content, let location):
+            Task {
+                let uploadTrackResult = await trackService.uploadTrack(
+                    isrc: isrc,
+                    imageData: imageData,
+                    content: content,
+                    location: location
+                )
+                switch uploadTrackResult {
+                case .success: break
+                case .failure(let error): print(error) // TODO: 에러 처리
+                }
+            }
+            
+        case .likeTrack(let trackId, let isLike):
+            Task {
+                let result = await trackService.like(trackId: trackId, isLike: isLike)
+                switch result {
+                case .success: break
+                case .failure(let error): print(error) // TODO: 에러 처리
+                }
+            }
+            
+        case .reportTrack(let trackId):
+            Task {
+                let result = await trackService.report(trackId: trackId)
+                switch result {
+                case .success: break
+                case .failure(let error): print(error) // TODO: 에러 처리
                 }
             }
         }
