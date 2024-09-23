@@ -7,23 +7,25 @@
 
 import SwiftUI
 
+// MARK: - PlatProcessingFullScreen
+
 struct PlatProcessingFullScreen: View {
     @State var isCompleteLoading = false
     @Binding var playList: Playlist?
     
     var body: some View {
         VStack {
-            PlattingDismissButton()
+            PlatProcessingDismissButton()
             Spacer()
             if isCompleteLoading {
                 if let playlist = playList {
-                    PlattingPlayListView(playList: playlist)
+                    PlatProcessingPlaylist(playList: playlist)
                 } else {
                     Text("No playlist available")
                 }
             } else {
                 if let trackList = playList?.trackList {
-                    PlattingLoadingView(trackList: trackList)
+                    PlatProcessingLoading(trackList: trackList)
                 } else {
                     Text("Loading failed")
                 }
@@ -40,24 +42,23 @@ struct PlatProcessingFullScreen: View {
     }
 }
 
-// MARK: - PlattingDismissButton
+// MARK: - PlatProcessingDismissButton
 
-private struct PlattingDismissButton: View {
+private struct PlatProcessingDismissButton: View {
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         HStack {
             Spacer()
             DismissButton {
-                // TODO: 만들어진 플레이리스트 인스턴스 삭제 필요?
                 dismiss()
             }
         }
     }
 }
 
-// MARK: - PlattingLoadingView
+// MARK: - PlatProcessingLoading
 
-private struct PlattingLoadingView: View {
+private struct PlatProcessingLoading: View {
     var trackList: [Track]
     var body: some View {
         VStack {
@@ -83,9 +84,9 @@ private struct PlattingLoadingView: View {
     }
 }
 
-// MARK: - PlattingPlayListView
+// MARK: - PlatProcessingPlaylist
 
-private struct PlattingPlayListView: View {
+private struct PlatProcessingPlaylist: View {
     var playList: Playlist
     
     var body: some View {
@@ -120,21 +121,21 @@ private struct PlattingPlayListView: View {
                 .foregroundStyle(.gray7)
                 .padding(.bottom)
             
-            PlattingPlayListButton()
+            PlatProcessingPlaylistButton()
             
             Rectangle()
                 .frame(height: 1)
                 .foregroundStyle(.gray9)
                 .padding(.top, 40)
             
-            PlattingPlayList(trackList: playList.trackList)
+            PlatProcessingPlaylistTracklist(trackList: playList.trackList)
         }
     }
 }
 
-// MARK: - PlattingPlayListButton
+// MARK: - PlatProcessingPlaylistButton
 
-private struct PlattingPlayListButton: View {
+private struct PlatProcessingPlaylistButton: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -175,9 +176,9 @@ private struct PlattingPlayListButton: View {
     }
 }
 
-// MARK: - PlattingPlayList
+// MARK: - PlatProcessingPlaylistTracklist
 
-private struct PlattingPlayList: View {
+private struct PlatProcessingPlaylistTracklist: View {
     var trackList: [Track]
     
     var body: some View {
