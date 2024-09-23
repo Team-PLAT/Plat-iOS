@@ -265,14 +265,14 @@ private struct FeedPlayer: View {
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
                         musicControlUseCase.effect(.togglePlayback)
                     } else {
                         /// 처음 재생할 때
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
                         musicControlUseCase.effect(.setup(music: track.music))
                         selectedTrackId = trackIndex
                     }

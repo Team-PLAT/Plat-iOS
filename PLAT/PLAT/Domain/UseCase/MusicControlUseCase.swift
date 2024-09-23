@@ -56,6 +56,7 @@ extension MusicControlUseCase {
         case playRandomPlaylist(isrcs: [String])
         case togglePlayback
         case updatePlayer(duration: Double)
+        case updatePlayingTrack(track: Track)
     }
     
     func effect(_ effect: Effect) {
@@ -102,6 +103,9 @@ extension MusicControlUseCase {
             
         case .updatePlayer(duration: let duration):
             musicController.updateMusicPlayer(with: duration)
+            
+        case .updatePlayingTrack(track: let track):
+            state.isPlayingTrack = track
         }
     }
 }
