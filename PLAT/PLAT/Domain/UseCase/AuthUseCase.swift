@@ -24,7 +24,8 @@ final class AuthUseCase {
         self.state = State(
             isMember: false,
             isSignIn: false,
-            isLoginComplete: false
+            isLoginComplete: false,
+            currentUserId: UUID()
         )
     }
 }
@@ -40,6 +41,7 @@ extension AuthUseCase {
         var isMember: Bool
         var isSignIn: Bool
         var isLoginComplete: Bool
+        var currentUserId: UUID // TODO: 로그인 이후 로직이.. 어떻게 되는지.. state 수정해야해!
     }
 }
 

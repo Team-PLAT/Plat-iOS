@@ -7,7 +7,14 @@
 
 import Foundation
 
-struct User {
+struct User: Identifiable {
+    let id: UUID
     var nickname: String
     var profileImageUrl: String
+    
+    init(nickname: String, profileImageUrl: String) {
+        self.id = UUID()
+        self.nickname = nickname
+        self.profileImageUrl = profileImageUrl
+    }
 }

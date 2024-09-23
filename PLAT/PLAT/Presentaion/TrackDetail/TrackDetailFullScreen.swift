@@ -72,7 +72,7 @@ struct TrackDetailFullScreen: View {
             }
             
             if musicControlUseCase.state.isPlayingTrack?.id != track.id {
-                musicControlUseCase.state.isPlayingTrack = track
+                musicControlUseCase.effect(.updatePlayingTrack(track: track))
                 musicControlUseCase.effect(.setup(music: track.music))
             }
         }
