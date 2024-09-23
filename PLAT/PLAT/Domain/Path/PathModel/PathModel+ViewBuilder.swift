@@ -39,6 +39,9 @@ extension PathModel {
         case .playlistDetailsEditView:
             PlaylistDetailsEditView()
             
+        case .report:
+            ReportView()
+            
         case .userDetail:
             UserDetailView()
             

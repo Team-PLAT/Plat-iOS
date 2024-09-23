@@ -24,6 +24,9 @@ enum Screen: Identifiable, Hashable {
     case playlistDetail
     case playlistDetailsEditView
     
+    // 신고
+    case report
+    
     // 설정
     case userDetail
     case nicknameSetting

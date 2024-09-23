@@ -56,6 +56,7 @@ struct TrackFeedView: View {
 private struct FeedRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PathModel.self) private var pathModel
     
     let track: Track
     let trackIndex: Int64
@@ -79,8 +80,12 @@ private struct FeedRowView: View {
                         
                         Spacer()
                         
-                        Button {
-                            // 알럿창
+                        Menu {
+                            Button(role: .destructive) {
+                                pathModel.push(.report)
+                            } label: {
+                                Text("신고하기")
+                            }
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.white)
@@ -469,4 +474,5 @@ private struct FeedActionView: View {
 #Preview {
     TrackFeedView()
         .environment(PreviewHelper.mockMusicControlUseCase)
+        .injectDIContainer()
 }
