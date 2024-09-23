@@ -43,6 +43,7 @@
 		793509C22C393BA40098B073 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793509C12C393BA40098B073 /* ListSection.swift */; };
 		7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9852C917FEE009B915D /* UploadImageAPI.swift */; };
 		7946B9882C918066009B915D /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7946B9872C918062009B915D /* ImageRepository.swift */; };
+		7948116E2CA17F03003EF6EB /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948116D2CA17F03003EF6EB /* ReportView.swift */; };
 		79501FD22C93185F00FB8143 /* PlaylistUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79501FD12C93185F00FB8143 /* PlaylistUseCase.swift */; };
 		79501FD42C9318C500FB8143 /* PlaylistServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */; };
 		7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796465992C3A5C2400F6DC2D /* Helper+Preview.swift */; };
@@ -192,6 +193,7 @@
 		793509C12C393BA40098B073 /* ListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
 		7946B9852C917FEE009B915D /* UploadImageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageAPI.swift; sourceTree = "<group>"; };
 		7946B9872C918062009B915D /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		7948116D2CA17F03003EF6EB /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		79501FD12C93185F00FB8143 /* PlaylistUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistUseCase.swift; sourceTree = "<group>"; };
 		79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistServiceInterface.swift; sourceTree = "<group>"; };
 		796465992C3A5C2400F6DC2D /* Helper+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Preview.swift"; sourceTree = "<group>"; };
@@ -470,6 +472,14 @@
 			path = ImageAPI;
 			sourceTree = "<group>";
 		};
+		7948116C2CA17ED2003EF6EB /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				7948116D2CA17F03003EF6EB /* ReportView.swift */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
 		79A09D4C2C391B97006F14F4 /* AppCoordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,6 +551,7 @@
 				5151BEA92C71EAB5001DA80F /* PlatProcessing */,
 				513DCBE02C98234D007CA813 /* Playlist */,
 				8208368B2C3403FB00F6D0CF /* Settings */,
+				7948116C2CA17ED2003EF6EB /* Report */,
 			);
 			path = Presentaion;
 			sourceTree = "<group>";
@@ -1022,6 +1033,7 @@
 				82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */,
 				82721EEE2C8D624000CA2C9A /* ToastMessage.swift in Sources */,
 				DF6DC99B2C75CB9D004A23F7 /* AppleMusicControllerServiceImpl.swift in Sources */,
+				7948116E2CA17F03003EF6EB /* ReportView.swift in Sources */,
 				791905A82C905762005571DE /* PlaylistView.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				8235A45C2C9D726900063E27 /* FullScreenCover.swift in Sources */,
@@ -1211,7 +1223,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1231,7 +1243,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.crownjoe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1253,7 +1265,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QMNM64P9Z;
+				DEVELOPMENT_TEAM = MXGCKXDXUM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1273,7 +1285,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.crownjoe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

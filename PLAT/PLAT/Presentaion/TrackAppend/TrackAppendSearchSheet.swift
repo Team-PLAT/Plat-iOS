@@ -217,4 +217,5 @@ private struct TrackAppendMusicList: View {
 
 #Preview {
     TrackAppendSearchSheet()
+        .injectDIContainer()
 }
