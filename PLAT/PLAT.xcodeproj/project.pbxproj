@@ -161,7 +161,6 @@
 		512DE28B2C988066002B4622 /* PlaylistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailView.swift; sourceTree = "<group>"; };
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		513DCBDE2C95FC66007CA813 /* Helper+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+View.swift"; sourceTree = "<group>"; };
-		513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
 		5151BEAA2C71EB73001DA80F /* PlatProcessingFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatProcessingFullScreen.swift; sourceTree = "<group>"; };
 		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
 		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
@@ -333,7 +332,6 @@
 				791905A72C905762005571DE /* PlaylistView.swift */,
 				512DE28B2C988066002B4622 /* PlaylistDetailView.swift */,
 				8235A4632C9D883300063E27 /* AppendPlaylistView.swift */,
-				513DCBEB2C98480D007CA813 /* AppendPlaylistView.swift */,
 				82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */,
 			);
 			path = Playlist;
