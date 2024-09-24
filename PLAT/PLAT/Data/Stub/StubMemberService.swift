@@ -24,7 +24,7 @@ struct StubMemberService: MemberServiceInterface {
     
     func fetchProfile() async -> Result<User, any Error> {
         print(#function)
-        return .success(User(nickname: "한톨", profileImageUrl: ""))
+        return .success(User(id: 0, nickname: "한톨", profileImageUrl: ""))
     }
     
     func updateProfileNickname(to nickname: String) async -> Result<Void, any Error> {

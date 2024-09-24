@@ -254,6 +254,7 @@ struct MockDataBuilder {
     /// Mock User 데이터를 반환합니다.
     static var mine: User {
         return User(
+            id: 0,
             nickname: "한톨",
             profileImageUrl: "https://mblogthumb-phinf.pstatic.net/MjAyMjA4MjRfMTgy/MDAxNjYxMzIwNjIzODk5.OWc2z-YXeLFvyvYahPkySEAO2L4HtljLNqmL1y1D5l0g.jE14uKWjrHUYRNX7VfU95-PxStNktetch_hngxM3Q-Eg.JPEG.ages9090/KakaoTalk_20220824_140238973_17.jpg?type=w800"
         )
@@ -262,6 +263,7 @@ struct MockDataBuilder {
     /// Mock Friend 데이터를 반환합니다.
     static var friend: User {
         return User(
+            id: 1,
             nickname: "페더",
             profileImageUrl: "https://p.turbosquid.com/ts-thumb/YS/jomAmS/ulZxDbeh/render01/jpg/1282179377/600x600/fit_q87/edab67ff7df50901ab9f109305d5a692b68477a7/render01.jpg"
         )

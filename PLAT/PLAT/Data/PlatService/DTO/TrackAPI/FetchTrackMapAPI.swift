@@ -41,6 +41,7 @@ struct FetchTrackMapResponse: Decodable {
             )
             
             let user = User(
+                id: 0,
                 nickname: "",
                 profileImageUrl: ""
             )
