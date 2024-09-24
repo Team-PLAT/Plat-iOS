@@ -58,7 +58,6 @@ extension PlaylistUseCase {
     /// 선택된 플레이리스트의 ISRC 배열 반환
     func getPlaylistIsrcs() -> [String]? {
         let isrcs = selectedPlaylist?.trackList.map { $0.music.isrc }
-        print("🎀\(isrcs)")
         return isrcs
     }
 

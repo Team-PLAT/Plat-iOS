@@ -27,4 +27,5 @@ enum SystemImage {
     static let trackDetail = "line.3.horizontal"
     static let minus = "minus"
     static let back = "chevron.backward"
+    static let savePlaylist = "square.stack"
 }
