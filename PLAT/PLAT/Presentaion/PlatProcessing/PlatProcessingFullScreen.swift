@@ -46,12 +46,13 @@ struct PlatProcessingFullScreen: View {
 // MARK: - PlatProcessingDismissButton
 
 private struct PlatProcessingDismissButton: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
         HStack {
             Spacer()
             DismissButton {
-                dismiss()
+                pathModel.dismissFullScreenCover()
             }
         }
     }
@@ -140,14 +141,14 @@ private struct PlatProcessingPlaylist: View {
 // MARK: - PlatProcessingPlaylistButton
 
 private struct PlatProcessingPlaylistButton: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(PathModel.self) private var pathModel
     
     var body: some View {
         HStack(spacing: 26) {
             Group {
                 Button {
                     // TODO: 플레이리스트 재생 기능 추가
-                    dismiss()
+                    pathModel.dismissFullScreenCover()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(.gray9)
@@ -160,7 +161,7 @@ private struct PlatProcessingPlaylistButton: View {
                 }
                 Button {
                     // TODO: 플레이리스트 저장 기능 추가
-                    dismiss()
+                    pathModel.dismissFullScreenCover()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(.gray9)
