@@ -94,13 +94,12 @@ private struct PlatProcessingLoading: View {
             
             Spacer()
             
-            
             Text("Platting\(String(repeating: ".", count: dotTextCount))")
                 .font(.Head.head3)
                 .padding(.bottom, 104)
         }
         .onAppear {
-            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { _ in
                 dotTextCount = (dotTextCount + 1) % (4 + 1)
                 trackRandomIndex = Int.random(in: 0...(trackUseCase.mapTrackList.count - 1))
             }
