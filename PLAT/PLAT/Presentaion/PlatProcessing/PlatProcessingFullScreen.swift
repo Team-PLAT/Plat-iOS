@@ -17,7 +17,9 @@ struct PlatProcessingFullScreen: View {
     var body: some View {
         VStack {
             PlatProcessingDismissButton()
+            
             Spacer()
+            
             if isCompleteLoading {
                 if trackUseCase.mapTrackList.isEmpty {
                     Text("No playlist available")
@@ -34,7 +36,7 @@ struct PlatProcessingFullScreen: View {
         }
         .presentationBackground(.black.opacity(0.8))
         
-        // TODO: 플래팅로딩뷰에서 플래팅플레이리스트뷰로 넘어가는 로직 구현하기
+        // TODO: PlatProcessing 로딩뷰에서 PlatProcessing 플레이리스트뷰로 넘어가는 로직 기획 나오면 구현하기
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                 isCompleteLoading = true
@@ -51,6 +53,7 @@ private struct PlatProcessingDismissButton: View {
     var body: some View {
         HStack {
             Spacer()
+            
             DismissButton {
                 pathModel.dismissFullScreenCover()
             }
@@ -162,12 +165,14 @@ private struct PlatProcessingPlaylistButton: View {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(.gray9)
                         .overlay {
-                            HStack {
-                                Image(systemName: "play.fill")
+                            HStack(spacing: 4) {
+                                Image(systemName: SystemImage.play)
+                                
                                 Text("재생")
                             }
                         }
                 }
+                
                 Button {
                     // TODO: 플레이리스트 저장 기능 추가
                     pathModel.dismissFullScreenCover()
@@ -175,9 +180,12 @@ private struct PlatProcessingPlaylistButton: View {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(.gray9)
                         .overlay {
-                            HStack {
-                                // TODO: 이미지 바꾸기
-                                Image(systemName: "music.note")
+                            HStack(spacing: 4) {
+                                Image("img_playlistsave")
+                                    .resizable()
+                                    .aspectRatio(1, contentMode: .fit)
+                                    .padding(.vertical, 14)
+                                
                                 Text("플레이리스트 저장")
                             }
                         }
