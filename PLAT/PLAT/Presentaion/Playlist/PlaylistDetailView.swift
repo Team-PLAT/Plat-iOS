@@ -250,7 +250,7 @@ private struct PlaylistDetailNewTrackButton: View {
     
     var body: some View {
         Button {
-            pathModel.push(.appendPlaylistView)
+            pathModel.presentSheet(.trackAppendSearch)
         } label: {
             HStack(spacing: 10) {
                 RoundedRectangle(cornerRadius: 4)

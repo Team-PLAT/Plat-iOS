@@ -18,10 +18,12 @@ struct PlaylistDetailsEditView: View {
         trackList: []
     )
     
+    @State private var playlistTitle: String = ""
+    
     var body: some View {
         VStack(spacing: 0) {
             
-            PlayListEditInfo(playlist: selectedPlaylist)
+            PlayListEditInfo(playlistTitle: $playlistTitle, playlist: selectedPlaylist)
                 .padding(.bottom, 17)
             
             NewTrackAdd()
@@ -69,6 +71,7 @@ struct PlaylistDetailsEditView: View {
                 imageUrl: "",
                 trackList: []
             )
+            self.playlistTitle = selectedPlaylist.title
         }
     }
     
@@ -81,11 +84,11 @@ struct PlaylistDetailsEditView: View {
 
 private struct PlayListEditInfo: View {
     
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    
     @State private var isPhotoAlbumSheet = false
     @State private var selectedImage: UIImage?
-    @State private var playlistTitle: String = ""
-    
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Binding var playlistTitle: String
     
     let playlist: Playlist
     
@@ -176,9 +179,6 @@ private struct PlayListEditInfo: View {
                 .frame(height: 1)
                 .foregroundColor(.gray9)
         }
-        .onAppear {
-            self.playlistTitle = playlist.title
-        }
     }
 }
 
@@ -190,7 +190,7 @@ private struct NewTrackAdd: View {
     
     var body: some View {
         Button {
-            pathModel.push(.appendPlaylistView)
+            pathModel.presentSheet(.trackAppendSearch)
         } label: {
             HStack(spacing: 10) {
                 
