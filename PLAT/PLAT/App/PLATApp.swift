@@ -16,6 +16,16 @@ struct PLATApp: App {
         WindowGroup {
             AppCoordinatorView()
                 .injectDIContainer()
+                .onAppear {
+                    Task {
+                        await AddressRepository().fetchReverseGeocode(
+                            request: .init(
+                                latitude: 0,
+                                longitude: 0
+                            )
+                        )
+                    }
+                }
         }
     }
 }

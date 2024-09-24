@@ -107,6 +107,7 @@
 		8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */; };
 		823CA1162C9D6C670084A90B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CA1152C9D6C670084A90B /* Screen.swift */; };
 		82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */; };
+		82588AA02CA2ECE800AD8132 /* AddressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -258,6 +259,7 @@
 		8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSecurityManager.swift; sourceTree = "<group>"; };
 		823CA1152C9D6C670084A90B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodeAPI.swift; sourceTree = "<group>"; };
+		82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRepository.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -697,6 +699,14 @@
 			path = AddressAPI;
 			sourceTree = "<group>";
 		};
+		82588A9E2CA2ECC900AD8132 /* AddressService */ = {
+			isa = PBXGroup;
+			children = (
+				82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */,
+			);
+			path = AddressService;
+			sourceTree = "<group>";
+		};
 		827169102C9DB69E00D8BF81 /* PathType */ = {
 			isa = PBXGroup;
 			children = (
@@ -846,6 +856,7 @@
 				82204EB62C96B51C00546A5C /* TrackService */,
 				82204EB72C96B52400546A5C /* MemberService */,
 				82204EB82C96B52F00546A5C /* ImageService */,
+				82588A9E2CA2ECC900AD8132 /* AddressService */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -956,6 +967,7 @@
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
 				513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */,
 				DF2D4DDA2C6CF74F005FCA44 /* TrackFeedView.swift in Sources */,
+				82588AA02CA2ECE800AD8132 /* AddressRepository.swift in Sources */,
 				8235A4602C9D84B100063E27 /* PathModel.swift in Sources */,
 				DF2D4DE02C6D1731005FCA44 /* Helper+RoundedCorner.swift in Sources */,
 				DFE27A202C71E78F002BAD11 /* Config.swift in Sources */,
