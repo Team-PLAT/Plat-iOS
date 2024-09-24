@@ -50,6 +50,11 @@ struct TrackMapView: View {
             
             ToastMessage(message: "플레이리스트를 생성할 트랙이 없어요", isToastPresented: $isShowToastMessage)
         }
+        //        .onAppear {
+        //            Task {
+        //                playlist = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+        //            }
+        //        }
     }
 }
 
@@ -92,6 +97,11 @@ private struct MapView: View {
 // MARK: - CustomMarkerView
 
 private struct CustomMarkerView: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var playlistMusic: Music?
+    
     let track: Track
     
     var body: some View {
@@ -99,22 +109,34 @@ private struct CustomMarkerView: View {
             .frame(width: 40, height: 40)
             .foregroundStyle(.gray3)
             .overlay {
-                AsyncImage(url: URL(string: track.music.albumImageUrl)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 34, height: 34)
-                            .clipShape(Circle())
-                    } else {
-                        Circle()
-                            .frame(width: 40, height: 40)
-                            .foregroundStyle(.gray3)
+                if let albumImageUrl = playlistMusic?.albumImageUrl {
+                    AsyncImage(url: URL(string: albumImageUrl)) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 34, height: 34)
+                                .clipShape(Circle())
+                        } else {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(.gray3)
+                        }
                     }
+                } else {
+                    Circle()
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.gray3)
+                }
+            }
+            .onAppear {
+                Task {
+                    playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
                 }
             }
     }
 }
+
 
 // MARK: - MapComponentsView
 
