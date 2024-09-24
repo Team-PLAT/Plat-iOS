@@ -106,6 +106,7 @@
 		8235A4642C9D883300063E27 /* AppendPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4632C9D883300063E27 /* AppendPlaylistView.swift */; };
 		8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */; };
 		823CA1162C9D6C670084A90B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CA1152C9D6C670084A90B /* Screen.swift */; };
+		82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -256,6 +257,7 @@
 		8235A4632C9D883300063E27 /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
 		8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSecurityManager.swift; sourceTree = "<group>"; };
 		823CA1152C9D6C670084A90B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
+		82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodeAPI.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -687,6 +689,14 @@
 			path = ImageService;
 			sourceTree = "<group>";
 		};
+		82588A9B2CA2EC4D00AD8132 /* AddressAPI */ = {
+			isa = PBXGroup;
+			children = (
+				82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */,
+			);
+			path = AddressAPI;
+			sourceTree = "<group>";
+		};
 		827169102C9DB69E00D8BF81 /* PathType */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +824,7 @@
 				79B0F6EF2C8C3F22009140AF /* TrackAPI */,
 				79B0F7072C8DBA9E009140AF /* MemberAPI */,
 				7946B9842C917FDC009B915D /* ImageAPI */,
+				82588A9B2CA2EC4D00AD8132 /* AddressAPI */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -1024,6 +1035,7 @@
 				DF6DC99B2C75CB9D004A23F7 /* AppleMusicControllerServiceImpl.swift in Sources */,
 				791905A82C905762005571DE /* PlaylistView.swift in Sources */,
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
+				82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */,
 				8235A45C2C9D726900063E27 /* FullScreenCover.swift in Sources */,
 				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
