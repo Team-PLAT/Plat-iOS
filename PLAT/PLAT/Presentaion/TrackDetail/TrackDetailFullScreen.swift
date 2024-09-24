@@ -126,16 +126,9 @@ private struct HeaderView: View {
             HStack {
                 Image(.imgMarker)
                 
-                Group {
-                    if let placeName = trackUseCase.state.place.name {
-                        Text(placeName)
-                        
-                    } else {
-                        Text(trackUseCase.state.place.address)
-                    }
-                }
-                .font(.Head.head2)
-                .foregroundStyle(.white)
+                Text(trackUseCase.state.place.address)
+                    .font(.Head.head2)
+                    .foregroundStyle(.white)
                 
                 Spacer()
                 

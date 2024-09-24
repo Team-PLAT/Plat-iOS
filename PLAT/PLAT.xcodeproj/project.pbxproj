@@ -108,6 +108,8 @@
 		823CA1162C9D6C670084A90B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CA1152C9D6C670084A90B /* Screen.swift */; };
 		82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */; };
 		82588AA02CA2ECE800AD8132 /* AddressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */; };
+		82588AA22CA2EF7600AD8132 /* AddressServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AA12CA2EF7600AD8132 /* AddressServiceImpl.swift */; };
+		82588AA42CA2EFA500AD8132 /* AddressServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -260,6 +262,8 @@
 		823CA1152C9D6C670084A90B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodeAPI.swift; sourceTree = "<group>"; };
 		82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRepository.swift; sourceTree = "<group>"; };
+		82588AA12CA2EF7600AD8132 /* AddressServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressServiceImpl.swift; sourceTree = "<group>"; };
+		82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressServiceInterface.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -608,6 +612,7 @@
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
 				5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */,
 				82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */,
+				82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */,
 				79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
@@ -702,6 +707,7 @@
 		82588A9E2CA2ECC900AD8132 /* AddressService */ = {
 			isa = PBXGroup;
 			children = (
+				82588AA12CA2EF7600AD8132 /* AddressServiceImpl.swift */,
 				82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */,
 			);
 			path = AddressService;
@@ -1061,10 +1067,12 @@
 				820836992C34064400F6D0CF /* StreamAccount.swift in Sources */,
 				820836772C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift in Sources */,
 				79501FD42C9318C500FB8143 /* PlaylistServiceInterface.swift in Sources */,
+				82588AA42CA2EFA500AD8132 /* AddressServiceInterface.swift in Sources */,
 				79842E8C2C7225FD0062F825 /* MapKitLocationServiceImpl.swift in Sources */,
 				8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */,
 				79B0F6F42C8C4111009140AF /* FetchTrackFeedAPI.swift in Sources */,
 				7964659C2C3A5F1800F6DC2D /* StubInfoService.swift in Sources */,
+				82588AA22CA2EF7600AD8132 /* AddressServiceImpl.swift in Sources */,
 				DFD110D62C4644D500696FCB /* Helper+Lottie.swift in Sources */,
 				51B478502C4379E00008EB37 /* Helper+Text.swift in Sources */,
 				8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */,

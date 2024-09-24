@@ -8,6 +8,5 @@
 import Foundation
 
 struct Place {
-    var name: String?
     var address: String
 }

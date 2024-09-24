@@ -23,7 +23,6 @@ final class TrackUseCase {
         // TODO: 교체 예정
         self.state = State(
             place: Place(
-                name: "포항공과대학교",
                 address: "대한민국 경상북도 포항시 남구 지곡동"
             ),
             isPaused: true
