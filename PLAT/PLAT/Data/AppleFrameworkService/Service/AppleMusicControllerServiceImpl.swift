@@ -54,9 +54,7 @@ extension AppleMusicControllerServiceImpl {
         Task {
             let songIDs = await requestSongIds(for: isrcs)
             if !songIDs.isEmpty {
-                let reversedSongIDs = songIDs.reversed()
-                print("🐒🐒", reversedSongIDs)
-                let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: Array(reversedSongIDs))
+                let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: Array(songIDs))
                 musicPlayer.setQueue(with: descriptor)
                 musicPlayer.play()
             } else {
@@ -70,8 +68,6 @@ extension AppleMusicControllerServiceImpl {
         Task {
             var songIDs = await requestSongIds(for: isrcs)
             songIDs.shuffle()
-            
-            print("🐒🐒🐒🐒", songIDs)
             if !songIDs.isEmpty {
                 let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: songIDs)
                 musicPlayer.setQueue(with: descriptor)

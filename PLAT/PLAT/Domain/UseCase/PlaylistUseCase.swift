@@ -55,11 +55,13 @@ extension PlaylistUseCase {
         return state.playlists.filter { $0.id == state.selectedPlaylistId }.first
     }
     
-    /// 플레이리스트를 기기에서 재생
-    func playOnDevice() {
-        playlistService.playOnDevice()
+    /// 선택된 플레이리스트의 ISRC 배열 반환
+    func getPlaylistIsrcs() -> [String]? {
+        let isrcs = selectedPlaylist?.trackList.map { $0.music.isrc }
+        print("🎀\(isrcs)")
+        return isrcs
     }
-    
+
     /// 플레이리스트 삭제
     func deletePlaylist() {
         playlistService.deletePlaylist()

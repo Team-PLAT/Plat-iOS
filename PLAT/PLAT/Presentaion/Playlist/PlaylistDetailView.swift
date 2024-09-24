@@ -81,7 +81,6 @@ struct PlaylistDetailView: View {
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     pathModel.push(.playlistDetailsEditView)
-                    // TODO: PlaylistDetailsEditView 뷰 이동 & fetch한 애들 넘기기
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)
