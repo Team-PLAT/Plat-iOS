@@ -33,7 +33,21 @@ extension MapUseCase {
 
 extension MapUseCase {
     
-    func fetchReverseGeocode(longitude: Double, latitude: Double) {
+    /// 좌표값에 따라 역지오코딩 값을 반환합니다.
+    func fetchReverGeocode(latitude: Double, longitude: Double) async -> Result<Place, Error> {
+        let result = await addressService.fetchReverseGeocode(
+            latitude: longitude,
+            longitude: longitude
+        )
+        
+        switch result {
+        case .success(let place): return .success(place)
+        case .failure(let error): return .failure(error)
+        }
+    }
+    
+    /// 좌표값에 따라 역지오코딩 값을 업데이트합니다.
+    func updateReverseGeocode(latitude: Double, longitude: Double) {
         Task {
             let result = await addressService.fetchReverseGeocode(
                 latitude: longitude,

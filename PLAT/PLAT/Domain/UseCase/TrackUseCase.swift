@@ -22,9 +22,6 @@ final class TrackUseCase {
     init(trackService: TrackServiceInterface) {
         // TODO: 교체 예정
         self.state = State(
-            place: Place(
-                address: "대한민국 경상북도 포항시 남구 지곡동"
-            ),
             isPaused: true
         )
         
@@ -41,7 +38,6 @@ final class TrackUseCase {
 extension TrackUseCase {
     
     struct State {
-        var place: Place
         var isPaused: Bool
     }
 }
