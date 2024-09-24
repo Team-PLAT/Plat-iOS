@@ -10,24 +10,25 @@ import SwiftUI
 // MARK: - PlatProcessingFullScreen
 
 struct PlatProcessingFullScreen: View {
-    @State var isCompleteLoading = false
-    @Binding var playList: Playlist?
+    @Environment(TrackUseCase.self) private var trackUseCase
+    
+    @State private var isCompleteLoading = false
     
     var body: some View {
         VStack {
             PlatProcessingDismissButton()
             Spacer()
             if isCompleteLoading {
-                if let playlist = playList {
-                    PlatProcessingPlaylist(playList: playlist)
-                } else {
+                if trackUseCase.mapTrackList.isEmpty {
                     Text("No playlist available")
+                } else {
+                    PlatProcessingPlaylist()
                 }
             } else {
-                if let trackList = playList?.trackList {
-                    PlatProcessingLoading(trackList: trackList)
-                } else {
+                if trackUseCase.mapTrackList.isEmpty {
                     Text("Loading failed")
+                } else {
+                    PlatProcessingLoading()
                 }
             }
         }
@@ -59,7 +60,8 @@ private struct PlatProcessingDismissButton: View {
 // MARK: - PlatProcessingLoading
 
 private struct PlatProcessingLoading: View {
-    var trackList: [Track]
+    @Environment(TrackUseCase.self) private var trackUseCase
+
     var body: some View {
         VStack {
             // TODO: 트랙들의 이미지 그리는 로직 추가하기
@@ -87,7 +89,9 @@ private struct PlatProcessingLoading: View {
 // MARK: - PlatProcessingPlaylist
 
 private struct PlatProcessingPlaylist: View {
-    var playList: Playlist
+    @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MapUseCase.self) private var mapUseCase
+//        var playList: Playlist
     
     var body: some View {
         VStack {
@@ -128,7 +132,7 @@ private struct PlatProcessingPlaylist: View {
                 .foregroundStyle(.gray9)
                 .padding(.top, 40)
             
-            PlatProcessingPlaylistTracklist(trackList: playList.trackList)
+            PlatProcessingPlaylistTracklist()
         }
     }
 }
@@ -179,10 +183,11 @@ private struct PlatProcessingPlaylistButton: View {
 // MARK: - PlatProcessingPlaylistTracklist
 
 private struct PlatProcessingPlaylistTracklist: View {
-    var trackList: [Track]
+    @Environment(TrackUseCase.self) private var trackUseCase
+//    var trackList: [Track]
     
     var body: some View {
-        List(trackList) { track in
+        List(trackUseCase.mapTrackList) { track in
             VStack(alignment: .leading) {
                 HStack {
                     // TODO: 음원 이미지가 없을 때 기본 이미지 설정하기
