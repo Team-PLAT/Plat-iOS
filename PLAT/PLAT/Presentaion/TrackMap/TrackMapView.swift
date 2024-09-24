@@ -159,12 +159,18 @@ private struct MapComponentsView: View {
 // MARK: - MapAddressView
 
 private struct MapAddressView: View {
+    
+    @Environment(MapUseCase.self) private var mapUseCase
+    
     var body: some View {
         HStack {
             Image(.imgMarker)
-            // 위치에 따라 자동으로 변경
-            Text("포항시 남구 지곡동")
-                .font(.Head.head2)
+            
+            if let place = mapUseCase.state.place {
+                Text(place.address)
+                    .font(.Head.head2)
+            }
+            
         }
         .padding(.top, 10)
     }
