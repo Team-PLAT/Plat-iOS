@@ -91,7 +91,6 @@ private struct PlattingPlayListView: View {
     @State private var showTrackDetail = false
     @State private var isrcs: [String] = []
     
-    
     @Binding var playList: Playlist?
     
     var body: some View {
@@ -200,7 +199,7 @@ private struct PlayListPlayButton: View {
             }
             
             Button {
-                musicControlUseCase.effect(.playRandomPlaylist(isrcs: isrcs))
+                // TODO: 저장 구현
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 165, height: 44)

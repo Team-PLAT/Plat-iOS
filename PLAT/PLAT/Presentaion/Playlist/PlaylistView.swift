@@ -336,6 +336,7 @@ private struct DetailButtonsView: View {
             
             Button {
                 playlistUseCase.deletePlaylist()
+                // TODO: 플리 삭제 api 연결
             } label: {
                 HStack {
                     Image(systemName: "trash")

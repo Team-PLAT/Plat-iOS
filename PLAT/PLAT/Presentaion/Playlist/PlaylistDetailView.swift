@@ -96,7 +96,7 @@ struct PlaylistDetailView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 플리 삭제
+                    // TODO: 플리 안의 트랙 삭제 -> 플리 수정 api 연결
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)
