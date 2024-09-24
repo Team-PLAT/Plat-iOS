@@ -246,12 +246,13 @@ private struct PlayListDetailView: View {
 
 private struct PlaylistDetailNewTrackButton: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
-        // TODO: 클릭 범위를 HStack으로 할지, + 버튼으로 할지 기획 논의 필요
-        HStack(spacing: 10) {
-            Button {
-                // TODO: 새로운 트랙 생성 버튼 기능 구현
-            } label: {
+        Button {
+            pathModel.push(.appendPlaylistView)
+        } label: {
+            HStack(spacing: 10) {
                 RoundedRectangle(cornerRadius: 4)
                     .foregroundStyle(.platBlack)
                     .overlay {
@@ -260,13 +261,13 @@ private struct PlaylistDetailNewTrackButton: View {
                             .foregroundStyle(.platPurple)
                             .padding(12)
                     }
+                    .frame(width: 40, height: 40)
+                
+                Text("새로운 트랙 생성")
+                    .font(.Body.body2)
+                
+                Spacer()
             }
-            .frame(width: 40, height: 40)
-            
-            Text("새로운 트랙 생성")
-                .font(.Body.body2)
-            
-            Spacer()
         }
         .padding(.horizontal, 18)
     }

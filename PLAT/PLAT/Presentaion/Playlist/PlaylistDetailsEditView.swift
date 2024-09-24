@@ -36,8 +36,8 @@ struct PlaylistDetailsEditView: View {
                         PlayListRowView(
                             track: track,
                             onDelete: { trackToDelete in
-                            deleteTrack(trackToDelete)
-                        })
+                                deleteTrack(trackToDelete)
+                            })
                     }
                 }
             }
@@ -186,12 +186,14 @@ private struct PlayListEditInfo: View {
 
 private struct NewTrackAdd: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
-        HStack(spacing: 10) {
-            Button {
-                // TODO: 트랙 추가
+        Button {
+            pathModel.push(.appendPlaylistView)
+        } label: {
+            HStack(spacing: 10) {
                 
-            } label: {
                 Circle()
                     .frame(width: 20, height: 20)
                     .foregroundStyle(.gray9)
@@ -201,14 +203,14 @@ private struct NewTrackAdd: View {
                             .frame(width: 12, height: 12)
                             .foregroundStyle(.platPurple)
                     }
+                    .padding(.leading, 18)
+                
+                Text("새로운 트랙 생성")
+                    .font(.Body.body2)
+                    .foregroundStyle(.white)
+                
+                Spacer()
             }
-            .padding(.leading, 18)
-            
-            Text("새로운 트랙 생성")
-                .font(.Body.body2)
-                .foregroundStyle(.white)
-            
-            Spacer()
             
         }
         .padding(.trailing, 18)

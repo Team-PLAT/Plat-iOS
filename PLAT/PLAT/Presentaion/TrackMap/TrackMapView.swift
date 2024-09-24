@@ -50,11 +50,6 @@ struct TrackMapView: View {
             
             ToastMessage(message: "플레이리스트를 생성할 트랙이 없어요", isToastPresented: $isShowToastMessage)
         }
-        //        .onAppear {
-        //            Task {
-        //                playlist = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
-        //            }
-        //        }
     }
 }
 
@@ -136,7 +131,6 @@ private struct CustomMarkerView: View {
             }
     }
 }
-
 
 // MARK: - MapComponentsView
 
