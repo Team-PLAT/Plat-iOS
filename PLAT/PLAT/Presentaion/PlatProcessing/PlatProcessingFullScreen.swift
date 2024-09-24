@@ -92,29 +92,14 @@ private struct PlatProcessingLoading: View {
 private struct PlatProcessingPlaylist: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MapUseCase.self) private var mapUseCase
-//        var playList: Playlist
     
     var body: some View {
         VStack {
-            // TODO: 플레이리스트 기본 이미지 설정하기
-            AsyncImage(url: URL(string: playList.imageUrl)) { img in
-                if let image = img.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                        .aspectRatio(1, contentMode: .fit)
-                        .padding(.horizontal, 86)
-                        .padding(.bottom)
-                    
-                } else {
-                    RoundedRectangle(cornerRadius: 24)
-                        .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
-                        .aspectRatio(1, contentMode: .fit)
-                        .padding(.horizontal, 86)
-                        .padding(.bottom)
-                }
-            }
+            RoundedRectangle(cornerRadius: 24)
+                .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.horizontal, 86)
+                .padding(.bottom)
             
             // TODO: 사용자의 위치 명칭 받아오기(ex. 지곡동)
             Text("지곡동에서의 PLAT")
