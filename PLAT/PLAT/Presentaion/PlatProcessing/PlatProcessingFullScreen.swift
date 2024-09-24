@@ -248,5 +248,6 @@ private struct PlatProcessingPlaylistTracklist: View {
 }
 
 #Preview {
-    PlatProcessingFullScreen(playList: .constant(MockDataBuilder.playlist))
+    PlatProcessingFullScreen()
+        .injectDIContainer()
 }
