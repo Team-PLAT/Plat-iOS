@@ -62,27 +62,52 @@ private struct PlatProcessingDismissButton: View {
 
 private struct PlatProcessingLoading: View {
     @Environment(TrackUseCase.self) private var trackUseCase
-
+    
+    @State private var timer: Timer?
+    @State private var dotTextCount: Int = 0
+    @State private var trackRandomIndex: Int = 0
+    
     var body: some View {
         VStack {
-            // TODO: 트랙들의 이미지 그리는 로직 추가하기
-            ForEach(trackList) { list in
-                if let imgUrl = list.imageUrl {
+            // TODO: PlatProcessing 로딩 화면 기획 나오면 구현하기
+            Spacer()
+            
+            Group {
+                if let imgUrl = trackUseCase.mapTrackList[trackRandomIndex].imageUrl {
                     AsyncImage(url: URL(string: imgUrl)) { img in
                         if let image = img.image {
                             image
                                 .resizable()
                                 .scaledToFill()
                                 .clipShape(Circle())
-                                .frame(width: 100, height: 100)
+                        } else {
+                            Circle()
+                                .fill(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
                         }
                     }
+                } else {
+                    Circle()
+                        .fill(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
                 }
             }
+            .frame(width: 100, height: 100)
+            
             Spacer()
-            Text("Platting...")
+            
+            
+            Text("Platting\(String(repeating: ".", count: dotTextCount))")
                 .font(.Head.head3)
                 .padding(.bottom, 104)
+        }
+        .onAppear {
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                dotTextCount = (dotTextCount + 1) % (4 + 1)
+                trackRandomIndex = Int.random(in: 0...(trackUseCase.mapTrackList.count - 1))
+            }
+        }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
         }
     }
 }
@@ -101,8 +126,8 @@ private struct PlatProcessingPlaylist: View {
                 .padding(.horizontal, 86)
                 .padding(.bottom)
             
-            // TODO: 사용자의 위치 명칭 받아오기(ex. 지곡동)
-            Text("지곡동에서의 PLAT")
+            // TODO: 역지오코딩 기능 연결
+            Text("\("지곡동")에서의 PLAT")
                 .font(.Head.head2)
                 .padding(.bottom, 4)
             
@@ -170,7 +195,6 @@ private struct PlatProcessingPlaylistButton: View {
 
 private struct PlatProcessingPlaylistTracklist: View {
     @Environment(TrackUseCase.self) private var trackUseCase
-//    var trackList: [Track]
     
     var body: some View {
         List(trackUseCase.mapTrackList) { track in
