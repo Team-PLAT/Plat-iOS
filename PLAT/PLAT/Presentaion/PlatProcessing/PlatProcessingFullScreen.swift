@@ -106,7 +106,7 @@ private struct PlatProcessingPlaylist: View {
                 .font(.Head.head2)
                 .padding(.bottom, 4)
             
-            Text("\(playList.createdDate.yearMonthDayFormat)")
+            Text(Date().yearMonthDayFormat)
                 .font(.Body.body1)
                 .foregroundStyle(.gray7)
                 .padding(.bottom)
