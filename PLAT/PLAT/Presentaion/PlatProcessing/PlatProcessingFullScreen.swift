@@ -216,12 +216,22 @@ private struct PlatProcessingPlaylistTracklist: View {
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
                                     .clipShape(RoundedRectangle(cornerRadius: 4))
+                            } else {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                                    .frame(width: 40, height: 40)
                             }
                         }
+                    } else {
+                        RoundedRectangle(cornerRadius: 4)
+                            .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                            .frame(width: 40, height: 40)
                     }
+                    
                     VStack(alignment: .leading) {
                         Text("\(track.music.title)")
                             .font(.Body.body3)
+                        
                         Text("\(track.music.artist)・ \(track.user.nickname)의 트랙")
                             .font(.Body.body5)
                             .foregroundStyle(.gray7)
