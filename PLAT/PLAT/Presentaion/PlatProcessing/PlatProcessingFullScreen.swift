@@ -80,7 +80,7 @@ private struct PlattingLoadingView: View {
     }
 }
 
-// MARK: - PlattingLoadingView
+// MARK: - PlattingPlayListView
 
 private struct PlattingPlayListView: View {
     
@@ -127,7 +127,7 @@ private struct PlattingPlayListView: View {
     }
 }
 
-// MARK: - PlayListInfo
+// MARK: - PlattingPlayListInfo
 
 private struct PlattingPlayListInfo: View {
     
@@ -266,7 +266,7 @@ private struct PlayListRowView: View {
     }
 }
 
-// MARK: - AlbumImage
+// MARK: - PlattingAlbumImage
 
 private struct PlattingAlbumImage: View {
     
@@ -293,7 +293,7 @@ private struct PlattingAlbumImage: View {
     }
 }
 
-// MARK: - TrackInfo
+// MARK: - PlattingTrackInfo
 
 private struct PlattingTrackInfo: View {
     
