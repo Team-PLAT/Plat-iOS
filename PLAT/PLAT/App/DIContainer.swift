@@ -22,12 +22,13 @@ struct DIContainerModifier: ViewModifier {
     
     /// 생성 및 주입
     init() {
+        let imageServiceImpl = ImageServiceImpl()
         self.socialLoinService = AppleSocialLoginServiceImpl()
         self.memberService = MemberServiceImpl()
         self.musicControlService = AppleMusicControllerServiceImpl()
         self.infoService = StubInfoService() // TODO: Stub 교체
-        self.trackService = TrackServiceImpl(imageService: ImageServiceImpl())
-        self.playlistService = PlaylistServiceImpl()
+        self.trackService = TrackServiceImpl(imageService: imageServiceImpl)
+        self.playlistService = PlaylistServiceImpl(imageService: imageServiceImpl)
         self.userProfileService = StubUserProfileService() // TODO: Stub 교체
         self.streamAccountService = StubStreamAccountService() // TODO: Stub 교체
         self.trackAppendService = StubTrackAppendService() // TODO: Stub 교체

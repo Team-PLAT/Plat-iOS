@@ -9,7 +9,12 @@ import Foundation
 
 final class PlaylistServiceImpl: PlaylistServiceInterface {
     
+    private let imageService: ImageServiceInterface
     private let playlistRepository = PlaylistRepository()
+    
+    init(imageService: ImageServiceInterface) {
+        self.imageService = imageService
+    }
     
     /// 플레이리스트를 불러옵니다.
     func fetchPlaylists(page: Int, size: Int) async -> Result<[Playlist], any Error> {
@@ -110,7 +115,18 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
     }
     
     /// 플레이리스트를 업로드합니다.
-    func uploadPlaylist(title: String, imageUrl: String, tracks: [Track]) async -> Result<Void, any Error> {
+    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Void, Error> {
+        
+        var imageUrl = ""
+        
+        if let imageData = imageData {
+            let imageResult = await imageService.uploadImage(imageData: imageData)
+            switch imageResult {
+            case .success(let platImage): imageUrl = platImage.imageUrl
+            case .failure(let imageError): return .failure(imageError)
+            }
+        }
+        
         let trackRequest = tracks.map {
             UploadPlaylistRequest.TracksRequest(
                 trackId: $0.id,
@@ -118,7 +134,12 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
             )
         }
         
-        let request = UploadPlaylistRequest(title: title, playlistImageUrl: imageUrl, tracks: trackRequest)
+        let request = UploadPlaylistRequest(
+            title: title,
+            playlistImageUrl: imageUrl,
+            tracks: trackRequest
+        )
+        
         let response = await playlistRepository.uploadPlaylist(request: request)
         switch response {
         case .success:
@@ -147,7 +168,18 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
     }
     
     /// 플레이리스트를 업데이트합니다.
-    func updatePlaylist(playlistId: Int, title: String, imageUrl: String, tracks: [Track]) async -> Result<Void, any Error> {
+    func updatePlaylist(playlistId: Int, title: String, imageData: Data?, tracks: [Track]) async -> Result<Void, Error> {
+        
+        var imageUrl = ""
+        
+        if let imageData = imageData {
+            let imageResult = await imageService.uploadImage(imageData: imageData)
+            switch imageResult {
+            case .success(let platImage): imageUrl = platImage.imageUrl
+            case .failure(let imageError): return .failure(imageError)
+            }
+        }
+        
         let trackRequest = tracks.map {
             UpdatePlaylistRequest.TracksRequest(trackId: $0.id, orderIndex: $0.order)
         }
