@@ -175,7 +175,6 @@ private struct PlatProcessingPlaylistInfo: View {
                 } else {
                     print("PlatProcessing 주소 데이터 오류")
                 }
-                
             }
         }
     }
