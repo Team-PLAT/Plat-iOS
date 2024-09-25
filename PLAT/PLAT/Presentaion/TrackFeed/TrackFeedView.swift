@@ -82,7 +82,7 @@ private struct FeedRowView: View {
                         
                         Menu {
                             Button(role: .destructive) {
-                                pathModel.push(.report)
+                                pathModel.push(.report(trackId: track.id))
                             } label: {
                                 Text("신고하기")
                             }

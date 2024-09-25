@@ -246,7 +246,8 @@ private struct MusicControllerView: View {
             
             Menu {
                 Button(role: .destructive) {
-                    pathModel.push(.report)
+                    pathModel.dismissFullScreenCover()
+                    pathModel.push(.report(trackId: trackUseCase.currentTrack.id))
                 } label: {
                     Text("신고하기")
                 }

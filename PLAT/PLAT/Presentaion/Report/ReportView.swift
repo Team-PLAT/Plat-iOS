@@ -27,6 +27,8 @@ struct ReportView: View {
         "낚시/놀림/도배"
     ]
     
+    let trackId: Int64
+    
     var body: some View {
         VStack {
             ReportSection(reportList: $reportList, isReportAlertPresented: $isReportAlertPresented)
@@ -38,6 +40,9 @@ struct ReportView: View {
             
             Spacer()
         }
+        .onAppear {
+            print("❗️신고할 트랙ID: \(trackId)")
+        }
         .navigationTitle("신고하기")
         .navigationBarTitleDisplayMode(.inline)
         .padding(24)
@@ -46,8 +51,9 @@ struct ReportView: View {
             Button("취소", role: .cancel) {}
             Button("신고하기", role: .destructive) {
                 Task {
-                    // TODO: selectedTrackId라는 상수를 통해 넘겨주기
-                    trackUseCase.effect(.reportTrack(trackId: Int(trackUseCase.selectedTrackId)))
+                    // TODO: UserDefaults에 reportedTrackId 저장해놓기
+                    trackUseCase.effect(.reportTrack(trackId: Int(trackId)))
+                    print("🚨신고한 트랙ID: \(trackId)")
                     isReportCompleteAlertPresented.toggle()
                 }
             }
@@ -100,6 +106,6 @@ struct ReportView: View {
     // MARK: - Preview
     
     #Preview {
-        ReportView()
+        ReportView(trackId: 0001)
             .injectDIContainer()
     }

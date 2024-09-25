@@ -25,7 +25,7 @@ enum Screen: Identifiable, Hashable {
     case playlistDetailsEditView
     
     // 신고
-    case report
+    case report(trackId: Int64)
     
     // 설정
     case userDetail

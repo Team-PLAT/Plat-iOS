@@ -14,7 +14,6 @@ final class TrackUseCase {
     private(set) var mapTrackList: [Track]
     private(set) var feedTrackList: [Track]
     private(set) var trackId: Track.ID
-    private(set) var selectedTrackId: Track.ID
     
     private var trackService: TrackServiceInterface
     
@@ -34,7 +33,6 @@ final class TrackUseCase {
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
         self.trackId = 0
-        self.selectedTrackId = 0001
         self.trackService = trackService
     }
 }
