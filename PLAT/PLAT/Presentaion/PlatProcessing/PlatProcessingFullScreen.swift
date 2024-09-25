@@ -10,9 +10,7 @@ import SwiftUI
 // MARK: - PlatProcessingFullScreen
 
 struct PlatProcessingFullScreen: View {
-    @Environment(TrackUseCase.self) private var trackUseCase
-    
-    @State private var isCompleteLoading = false
+    @State var isCompleteLoading = false
     
     var body: some View {
         VStack {
@@ -21,22 +19,14 @@ struct PlatProcessingFullScreen: View {
             Spacer()
             
             if isCompleteLoading {
-                if trackUseCase.mapTrackList.isEmpty {
-                    Text("No playlist available")
-                } else {
-                    PlatProcessingPlaylist()
-                }
+                PlatProcessingPlaylist()
             } else {
-                if trackUseCase.mapTrackList.isEmpty {
-                    Text("Loading failed")
-                } else {
-                    PlatProcessingLoading()
-                }
+                PlatProcessingLoading()
             }
         }
         .presentationBackground(.black.opacity(0.8))
         
-        // TODO: PlatProcessing 로딩뷰에서 PlatProcessing 플레이리스트뷰로 넘어가는 로직 기획 나오면 구현하기
+        // TODO: 로딩뷰에서 플레이리스트뷰로 넘어가는 로직 기획 나오면 구현하기
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                 isCompleteLoading = true
@@ -118,34 +108,75 @@ private struct PlatProcessingLoading: View {
 
 private struct PlatProcessingPlaylist: View {
     @Environment(TrackUseCase.self) private var trackUseCase
-    @Environment(MapUseCase.self) private var mapUseCase
     
     var body: some View {
-        VStack {
-            RoundedRectangle(cornerRadius: 24)
-                .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
-                .aspectRatio(1, contentMode: .fit)
-                .padding(.horizontal, 86)
-                .padding(.bottom)
+        VStack(spacing: 0) {
             
-            // TODO: 역지오코딩 기능 연결
-            Text("\("지곡동")에서의 PLAT")
+            PlatProcessingPlaylistInfo()
+                .padding(.bottom, 10)
+            
+            PlatProcessingPlaylistButton()
+                .padding(.bottom, 10)
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.gray9)
+            
+            ScrollView {
+                VStack(spacing: 0) {
+                    ForEach(trackUseCase.mapTrackList) { track in
+                        PlatProcessingPlaylistRow(track: track)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - PlatProcessingPlaylistInfo
+
+private struct PlatProcessingPlaylistInfo: View {
+    @Environment(MapUseCase.self) private var mapUseCase
+    @Environment(UserUseCase.self) private var trackUseCase
+    
+    @State private var locationManager = MapKitLocationServiceImpl()
+    @State private var addressName: String = ""
+    
+    var body: some View {
+        VStack( alignment: .center, spacing: 0) {
+            
+            RoundedRectangle(cornerRadius: 24)
+                .frame(width: 220, height: 220)
+                .foregroundStyle(LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                .padding(.bottom, 16)
+            
+            Text("\(addressName)에서의 PLAT")
                 .font(.Head.head2)
-                .padding(.bottom, 4)
+                .foregroundStyle(.white)
+                .frame(width: 213, height: 44, alignment: .center)
+                .padding(.bottom, -12)
             
             Text(Date().yearMonthDayFormat)
                 .font(.Body.body1)
                 .foregroundStyle(.gray7)
-                .padding(.bottom)
+                .frame(width: 160, height: 44, alignment: .center)
             
-            PlatProcessingPlaylistButton()
-            
-            Rectangle()
-                .frame(height: 1)
-                .foregroundStyle(.gray9)
-                .padding(.top, 40)
-            
-            PlatProcessingPlaylistTracklist()
+        }
+        .onAppear {
+            Task {
+                if let coordinate = locationManager.location?.coordinate {
+                    let result = await mapUseCase.fetchReverGeocode(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    switch result {
+                    case .success(let success):
+                        addressName = success.address
+                    case .failure(let failure):
+                        break
+                    }
+                } else {
+                    print("PlatProcessing 주소 데이터 오류")
+                }
+                
+            }
         }
     }
 }
@@ -153,97 +184,147 @@ private struct PlatProcessingPlaylist: View {
 // MARK: - PlatProcessingPlaylistButton
 
 private struct PlatProcessingPlaylistButton: View {
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
+    
+    @State private var isrcs: [String] = []
     
     var body: some View {
-        HStack(spacing: 26) {
-            Group {
-                Button {
-                    // TODO: 플레이리스트 재생 기능 추가
-                    pathModel.dismissFullScreenCover()
-                } label: {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.gray9)
-                        .overlay {
-                            HStack(spacing: 4) {
-                                Image(systemName: SystemImage.play)
-                                
-                                Text("재생")
-                            }
+        HStack(spacing: 27) {
+            Button {
+                // TODO: 미니 플레이어 연결하기
+                musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
+                pathModel.dismissFullScreenCover()
+            } label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(width: 165, height: 44)
+                    .foregroundStyle(.platBlack)
+                    .overlay {
+                        HStack(spacing: 6) {
+                            Image(systemName: SystemImage.play)
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundStyle(.white)
+                            
+                            Text("재생")
+                                .font(.Body.body2)
+                                .foregroundStyle(.white)
                         }
-                }
-                
-                Button {
-                    // TODO: 플레이리스트 저장 기능 추가
-                    pathModel.dismissFullScreenCover()
-                } label: {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.gray9)
-                        .overlay {
-                            HStack(spacing: 4) {
-                                Image("img_playlistsave")
-                                    .resizable()
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .padding(.vertical, 14)
-                                
-                                Text("플레이리스트 저장")
-                            }
-                        }
-                }
+                    }
             }
-            .frame(height: 44)
-            .font(.Body.body2)
+            
+            Button {
+                // TODO: 저장 기능 구현(API 미구현)
+                pathModel.dismissFullScreenCover()
+            } label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(width: 165, height: 44)
+                    .foregroundStyle(.platBlack)
+                    .overlay {
+                        HStack(spacing: 6) {
+                            Image("img_playlistsave")
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundStyle(.white)
+                            
+                            Text("플레이리스트 저장")
+                                .font(.Body.body2)
+                                .foregroundStyle(.white)
+                        }
+                    }
+            }
         }
-        .padding(.horizontal, 18)
+        .onAppear {
+            isrcs = trackUseCase.mapTrackList.map { track in
+                return track.music.isrc
+            }
+        }
     }
 }
 
-// MARK: - PlatProcessingPlaylistTracklist
+// MARK: - PlatProcessingPlaylistRow
 
-private struct PlatProcessingPlaylistTracklist: View {
-    @Environment(TrackUseCase.self) private var trackUseCase
+private struct PlatProcessingPlaylistRow: View {
+    private(set) var track: Track
     
     var body: some View {
-        List(trackUseCase.mapTrackList) { track in
-            VStack(alignment: .leading) {
-                HStack {
-                    // TODO: 음원 이미지가 없을 때 기본 이미지 설정하기
-                    if let imgUrl = track.imageUrl {
-                        AsyncImage(url: URL(string: imgUrl)) { img in
-                            if let image = img.image {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                            } else {
-                                RoundedRectangle(cornerRadius: 4)
-                                    .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
-                                    .frame(width: 40, height: 40)
-                            }
-                        }
-                    } else {
-                        RoundedRectangle(cornerRadius: 4)
-                            .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
-                            .frame(width: 40, height: 40)
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text("\(track.music.title)")
-                            .font(.Body.body3)
-                        
-                        Text("\(track.music.artist)・ \(track.user.nickname)의 트랙")
-                            .font(.Body.body5)
-                            .foregroundStyle(.gray7)
-                    }
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                PlatProcessingPlaylistRowImage(music: track.music)
+                    .padding(.trailing, 10)
+                    .padding(.leading, 18)
+                
+                PlatProcessingPlaylistRowInfo(track: track)
+                    .padding(.trailing, 40)
+                
+                Spacer()
+            }
+            .padding(.vertical, 10)
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.gray9)
+                .padding(.leading, 46)
+        }
+    }
+}
+
+// MARK: - PlatProcessingPlaylistRowImage
+
+private struct PlatProcessingPlaylistRowImage: View {
+    private(set) var music: Music
+    
+    var body: some View {
+        AsyncImage(url: URL(string: music.albumImageUrl)) { phase in
+            if let image = phase.image {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+            } else {
+                RoundedRectangle(cornerRadius: 4)
+                    .frame(width: 40, height: 40)
+                    .foregroundStyle(.gray9)
+            }
+        }
+    }
+}
+
+// MARK: - PlatProcessingPlaylistRowInfo
+
+private struct PlatProcessingPlaylistRowInfo: View {
+    @Environment(UserUseCase.self) private var userUseCase
+    
+    private(set) var track: Track
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(track.music.title)
+                .font(.Body.body3)
+                .foregroundStyle(.white)
+            
+            HStack(spacing: 8) {
+                Text(track.music.artist)
+                    .font(.Body.body5)
+                    .foregroundStyle(.gray7)
+                
+                Circle()
+                    .frame(width: 2, height: 2)
+                    .foregroundColor(.gray7)
+                
+                if track.user.id == userUseCase.state.user.id {
+                    Text("직접 추가됨")
+                        .font(.Body.body5)
+                        .foregroundStyle(.gray7)
+                } else {
+                    Text("\(track.user.nickname)의 트랙")
+                        .font(.Body.body5)
+                        .foregroundStyle(.gray7)
                 }
             }
-            .listRowBackground(Color.clear)
-            .listRowSeparatorTint(.gray9)
-            .listRowInsets(EdgeInsets(top: 10, leading: 18, bottom: 10, trailing: 0))
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
     }
 }
 

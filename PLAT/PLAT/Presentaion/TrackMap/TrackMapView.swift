@@ -12,6 +12,8 @@ import MapKit
 
 struct TrackMapView: View {
     
+    @Environment(MapUseCase.self) private var mapUseCase
+    
     @State private var locationManager = MapKitLocationServiceImpl()
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
@@ -38,11 +40,12 @@ struct TrackMapView: View {
                 )
             }
             .onReceive(locationManager.locationPublisher) { location in
-                print("""
-            [위치 업데이트]
-            - 위도: \(Double(location.coordinate.latitude).rounded())
-            - 경도: \(Double(location.coordinate.longitude).rounded())
-            """)
+                
+                // 1. 역지오코딩
+                mapUseCase.updateReverseGeocode(
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                )
                 
                 // TODO: 트랙 리스트 업데이트
                 // TODO: 플레이리스트 생성
@@ -92,6 +95,11 @@ private struct MapView: View {
 // MARK: - CustomMarkerView
 
 private struct CustomMarkerView: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var playlistMusic: Music?
+    
     let track: Track
     
     var body: some View {
@@ -99,18 +107,29 @@ private struct CustomMarkerView: View {
             .frame(width: 40, height: 40)
             .foregroundStyle(.gray3)
             .overlay {
-                AsyncImage(url: URL(string: track.music.albumImageUrl)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 34, height: 34)
-                            .clipShape(Circle())
-                    } else {
-                        Circle()
-                            .frame(width: 40, height: 40)
-                            .foregroundStyle(.gray3)
+                if let albumImageUrl = playlistMusic?.albumImageUrl {
+                    AsyncImage(url: URL(string: albumImageUrl)) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 34, height: 34)
+                                .clipShape(Circle())
+                        } else {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(.gray3)
+                        }
                     }
+                } else {
+                    Circle()
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.gray3)
+                }
+            }
+            .onAppear {
+                Task {
+                    playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
                 }
             }
     }
@@ -159,12 +178,18 @@ private struct MapComponentsView: View {
 // MARK: - MapAddressView
 
 private struct MapAddressView: View {
+    
+    @Environment(MapUseCase.self) private var mapUseCase
+    
     var body: some View {
         HStack {
             Image(.imgMarker)
-            // 위치에 따라 자동으로 변경
-            Text("포항시 남구 지곡동")
-                .font(.Head.head2)
+            
+            if let place = mapUseCase.state.place {
+                Text(place.address)
+                    .font(.Head.head2)
+            }
+            
         }
         .padding(.top, 10)
     }

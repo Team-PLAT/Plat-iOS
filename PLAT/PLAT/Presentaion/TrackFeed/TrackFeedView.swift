@@ -74,7 +74,7 @@ private struct FeedRowView: View {
                     HStack(spacing: 0) {
                         VStack(alignment: . leading, spacing: 2) {
                             FeedHeaderView(track: track)
-                            FeedLocationView()
+                            FeedLocationView(track: track)
                         }
                         
                         Spacer()
@@ -187,7 +187,12 @@ private struct FeedHeaderView: View {
 
 private struct FeedLocationView: View {
     
+    @Environment(MapUseCase.self) private var mapUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
+    
+    @State private var address = ""
+    
+    let track: Track
     
     var body: some View {
         HStack(spacing: 4) {
@@ -196,10 +201,22 @@ private struct FeedLocationView: View {
                 .scaledToFill()
                 .frame(width: 12, height: 16)
             
-            // TODO: 주소 처리
-            Text(trackUseCase.state.place.address)
+            Text(address)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
+        }
+        .onAppear {
+            Task {
+                let result = await mapUseCase.fetchReverGeocode(
+                    latitude: track.location.latitude,
+                    longitude: track.location.longitude
+                )
+                
+                switch result {
+                case .success(let place): address = place.address
+                case .failure: break
+                }
+            }
         }
     }
 }
@@ -265,14 +282,14 @@ private struct FeedPlayer: View {
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
                         musicControlUseCase.effect(.togglePlayback)
                     } else {
                         /// 처음 재생할 때
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.state.isPlayingTrack = track
+                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
                         musicControlUseCase.effect(.setup(music: track.music))
                         selectedTrackId = trackIndex
                     }

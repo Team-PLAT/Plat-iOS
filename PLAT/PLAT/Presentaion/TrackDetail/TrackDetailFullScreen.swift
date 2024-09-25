@@ -103,37 +103,26 @@ private struct Background: View {
 
 private struct HeaderView: View {
     
-    @Environment(\.dismiss) private var dismiss
+    @Environment(PathModel.self) private var pathModel
+    @Environment(MapUseCase.self) private var mapUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
-        VStack(alignment: .leading, spacing: -2) {
-            HStack {
-                Image(.imgMarker)
-                
-                Group {
-                    if let placeName = trackUseCase.state.place.name {
-                        Text(placeName)
-                        
-                    } else {
-                        Text(trackUseCase.state.place.address)
-                    }
-                }
-                .font(.Head.head2)
-                .foregroundStyle(.white)
-                
-                Spacer()
-                
-                DismissButton {
-                    dismiss()
-                }
+        HStack {
+            Image(.imgMarker)
+            
+            if let place = mapUseCase.state.place {
+                Text(place.address)
+                    .font(.Head.head2)
+                    .foregroundStyle(.white)
             }
             
-            Text(trackUseCase.state.place.address)
-                .font(.Body.body3)
-                .foregroundStyle(.white)
-                .padding(.leading, 24)
+            Spacer()
+            
+            DismissButton {
+                pathModel.dismissFullScreenCover()
+            }
         }
     }
 }

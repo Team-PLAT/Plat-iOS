@@ -61,6 +61,7 @@ extension APIs.Plat {
         }
     }
     
+    /// Image API
     enum Images: RawRepresentable, API {
         static let baseUrl: URL = APIs.Plat.baseURL.appendingPathComponent("images")
         
@@ -69,6 +70,20 @@ extension APIs.Plat {
         var rawValue: RawValue {
             switch self {
             case .upload: return ""
+            }
+        }
+    }
+    
+    /// Address API
+    enum Address: RawRepresentable, API {
+        static let baseUrl: URL = APIs.Plat.baseURL.appendingPathComponent("address")
+        
+        case reverseGeocode
+        
+        var rawValue: RawValue {
+            switch self {
+            case .reverseGeocode:
+                return "reverse-geocode"
             }
         }
     }

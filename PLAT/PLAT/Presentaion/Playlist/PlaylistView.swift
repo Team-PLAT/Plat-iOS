@@ -296,17 +296,22 @@ private struct DetailInfoView: View {
 private struct DetailButtonsView: View {
     
     @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(PathModel.self) private var pathModel
     @Environment(\.dismiss) private var dismiss
     
     @Binding var selectedPlaylistId: Playlist.ID?
+    @State private var currentIsrcs: [String] = []
     
     let playlist: Playlist
     
     var body: some View {
         VStack(spacing: 32) {
             Button {
-                playlistUseCase.playOnDevice()
+                selectedPlaylistId = playlist.id
+                playlistUseCase.effect(.updateSelectedPlaylistId(selectedPlaylistId ?? 0))
+                currentIsrcs = playlistUseCase.getPlaylistIsrcs() ?? []
+                musicControlUseCase.effect(.playPlaylist(isrcs: currentIsrcs))
             } label: {
                 HStack {
                     Image(systemName: "play.circle")
@@ -331,6 +336,7 @@ private struct DetailButtonsView: View {
             
             Button {
                 playlistUseCase.deletePlaylist()
+                // TODO: 플리 삭제 api 연결
             } label: {
                 HStack {
                     Image(systemName: "trash")
