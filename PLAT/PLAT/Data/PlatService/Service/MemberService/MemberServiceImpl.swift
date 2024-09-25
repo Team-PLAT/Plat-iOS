@@ -56,6 +56,7 @@ final class MemberServiceImpl: MemberServiceInterface {
         case .success(let fetchProfileResponse):
             return .success(
                 User(
+                    id: Int(fetchProfileResponse.memberId),
                     nickname: fetchProfileResponse.nickname,
                     profileImageUrl: fetchProfileResponse.avatar
                 )

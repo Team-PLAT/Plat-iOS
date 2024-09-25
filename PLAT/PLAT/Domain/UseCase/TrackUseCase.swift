@@ -10,29 +10,18 @@ import Foundation
 @Observable
 final class TrackUseCase {
     
-    private(set) var currentTrack: Track
-    private(set) var mapTrackList: [Track]
-    private(set) var feedTrackList: [Track]
-    private(set) var trackId: Track.ID
-    
     private var trackService: TrackServiceInterface
     
     private(set) var state: State
+    private(set) var currentTrack: Track
+    private(set) var mapTrackList: [Track]
+    private(set) var feedTrackList: [Track]
     
     init(trackService: TrackServiceInterface) {
-        // TODO: 교체 예정
-        self.state = State(
-            place: Place(
-                name: "포항공과대학교",
-                address: "대한민국 경상북도 포항시 남구 지곡동"
-            ),
-            isPaused: true
-        )
-        
+        self.state = State()
         self.mapTrackList = []
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
-        self.trackId = 0
         self.trackService = trackService
     }
 }
@@ -42,8 +31,7 @@ final class TrackUseCase {
 extension TrackUseCase {
     
     struct State {
-        var place: Place
-        var isPaused: Bool
+        
     }
 }
 

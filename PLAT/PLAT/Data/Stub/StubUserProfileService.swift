@@ -9,7 +9,7 @@ import Foundation
 
 struct StubUserProfileService: UserProfileServiceInterface {
     func fetchUserInfo() -> User {
-        return User(nickname: "IPSUM_LOREM", profileImageUrl: "")
+        return User(id: 0, nickname: "IPSUM_LOREM", profileImageUrl: "")
     }
     
     func updateProfileImage() {

@@ -8,12 +8,12 @@
 import Foundation
 
 struct User: Identifiable {
-    let id: UUID
+    let id: Int
     var nickname: String
     var profileImageUrl: String
     
-    init(nickname: String, profileImageUrl: String) {
-        self.id = UUID()
+    init(id: Int, nickname: String, profileImageUrl: String) {
+        self.id = id
         self.nickname = nickname
         self.profileImageUrl = profileImageUrl
     }

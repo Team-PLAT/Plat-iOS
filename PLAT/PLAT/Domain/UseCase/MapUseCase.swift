@@ -6,18 +6,17 @@
 //
 
 import Foundation
-import MapKit
 
 @Observable
 final class MapUseCase {
     
+    private let addressService: AddressServiceInterface
+    
     private(set) var state: State
     
-    init() {
-        self.state = State(
-            location: .init(latitude: 0, longitude: 0),
-            trackList: []
-        )
+    init(addressService: AddressServiceInterface) {
+        self.addressService = addressService
+        self.state = State()
     }
 }
 
@@ -26,8 +25,7 @@ final class MapUseCase {
 extension MapUseCase {
     
     struct State {
-        var location: Location?
-        var trackList: [Track]
+        var place: Place?
     }
 }
 
@@ -35,27 +33,31 @@ extension MapUseCase {
 
 extension MapUseCase {
     
-    /// 현재위치 확인하기
-    func currentLocation() -> Location {
-        .init(latitude: 0, longitude: 0)
-    }
-    
-    /// 서버에서 트랙 불러오기
-    @MainActor
-    func fetchTrackList(currentLocation: Location) {
-        Task {
-            
+    /// 좌표값에 따라 역지오코딩 값을 반환합니다.
+    func fetchReverGeocode(latitude: Double, longitude: Double) async -> Result<Place, Error> {
+        let result = await addressService.fetchReverseGeocode(
+            latitude: longitude,
+            longitude: longitude
+        )
+        
+        switch result {
+        case .success(let place): return .success(place)
+        case .failure(let error): return .failure(error)
         }
     }
     
-    /// 지도에 트랙별 핀 꽂기
-    func insertPin(location: Location, track: Track) {
-        
-    }
-    
-    /// 플레이리스트 생성하기
-    @MainActor
-    func createPlatPlaylist(currentLocation: Location) async -> Playlist {
-        return .init(id: 0001, title: "", imageUrl: "", trackList: [])
+    /// 좌표값에 따라 역지오코딩 값을 업데이트합니다.
+    func updateReverseGeocode(latitude: Double, longitude: Double) {
+        Task {
+            let result = await addressService.fetchReverseGeocode(
+                latitude: longitude,
+                longitude: longitude
+            )
+            
+            switch result {
+            case .success(let place): state.place = place
+            case .failure(let error): print(error) // TODO: 에러 처리
+            }
+        }
     }
 }
