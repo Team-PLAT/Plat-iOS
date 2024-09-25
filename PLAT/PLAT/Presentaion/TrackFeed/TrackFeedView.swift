@@ -22,7 +22,12 @@ struct TrackFeedView: View {
                     .padding(.bottom, 20)
                 
                 ScrollView {
-                    ForEach(MockDataBuilder.trackList) { track in
+                    ForEach(MockDataBuilder.trackList.filter { track in
+                        
+                        let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+                        
+                        return !reportedTrackIdList.contains(track.id)
+                    }) { track in
                         FeedRowView(
                             track: track,
                             trackIndex: Int64(track.id),

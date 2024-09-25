@@ -51,8 +51,16 @@ struct ReportView: View {
             Button("취소", role: .cancel) {}
             Button("신고하기", role: .destructive) {
                 Task {
-                    // TODO: UserDefaults에 reportedTrackId 저장해놓기
                     trackUseCase.effect(.reportTrack(trackId: Int(trackId)))
+                    
+                    var currentReportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+                    
+                    if !currentReportedTrackIdList.contains(trackId) {
+                        currentReportedTrackIdList.append(trackId)
+                    }
+                    
+                    UserDefaults.standard.reportedTrackIdList = currentReportedTrackIdList
+                    
                     print("🚨신고한 트랙ID: \(trackId)")
                     isReportCompleteAlertPresented.toggle()
                 }
@@ -67,45 +75,45 @@ struct ReportView: View {
         }
     }
 }
+
+// MARK: - ReportSection
+
+private struct ReportSection: View {
     
-    // MARK: - ReportSection
+    @Binding var reportList: [String]
+    @Binding var isReportAlertPresented: Bool
     
-    private struct ReportSection: View {
-        
-        @Binding var reportList: [String]
-        @Binding var isReportAlertPresented: Bool
-        
-        var body: some View {
-            VStack(alignment: .leading) {
-                ForEach(Array(reportList.enumerated()), id: \.offset) { _, report in
-                    Button {
-                        isReportAlertPresented.toggle()
-                    } label: {
-                        Text(report)
-                            .font(.Body.body1)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .frame(height: 48)
-                    }
+    var body: some View {
+        VStack(alignment: .leading) {
+            ForEach(Array(reportList.enumerated()), id: \.offset) { _, report in
+                Button {
+                    isReportAlertPresented.toggle()
+                } label: {
+                    Text(report)
+                        .font(.Body.body1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(height: 48)
                 }
             }
         }
     }
+}
+
+// MARK: - ReportInfo
+
+private struct ReportInfo: View {
     
-    // MARK: - ReportInfo
-    
-    private struct ReportInfo: View {
-        
-        var body: some View {
-            Text("* 플랫은 모든 사용자가 안전하고 쾌적한 환경에서 서비스를 이용할 수 있도록 최선을 다하고 있어요. 그러나 이를 악용하여 다른 사용자에게 피해를 주는 경우, 제재가 가해질 수 있어요")
-                .font(.Body.body5)
-                .foregroundStyle(.gray7)
-                .lineSpacing(8)
-        }
+    var body: some View {
+        Text("* 플랫은 모든 사용자가 안전하고 쾌적한 환경에서 서비스를 이용할 수 있도록 최선을 다하고 있어요. 그러나 이를 악용하여 다른 사용자에게 피해를 주는 경우, 제재가 가해질 수 있어요")
+            .font(.Body.body5)
+            .foregroundStyle(.gray7)
+            .lineSpacing(8)
     }
-    
-    // MARK: - Preview
-    
-    #Preview {
-        ReportView(trackId: 0001)
-            .injectDIContainer()
-    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    ReportView(trackId: 0001)
+        .injectDIContainer()
+}

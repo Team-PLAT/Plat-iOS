@@ -70,6 +70,7 @@
 		79B0F7132C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */; };
 		79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */; };
 		79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7162C8DC44A009140AF /* ResignAPI.swift */; };
+		79B7F27B2CA3EFAD00C78D51 /* Helper+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B7F27A2CA3EFAD00C78D51 /* Helper+UserDefaults.swift */; };
 		79FC51442C6DD63200489507 /* MapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* MapUseCase.swift */; };
 		820836772C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift */; };
 		8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* AuthUseCase.swift */; };
@@ -220,6 +221,7 @@
 		79B0F7122C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileAvatarAPI.swift; sourceTree = "<group>"; };
 		79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProfileAPI.swift; sourceTree = "<group>"; };
 		79B0F7162C8DC44A009140AF /* ResignAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignAPI.swift; sourceTree = "<group>"; };
+		79B7F27A2CA3EFAD00C78D51 /* Helper+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+UserDefaults.swift"; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* MapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUseCase.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSocialLoginServiceImpl.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				DF2D4DDF2C6D1731005FCA44 /* Helper+RoundedCorner.swift */,
 				82C9A53D2C8725B100C57916 /* Helper+RawRepresentable.swift */,
 				513DCBDE2C95FC66007CA813 /* Helper+View.swift */,
+				79B7F27A2CA3EFAD00C78D51 /* Helper+UserDefaults.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1010,6 +1013,7 @@
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
 				79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */,
+				79B7F27B2CA3EFAD00C78D51 /* Helper+UserDefaults.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,
 				82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */,
