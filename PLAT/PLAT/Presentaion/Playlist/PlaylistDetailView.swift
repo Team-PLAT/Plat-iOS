@@ -81,7 +81,6 @@ struct PlaylistDetailView: View {
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     pathModel.push(.playlistDetailsEditView)
-                    // TODO: PlaylistDetailsEditView 뷰 이동 & fetch한 애들 넘기기
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)
@@ -97,7 +96,7 @@ struct PlaylistDetailView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 플리 삭제
+                    // TODO: 플리 안의 트랙 삭제 -> 플리 수정 api 연결
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)
@@ -247,12 +246,13 @@ private struct PlayListDetailView: View {
 
 private struct PlaylistDetailNewTrackButton: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
-        // TODO: 클릭 범위를 HStack으로 할지, + 버튼으로 할지 기획 논의 필요
-        HStack(spacing: 10) {
-            Button {
-                // TODO: 새로운 트랙 생성 버튼 기능 구현
-            } label: {
+        Button {
+            pathModel.presentSheet(.trackAppendSearch)
+        } label: {
+            HStack(spacing: 10) {
                 RoundedRectangle(cornerRadius: 4)
                     .foregroundStyle(.platBlack)
                     .overlay {
@@ -261,13 +261,13 @@ private struct PlaylistDetailNewTrackButton: View {
                             .foregroundStyle(.platPurple)
                             .padding(12)
                     }
+                    .frame(width: 40, height: 40)
+                
+                Text("새로운 트랙 생성")
+                    .font(.Body.body2)
+                
+                Spacer()
             }
-            .frame(width: 40, height: 40)
-            
-            Text("새로운 트랙 생성")
-                .font(.Body.body2)
-            
-            Spacer()
         }
         .padding(.horizontal, 18)
     }

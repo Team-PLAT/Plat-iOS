@@ -11,23 +11,19 @@ struct PlaylistDetailsEditView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
-    private var selectedPlaylist: Playlist {
-        if let playlist = playlistUseCase.selectedPlaylist {
-            return playlist
-        } else {
-            return Playlist(
-                id: 0001,
-                title: "플레이리스트 가져오기 실패",
-                imageUrl: "",
-                trackList: []
-            )
-        }
-    }
+    @State private var selectedPlaylist: Playlist = Playlist(
+        id: 0001,
+        title: "플레이리스트 가져오기 실패",
+        imageUrl: "",
+        trackList: []
+    )
+    
+    @State private var playlistTitle: String = ""
     
     var body: some View {
         VStack(spacing: 0) {
             
-            PlayListEditInfo(playlist: selectedPlaylist)
+            PlayListEditInfo(playlistTitle: $playlistTitle, playlist: selectedPlaylist)
                 .padding(.bottom, 17)
             
             NewTrackAdd()
@@ -39,9 +35,11 @@ struct PlaylistDetailsEditView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(selectedPlaylist.trackList) { track in
-                        PlayListRowView(track: track, onDelete: { trackToDelete in
-//                            deleteTrack(trackToDelete)
-                        })
+                        PlayListRowView(
+                            track: track,
+                            onDelete: { trackToDelete in
+                                deleteTrack(trackToDelete)
+                            })
                     }
                 }
             }
@@ -53,34 +51,44 @@ struct PlaylistDetailsEditView: View {
                     pathModel.pop()
                 } label: {
                     Text("취소")
-                    .foregroundStyle(.platPurple)
+                        .foregroundStyle(.platPurple)
                 }
             }
-        
+            
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 완료
+                    // TODO: 수정 완료
                 } label: {
                     Text("완료")
-                    .foregroundStyle(.platPurple)
+                        .foregroundStyle(.platPurple)
                 }
             }
         }
+        .onAppear {
+            selectedPlaylist = playlistUseCase.selectedPlaylist ?? Playlist(
+                id: 0001,
+                title: "플레이리스트 가져오기 실패",
+                imageUrl: "",
+                trackList: []
+            )
+            self.playlistTitle = selectedPlaylist.title
+        }
     }
-//    private func deleteTrack(_ track: Track) {
-//        selectedPlaylist.trackList.removeAll { $0.id == track.id }
-//    }
+    
+    private func deleteTrack(_ track: Track) {
+        selectedPlaylist.trackList.removeAll { $0.id == track.id }
+    }
 }
 
 // MARK: - PlayListEditInfo
 
 private struct PlayListEditInfo: View {
     
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    
     @State private var isPhotoAlbumSheet = false
     @State private var selectedImage: UIImage?
-    @State private var playlistTitle: String = ""
-    
-    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Binding var playlistTitle: String
     
     let playlist: Playlist
     
@@ -171,9 +179,6 @@ private struct PlayListEditInfo: View {
                 .frame(height: 1)
                 .foregroundColor(.gray9)
         }
-        .onAppear {
-                    self.playlistTitle = playlist.title
-                }
     }
 }
 
@@ -181,12 +186,14 @@ private struct PlayListEditInfo: View {
 
 private struct NewTrackAdd: View {
     
+    @Environment(PathModel.self) private var pathModel
+    
     var body: some View {
-        HStack(spacing: 10) {
-            Button {
-                // TODO: 트랙 추가
+        Button {
+            pathModel.presentSheet(.trackAppendSearch)
+        } label: {
+            HStack(spacing: 10) {
                 
-            } label: {
                 Circle()
                     .frame(width: 20, height: 20)
                     .foregroundStyle(.gray9)
@@ -196,14 +203,14 @@ private struct NewTrackAdd: View {
                             .frame(width: 12, height: 12)
                             .foregroundStyle(.platPurple)
                     }
+                    .padding(.leading, 18)
+                
+                Text("새로운 트랙 생성")
+                    .font(.Body.body2)
+                    .foregroundStyle(.white)
+                
+                Spacer()
             }
-            .padding(.leading, 18)
-            
-            Text("새로운 트랙 생성")
-                .font(.Body.body2)
-                .foregroundStyle(.white)
-            
-            Spacer()
             
         }
         .padding(.trailing, 18)
@@ -227,7 +234,6 @@ private struct PlayListRowView: View {
             HStack(spacing: 0) {
                 
                 Button {
-                    // TODO: 트랙 삭제
                     onDelete(track)
                 } label: {
                     Circle()
@@ -321,15 +327,15 @@ private struct TrackInfoEdit: View {
                     .frame(width: 2, height: 2)
                     .foregroundColor(.gray7)
                 
-//                if track.platter is User {
-                    Text("직접 추가됨")
-                        .font(.Body.body5)
-                        .foregroundStyle(.gray7)
-//                } else {
-//                    Text("\(track.platter.nickname)의 트랙")
-//                        .font(.Body.body5)
-//                        .foregroundStyle(.gray7)
-//                }
+                //                if track.platter is User {
+                Text("직접 추가됨")
+                    .font(.Body.body5)
+                    .foregroundStyle(.gray7)
+                //                } else {
+                //                    Text("\(track.platter.nickname)의 트랙")
+                //                        .font(.Body.body5)
+                //                        .foregroundStyle(.gray7)
+                //                }
                 
             }
         }

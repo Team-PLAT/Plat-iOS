@@ -16,11 +16,8 @@ struct PlatProcessingFullScreen: View {
             PlattingDismissButton()
             Spacer()
             if isCompleteLoading {
-                if let playlist = playList {
-                    PlattingPlayListView(playList: playlist)
-                } else {
-                    Text("No playlist available")
-                }
+                PlattingPlayListView(playList: $playList)
+                
             } else {
                 if let trackList = playList?.trackList {
                     PlattingLoadingView(trackList: trackList)
@@ -86,134 +83,253 @@ private struct PlattingLoadingView: View {
 // MARK: - PlattingPlayListView
 
 private struct PlattingPlayListView: View {
-    var playList: Playlist
+    
+    @Environment(PathModel.self) private var pathModel
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var showTrackDetail = false
+    @State private var isrcs: [String] = []
+    
+    @Binding var playList: Playlist?
     
     var body: some View {
-        VStack {
-            // TODO: 플레이리스트 기본 이미지 설정하기
-            AsyncImage(url: URL(string: playList.imageUrl)) { img in
-                if let image = img.image {
+        ScrollView {
+            VStack(spacing: 0) {
+                
+                PlattingPlayListInfo(playlist: playList ?? Playlist(
+                    id: 0001,
+                    title: "플레이리스트 가져오기 실패",
+                    imageUrl: "",
+                    trackList: []
+                ))
+                .padding(.bottom, 10)
+                
+                PlayListPlayButton(isrcs: $isrcs)
+                    .padding(.bottom, 10)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.gray9)
+                
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.gray9)
+                    .padding(.leading, 46)
+                
+                VStack(spacing: 0) {
+                    ForEach(playList?.trackList ?? []) { track in
+                        PlayListRowView(isrcs: $isrcs, track: track)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - PlattingPlayListInfo
+
+private struct PlattingPlayListInfo: View {
+    
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    
+    let playlist: Playlist
+    
+    var body: some View {
+        VStack( alignment: .center, spacing: 0) {
+            
+            AsyncImage(url: URL(string: playlist.imageUrl)) { phase in
+                if let image = phase.image {
                     image
                         .resizable()
                         .scaledToFill()
+                        .frame(width: 220, height: 220)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
-                        .aspectRatio(1, contentMode: .fit)
-                        .padding(.horizontal, 86)
-                        .padding(.bottom)
-                    
                 } else {
                     RoundedRectangle(cornerRadius: 24)
-                        .foregroundStyle(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
-                        .aspectRatio(1, contentMode: .fit)
-                        .padding(.horizontal, 86)
-                        .padding(.bottom)
+                        .frame(width: 220, height: 220)
+                        .foregroundStyle(LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
                 }
             }
+            .padding(.bottom, 16)
             
-            // TODO: 사용자의 위치 명칭 받아오기(ex. 지곡동)
-            Text("지곡동에서의 PLAT")
+            Text(playlist.title)
                 .font(.Head.head2)
-                .padding(.bottom, 4)
+                .foregroundStyle(.white)
+                .frame(width: 213, height: 44, alignment: .center)
+                .padding(.bottom, -12)
             
-            Text("\(playList.createdDate.yearMonthDayFormat)")
+            Text(playlist.createdDate.yearMonthDayFormat)
                 .font(.Body.body1)
                 .foregroundStyle(.gray7)
-                .padding(.bottom)
+                .frame(width: 160, height: 44, alignment: .center)
             
-            PlattingPlayListButton()
+        }
+    }
+}
+
+// MARK: - PlayListPlayButton
+
+private struct PlayListPlayButton: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @Binding var isrcs: [String]
+    
+    var body: some View {
+        HStack(spacing: 27) {
+            Button {
+                musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
+            } label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(width: 165, height: 44)
+                    .foregroundStyle(.platBlack)
+                    .overlay {
+                        HStack(spacing: 6) {
+                            Image(systemName: SystemImage.play)
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundStyle(.white)
+                            
+                            Text("재생")
+                                .font(.Body.body2)
+                                .foregroundStyle(.white)
+                        }
+                    }
+            }
+            
+            Button {
+                // TODO: 저장 구현
+            } label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .frame(width: 165, height: 44)
+                    .foregroundStyle(.platBlack)
+                    .overlay {
+                        HStack(spacing: 6) {
+                            Image(systemName: SystemImage.savePlaylist)
+                                .resizable()
+                                .frame(width: 15, height: 15)
+                                .foregroundStyle(.white)
+                            
+                            Text("플레이리스트 저장")
+                                .font(.Body.body2)
+                                .foregroundStyle(.white)
+                        }
+                    }
+            }
+        }
+    }
+}
+
+// MARK: - PlayListRowView
+
+private struct PlayListRowView: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PathModel.self) private var pathModel
+    
+    @State private var playlistMusic: Music?
+    @Binding var isrcs: [String]
+    
+    let track: Track
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                PlattingAlbumImage(playlistMusic: $playlistMusic)
+                    .padding(.trailing, 10)
+                    .padding(.leading, 18)
+                
+                PlattingTrackInfo(playlistMusic: $playlistMusic)
+                    .padding(.trailing, 40)
+                
+                Spacer()
+            }
+            .padding(.vertical, 10)
             
             Rectangle()
                 .frame(height: 1)
-                .foregroundStyle(.gray9)
-                .padding(.top, 40)
+                .foregroundColor(.gray9)
+                .padding(.leading, 46)
             
-            PlattingPlayList(trackList: playList.trackList)
+        }
+        .onAppear {
+            Task {
+                playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                
+                if let currentIsrc = playlistMusic?.isrc {
+                    isrcs.append(currentIsrc)
+                    print("🍔🍔🍔🍔", isrcs)
+                }
+            }
         }
     }
 }
 
-// MARK: - PlattingPlayListButton
+// MARK: - PlattingAlbumImage
 
-private struct PlattingPlayListButton: View {
-    @Environment(\.dismiss) private var dismiss
+private struct PlattingAlbumImage: View {
+    
+    @Binding private(set) var playlistMusic: Music?
+    
+    private var albumImageUrl: URL? {
+        URL(string: playlistMusic?.albumImageUrl ?? "")
+    }
     
     var body: some View {
-        HStack(spacing: 26) {
-            Group {
-                Button {
-                    // TODO: 플레이리스트 재생 기능 추가
-                    dismiss()
-                } label: {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.gray9)
-                        .overlay {
-                            HStack {
-                                Image(systemName: "play.fill")
-                                Text("재생")
-                            }
-                        }
-                }
-                Button {
-                    // TODO: 플레이리스트 저장 기능 추가
-                    dismiss()
-                } label: {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(.gray9)
-                        .overlay {
-                            HStack {
-                                // TODO: 이미지 바꾸기
-                                Image(systemName: "music.note")
-                                Text("플레이리스트 저장")
-                            }
-                        }
-                }
+        AsyncImage(url: albumImageUrl) { phase in
+            if let image = phase.image {
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 40, height: 40)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+            } else {
+                RoundedRectangle(cornerRadius: 4)
+                    .frame(width: 40, height: 40)
+                    .foregroundStyle(.gray9)
             }
-            .frame(height: 44)
-            .font(.Body.body2)
         }
-        .padding(.horizontal, 18)
     }
 }
 
-// MARK: - PlattingPlayList
+// MARK: - PlattingTrackInfo
 
-private struct PlattingPlayList: View {
-    var trackList: [Track]
+private struct PlattingTrackInfo: View {
+    
+    @Binding private(set) var playlistMusic: Music?
     
     var body: some View {
-        List(trackList) { track in
-            VStack(alignment: .leading) {
-                HStack {
-                    // TODO: 음원 이미지가 없을 때 기본 이미지 설정하기
-                    if let imgUrl = track.imageUrl {
-                        AsyncImage(url: URL(string: imgUrl)) { img in
-                            if let image = img.image {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                            }
-                        }
-                    }
-                    VStack(alignment: .leading) {
-                        Text("\(track.music.title)")
-                            .font(.Body.body3)
-                        Text("\(track.music.artist)・ \(track.user.nickname)의 트랙")
-                            .font(.Body.body5)
-                            .foregroundStyle(.gray7)
-                    }
-                }
+        VStack(alignment: .leading, spacing: 0) {
+            Text(playlistMusic?.title ?? "")
+                .font(.Body.body3)
+                .foregroundStyle(.white)
+            
+            HStack(spacing: 8) {
+                Text(playlistMusic?.artist ?? "")
+                    .font(.Body.body5)
+                    .foregroundStyle(.gray7)
+                
+                Circle()
+                    .frame(width: 2, height: 2)
+                    .foregroundColor(.gray7)
+                
+                //                if track.platter is User {
+                Text("직접 추가됨")
+                    .font(.Body.body5)
+                    .foregroundStyle(.gray7)
+                //                } else {
+                //                    Text("\(track.platter.nickname)의 트랙")
+                //                        .font(.Body.body5)
+                //                        .foregroundStyle(.gray7)
+                //                }
+                
             }
-            .listRowBackground(Color.clear)
-            .listRowSeparatorTint(.gray9)
-            .listRowInsets(EdgeInsets(top: 10, leading: 18, bottom: 10, trailing: 0))
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
     }
 }
 
 #Preview {
     PlatProcessingFullScreen(playList: .constant(MockDataBuilder.playlist))
+        .injectDIContainer()
 }
