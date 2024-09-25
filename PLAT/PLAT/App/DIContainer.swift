@@ -27,7 +27,7 @@ struct DIContainerModifier: ViewModifier {
         self.musicControlService = AppleMusicControllerServiceImpl()
         self.infoService = StubInfoService() // TODO: Stub 교체
         self.trackService = TrackServiceImpl(imageService: ImageServiceImpl())
-        self.playlistService = StubPlaylistService() // TODO: Stub 교체
+        self.playlistService = PlaylistServiceImpl()
         self.userProfileService = StubUserProfileService() // TODO: Stub 교체
         self.streamAccountService = StubStreamAccountService() // TODO: Stub 교체
         self.trackAppendService = StubTrackAppendService() // TODO: Stub 교체

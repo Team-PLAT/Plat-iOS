@@ -59,6 +59,7 @@ struct FetchTrackFeedResponse: Decodable {
             
             return Track(
                 id: $0.trackId,
+                order: 0,
                 music: music,
                 location: location,
                 user: user,

@@ -55,7 +55,6 @@
 		79842E8C2C7225FD0062F825 /* MapKitLocationServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79842E8B2C7225FD0062F825 /* MapKitLocationServiceImpl.swift */; };
 		79A09D4E2C391BA2006F14F4 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
-		79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */; };
 		79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */; };
 		79B0F6F22C8C406E009140AF /* TrackServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F12C8C406E009140AF /* TrackServiceImpl.swift */; };
 		79B0F6F42C8C4111009140AF /* FetchTrackFeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */; };
@@ -217,7 +216,6 @@
 		79842E8B2C7225FD0062F825 /* MapKitLocationServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitLocationServiceImpl.swift; sourceTree = "<group>"; };
 		79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPlaylistService.swift; sourceTree = "<group>"; };
 		79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackMapAPI.swift; sourceTree = "<group>"; };
 		79B0F6F12C8C406E009140AF /* TrackServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceImpl.swift; sourceTree = "<group>"; };
 		79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackFeedAPI.swift; sourceTree = "<group>"; };
@@ -628,10 +626,10 @@
 				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
+				79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */,
 				5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */,
 				82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */,
 				82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */,
-				79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
 			);
@@ -850,7 +848,6 @@
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
-				79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */,
 				82204EB92C96CA4100546A5C /* StubImageService.swift */,
 			);
 			path = Stub;
@@ -1074,7 +1071,6 @@
 				82721EEC2C8C3D1E00CA2C9A /* HTTPMethod.swift in Sources */,
 				82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
-				79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
 				DFDF9DD42C6C98FF00D5252B /* Playlist.swift in Sources */,

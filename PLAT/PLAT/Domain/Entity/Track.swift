@@ -9,6 +9,7 @@ import Foundation
 
 struct Track: Identifiable {
     let id: Int64
+    let order: Int
     var music: Music
     var location: Location
     var user: User
@@ -20,6 +21,7 @@ struct Track: Identifiable {
     
     init(
         id: Int64,
+        order: Int,
         music: Music,
         location: Location,
         user: User,
@@ -30,6 +32,7 @@ struct Track: Identifiable {
         isReported: Bool = false
     ) {
         self.id = id
+        self.order = order
         self.music = music
         self.location = location
         self.user = user
