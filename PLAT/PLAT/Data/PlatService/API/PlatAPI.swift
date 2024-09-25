@@ -70,6 +70,7 @@ extension APIs.Plat {
         case searchPlaylist
         case upload
         case appendTrackToPlaylist(playlistId: Int64)
+        case update(playlistId: Int64)
         case delete(playlistId: Int64)
         
         var rawValue: RawValue {
@@ -79,6 +80,7 @@ extension APIs.Plat {
             case .searchPlaylist: return "/search"
             case .upload: return ""
             case .appendTrackToPlaylist(let playlistId): return "\(playlistId)"
+            case .update(playlistId: let playlistId): return "\(playlistId)"
             case .delete(let playlistId): return "\(playlistId)"
             }
         }
