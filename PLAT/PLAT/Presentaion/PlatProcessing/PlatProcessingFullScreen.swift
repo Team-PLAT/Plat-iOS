@@ -223,7 +223,7 @@ private struct PlatProcessingPlaylistButton: View {
                     .foregroundStyle(.platBlack)
                     .overlay {
                         HStack(spacing: 6) {
-                            Image("img_playlistsave")
+                            Image(.imgPlaylistsave)
                                 .resizable()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(.white)
