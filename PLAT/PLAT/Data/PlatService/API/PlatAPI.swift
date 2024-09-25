@@ -61,6 +61,29 @@ extension APIs.Plat {
         }
     }
     
+    /// PlaylistAPI
+    enum Playlists: RawRepresentable, API {
+        static let baseUrl: URL = APIs.Plat.baseURL.appendingPathComponent("playlists")
+        
+        case fetchPlaylists
+        case fetchPlaylistDetail(playlistId: Int64)
+        case searchPlaylist
+        case upload
+        case appendTrackToPlaylist(playlistId: Int64)
+        case delete(playlistId: Int64)
+        
+        var rawValue: RawValue {
+            switch self {
+            case .fetchPlaylists: return ""
+            case .fetchPlaylistDetail(let playlistId): return "/\(playlistId)/detail"
+            case .searchPlaylist: return "/search"
+            case .upload: return ""
+            case .appendTrackToPlaylist(let playlistId): return "\(playlistId)"
+            case .delete(let playlistId): return "\(playlistId)"
+            }
+        }
+    }
+    
     /// Image API
     enum Images: RawRepresentable, API {
         static let baseUrl: URL = APIs.Plat.baseURL.appendingPathComponent("images")
