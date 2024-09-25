@@ -14,7 +14,7 @@ protocol MemberServiceInterface {
     
     func fetchProfile() async -> Result<User, Error>
     func updateProfileNickname(to nickname: String) async -> Result<Void, Error>
-    func updateProfileAvatar(to imageUrl: String) async -> Result<Void, Error>
+    func updateProfileAvatar(to imageData: Data) async -> Result<Void, Error>
     
     func fetchStreamAccount() async -> Result<StreamAccount, Error>
     func updateStreamAccount(to streamAccount: StreamAccount) async -> Result<Void, Error>
