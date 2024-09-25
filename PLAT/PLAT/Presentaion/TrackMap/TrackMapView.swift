@@ -12,6 +12,8 @@ import MapKit
 
 struct TrackMapView: View {
     
+    @Environment(MapUseCase.self) private var mapUseCase
+    
     @State private var locationManager = MapKitLocationServiceImpl()
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
@@ -38,11 +40,12 @@ struct TrackMapView: View {
                 )
             }
             .onReceive(locationManager.locationPublisher) { location in
-                print("""
-            [위치 업데이트]
-            - 위도: \(Double(location.coordinate.latitude).rounded())
-            - 경도: \(Double(location.coordinate.longitude).rounded())
-            """)
+                
+                // 1. 역지오코딩
+                mapUseCase.updateReverseGeocode(
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                )
                 
                 // TODO: 트랙 리스트 업데이트
                 // TODO: 플레이리스트 생성
@@ -159,12 +162,18 @@ private struct MapComponentsView: View {
 // MARK: - MapAddressView
 
 private struct MapAddressView: View {
+    
+    @Environment(MapUseCase.self) private var mapUseCase
+    
     var body: some View {
         HStack {
             Image(.imgMarker)
-            // 위치에 따라 자동으로 변경
-            Text("포항시 남구 지곡동")
-                .font(.Head.head2)
+            
+            if let place = mapUseCase.state.place {
+                Text(place.address)
+                    .font(.Head.head2)
+            }
+            
         }
         .padding(.top, 10)
     }

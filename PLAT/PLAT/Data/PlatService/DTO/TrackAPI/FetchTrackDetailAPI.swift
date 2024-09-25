@@ -51,6 +51,7 @@ struct FetchTrackDetailResponse: Decodable {
             music: music,
             location: location,
             user: User(
+                id: Int(self.member.memberId),
                 nickname: self.member.memberNickname,
                 profileImageUrl: self.member.avatar
             ),

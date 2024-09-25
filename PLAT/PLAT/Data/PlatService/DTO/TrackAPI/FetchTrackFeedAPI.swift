@@ -52,6 +52,7 @@ struct FetchTrackFeedResponse: Decodable {
             )
             
             let user = User(
+                id: Int($0.member.memberId),
                 nickname: $0.member.memberNickname,
                 profileImageUrl: $0.member.avatar
             )

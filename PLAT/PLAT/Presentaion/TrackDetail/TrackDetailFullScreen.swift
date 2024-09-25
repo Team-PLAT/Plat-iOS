@@ -62,20 +62,20 @@ struct TrackDetailFullScreen: View {
                 )
             }
         }
-//        .onAppear {
-//            guard let track = MockDataBuilder.trackList.first(
-//                where: {
-//                    $0.id == trackUseCase.trackId
-//                }) else {
-//                print("Track Detail View trackId 찾기 오류")
-//                return
-//            }
-//            
-//            if musicControlUseCase.state.isPlayingTrack?.id != track.id {
-//                musicControlUseCase.effect(.updatePlayingTrack(track: track))
-//                musicControlUseCase.effect(.setup(music: track.music))
-//            }
-//        }
+        //        .onAppear {
+        //            guard let track = MockDataBuilder.trackList.first(
+        //                where: {
+        //                    $0.id == trackUseCase.trackId
+        //                }) else {
+        //                print("Track Detail View trackId 찾기 오류")
+        //                return
+        //            }
+        //            
+        //            if musicControlUseCase.state.isPlayingTrack?.id != track.id {
+        //                musicControlUseCase.effect(.updatePlayingTrack(track: track))
+        //                musicControlUseCase.effect(.setup(music: track.music))
+        //            }
+        //        }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
         .onTapGesture {
@@ -117,37 +117,26 @@ private struct Background: View {
 
 private struct HeaderView: View {
     
-    @Environment(\.dismiss) private var dismiss
+    @Environment(PathModel.self) private var pathModel
+    @Environment(MapUseCase.self) private var mapUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     var body: some View {
-        VStack(alignment: .leading, spacing: -2) {
-            HStack {
-                Image(.imgMarker)
-                
-                Group {
-                    if let placeName = trackUseCase.state.place.name {
-                        Text(placeName)
-                        
-                    } else {
-                        Text(trackUseCase.state.place.address)
-                    }
-                }
-                .font(.Head.head2)
-                .foregroundStyle(.white)
-                
-                Spacer()
-                
-                DismissButton {
-                    dismiss()
-                }
+        HStack {
+            Image(.imgMarker)
+            
+            if let place = mapUseCase.state.place {
+                Text(place.address)
+                    .font(.Head.head2)
+                    .foregroundStyle(.white)
             }
             
-            Text(trackUseCase.state.place.address)
-                .font(.Body.body3)
-                .foregroundStyle(.white)
-                .padding(.leading, 24)
+            Spacer()
+            
+            DismissButton {
+                pathModel.dismissFullScreenCover()
+            }
         }
     }
 }
