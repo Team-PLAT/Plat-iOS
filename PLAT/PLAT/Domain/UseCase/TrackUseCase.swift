@@ -12,26 +12,15 @@ final class TrackUseCase {
     
     private var trackService: TrackServiceInterface
     
-    private(set) var state: State
     private(set) var currentTrack: Track
     private(set) var mapTrackList: [Track]
     private(set) var feedTrackList: [Track]
     
     init(trackService: TrackServiceInterface) {
-        self.state = State()
         self.mapTrackList = []
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
         self.trackService = trackService
-    }
-}
-
-// MARK: - State
-
-extension TrackUseCase {
-    
-    struct State {
-        
     }
 }
 
@@ -46,6 +35,7 @@ extension TrackUseCase {
         case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
         case likeTrack(trackId: Int, isLike: Bool)
         case reportTrack(trackId: Int)
+        case deleteTrack(trackId: Int)
     }
     
     func effect(_ effect: Effect) {
@@ -103,6 +93,15 @@ extension TrackUseCase {
         case .reportTrack(let trackId):
             Task {
                 let result = await trackService.report(trackId: trackId)
+                switch result {
+                case .success: break
+                case .failure(let error): print(error) // TODO: 에러 처리
+                }
+            }
+            
+        case .deleteTrack(trackId: let trackId):
+            Task {
+                let result = await trackService.delete(trackId: trackId)
                 switch result {
                 case .success: break
                 case .failure(let error): print(error) // TODO: 에러 처리

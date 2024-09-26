@@ -8,6 +8,7 @@
 import Foundation
 
 struct StubTrackService: TrackServiceInterface {
+    
     func fetchTrackList(rectLocation: RectLocation) async -> Result<[Track], any Error> {
         .success(MockDataBuilder.trackList)
     }
@@ -29,6 +30,10 @@ struct StubTrackService: TrackServiceInterface {
     }
     
     func report(trackId: Int) async -> Result<Void, any Error> {
+        return .success(Void())
+    }
+    
+    func delete(trackId: Int) async -> Result<Void, any Error> {
         return .success(Void())
     }
 }

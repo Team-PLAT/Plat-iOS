@@ -120,6 +120,7 @@
 		82588AB32CA3ED2600AD8132 /* DeletePlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB22CA3ED2600AD8132 /* DeletePlaylistAPI.swift */; };
 		82588AB72CA3EDDF00AD8132 /* PlaylistServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB62CA3EDDF00AD8132 /* PlaylistServiceImpl.swift */; };
 		82588AB92CA3EDE700AD8132 /* PlaylistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB82CA3EDE700AD8132 /* PlaylistRepository.swift */; };
+		82588ABD2CA5809D00AD8132 /* DeleteTrackAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588ABC2CA5809D00AD8132 /* DeleteTrackAPI.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -284,6 +285,7 @@
 		82588AB22CA3ED2600AD8132 /* DeletePlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePlaylistAPI.swift; sourceTree = "<group>"; };
 		82588AB62CA3EDDF00AD8132 /* PlaylistServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistServiceImpl.swift; sourceTree = "<group>"; };
 		82588AB82CA3EDE700AD8132 /* PlaylistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRepository.swift; sourceTree = "<group>"; };
+		82588ABC2CA5809D00AD8132 /* DeleteTrackAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTrackAPI.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				DFE27A212C71FEE0002BAD11 /* FetchTrackDetailAPI.swift */,
 				79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */,
 				79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */,
+				82588ABC2CA5809D00AD8132 /* DeleteTrackAPI.swift */,
 			);
 			path = TrackAPI;
 			sourceTree = "<group>";
@@ -1044,6 +1047,7 @@
 				82204EA82C95B00500546A5C /* MemberServiceInterface.swift in Sources */,
 				DF6DC99F2C75DF4B004A23F7 /* AppleMusicDTO.swift in Sources */,
 				82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */,
+				82588ABD2CA5809D00AD8132 /* DeleteTrackAPI.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				79B0F6FA2C8C42AD009140AF /* LikeTrackAPI.swift in Sources */,
 				82588AB72CA3EDDF00AD8132 /* PlaylistServiceImpl.swift in Sources */,
@@ -1307,7 +1311,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1327,7 +1331,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1349,7 +1353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1369,7 +1373,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
