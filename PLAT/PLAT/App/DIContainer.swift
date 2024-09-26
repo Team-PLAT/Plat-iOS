@@ -23,7 +23,7 @@ struct DIContainerModifier: ViewModifier {
     /// 생성 및 주입
     init() {
         self.socialLoinService = AppleSocialLoginServiceImpl()
-        self.memberService = MemberServiceImpl()
+        self.memberService = MemberServiceImpl(imageService: ImageServiceImpl())
         self.musicControlService = AppleMusicControllerServiceImpl()
         self.infoService = StubInfoService() // TODO: Stub 교체
         self.trackService = TrackServiceImpl(imageService: ImageServiceImpl())

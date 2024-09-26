@@ -15,6 +15,11 @@ final class MemberServiceImpl: MemberServiceInterface {
     
     private let userSecurityManager = UserSecurityManager.shared
     private let memberRepository = MemberRepository()
+    private let imageService: ImageServiceInterface
+    
+    init(imageService: ImageServiceInterface) {
+        self.imageService = imageService
+    }
     
     /// 로그인을 요청합니다.
     func signIn(socialAccount: SocialAccount) async -> Result<Void, any Error> {
@@ -79,12 +84,20 @@ final class MemberServiceImpl: MemberServiceInterface {
     }
     
     /// 프로필 아바타를 업데이트합니다.
-    func updateProfileAvatar(to imageUrl: String) async -> Result<Void, any Error> {
-        let request = UpdateProfileAvatarRequest(avatar: imageUrl)
-        let result = await memberRepository.updateProfileAvatar(request: request)
-        switch result {
-        case .success:
-            return .success(Void())
+    func updateProfileAvatar(to imageData: Data) async -> Result<Void, any Error> {
+        
+        let imageResult = await imageService.uploadImage(imageData: imageData)
+        switch imageResult {
+        case .success(let platImage):
+            let request = UpdateProfileAvatarRequest(avatar: platImage.imageUrl)
+            let result = await memberRepository.updateProfileAvatar(request: request)
+            switch result {
+            case .success:
+                return .success(())
+            case .failure(let error):
+                return .failure(error)
+            }
+            
         case .failure(let error):
             return .failure(error)
         }

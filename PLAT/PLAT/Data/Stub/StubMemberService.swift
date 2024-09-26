@@ -8,6 +8,7 @@
 import Foundation
 
 struct StubMemberService: MemberServiceInterface {
+    
     func signIn(socialAccount: SocialAccount) async -> Result<Void, any Error> {
         print(#function)
         return .success(Void())
@@ -32,9 +33,9 @@ struct StubMemberService: MemberServiceInterface {
         return .success(Void())
     }
     
-    func updateProfileAvatar(to imageUrl: String) async -> Result<Void, any Error> {
+    func updateProfileAvatar(to imageData: Data) async -> Result<Void, any Error> {
         print(#function)
-        return .success(Void())
+        return .success(())
     }
     
     func fetchStreamAccount() async -> Result<StreamAccount, any Error> {
