@@ -16,7 +16,7 @@ struct AppCoordinatorView: View {
     @Environment(MapUseCase.self) private var mapUseCase
     
     var body: some View {
-        if !authUseCase.state.isLoginComplete {
+        if authUseCase.state.isLoginComplete {
             PlatMainView()
         } else {
             LoginView()
