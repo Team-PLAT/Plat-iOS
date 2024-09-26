@@ -73,7 +73,12 @@ private struct MapView: View {
             UserAnnotation()
             
             // TODO: 실제 데이터로 변경
-            ForEach(MockDataBuilder.trackList) { track in
+            ForEach(MockDataBuilder.trackList.filter { track in
+                
+                let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+                
+                return !reportedTrackIdList.contains(track.id)
+            }) { track in
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
