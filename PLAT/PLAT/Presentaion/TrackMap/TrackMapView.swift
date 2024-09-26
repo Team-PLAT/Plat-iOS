@@ -13,8 +13,8 @@ import MapKit
 struct TrackMapView: View {
     
     @Environment(MapUseCase.self) private var mapUseCase
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var locationManager = MapKitLocationServiceImpl()
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
     @State private var isShowToastMessage: Bool = false
@@ -23,14 +23,10 @@ struct TrackMapView: View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .topLeading) {
                 if #available(iOS 18.0, *) {
-                    MapView(
-                        locationManager: $locationManager
-                    )
+                    MapView()
                     .toolbarVisibility(.hidden, for: .navigationBar)
                 } else {
-                    MapView(
-                        locationManager: $locationManager
-                    )
+                    MapView()
                 }
                 
                 MapComponentsView(
@@ -62,10 +58,11 @@ private struct MapView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    
-    @Binding private(set) var locationManager: MapKitLocationServiceImpl
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
     var body: some View {
+        @Bindable var locationManager = locationManager
+        
         Map(
             position: $locationManager.position,
             interactionModes: []

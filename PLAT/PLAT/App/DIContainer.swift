@@ -51,6 +51,7 @@ struct DIContainerModifier: ViewModifier {
                 )
             )
             .environment(TrackAppendUseCase(trackAppendService: trackAppendService))
+            .environment(MapKitLocationServiceImpl())
     }
 }
 

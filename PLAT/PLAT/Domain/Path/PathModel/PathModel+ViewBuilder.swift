@@ -92,7 +92,7 @@ extension PathModel {
             TrackDetailFullScreen()
             
         case .platProcessing:
-            PlatProcessingFullScreen(playList: .constant(MockDataBuilder.playlist))
+            PlatProcessingFullScreen()
         }
     }
 }
