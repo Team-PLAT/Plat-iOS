@@ -48,6 +48,7 @@ extension APIs.Plat {
         case fetch(trackId: Int64)
         case fetchFeed
         case fetchMap
+        case delete(trackId: Int64)
         
         var rawValue: RawValue {
             switch self {
@@ -57,6 +58,7 @@ extension APIs.Plat {
             case let .fetch(trackId): return "\(trackId)"
             case .fetchFeed: return "feeds"
             case .fetchMap: return "map"
+            case let .delete(trackId): return "\(trackId)"
             }
         }
     }
