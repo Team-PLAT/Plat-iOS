@@ -22,7 +22,12 @@ struct TrackFeedView: View {
                     .padding(.bottom, 20)
                 
                 ScrollView {
-                    ForEach(MockDataBuilder.trackList) { track in
+                    ForEach(MockDataBuilder.trackList.filter { track in
+                        
+                        let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+                        
+                        return !reportedTrackIdList.contains(track.id)
+                    }) { track in
                         FeedRowView(
                             track: track,
                             trackIndex: Int64(track.id),
@@ -56,6 +61,7 @@ struct TrackFeedView: View {
 private struct FeedRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PathModel.self) private var pathModel
     
     let track: Track
     let trackIndex: Int64
@@ -79,8 +85,12 @@ private struct FeedRowView: View {
                         
                         Spacer()
                         
-                        Button {
-                            // 알럿창
+                        Menu {
+                            Button(role: .destructive) {
+                                pathModel.push(.report(trackId: track.id))
+                            } label: {
+                                Text("신고하기")
+                            }
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.white)
@@ -486,4 +496,5 @@ private struct FeedActionView: View {
 #Preview {
     TrackFeedView()
         .environment(PreviewHelper.mockMusicControlUseCase)
+        .injectDIContainer()
 }

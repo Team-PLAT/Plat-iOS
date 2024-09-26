@@ -62,20 +62,6 @@ struct TrackDetailFullScreen: View {
                 )
             }
         }
-        //        .onAppear {
-        //            guard let track = MockDataBuilder.trackList.first(
-        //                where: {
-        //                    $0.id == trackUseCase.trackId
-        //                }) else {
-        //                print("Track Detail View trackId 찾기 오류")
-        //                return
-        //            }
-        //            
-        //            if musicControlUseCase.state.isPlayingTrack?.id != track.id {
-        //                musicControlUseCase.effect(.updatePlayingTrack(track: track))
-        //                musicControlUseCase.effect(.setup(music: track.music))
-        //            }
-        //        }
         .background(.black.opacity(0.6))
         .presentationBackground(.thinMaterial.opacity(0.5))
         .onTapGesture {
@@ -233,12 +219,26 @@ private struct MusicControllerView: View {
                 }
             )
             
-            MusicControllerCell(
-                systemImage: SystemImage.seeMore,
-                tapAction: {
-                    // TODO: 더보기 창 띄우기
+            Menu {
+                Button(role: .destructive) {
+                    pathModel.dismissFullScreenCover()
+                    pathModel.push(.report(trackId: trackUseCase.currentTrack.id))
+                } label: {
+                    Text("신고하기")
                 }
-            )
+            } label: {
+                ZStack {
+                    Circle()
+                        .frame(width: 36, height: 36)
+                        .foregroundStyle(.gray9)
+                    
+                    Image(systemName: SystemImage.seeMore)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 16, height: 16)
+                        .foregroundStyle(.white)
+                }
+            }
         }
         .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
             TrackAppendToPlaylistSheet()
@@ -404,4 +404,5 @@ private struct ProfileContent: View {
 #Preview {
     TrackDetailFullScreen()
         .environment(PreviewHelper.mockMusicControlUseCase)
+        .injectDIContainer()
 }

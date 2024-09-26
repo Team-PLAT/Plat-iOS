@@ -13,8 +13,8 @@ import MapKit
 struct TrackMapView: View {
     
     @Environment(MapUseCase.self) private var mapUseCase
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var locationManager = MapKitLocationServiceImpl()
     @State private var hasNotifications = false
     @State private var playlist: Playlist?
     @State private var isShowToastMessage: Bool = false
@@ -23,14 +23,10 @@ struct TrackMapView: View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .topLeading) {
                 if #available(iOS 18.0, *) {
-                    MapView(
-                        locationManager: $locationManager
-                    )
+                    MapView()
                     .toolbarVisibility(.hidden, for: .navigationBar)
                 } else {
-                    MapView(
-                        locationManager: $locationManager
-                    )
+                    MapView()
                 }
                 
                 MapComponentsView(
@@ -62,10 +58,11 @@ private struct MapView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    
-    @Binding private(set) var locationManager: MapKitLocationServiceImpl
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
     var body: some View {
+        @Bindable var locationManager = locationManager
+        
         Map(
             position: $locationManager.position,
             interactionModes: []
@@ -73,7 +70,12 @@ private struct MapView: View {
             UserAnnotation()
             
             // TODO: 실제 데이터로 변경
-            ForEach(MockDataBuilder.trackList) { track in
+            ForEach(MockDataBuilder.trackList.filter { track in
+                
+                let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+                
+                return !reportedTrackIdList.contains(track.id)
+            }) { track in
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
@@ -95,6 +97,11 @@ private struct MapView: View {
 // MARK: - CustomMarkerView
 
 private struct CustomMarkerView: View {
+    
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var playlistMusic: Music?
+    
     let track: Track
     
     var body: some View {
@@ -102,18 +109,29 @@ private struct CustomMarkerView: View {
             .frame(width: 40, height: 40)
             .foregroundStyle(.gray3)
             .overlay {
-                AsyncImage(url: URL(string: track.music.albumImageUrl)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 34, height: 34)
-                            .clipShape(Circle())
-                    } else {
-                        Circle()
-                            .frame(width: 40, height: 40)
-                            .foregroundStyle(.gray3)
+                if let albumImageUrl = playlistMusic?.albumImageUrl {
+                    AsyncImage(url: URL(string: albumImageUrl)) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 34, height: 34)
+                                .clipShape(Circle())
+                        } else {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(.gray3)
+                        }
                     }
+                } else {
+                    Circle()
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(.gray3)
+                }
+            }
+            .onAppear {
+                Task {
+                    playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
                 }
             }
     }

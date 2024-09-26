@@ -39,6 +39,9 @@ extension PathModel {
         case .playlistDetailsEditView:
             PlaylistDetailsEditView()
             
+        case .report(let trackId):
+            ReportView(trackId: trackId)
+            
         case .userDetail:
             UserDetailView()
             
@@ -89,7 +92,7 @@ extension PathModel {
             TrackDetailFullScreen()
             
         case .platProcessing:
-            PlatProcessingFullScreen(playList: .constant(MockDataBuilder.playlist))
+            PlatProcessingFullScreen()
         }
     }
 }
