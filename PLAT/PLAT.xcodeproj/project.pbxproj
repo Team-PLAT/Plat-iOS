@@ -56,7 +56,6 @@
 		79842E8C2C7225FD0062F825 /* MapKitLocationServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79842E8B2C7225FD0062F825 /* MapKitLocationServiceImpl.swift */; };
 		79A09D4E2C391BA2006F14F4 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */; };
 		79A09D502C391C4A006F14F4 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A09D4F2C391C4A006F14F4 /* Tab.swift */; };
-		79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */; };
 		79B0F6E92C8C24FC009140AF /* FetchTrackMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */; };
 		79B0F6F22C8C406E009140AF /* TrackServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F12C8C406E009140AF /* TrackServiceImpl.swift */; };
 		79B0F6F42C8C4111009140AF /* FetchTrackFeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */; };
@@ -112,6 +111,15 @@
 		82588AA02CA2ECE800AD8132 /* AddressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */; };
 		82588AA22CA2EF7600AD8132 /* AddressServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AA12CA2EF7600AD8132 /* AddressServiceImpl.swift */; };
 		82588AA42CA2EFA500AD8132 /* AddressServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */; };
+		82588AA72CA3E81900AD8132 /* FetchPlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AA62CA3E81900AD8132 /* FetchPlaylistAPI.swift */; };
+		82588AA92CA3E8F500AD8132 /* FetchPlaylistDetailAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AA82CA3E8F500AD8132 /* FetchPlaylistDetailAPI.swift */; };
+		82588AAB2CA3EA7D00AD8132 /* SearchPlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AAA2CA3EA7D00AD8132 /* SearchPlaylistAPI.swift */; };
+		82588AAD2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AAC2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift */; };
+		82588AAF2CA3EC1000AD8132 /* AppendTrackToPlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AAE2CA3EC1000AD8132 /* AppendTrackToPlaylistAPI.swift */; };
+		82588AB12CA3ECA300AD8132 /* UpdatePlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB02CA3ECA300AD8132 /* UpdatePlaylistAPI.swift */; };
+		82588AB32CA3ED2600AD8132 /* DeletePlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB22CA3ED2600AD8132 /* DeletePlaylistAPI.swift */; };
+		82588AB72CA3EDDF00AD8132 /* PlaylistServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB62CA3EDDF00AD8132 /* PlaylistServiceImpl.swift */; };
+		82588AB92CA3EDE700AD8132 /* PlaylistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588AB82CA3EDE700AD8132 /* PlaylistRepository.swift */; };
 		8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */; };
 		826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933442C71FF5B0004E0B5 /* AppDelegate.swift */; };
 		826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826933462C71FFE20004E0B5 /* SceneDelegate.swift */; };
@@ -211,7 +219,6 @@
 		79842E8B2C7225FD0062F825 /* MapKitLocationServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitLocationServiceImpl.swift; sourceTree = "<group>"; };
 		79A09D4D2C391BA2006F14F4 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		79A09D4F2C391C4A006F14F4 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPlaylistService.swift; sourceTree = "<group>"; };
 		79B0F6E82C8C24FC009140AF /* FetchTrackMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackMapAPI.swift; sourceTree = "<group>"; };
 		79B0F6F12C8C406E009140AF /* TrackServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceImpl.swift; sourceTree = "<group>"; };
 		79B0F6F32C8C4111009140AF /* FetchTrackFeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTrackFeedAPI.swift; sourceTree = "<group>"; };
@@ -268,6 +275,15 @@
 		82588A9F2CA2ECE800AD8132 /* AddressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRepository.swift; sourceTree = "<group>"; };
 		82588AA12CA2EF7600AD8132 /* AddressServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressServiceImpl.swift; sourceTree = "<group>"; };
 		82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressServiceInterface.swift; sourceTree = "<group>"; };
+		82588AA62CA3E81900AD8132 /* FetchPlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPlaylistAPI.swift; sourceTree = "<group>"; };
+		82588AA82CA3E8F500AD8132 /* FetchPlaylistDetailAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPlaylistDetailAPI.swift; sourceTree = "<group>"; };
+		82588AAA2CA3EA7D00AD8132 /* SearchPlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaylistAPI.swift; sourceTree = "<group>"; };
+		82588AAC2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPlaylistAPI.swift; sourceTree = "<group>"; };
+		82588AAE2CA3EC1000AD8132 /* AppendTrackToPlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendTrackToPlaylistAPI.swift; sourceTree = "<group>"; };
+		82588AB02CA3ECA300AD8132 /* UpdatePlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePlaylistAPI.swift; sourceTree = "<group>"; };
+		82588AB22CA3ED2600AD8132 /* DeletePlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePlaylistAPI.swift; sourceTree = "<group>"; };
+		82588AB62CA3EDDF00AD8132 /* PlaylistServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistServiceImpl.swift; sourceTree = "<group>"; };
+		82588AB82CA3EDE700AD8132 /* PlaylistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRepository.swift; sourceTree = "<group>"; };
 		8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControlUseCase.swift; sourceTree = "<group>"; };
 		826933442C71FF5B0004E0B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		826933462C71FFE20004E0B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -420,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */,
+				82E3328A2C9B164700D06A8D /* Config.xcconfig */,
 				793278072C2D014500F433F5 /* PLAT */,
 				793278062C2D014500F433F5 /* Products */,
 			);
@@ -540,7 +557,6 @@
 			children = (
 				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
 				51F433472C3411ED00FAFD14 /* Info.plist */,
-				82E3328A2C9B164700D06A8D /* Config.xcconfig */,
 				793278082C2D014500F433F5 /* PLATApp.swift */,
 				826933442C71FF5B0004E0B5 /* AppDelegate.swift */,
 				826933462C71FFE20004E0B5 /* SceneDelegate.swift */,
@@ -624,10 +640,10 @@
 				82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */,
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
+				79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */,
 				5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */,
 				82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */,
 				82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */,
-				79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
 				820836922C3404C700F6D0CF /* StreamAccountServiceInterface.swift */,
 			);
@@ -727,6 +743,29 @@
 			path = AddressService;
 			sourceTree = "<group>";
 		};
+		82588AA52CA3E7FD00AD8132 /* PlaylistAPI */ = {
+			isa = PBXGroup;
+			children = (
+				82588AA62CA3E81900AD8132 /* FetchPlaylistAPI.swift */,
+				82588AA82CA3E8F500AD8132 /* FetchPlaylistDetailAPI.swift */,
+				82588AAA2CA3EA7D00AD8132 /* SearchPlaylistAPI.swift */,
+				82588AAC2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift */,
+				82588AAE2CA3EC1000AD8132 /* AppendTrackToPlaylistAPI.swift */,
+				82588AB02CA3ECA300AD8132 /* UpdatePlaylistAPI.swift */,
+				82588AB22CA3ED2600AD8132 /* DeletePlaylistAPI.swift */,
+			);
+			path = PlaylistAPI;
+			sourceTree = "<group>";
+		};
+		82588AB52CA3EDD000AD8132 /* PlaylistService */ = {
+			isa = PBXGroup;
+			children = (
+				82588AB62CA3EDDF00AD8132 /* PlaylistServiceImpl.swift */,
+				82588AB82CA3EDE700AD8132 /* PlaylistRepository.swift */,
+			);
+			path = PlaylistService;
+			sourceTree = "<group>";
+		};
 		827169102C9DB69E00D8BF81 /* PathType */ = {
 			isa = PBXGroup;
 			children = (
@@ -823,7 +862,6 @@
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
 				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
-				79ABDAF32C996F3500A127DD /* StubPlaylistService.swift */,
 				82204EB92C96CA4100546A5C /* StubImageService.swift */,
 			);
 			path = Stub;
@@ -852,6 +890,7 @@
 			children = (
 				82204EB32C96B3E900546A5C /* Base */,
 				79B0F6EF2C8C3F22009140AF /* TrackAPI */,
+				82588AA52CA3E7FD00AD8132 /* PlaylistAPI */,
 				79B0F7072C8DBA9E009140AF /* MemberAPI */,
 				7946B9842C917FDC009B915D /* ImageAPI */,
 				82588A9B2CA2EC4D00AD8132 /* AddressAPI */,
@@ -874,6 +913,7 @@
 			isa = PBXGroup;
 			children = (
 				82204EB62C96B51C00546A5C /* TrackService */,
+				82588AB52CA3EDD000AD8132 /* PlaylistService */,
 				82204EB72C96B52400546A5C /* MemberService */,
 				82204EB82C96B52F00546A5C /* ImageService */,
 				82588A9E2CA2ECC900AD8132 /* AddressService */,
@@ -982,6 +1022,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8235A4642C9D883300063E27 /* AppendPlaylistView.swift in Sources */,
+				82588AAB2CA3EA7D00AD8132 /* SearchPlaylistAPI.swift in Sources */,
 				82204E5D2C9071BC00546A5C /* RectLocation.swift in Sources */,
 				82C9A5342C777F1000C57916 /* User.swift in Sources */,
 				7932780B2C2D014500F433F5 /* OnboardingView.swift in Sources */,
@@ -1005,8 +1046,10 @@
 				82E332952C9BF51500D06A8D /* PlaylistDetailsEditView.swift in Sources */,
 				82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */,
 				79B0F6FA2C8C42AD009140AF /* LikeTrackAPI.swift in Sources */,
+				82588AB72CA3EDDF00AD8132 /* PlaylistServiceImpl.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */,
 				7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */,
+				82588AB12CA3ECA300AD8132 /* UpdatePlaylistAPI.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */,
@@ -1014,11 +1057,13 @@
 				79B0F7092C8DBAB5009140AF /* MemberRepository.swift in Sources */,
 				5151BEAB2C71EB73001DA80F /* PlatProcessingFullScreen.swift in Sources */,
 				82204EAE2C9693A800546A5C /* SignInAPI.swift in Sources */,
+				82588AA72CA3E81900AD8132 /* FetchPlaylistAPI.swift in Sources */,
 				8235A4622C9D850B00063E27 /* PathModel+ViewBuilder.swift in Sources */,
 				82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */,
 				82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */,
 				791FEF8E2C771FD6006CBDE0 /* StubMemberService.swift in Sources */,
 				7946B9882C918066009B915D /* ImageRepository.swift in Sources */,
+				82588AAF2CA3EC1000AD8132 /* AppendTrackToPlaylistAPI.swift in Sources */,
 				82204EBA2C96CA4100546A5C /* StubImageService.swift in Sources */,
 				8208368D2C34043700F6D0CF /* StreamAccountSettingsView.swift in Sources */,
 				79A09D4E2C391BA2006F14F4 /* AppCoordinatorView.swift in Sources */,
@@ -1040,7 +1085,6 @@
 				82721EEC2C8C3D1E00CA2C9A /* HTTPMethod.swift in Sources */,
 				82C9A5402C8729D500C57916 /* PlatAPI.swift in Sources */,
 				793278092C2D014500F433F5 /* PLATApp.swift in Sources */,
-				79ABDAF42C996F3500A127DD /* StubPlaylistService.swift in Sources */,
 				82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */,
 				79B7F27B2CA3EFAD00C78D51 /* Helper+UserDefaults.swift in Sources */,
 				51F4334A2C3413CB00FAFD14 /* Helper+PretendardFont.swift in Sources */,
@@ -1059,6 +1103,7 @@
 				796465A62C3A82A200F6DC2D /* ListRadioButton.swift in Sources */,
 				823CA1162C9D6C670084A90B /* Screen.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
+				82588AB92CA3EDE700AD8132 /* PlaylistRepository.swift in Sources */,
 				5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */,
 				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
@@ -1072,8 +1117,10 @@
 				82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */,
 				8235A45C2C9D726900063E27 /* FullScreenCover.swift in Sources */,
 				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
+				82588AAD2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
 				79FC51442C6DD63200489507 /* MapUseCase.swift in Sources */,
+				82588AA92CA3E8F500AD8132 /* FetchPlaylistDetailAPI.swift in Sources */,
 				510E363C2C76BFB6009AD4AC /* PhotoAlbumPicker.swift in Sources */,
 				5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */,
 				82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */,
@@ -1115,6 +1162,7 @@
 				82204EB52C96B4CA00546A5C /* ImageServiceImpl.swift in Sources */,
 				79B0F70F2C8DBB39009140AF /* UpdateProfileStreamTypeAPI.swift in Sources */,
 				79B0F6F22C8C406E009140AF /* TrackServiceImpl.swift in Sources */,
+				82588AB32CA3ED2600AD8132 /* DeletePlaylistAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
