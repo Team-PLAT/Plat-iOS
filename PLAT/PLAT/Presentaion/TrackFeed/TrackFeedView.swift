@@ -141,7 +141,7 @@ private struct FeedRowView: View {
     /// 음악 Fetch에 딜레이를 부여합니다.
     private func handleFetchMusic() {
         fetchMusicTask = Task {
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1초 딜레이
+            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
             if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
             feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
         }
