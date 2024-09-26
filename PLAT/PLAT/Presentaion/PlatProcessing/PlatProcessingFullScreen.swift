@@ -138,8 +138,8 @@ private struct PlatProcessingPlaylist: View {
 private struct PlatProcessingPlaylistInfo: View {
     @Environment(MapUseCase.self) private var mapUseCase
     @Environment(UserUseCase.self) private var trackUseCase
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var locationManager = MapKitLocationServiceImpl()
     @State private var addressName: String = ""
     
     var body: some View {
