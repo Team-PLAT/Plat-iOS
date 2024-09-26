@@ -431,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */,
+				82E3328A2C9B164700D06A8D /* Config.xcconfig */,
 				793278072C2D014500F433F5 /* PLAT */,
 				793278062C2D014500F433F5 /* Products */,
 			);
@@ -543,7 +544,6 @@
 			children = (
 				DFA3F9C82C3FB7FF007B5DF7 /* PLAT.entitlements */,
 				51F433472C3411ED00FAFD14 /* Info.plist */,
-				82E3328A2C9B164700D06A8D /* Config.xcconfig */,
 				793278082C2D014500F433F5 /* PLATApp.swift */,
 				826933442C71FF5B0004E0B5 /* AppDelegate.swift */,
 				826933462C71FFE20004E0B5 /* SceneDelegate.swift */,

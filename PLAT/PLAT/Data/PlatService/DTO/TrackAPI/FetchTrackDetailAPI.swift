@@ -48,7 +48,6 @@ struct FetchTrackDetailResponse: Decodable {
         
         return Track(
             id: self.trackId,
-            order: 0,
             music: music,
             location: location,
             user: User(

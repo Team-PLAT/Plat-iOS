@@ -65,7 +65,6 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
                 
                 return Track(
                     id: $0.trackDetail.trackId,
-                    order: $0.orderIndex,
                     music: music,
                     location: location,
                     user: user,
@@ -127,11 +126,9 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
             }
         }
         
-        let trackRequest = tracks.map {
-            UploadPlaylistRequest.TracksRequest(
-                trackId: $0.id,
-                orderIndex: $0.order
-            )
+        var trackRequest: [UploadPlaylistRequest.TracksRequest] = []
+        for (index, track) in tracks.enumerated() {
+            trackRequest.append(.init(trackId: track.id, orderIndex: index))
         }
         
         let request = UploadPlaylistRequest(
@@ -180,9 +177,11 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
             }
         }
         
-        let trackRequest = tracks.map {
-            UpdatePlaylistRequest.TracksRequest(trackId: $0.id, orderIndex: $0.order)
+        var trackRequest: [UpdatePlaylistRequest.TracksRequest] = []
+        for (index, track) in tracks.enumerated() {
+            trackRequest.append(.init(trackId: track.id, orderIndex: index))
         }
+        
         let request = UpdatePlaylistRequest(title: title, playlistImageUrl: imageUrl, tracks: trackRequest)
         let response = await playlistRepository.updatePlaylist(request: request, playlistId: Int64(playlistId))
         switch response {

@@ -47,7 +47,6 @@ struct MockDataBuilder {
         return [
             Track(
                 id: 000001,
-                order: 0,
                 music: musicList[0],
                 location: locationList[0],
                 user: mine,
@@ -59,7 +58,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000002,
-                order: 1,
                 music: musicList[1],
                 location: locationList[1],
                 user: friend,
@@ -71,7 +69,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000003,
-                order: 2,
                 music: musicList[2],
                 location: locationList[2],
                 user: mine,
@@ -83,7 +80,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000004,
-                order: 3,
                 music: musicList[3],
                 location: locationList[3],
                 user: friend,
@@ -95,7 +91,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000005,
-                order: 4,
                 music: musicList[4],
                 location: locationList[4],
                 user: friend,
@@ -107,7 +102,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000006,
-                order: 5,
                 music: musicList[5],
                 location: locationList[5],
                 user: friend,
@@ -125,7 +119,6 @@ struct MockDataBuilder {
         return [
             Track(
                 id: 000001,
-                order: 0,
                 music: musicList[0],
                 location: currentLocation,
                 user: mine,
@@ -137,7 +130,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000002,
-                order: 1,
                 music: musicList[1],
                 location: currentLocation,
                 user: friend,
@@ -149,7 +141,6 @@ struct MockDataBuilder {
             ),
             Track(
                 id: 000003,
-                order: 2,
                 music: musicList[2],
                 location: currentLocation,
                 user: mine,
@@ -166,7 +157,6 @@ struct MockDataBuilder {
     static var track: Track {
         return Track(
             id: 00000001,
-            order: 0,
             music: music,
             location: currentLocation,
             user: mine,
