@@ -151,6 +151,7 @@ extension MusicControlUseCase {
         }
     }
     
+    @MainActor
     func fetchMusicInfoApi(music: Music) async -> Music? {
         if let musicInfo = await musicController.fetchMusic(music) {
             return Music(
