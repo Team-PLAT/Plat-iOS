@@ -12,7 +12,6 @@ protocol MusicControllerInterface {
     func setup() async -> Bool
     func play(_ music: Music)
     func playPlaylist(with isrcs: [String])
-    func playRandomPlaylist(with isrcs: [String])
     func pause()
     func resume()
     func repeatPlayback()

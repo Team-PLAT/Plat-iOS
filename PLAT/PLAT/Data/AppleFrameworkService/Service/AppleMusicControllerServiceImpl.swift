@@ -38,7 +38,7 @@ extension AppleMusicControllerServiceImpl {
         }
     }
     
-    /// 음악 첫 재생
+    /// 음악 재생
     func play(_ music: Music) {
         if let songId = firstSong?.id {
             let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songId])
@@ -55,21 +55,6 @@ extension AppleMusicControllerServiceImpl {
             let songIDs = await requestSongIds(for: isrcs)
             if !songIDs.isEmpty {
                 let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: Array(songIDs))
-                musicPlayer.setQueue(with: descriptor)
-                musicPlayer.play()
-            } else {
-                print("플레이리스트에 곡이 없습니다.")
-            }
-        }
-    }
-    
-    /// 플리 임의 재생
-    func playRandomPlaylist(with isrcs: [String]) {
-        Task {
-            var songIDs = await requestSongIds(for: isrcs)
-            songIDs.shuffle()
-            if !songIDs.isEmpty {
-                let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: songIDs)
                 musicPlayer.setQueue(with: descriptor)
                 musicPlayer.play()
             } else {

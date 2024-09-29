@@ -162,6 +162,7 @@ private struct PlayListPlayButton: View {
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @Binding var isrcs: [String]
+    @State private var randomIsrcs: [String] = []
     
     private var selectedPlaylist: Playlist {
         if let playlist = playlistUseCase.selectedPlaylist {
@@ -179,8 +180,8 @@ private struct PlayListPlayButton: View {
     var body: some View {
         HStack(spacing: 27) {
             Button {
-                musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
                 musicControlUseCase.effect(.updatePlayingTrackList(trackList: selectedPlaylist.trackList ))
+                musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 165, height: 44)
@@ -200,7 +201,10 @@ private struct PlayListPlayButton: View {
             }
             
             Button {
-                musicControlUseCase.effect(.playRandomPlaylist(isrcs: isrcs))
+                randomIsrcs = isrcs.shuffled()
+                musicControlUseCase.effect(.updatePlayingTrackList(trackList: selectedPlaylist.trackList ))
+                // TODO: selectedPlaylist 트랙 리스트 교체
+                musicControlUseCase.effect(.playPlaylist(isrcs: randomIsrcs))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 165, height: 44)
@@ -326,6 +330,7 @@ private struct PlayListRowView: View {
                         
                         Button(role: .destructive) {
                             // TODO: 플리에서 제거
+                            
                         } label: {
                             Label("플레이리스트에서 제거", systemImage: SystemImage.delete)
                                 .symbolRenderingMode(.palette)

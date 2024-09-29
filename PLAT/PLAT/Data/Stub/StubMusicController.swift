@@ -22,10 +22,6 @@ struct StubMusicController: MusicControllerInterface {
         print(#function)
     }
     
-    func playRandomPlaylist(with isrcs: [String]) {
-        print(#function)
-    }
-    
     func pause() {
         print(#function)
     }

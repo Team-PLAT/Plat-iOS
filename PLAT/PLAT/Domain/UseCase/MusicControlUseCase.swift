@@ -25,7 +25,8 @@ final class MusicControlUseCase {
             isPaused: true,
             currentDuration: 0,
             isPlayingTrack: nil,
-            status: false
+            status: false,
+            currentTrackIndex: 0
         )
     }
 }
@@ -41,6 +42,7 @@ extension MusicControlUseCase {
         var currentDuration: Double
         var isPlayingTrack: Track?
         var status: Bool
+        var currentTrackIndex: Int
     }
 }
 
@@ -53,7 +55,6 @@ extension MusicControlUseCase {
         case setup(music: Music)
         case play(music: Music)
         case playPlaylist(isrcs: [String])
-        case playRandomPlaylist(isrcs: [String])
         case togglePlayback
         case updatePlayer(duration: Double)
         case updatePlayingTrack(track: Track)
@@ -85,11 +86,17 @@ extension MusicControlUseCase {
             fetchCurrentPlaybackPosition()
             
         case .playPlaylist(let isrcs):
-            musicController.playPlaylist(with: isrcs)
-            
-        case .playRandomPlaylist(let isrcs):
-            musicController.playRandomPlaylist(with: isrcs)
-            
+            Task {
+                for isrc in isrcs {
+                    let music = Music(isrc: isrc, title: "", artist: "", albumImageUrl: "", duration: 0.0)
+                    await fetchCurrentMusicInfo(music: music)
+                }
+                musicController.playPlaylist(with: isrcs)
+            }
+            state.isStreaming = true
+            state.isPaused = false
+            fetchCurrentPlaybackPosition()
+
         case .togglePlayback:
             if state.isPaused {
                 musicController.resume()
@@ -106,12 +113,18 @@ extension MusicControlUseCase {
             
         case .updatePlayingTrack(track: let track):
             state.isPlayingTrack = track
-        
+            
         case .updatePlayingTrackList(let trackList):
-            print("어쩌궁")
-//            state.isPlayingTrack = trackList
-            // 트랙이 끝날 때마다 인덱스 다르게 해줘서 하나씩 올려줘야 함!.. 끝난 걸 어디서 감지하쥐?
-            // 임의재생일 때는~?
+            state.isPlayingTrack = trackList.first
+            
+            if state.isPaused {
+                guard state.currentTrackIndex < trackList.count - 1 else {
+                    // 모든 트랙이 재생된 경우 처리
+                    return
+                }
+                state.currentTrackIndex += 1 
+                state.isPlayingTrack = trackList[state.currentTrackIndex]
+            }
         }
     }
 }

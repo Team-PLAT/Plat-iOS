@@ -38,7 +38,6 @@ struct TrackFeedView: View {
                 }
                 
                 if musicControlUseCase.state.isStreaming {
-                    // TODO: 더미데이터 변경
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
