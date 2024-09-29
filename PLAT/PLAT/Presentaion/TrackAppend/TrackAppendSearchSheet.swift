@@ -32,7 +32,7 @@ struct TrackAppendSearchSheet: View {
                 
                 Spacer()
                 
-                TrackAppendMusicList(musicList: $musicList)
+                TrackAppendMusicList(musicList: $musicList, searchTerm: $searchTerm)
             }
             .tint(.white)
             // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
@@ -179,9 +179,10 @@ private struct TrackAppendMusicList: View {
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     
     @Binding var musicList: [Music]
+    @Binding var searchTerm: String
     
     var body: some View {
-        List($musicList, id: \.self.isrc) { music in
+        List(Array($musicList.enumerated()), id: \.self.offset) { index, music in
             HStack {
                 // TODO: 이미지 캐싱 구현
                 AsyncImage(url: URL(string: music.albumImageUrl.wrappedValue)) { image in
@@ -215,6 +216,13 @@ private struct TrackAppendMusicList: View {
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
+            .onAppear {
+                if $musicList.count == (index + 1) {
+                    Task {
+                        await musicList.append(contentsOf: trackAppendUseCase.searchMusic(term: searchTerm, isPagination: true))
+                    }
+                }
+            }
         }
         .contentMargins(.top, 0, for: .scrollContent)
     }
