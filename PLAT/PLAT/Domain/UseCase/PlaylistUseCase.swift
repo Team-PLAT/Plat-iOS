@@ -25,7 +25,8 @@ final class PlaylistUseCase {
 extension PlaylistUseCase {
     
     struct State {
-        var playlists: [Playlist] = []
+//        var playlists: [Playlist] = []
+        var playlists: [Playlist] = MockDataBuilder.playlists
         var searchPlaylists: [Playlist] = []
         var selectedPlaylist: Playlist?
         var selectedPlaylistId: Playlist.ID?

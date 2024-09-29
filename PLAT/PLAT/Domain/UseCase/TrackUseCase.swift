@@ -19,7 +19,8 @@ final class TrackUseCase {
     
     init(trackService: TrackServiceInterface) {
         self.state = State()
-        self.mapTrackList = []
+//        self.mapTrackList = []
+        self.mapTrackList = MockDataBuilder.trackList
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
         self.trackService = trackService

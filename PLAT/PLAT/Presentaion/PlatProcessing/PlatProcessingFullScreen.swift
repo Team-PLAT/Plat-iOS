@@ -108,6 +108,8 @@ private struct PlatProcessingLoading: View {
 
 private struct PlatProcessingPlaylist: View {
     @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PathModel.self) private var pathModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -126,6 +128,11 @@ private struct PlatProcessingPlaylist: View {
                 VStack(spacing: 0) {
                     ForEach(trackUseCase.mapTrackList) { track in
                         PlatProcessingPlaylistRow(track: track)
+                            .onTapGesture {
+                                musicControlUseCase.effect(.updatePlayingTrack(track: track))
+                                musicControlUseCase.effect(.setup(music: track.music))
+                                pathModel.presentFullScreenCover(.trackDetail)
+                        }
                     }
                 }
             }
@@ -143,7 +150,7 @@ private struct PlatProcessingPlaylistInfo: View {
     @State private var addressName: String = ""
     
     var body: some View {
-        VStack( alignment: .center, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             
             RoundedRectangle(cornerRadius: 24)
                 .frame(width: 220, height: 220)
@@ -192,8 +199,8 @@ private struct PlatProcessingPlaylistButton: View {
     var body: some View {
         HStack(spacing: 27) {
             Button {
-                // TODO: 미니 플레이어 연결하기
                 musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
+                musicControlUseCase.effect(.updatePlayingTrackList(trackList: trackUseCase.mapTrackList))
                 pathModel.dismissFullScreenCover()
             } label: {
                 RoundedRectangle(cornerRadius: 12)
@@ -245,16 +252,21 @@ private struct PlatProcessingPlaylistButton: View {
 // MARK: - PlatProcessingPlaylistRow
 
 private struct PlatProcessingPlaylistRow: View {
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @State private var currentTrackMusic: Music?
+    @State private var fetchMusicTask: Task<Void, Never>?
+    
     private(set) var track: Track
     
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                PlatProcessingPlaylistRowImage(music: track.music)
+                PlatProcessingPlaylistRowImage(currentTrackMusic: $currentTrackMusic)
                     .padding(.trailing, 10)
                     .padding(.leading, 18)
                 
-                PlatProcessingPlaylistRowInfo(track: track)
+                PlatProcessingPlaylistRowInfo(currentTrackMusic: $currentTrackMusic, track: track)
                     .padding(.trailing, 40)
                 
                 Spacer()
@@ -266,16 +278,32 @@ private struct PlatProcessingPlaylistRow: View {
                 .foregroundColor(.gray9)
                 .padding(.leading, 46)
         }
+        .onAppear {
+            handleFetchMusic()
+        }
+        .onDisappear {
+            fetchMusicTask?.cancel()
+            fetchMusicTask = nil
+        }
+    }
+    
+    private func handleFetchMusic() {
+        fetchMusicTask = Task {
+            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
+            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
+            currentTrackMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+        }
     }
 }
 
 // MARK: - PlatProcessingPlaylistRowImage
 
 private struct PlatProcessingPlaylistRowImage: View {
-    private(set) var music: Music
+    
+    @Binding private(set) var currentTrackMusic: Music?
     
     var body: some View {
-        AsyncImage(url: URL(string: music.albumImageUrl)) { phase in
+        AsyncImage(url: URL(string: currentTrackMusic?.albumImageUrl ?? "")) { phase in
             if let image = phase.image {
                 image
                     .resizable()
@@ -295,17 +323,18 @@ private struct PlatProcessingPlaylistRowImage: View {
 
 private struct PlatProcessingPlaylistRowInfo: View {
     @Environment(UserUseCase.self) private var userUseCase
+    @Binding private(set) var currentTrackMusic: Music?
     
     private(set) var track: Track
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(track.music.title)
+            Text(currentTrackMusic?.title ?? "")
                 .font(.Body.body3)
                 .foregroundStyle(.white)
             
             HStack(spacing: 8) {
-                Text(track.music.artist)
+                Text(currentTrackMusic?.artist ?? "")
                     .font(.Body.body5)
                     .foregroundStyle(.gray7)
                 

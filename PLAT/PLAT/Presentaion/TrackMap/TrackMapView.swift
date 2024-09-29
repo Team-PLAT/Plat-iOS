@@ -16,7 +16,7 @@ struct TrackMapView: View {
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
     @State private var hasNotifications = false
-    @State private var playlist: Playlist?
+    @State private var playlist: Playlist? = MockDataBuilder.playlist
     @State private var isShowToastMessage: Bool = false
     
     var body: some View {
@@ -79,7 +79,7 @@ private struct MapView: View {
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
-                            musicControlUseCase.state.isPlayingTrack = track
+                            musicControlUseCase.effect(.updatePlayingTrack(track: track))
                             musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         }

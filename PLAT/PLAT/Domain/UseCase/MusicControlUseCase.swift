@@ -57,6 +57,7 @@ extension MusicControlUseCase {
         case togglePlayback
         case updatePlayer(duration: Double)
         case updatePlayingTrack(track: Track)
+        case updatePlayingTrackList(trackList: [Track])
     }
     
     func effect(_ effect: Effect) {
@@ -64,7 +65,6 @@ extension MusicControlUseCase {
         case .request:
             Task {
                 state.status = await musicController.setup()
-                print("🎀", state.status )
             }
             
         case let .setup(music):
@@ -106,6 +106,12 @@ extension MusicControlUseCase {
             
         case .updatePlayingTrack(track: let track):
             state.isPlayingTrack = track
+        
+        case .updatePlayingTrackList(let trackList):
+            print("어쩌궁")
+//            state.isPlayingTrack = trackList
+            // 트랙이 끝날 때마다 인덱스 다르게 해줘서 하나씩 올려줘야 함!.. 끝난 걸 어디서 감지하쥐?
+            // 임의재생일 때는~?
         }
     }
 }

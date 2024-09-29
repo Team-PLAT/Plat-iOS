@@ -57,7 +57,7 @@ struct PlaylistDetailView: View {
                     ForEach(selectedPlaylist.trackList) { track in
                         PlayListRowView(isrcs: $isrcs, track: track)
                             .onTapGesture {
-                                musicControlUseCase.state.isPlayingTrack = track
+                                musicControlUseCase.effect(.updatePlayingTrack(track: track))
                                 musicControlUseCase.effect(.setup(music: track.music))
                                 pathModel.presentFullScreenCover(.trackDetail)
                             }
@@ -159,13 +159,28 @@ private struct PlayListInfo: View {
 private struct PlayListPlayButton: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @Binding var isrcs: [String]
+    
+    private var selectedPlaylist: Playlist {
+        if let playlist = playlistUseCase.selectedPlaylist {
+            return playlist
+        } else {
+            return Playlist(
+                id: 0001,
+                title: "플레이리스트 가져오기 실패",
+                imageUrl: "",
+                trackList: []
+            )
+        }
+    }
     
     var body: some View {
         HStack(spacing: 27) {
             Button {
                 musicControlUseCase.effect(.playPlaylist(isrcs: isrcs))
+                musicControlUseCase.effect(.updatePlayingTrackList(trackList: selectedPlaylist.trackList ))
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 165, height: 44)
@@ -302,7 +317,7 @@ private struct PlayListRowView: View {
                 HStack(spacing: 0) {
                     Menu {
                         Button {
-                            musicControlUseCase.state.isPlayingTrack = track
+                            musicControlUseCase.effect(.updatePlayingTrack(track: track))
                             musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         } label: {
