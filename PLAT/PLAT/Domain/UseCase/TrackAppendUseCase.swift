@@ -25,6 +25,7 @@ extension TrackAppendUseCase {
     
     struct State {
         var selectedMusic: Music
+        var searchOffset: Int = 0
     }
 }
 
@@ -53,8 +54,13 @@ extension TrackAppendUseCase {
     }
     
     /// 음원 검색하기
-    func searchMusic(term: String) async -> [Music] {
-        await trackAppendService.searchMusic(term: term)
+    func searchMusic(term: String, isPagination: Bool = false) async -> [Music] {
+        if isPagination {
+            self.state.searchOffset += 25
+        } else {
+            self.state.searchOffset = 0
+        }
+        return await trackAppendService.searchMusic(term: term, searchOffset: self.state.searchOffset)
     }
     
     /// 트랙 게시하기

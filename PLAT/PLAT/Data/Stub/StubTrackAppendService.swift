@@ -62,14 +62,11 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
         }
     }
     
-    // TODO: 스트리밍 계정에 따라 다른 검색엔진 사용하도록(여기서 처리할지, 아예 함수를 다르게 구성할지...)
-    func searchMusic(term: String) async -> [Music] {
+    func searchMusic(term: String, searchOffset: Int) async -> [Music] {
         
         if !term.isEmpty {
             var reqeust = MusicCatalogSearchRequest(term: term, types: [Song.self])
-            // TODO: 페이징
-            reqeust.offset = 0
-            // TODO: 한 번에 불러올 개수 설정
+            reqeust.offset = searchOffset
             reqeust.limit = 25
             do {
                 let result = try await reqeust.response()
