@@ -183,13 +183,18 @@ private struct TrackAppendMusicList: View {
     var body: some View {
         List($musicList, id: \.self.isrc) { music in
             HStack {
-                // TODO: 이미지 캐싱 필요할 것 같습니다.
+                // TODO: 이미지 캐싱 구현
                 AsyncImage(url: URL(string: music.albumImageUrl.wrappedValue)) { image in
-                    image.image?
-                        .resizable()
-                        .frame(width: 72, height: 72)
-                        .cornerRadius(4, corners: .allCorners)
+                    if let img = image.image {
+                        img
+                            .resizable()
+                    } else {
+                        LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom)
+                    }
                 }
+                .frame(width: 72, height: 72)
+                .cornerRadius(4, corners: .allCorners)
+                
                 VStack(alignment: .leading) {
                     Text("\(music.title.wrappedValue)")
                         .font(.Body.body3)
