@@ -13,6 +13,7 @@ import MusicKit
 struct TrackAppendSearchSheet: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
 
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
@@ -56,7 +57,7 @@ struct TrackAppendSearchSheet: View {
                 self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
                     Task {
                         @MainActor in
-                        musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
+                        musicList = await musicControlUseCase.searchMusic(term: searchTerm)
                     }
                 }
             }
@@ -178,6 +179,7 @@ private struct TrackAppendRecentTerm: View {
 private struct TrackAppendMusicList: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding var musicList: [Music]
     @Binding var searchTerm: String
@@ -220,7 +222,7 @@ private struct TrackAppendMusicList: View {
             .onAppear {
                 if $musicList.count == (index + 1) {
                     Task {
-                        await musicList.append(contentsOf: trackAppendUseCase.searchMusic(term: searchTerm, isPagination: true))
+                        await musicList.append(contentsOf: musicControlUseCase.searchMusic(term: searchTerm, isPagination: true))
                     }
                 }
             }
