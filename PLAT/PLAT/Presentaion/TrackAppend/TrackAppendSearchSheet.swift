@@ -55,6 +55,7 @@ struct TrackAppendSearchSheet: View {
                 
                 self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
                     Task {
+                        @MainActor in
                         musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
                     }
                 }
