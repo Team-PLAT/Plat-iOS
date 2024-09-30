@@ -101,6 +101,7 @@ private struct CustomMarkerView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var playlistMusic: Music?
+    @State private var fetchMusicTask: Task<Void, Never>?
     
     let track: Track
     
@@ -130,10 +131,21 @@ private struct CustomMarkerView: View {
                 }
             }
             .onAppear {
-                Task {
-                    playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
-                }
+                handleFetchMusic()
             }
+            .onDisappear {
+                fetchMusicTask?.cancel()
+                fetchMusicTask = nil
+            }
+    }
+    
+    /// 음악 Fetch에 딜레이를 부여합니다.
+    private func handleFetchMusic() {
+        fetchMusicTask = Task {
+            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
+            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
+            playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+        }
     }
 }
 

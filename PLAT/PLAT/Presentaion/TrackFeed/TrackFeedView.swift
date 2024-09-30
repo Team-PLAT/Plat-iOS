@@ -68,6 +68,8 @@ private struct FeedRowView: View {
     let playlistId: String
     
     @State private var feedMusic: Music?
+    @State private var fetchMusicTask: Task<Void, Never>?
+    
     @Binding private(set) var selectedTrackId: Int64?
     
     var body: some View {
@@ -128,9 +130,20 @@ private struct FeedRowView: View {
                 .frame(width: UIScreen.main.bounds.width, height: 1)
         }
         .onAppear {
-            Task {
-                feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
-            }
+            handleFetchMusic()
+        }
+        .onDisappear {
+            fetchMusicTask?.cancel()
+            fetchMusicTask = nil
+        }
+    }
+    
+    /// 음악 Fetch에 딜레이를 부여합니다.
+    private func handleFetchMusic() {
+        fetchMusicTask = Task {
+            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
+            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
+            feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
         }
     }
 }
