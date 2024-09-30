@@ -17,7 +17,7 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 현재 위치의 사각형을 기준으로 TrackList를 반환합니다.
-    func fetchTrackList(rectLocation: RectLocation) async -> Result<[Track], any Error> {
+    func fetchTrackList(rectLocation: RectLocation) async -> Result<[Track], Error> {
         let request = FetchTrackMapRequest(
             startLatitude: rectLocation.startLatitude,
             startLongitude: rectLocation.startLongitude,
@@ -36,7 +36,7 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 지정된 페이지의 TrackList를 반환합니다.
-    func fetchTrackList(page: Int) async -> Result<[Track], any Error> {
+    func fetchTrackList(page: Int) async -> Result<[Track], Error> {
         let request = FetchTrackFeedRequest(page: Int32(page), size: 20)
         let result = await trackRepository.fetchTrackFeedList(request: request)
         switch result {
@@ -49,7 +49,7 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// Track 정보를 패치합니다.
-    func fetchCurrent(trackId: Int) async -> Result<Track, any Error> {
+    func fetchCurrent(trackId: Int) async -> Result<Track, Error> {
         let request = FetchTrackDetailResquest(trackId: Int64(trackId))
         let result = await trackRepository.fetchTrackDetail(request: request)
         switch result {
@@ -91,7 +91,7 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 트랙에 좋아요를 표시합니다.
-    func like(trackId: Int, isLike: Bool) async -> Result<Void, any Error> {
+    func like(trackId: Int, isLike: Bool) async -> Result<Void, Error> {
         let request = LikeTrackRequest(trackId: Int64(trackId), isLiked: isLike)
         let result = await trackRepository.likeTrack(request: request)
         switch result {
@@ -101,9 +101,18 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 트랙을 신고합니다.
-    func report(trackId: Int) async -> Result<Void, any Error> {
+    func report(trackId: Int) async -> Result<Void, Error> {
         let request = ReportTrackRequset(trackId: Int64(trackId))
         let result = await trackRepository.reportTrack(request: request)
+        switch result {
+        case .success: return .success(Void())
+        case .failure(let error): return .failure(error)
+        }
+    }
+    
+    /// 트랙을 삭제합니다.
+    func delete(trackId: Int) async -> Result<Void, any Error> {
+        let result = await trackRepository.deleteTrack(trackId: Int64(trackId))
         switch result {
         case .success: return .success(Void())
         case .failure(let error): return .failure(error)

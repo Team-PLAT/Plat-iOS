@@ -65,7 +65,7 @@ final class TrackRepository {
     
     func uploadTrack(request: UploadTrackRequest) async -> Result<UploadTrackResponse, Error> {
         let url = APIs.Plat.Tracks.upload.url
-        let response: Result<BaseResponse<UploadTrackResponse>, Error>  = await client.post(url: url, body: request)
+        let response: Result<BaseResponse<UploadTrackResponse>, Error> = await client.post(url: url, body: request)
         do {
             return try .success(response.get().result)
         } catch {
@@ -75,7 +75,7 @@ final class TrackRepository {
     
     func likeTrack(request: LikeTrackRequest) async -> Result<LikeTrackResponse, Error> {
         let url = APIs.Plat.Tracks.like(trackId: request.trackId).url
-        let response: Result<BaseResponse<LikeTrackResponse>, Error>  = await client.post(url: url, body: request)
+        let response: Result<BaseResponse<LikeTrackResponse>, Error> = await client.post(url: url, body: request)
         do {
             return try .success(response.get().result)
         } catch {
@@ -85,7 +85,17 @@ final class TrackRepository {
     
     func reportTrack(request: ReportTrackRequset) async -> Result<ReportTrackResponse, Error> {
         let url = APIs.Plat.Tracks.report(trackId: request.trackId).url
-        let response: Result<BaseResponse<ReportTrackResponse>, Error>  = await client.post(url: url, body: request)
+        let response: Result<BaseResponse<ReportTrackResponse>, Error> = await client.post(url: url, body: request)
+        do {
+            return try .success(response.get().result)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func deleteTrack(trackId: Int64) async -> Result<DeleteTrackResponse, Error> {
+        let url = APIs.Plat.Tracks.delete(trackId: trackId).url
+        let response: Result<BaseResponse<DeleteTrackResponse>, Error> = await client.delete(url: url)
         do {
             return try .success(response.get().result)
         } catch {
