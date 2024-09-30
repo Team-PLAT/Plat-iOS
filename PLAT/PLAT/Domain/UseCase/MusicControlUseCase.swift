@@ -41,6 +41,7 @@ extension MusicControlUseCase {
         var currentDuration: Double
         var isPlayingTrack: Track?
         var status: Bool
+        var searchOffset: Int = 0
     }
 }
 
@@ -162,5 +163,20 @@ extension MusicControlUseCase {
             )
         }
         return nil
+    }
+}
+
+// MARK: - Music Search
+
+extension MusicControlUseCase {
+    
+    /// 음원 검색하기
+    func searchMusic(term: String, isPagination: Bool = false) async -> [Music] {
+        if isPagination {
+            self.state.searchOffset += 25
+        } else {
+            self.state.searchOffset = 0
+        }
+        return await musicController.searchMusic(term: term, searchOffset: self.state.searchOffset)
     }
 }
