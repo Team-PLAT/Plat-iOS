@@ -125,6 +125,40 @@ extension AppleMusicControllerServiceImpl {
             return nil
         }
     }
+    
+    /// 음악 검색
+    func searchMusic(term: String, searchOffset: Int) async -> [Music] {
+        if !term.isEmpty {
+            var reqeust = MusicCatalogSearchRequest(term: term, types: [Song.self])
+            reqeust.offset = searchOffset
+            reqeust.limit = 25
+            do {
+                let result = try await reqeust.response()
+                let songs = result.songs
+                var musicList: [Music] = []
+                musicList = songs.map({ song in
+                    let musicData = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
+                    guard let musicIsrc = song.isrc else {
+                        return musicData
+                    }
+                    guard let musicArtworkURL = song.artwork?.url(width: 256, height: 256) else {
+                        return musicData
+                    }
+                    guard let musicDuration = song.duration else {
+                        return musicData
+                    }
+                    
+                    return Music(isrc: musicIsrc, title: song.title, artist: song.artistName, albumImageUrl: musicArtworkURL.absoluteString, duration: musicDuration)
+                })
+                return musicList
+            } catch {
+                print(error)
+                return []
+            }
+        } else {
+            return []
+        }
+    }
 }
 
 extension AppleMusicControllerServiceImpl {

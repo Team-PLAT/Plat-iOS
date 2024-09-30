@@ -58,4 +58,7 @@ struct StubMusicController: MusicControllerInterface {
         return (durationInMillis: nil, url: nil, name: nil, artistName: nil)
     }
     
+    func searchMusic(term: String, searchOffset: Int) async -> [Music] {
+        return []
+    }
 }

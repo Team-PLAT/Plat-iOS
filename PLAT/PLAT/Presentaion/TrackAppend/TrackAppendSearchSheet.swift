@@ -13,6 +13,7 @@ import MusicKit
 struct TrackAppendSearchSheet: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
 
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
@@ -32,7 +33,7 @@ struct TrackAppendSearchSheet: View {
                 
                 Spacer()
                 
-                TrackAppendMusicList(musicList: $musicList)
+                TrackAppendMusicList(musicList: $musicList, searchTerm: $searchTerm)
             }
             .tint(.white)
             // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
@@ -55,7 +56,8 @@ struct TrackAppendSearchSheet: View {
                 
                 self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
                     Task {
-                        musicList = await trackAppendUseCase.searchMusic(term: searchTerm)
+                        @MainActor in
+                        musicList = await musicControlUseCase.searchMusic(term: searchTerm)
                     }
                 }
             }
@@ -177,19 +179,26 @@ private struct TrackAppendRecentTerm: View {
 private struct TrackAppendMusicList: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding var musicList: [Music]
+    @Binding var searchTerm: String
     
     var body: some View {
-        List($musicList, id: \.self.isrc) { music in
+        List(Array($musicList.enumerated()), id: \.self.offset) { index, music in
             HStack {
-                // TODO: 이미지 캐싱 필요할 것 같습니다.
+                // TODO: 이미지 캐싱 구현
                 AsyncImage(url: URL(string: music.albumImageUrl.wrappedValue)) { image in
-                    image.image?
-                        .resizable()
-                        .frame(width: 72, height: 72)
-                        .cornerRadius(4, corners: .allCorners)
+                    if let img = image.image {
+                        img
+                            .resizable()
+                    } else {
+                        LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom)
+                    }
                 }
+                .frame(width: 72, height: 72)
+                .cornerRadius(4, corners: .allCorners)
+                
                 VStack(alignment: .leading) {
                     Text("\(music.title.wrappedValue)")
                         .font(.Body.body3)
@@ -210,6 +219,13 @@ private struct TrackAppendMusicList: View {
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
+            .onAppear {
+                if $musicList.count == (index + 1) {
+                    Task {
+                        await musicList.append(contentsOf: musicControlUseCase.searchMusic(term: searchTerm, isPagination: true))
+                    }
+                }
+            }
         }
         .contentMargins(.top, 0, for: .scrollContent)
     }
