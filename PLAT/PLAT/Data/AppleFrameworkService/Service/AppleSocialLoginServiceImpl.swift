@@ -20,8 +20,6 @@ struct AppleSocialLoginServiceImpl: SocialLoginServiceInterface {
     func handleLogin(_ authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error> {
         switch authResult {
         case .success(let auth):
-            print("✅ APPLE LOGIN 성공")
-            
             switch auth.credential {
             case let(credential) as ASAuthorizationAppleIDCredential:
                 UserSecurityManager.shared.updateEncryptedUserIdentifier(credential.user)
@@ -31,7 +29,6 @@ struct AppleSocialLoginServiceImpl: SocialLoginServiceInterface {
                 return .failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "알 수 없는 인증 유형"]))
             }
         case .failure(let error):
-            print("실패", error.localizedDescription)
             return .failure(error)
         }
     }

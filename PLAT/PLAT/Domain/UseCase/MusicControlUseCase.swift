@@ -11,7 +11,6 @@ import Combine
 @Observable
 final class MusicControlUseCase {
     
-    /// Apple Music or Spotify를 넣기 위한 인터페이스
     private var musicController: MusicControllerInterface
     
     var state: State
@@ -23,6 +22,7 @@ final class MusicControlUseCase {
         self.state = State(
             isStreaming: false,
             isPaused: true,
+            isLoading: false,
             currentDuration: 0,
             isPlayingTrack: nil,
             status: false
@@ -38,6 +38,7 @@ extension MusicControlUseCase {
         var music: Music?
         var isStreaming: Bool
         var isPaused: Bool
+        var isLoading: Bool
         var currentDuration: Double
         var isPlayingTrack: Track?
         var status: Bool
@@ -64,8 +65,9 @@ extension MusicControlUseCase {
         switch effect {
         case .request:
             Task {
+                state.isLoading = true
                 state.status = await musicController.setup()
-                print("🎀", state.status )
+                state.isLoading = false
             }
             
         case let .setup(music):
