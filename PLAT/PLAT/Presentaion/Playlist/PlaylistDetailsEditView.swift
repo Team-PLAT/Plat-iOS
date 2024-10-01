@@ -265,7 +265,7 @@ private struct PlayListRowView: View {
         }
         .onAppear {
             Task {
-                playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
             }
         }
         .padding(.vertical, 10)

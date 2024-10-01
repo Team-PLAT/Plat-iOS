@@ -64,6 +64,38 @@ final class MapKitLocationServiceImpl: NSObject {
     func requestLocation() {
         locationManager.requestLocation()
     }
+    
+    // 주어진 좌표에서 1km 떨어진 좌표를 계산하는 함수
+    func calculateRectCoordinates(from center: CLLocation) -> RectLocation {
+        let center = CLLocationCoordinate2D(
+            latitude: center.coordinate.latitude,
+            longitude: center.coordinate.longitude
+        )
+        
+        let distanceInKm = 1.0 // 1km
+        let earthRadiusInKm = 6371.0 // 지구 반지름 (킬로미터 단위)
+        
+        // 위도 변화를 위한 계수
+        let latitudeDelta = distanceInKm / earthRadiusInKm * (180.0 / .pi)
+        
+        // 경도 변화를 위한 계수 (경도는 위도에 따라 달라짐)
+        let longitudeDelta = distanceInKm / (earthRadiusInKm * cos(center.latitude * .pi / 180.0)) * (180.0 / .pi)
+        
+        // 사각형의 좌표 계산 (위, 아래, 왼쪽, 오른쪽)
+        let topLeftLatitude = center.latitude + latitudeDelta
+        let topLeftLongitude = center.longitude - longitudeDelta
+        let bottomRightLatitude = center.latitude - latitudeDelta
+        let bottomRightLongitude = center.longitude + longitudeDelta
+        
+        let rectLocation = RectLocation(
+            startLatitude: topLeftLatitude,
+            startLongitude: topLeftLongitude,
+            endLatitude: bottomRightLatitude,
+            endLongitude: bottomRightLongitude
+        )
+
+        return rectLocation
+    }
 }
 
 // MARK: - CLLocationManagerDelegate

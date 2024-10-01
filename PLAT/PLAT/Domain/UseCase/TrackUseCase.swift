@@ -24,12 +24,38 @@ final class TrackUseCase {
     }
 }
 
+// MARK: - UseCase Method
+
+extension TrackUseCase {
+    
+    /// 사각형 좌표에 기반한 TrackMap의 TrackList를 반환합니다.
+    func fetchMapTrackLst(rectLocation: RectLocation) async {
+        let result = await trackService.fetchTrackList(rectLocation: rectLocation)
+        switch result {
+        case .success(let trackList): self.mapTrackList = trackList
+        case .failure(let error): print(error) // TODO: 에러 처리
+        }
+    }
+    
+    /// TrackMap의 음악 정보를 업데이트합니다.
+    func updateMapTrackListMusicInfo(from musicList: [Music]) {
+        var copyMapTrackList = mapTrackList
+        for (index, track) in copyMapTrackList.enumerated() {
+            if let music = musicList.first(where: { $0.isrc == track.music.isrc }) {
+                print("노래 찾았다! \(music)")
+                copyMapTrackList[index].music = music
+            }
+        }
+        
+        mapTrackList = copyMapTrackList
+    }
+}
+
 // MARK: - Effect
 
 extension TrackUseCase {
     
     enum Effect {
-        case fetchMapTrackList(rectLocation: RectLocation)
         case fetchFeedTrackList(page: Int)
         case fetchCurrentTrack(id: Int)
         case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
@@ -40,15 +66,6 @@ extension TrackUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
-        case .fetchMapTrackList(let rectLocation):
-            Task {
-                let result = await trackService.fetchTrackList(rectLocation: rectLocation)
-                switch result {
-                case .success(let trackList): self.mapTrackList = trackList
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
-            
         case .fetchFeedTrackList(let page):
             Task {
                 let result = await trackService.fetchTrackList(page: page)

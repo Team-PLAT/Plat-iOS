@@ -42,7 +42,7 @@ struct TrackFeedView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: $musicControlUseCase.state.isPlayingTrack,
+                        track: $musicControlUseCase.state.currentTrack,
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
@@ -143,7 +143,7 @@ private struct FeedRowView: View {
         fetchMusicTask = Task {
             try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
             if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-            feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+            // feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
         }
     }
 }
@@ -305,14 +305,14 @@ private struct FeedPlayer: View {
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
+                        musicControlUseCase.updateCurrentTrack(to: track)
                         musicControlUseCase.effect(.togglePlayback)
                     } else {
                         /// 처음 재생할 때
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
+                        musicControlUseCase.updateCurrentTrack(to: track)
                         // musicControlUseCase.effect(.setup(music: track.music))
                         selectedTrackId = trackIndex
                     }

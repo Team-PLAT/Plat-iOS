@@ -10,6 +10,8 @@ import Combine
 
 struct StubMusicController: MusicControllerInterface {
     
+    
+    
     func setup() async -> Result<Bool, any Error> {
         return .success(true)
     }
@@ -54,7 +56,7 @@ struct StubMusicController: MusicControllerInterface {
         return Empty<Double, Error>().eraseToAnyPublisher()
     }
     
-    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+    func fetchMusic(with isrc: String) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
         return (durationInMillis: nil, url: nil, name: nil, artistName: nil)
     }
     

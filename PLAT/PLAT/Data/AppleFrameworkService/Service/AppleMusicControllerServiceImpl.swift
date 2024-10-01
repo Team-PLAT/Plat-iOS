@@ -117,8 +117,8 @@ extension AppleMusicControllerServiceImpl {
     }
     
     /// Music 정보 받아오는 함수
-    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
-        await requestSongId(for: music.isrc)
+    func fetchMusic(with isrc: String) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+        await requestSongId(for: isrc)
         
         if let song = firstSong {
             return (song.attributes.durationInMillis, song.attributes.artwork?.url, song.attributes.name, song.attributes.artistName)
@@ -212,7 +212,6 @@ extension AppleMusicControllerServiceImpl {
             let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
             
             if var firstSong = result.data.first {
-                
                 if var artwork = firstSong.attributes.artwork {
                     if let originalUrl = artwork.url {
                         let cleanedUrl = originalUrl

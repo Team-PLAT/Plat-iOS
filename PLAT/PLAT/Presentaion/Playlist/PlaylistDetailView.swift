@@ -57,7 +57,7 @@ struct PlaylistDetailView: View {
                     ForEach(selectedPlaylist.trackList) { track in
                         PlayListRowView(isrcs: $isrcs, track: track)
                             .onTapGesture {
-                                musicControlUseCase.state.isPlayingTrack = track
+                                musicControlUseCase.state.currentTrack = track
 //                                musicControlUseCase.effect(.setup(music: track.music))
                                 pathModel.presentFullScreenCover(.trackDetail)
                             }
@@ -302,7 +302,7 @@ private struct PlayListRowView: View {
                 HStack(spacing: 0) {
                     Menu {
                         Button {
-                            musicControlUseCase.state.isPlayingTrack = track
+                            musicControlUseCase.state.currentTrack = track
 //                            musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         } label: {
@@ -335,7 +335,7 @@ private struct PlayListRowView: View {
         }
         .onAppear {
             Task {
-                playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
                 
                 if let currentIsrc = playlistMusic?.isrc {
                     isrcs.append(currentIsrc)
