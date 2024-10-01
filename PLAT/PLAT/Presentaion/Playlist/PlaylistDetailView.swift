@@ -58,7 +58,7 @@ struct PlaylistDetailView: View {
                         PlayListRowView(isrcs: $isrcs, track: track)
                             .onTapGesture {
                                 musicControlUseCase.state.isPlayingTrack = track
-                                musicControlUseCase.effect(.setup(music: track.music))
+//                                musicControlUseCase.effect(.setup(music: track.music))
                                 pathModel.presentFullScreenCover(.trackDetail)
                             }
                     }
@@ -303,7 +303,7 @@ private struct PlayListRowView: View {
                     Menu {
                         Button {
                             musicControlUseCase.state.isPlayingTrack = track
-                            musicControlUseCase.effect(.setup(music: track.music))
+//                            musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         } label: {
                             Label("트랙 피드 조회", systemImage: SystemImage.searchFeed)

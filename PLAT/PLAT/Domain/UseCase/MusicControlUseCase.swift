@@ -25,7 +25,8 @@ final class MusicControlUseCase {
             isLoading: false,
             currentDuration: 0,
             isPlayingTrack: nil,
-            status: false
+            isAuthorized: false,
+            searchOffset: 0
         )
     }
 }
@@ -41,8 +42,45 @@ extension MusicControlUseCase {
         var isLoading: Bool
         var currentDuration: Double
         var isPlayingTrack: Track?
-        var status: Bool
-        var searchOffset: Int = 0
+        var isAuthorized: Bool
+        var searchOffset: Int
+    }
+}
+
+// MARK: - UseCase Method
+
+extension MusicControlUseCase {
+    
+    /// 스트리밍 계정 구독 여부를 요청합니다.
+    func requestSubscription() async throws {
+        startLoading()
+        let result = await musicController.setup()
+        try await Task.sleep(nanoseconds: 3_000_000_000)
+        
+        switch result {
+        case let .success(isAuthorized):
+            state.isAuthorized = isAuthorized
+            
+        case let .failure(error):
+            throw error
+        }
+        
+        stopLoading()
+    }
+}
+
+// MARK: - Helper
+
+extension MusicControlUseCase {
+    
+    /// 로딩을 시작합니다.
+    private func startLoading() {
+        state.isLoading = true
+    }
+    
+    /// 로딩을 종료합니다.
+    private func stopLoading() {
+        state.isLoading = false
     }
 }
 
@@ -51,8 +89,7 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
-        case request
-        case setup(music: Music)
+        // case setup(music: Music)
         case play(music: Music)
         case playPlaylist(isrcs: [String])
         case playRandomPlaylist(isrcs: [String])
@@ -63,22 +100,15 @@ extension MusicControlUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
-        case .request:
-            Task {
-                state.isLoading = true
-                state.status = await musicController.setup()
-                state.isLoading = false
-            }
-            
-        case let .setup(music):
-            Task {
-                state.status = await musicController.setup()
-                await fetchCurrentMusicInfo(music: music)
-                musicController.play(music)
-            }
-            state.isStreaming = true
-            state.isPaused = false
-            fetchCurrentPlaybackPosition()
+//        case let .setup(music):
+//            Task {
+//                state.status = await musicController.setup()
+//                await fetchCurrentMusicInfo(music: music)
+//                musicController.play(music)
+//            }
+//            state.isStreaming = true
+//            state.isPaused = false
+//            fetchCurrentPlaybackPosition()
             
         case let .play(music):
             cancelPublisher()

@@ -10,8 +10,8 @@ import Combine
 
 struct StubMusicController: MusicControllerInterface {
     
-    func setup() async -> Bool {
-        return false
+    func setup() async -> Result<Bool, any Error> {
+        return .success(true)
     }
     
     func play(_ music: Music) {

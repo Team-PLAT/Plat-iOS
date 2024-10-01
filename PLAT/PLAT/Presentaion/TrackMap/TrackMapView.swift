@@ -80,7 +80,7 @@ private struct MapView: View {
                     CustomMarkerView(track: track)
                         .onTapGesture {
                             musicControlUseCase.state.isPlayingTrack = track
-                            musicControlUseCase.effect(.setup(music: track.music))
+//                            musicControlUseCase.effect(.setup(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         }
                 }

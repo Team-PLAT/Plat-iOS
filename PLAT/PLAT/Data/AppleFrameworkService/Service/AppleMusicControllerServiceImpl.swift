@@ -14,9 +14,12 @@ import MediaPlayer
 
 final class AppleMusicControllerServiceImpl: NSObject, MusicControllerInterface {
     
-    private var firstSong: ResponseSong?
+    enum AppleMusicError: Error {
+        case invalidAuthorization
+    }
     
-    var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
+    private var firstSong: ResponseSong?
+    private var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
 }
 
 // MARK: - Interface Method
@@ -24,17 +27,16 @@ final class AppleMusicControllerServiceImpl: NSObject, MusicControllerInterface 
 extension AppleMusicControllerServiceImpl {
     
     /// 권한 요청
-    func setup() async -> Bool {
+    func setup() async -> Result<Bool, Error> {
         let isAuthorized = await requestAuthorization()
         if isAuthorized {
             if await checkMusicSubscription() {
-                return true
+                return .success(true)
             } else {
-                return false
+                return .success(false)
             }
         } else {
-            print("권한 없엉")
-            return false
+            return .failure(AppleMusicError.invalidAuthorization)
         }
     }
     

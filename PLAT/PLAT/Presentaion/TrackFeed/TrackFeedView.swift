@@ -313,7 +313,7 @@ private struct FeedPlayer: View {
                             track.music = feedMusic
                         }
                         musicControlUseCase.effect(.updatePlayingTrack(track: track))
-                        musicControlUseCase.effect(.setup(music: track.music))
+                        // musicControlUseCase.effect(.setup(music: track.music))
                         selectedTrackId = trackIndex
                     }
                 } label: {

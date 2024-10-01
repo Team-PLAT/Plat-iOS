@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol MusicControllerInterface {
-    func setup() async -> Bool
+    func setup() async -> Result<Bool, Error>
     func play(_ music: Music)
     func playPlaylist(with isrcs: [String])
     func playRandomPlaylist(with isrcs: [String])

@@ -140,6 +140,7 @@
 		82A825182C6E3B060084D7E8 /* Helper+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */; };
 		82A8251C2C71BE020084D7E8 /* MiniMusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */; };
 		82B2F0F12CABC21600BCFD70 /* PlatTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B2F0F02CABC21600BCFD70 /* PlatTitle.swift */; };
+		82B2F0F32CABC88B00BCFD70 /* AlertActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B2F0F22CABC88B00BCFD70 /* AlertActionButton.swift */; };
 		82C06F542C6DD977000FEE3A /* TrackDetailFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F532C6DD977000FEE3A /* TrackDetailFullScreen.swift */; };
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
@@ -306,6 +307,7 @@
 		82A825172C6E3B060084D7E8 /* Helper+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+DateFormatter.swift"; sourceTree = "<group>"; };
 		82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMusicPlayer.swift; sourceTree = "<group>"; };
 		82B2F0F02CABC21600BCFD70 /* PlatTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatTitle.swift; sourceTree = "<group>"; };
+		82B2F0F22CABC88B00BCFD70 /* AlertActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionButton.swift; sourceTree = "<group>"; };
 		82C06F532C6DD977000FEE3A /* TrackDetailFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailFullScreen.swift; sourceTree = "<group>"; };
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				82A8251B2C71BE020084D7E8 /* MiniMusicPlayer.swift */,
 				82721EED2C8D624000CA2C9A /* ToastMessage.swift */,
 				82CF06952CA04DC70039C2FF /* PlatProgressView.swift */,
+				82B2F0F22CABC88B00BCFD70 /* AlertActionButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 				82588AB72CA3EDDF00AD8132 /* PlaylistServiceImpl.swift in Sources */,
 				8208367F2C34012E00F6D0CF /* SocialLoginServiceInterface.swift in Sources */,
 				7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */,
+				82B2F0F32CABC88B00BCFD70 /* AlertActionButton.swift in Sources */,
 				82588AB12CA3ECA300AD8132 /* UpdatePlaylistAPI.swift in Sources */,
 				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
