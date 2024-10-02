@@ -189,6 +189,7 @@ private struct AlbumImage: View {
 private struct MusicControllerView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(UserUseCase.self) private var userUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
@@ -220,11 +221,19 @@ private struct MusicControllerView: View {
             )
             
             Menu {
-                Button(role: .destructive) {
-                    pathModel.dismissFullScreenCover()
-                    pathModel.push(.report(trackId: trackUseCase.currentTrack.id))
-                } label: {
-                    Text("신고하기")
+                if userUseCase.checkMyTrack(currentTrack: trackUseCase.currentTrack) {
+                    Button(role: .destructive) {
+                        trackUseCase.effect(.deleteTrack(trackId: Int(trackUseCase.currentTrack.id)))
+                    } label: {
+                        Text("삭제하기")
+                    }
+                } else {
+                    Button(role: .destructive) {
+                        pathModel.dismissFullScreenCover()
+                        pathModel.push(.report(trackId: trackUseCase.currentTrack.id))
+                    } label: {
+                        Text("신고하기")
+                    }
                 }
             } label: {
                 ZStack {

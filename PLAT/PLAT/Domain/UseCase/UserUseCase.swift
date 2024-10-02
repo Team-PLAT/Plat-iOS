@@ -43,7 +43,17 @@ extension UserUseCase {
         userProfileService.updateNickname()
     }
     
+    /// 닉네임 유효성 확인하기
     func validateNickname(text: String) -> String {
         return userProfileService.validateNickname(text: text)
+    }
+    
+    /// 내가 게시한 트랙인지 확인하기
+    func checkMyTrack(currentTrack: Track) -> Bool {
+        if state.user.id == currentTrack.user.id {
+            return true
+        } else {
+            return false
+        }
     }
 }
