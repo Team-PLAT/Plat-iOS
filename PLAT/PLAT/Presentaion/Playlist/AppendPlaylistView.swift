@@ -125,8 +125,7 @@ private struct AppendPlaylistDate: View {
         HStack {
             Text("생성일자")
             Spacer()
-            // TODO: 생성일자 서버 기준으로 표시하기
-            Text("2024.08.17")
+            Text(Date().yearMonthDayFormat)
         }
         .foregroundStyle(.gray7)
         .font(.Body.body1)
