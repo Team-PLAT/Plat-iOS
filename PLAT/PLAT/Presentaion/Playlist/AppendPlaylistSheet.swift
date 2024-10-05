@@ -10,6 +10,7 @@ import SwiftUI
 struct AppendPlaylistSheet: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @State private var isPhotoAlbumSheet = false
     @State private var playlistImage: UIImage?
@@ -47,7 +48,13 @@ struct AppendPlaylistSheet: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 플레이 생성하기 기능 추가
+                    Task {
+                        let result = await playlistUseCase.uploadPlaylist(title: playlistTitle, imageData: nil, tracks: [])
+                        switch result {
+                        case .success(let playlistId): playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistId))
+                        case .failure: break
+                        }
+                    }
                 } label: {
                     Text("생성")
                         .foregroundStyle(.platPurple)
