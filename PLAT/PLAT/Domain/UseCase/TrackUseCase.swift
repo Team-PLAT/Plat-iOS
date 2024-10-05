@@ -32,7 +32,7 @@ extension TrackUseCase {
         case fetchMapTrackList(rectLocation: RectLocation)
         case fetchFeedTrackList(page: Int)
         case fetchCurrentTrack(id: Int)
-        case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
+        case uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location)
         case likeTrack(trackId: Int, isLike: Bool)
         case reportTrack(trackId: Int)
         case deleteTrack(trackId: Int)
