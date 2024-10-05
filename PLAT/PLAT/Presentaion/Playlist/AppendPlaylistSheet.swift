@@ -1,5 +1,5 @@
 //
-//  AppendPlaylistView.swift
+//  AppendPlaylistSheet.swift
 //  PLAT
 //
 //  Created by 박준우 on 9/16/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppendPlaylistView: View {
+struct AppendPlaylistSheet: View {
     
     @Environment(PathModel.self) private var pathModel
     
@@ -134,6 +134,6 @@ private struct AppendPlaylistDate: View {
 }
 
 #Preview {
-    AppendPlaylistView()
+    AppendPlaylistSheet()
         .injectDIContainer()
 }
