@@ -17,54 +17,56 @@ struct AppendPlaylistSheet: View {
     @State private var playlistTitle: String = ""
     
     var body: some View {
-        VStack {
-            AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
-                .sheet(isPresented: $isPhotoAlbumSheet) {
-                    PhotoPicker(selectedImage: $playlistImage)
+        NavigationStack {
+            VStack {
+                AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
+                    .sheet(isPresented: $isPhotoAlbumSheet) {
+                        PhotoPicker(selectedImage: $playlistImage)
+                    }
+                
+                AppendPlaylistTitle(playlistTitle: $playlistTitle)
+                
+                AppendPlaylistDate()
+                
+                Spacer()
+            }
+            .navigationTitle("새로운 플레이리스트")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        pathModel.dismissSheet()
+                    } label: {
+                        HStack(spacing: 3) {
+                            Image(systemName: "chevron.backward")
+                            Text("취소")
+                                .font(.Body.body2)
+                        }
+                        .foregroundStyle(.platPurple)
+                    }
+                    
                 }
-            
-            AppendPlaylistTitle(playlistTitle: $playlistTitle)
-            
-            AppendPlaylistDate()
-            
-            Spacer()
-        }
-        .navigationTitle("새로운 플레이리스트")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button {
-                    pathModel.dismissSheet()
-                } label: {
-                    HStack(spacing: 3) {
-                        Image(systemName: "chevron.backward")
-                        Text("취소")
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        Task {
+                            let result = await playlistUseCase.uploadPlaylist(title: playlistTitle, imageData: nil, tracks: [])
+                            switch result {
+                            case .success(let playlistId): playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistId))
+                            case .failure: break
+                            }
+                        }
+                        pathModel.dismissSheet()
+                        pathModel.push(.playlistDetail)
+                    } label: {
+                        Text("생성")
+                            .foregroundStyle(.platPurple)
                             .font(.Body.body2)
                     }
-                    .foregroundStyle(.platPurple)
-                }
-                
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    Task {
-                        let result = await playlistUseCase.uploadPlaylist(title: playlistTitle, imageData: nil, tracks: [])
-                        switch result {
-                        case .success(let playlistId): playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistId))
-                        case .failure: break
-                        }
-                    }
-                    pathModel.dismissSheet()
-                    pathModel.push(.playlistDetail)
-                } label: {
-                    Text("생성")
-                        .foregroundStyle(.platPurple)
-                        .font(.Body.body2)
                 }
             }
+            .presentationDragIndicator(.visible)
         }
-        .presentationDragIndicator(.visible)
     }
 }
 
