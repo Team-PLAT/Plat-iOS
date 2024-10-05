@@ -181,7 +181,7 @@ private struct CreatePlaylistView: View {
     var body: some View {
         VStack {
             Button {
-                pathModel.push(.appendPlaylistView)
+                pathModel.presentSheet(.appendPlaylist)
             } label: {
                 HStack(spacing: 18) {
                     RoundedRectangle(cornerRadius: 12)

@@ -30,9 +30,6 @@ extension PathModel {
         case .playlist:
             PlaylistView()
             
-        case .appendPlaylistView:
-            AppendPlaylistView()
-            
         case .playlistDetail:
             PlaylistDetailView()
             
@@ -81,7 +78,7 @@ extension PathModel {
             EmptyView()
         
         case .appendPlaylist:
-            EmptyView()
+            AppendPlaylistSheet()
         }
     }
     
