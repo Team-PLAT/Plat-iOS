@@ -35,7 +35,7 @@ struct AppendPlaylistSheet: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
-                    pathModel.pop()
+                    pathModel.dismissSheet()
                 } label: {
                     HStack(spacing: 3) {
                         Image(systemName: "chevron.backward")
@@ -55,6 +55,8 @@ struct AppendPlaylistSheet: View {
                         case .failure: break
                         }
                     }
+                    pathModel.dismissSheet()
+                    pathModel.push(.playlistDetail)
                 } label: {
                     Text("생성")
                         .foregroundStyle(.platPurple)
