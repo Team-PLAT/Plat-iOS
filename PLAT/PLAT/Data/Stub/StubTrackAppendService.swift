@@ -61,16 +61,4 @@ struct StubTrackAppendService: TrackAppendServiceInterface {
             print("removeRecentSearchTerm 실패: \(error)")
         }
     }
-
-    func postTrack(music: Music, context: String, location: Location) async {
-        let response = await TrackRepository().uploadTrack(
-            request: UploadTrackRequest(
-                isrc: music.isrc,
-                imageUrl: music.albumImageUrl,
-                content: context,
-                latitude: location.latitude,
-                longitude: location.longitude
-            )
-        )
-    }
 }
