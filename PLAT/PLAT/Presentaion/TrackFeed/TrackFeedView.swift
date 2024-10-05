@@ -61,6 +61,8 @@ struct TrackFeedView: View {
 private struct FeedRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(UserUseCase.self) private var userUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(PathModel.self) private var pathModel
     
     let track: Track
@@ -88,10 +90,18 @@ private struct FeedRowView: View {
                         Spacer()
                         
                         Menu {
-                            Button(role: .destructive) {
-                                pathModel.push(.report(trackId: track.id))
-                            } label: {
-                                Text("신고하기")
+                            if userUseCase.checkMyTrack(currentTrack: track) {
+                                Button(role: .destructive) {
+                                    trackUseCase.effect(.deleteTrack(trackId: Int(track.id)))
+                                } label: {
+                                    Text("삭제하기")
+                                }
+                            } else {
+                                Button(role: .destructive) {
+                                    pathModel.push(.report(trackId: track.id))
+                                } label: {
+                                    Text("신고하기")
+                                }
                             }
                         } label: {
                             Image(systemName: "ellipsis")
