@@ -50,7 +50,7 @@ extension MusicControlUseCase {
     func requestSubscription() async throws {
         startLoading()
         let result = await musicController.setup()
-        // try await Task.sleep(nanoseconds: 1_000_000_000) // UX를 고려한 대기
+        try await Task.sleep(nanoseconds: 2_000_000_000) // UX를 고려한 대기
         
         switch result {
         case let .success(isAuthorized):

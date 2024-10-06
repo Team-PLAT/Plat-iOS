@@ -8,7 +8,7 @@
 import Combine
 
 struct StubMusicControllerService: MusicControllerInterface {
-    func setup() async -> Result<Bool, any Error> {
+    func setup() async -> Result<Bool, Error> {
         .success(true)
     }
     
@@ -40,15 +40,15 @@ struct StubMusicControllerService: MusicControllerInterface {
         //
     }
     
-    func currentDuration() -> AnyPublisher<Double, any Error> {
+    func currentDuration() -> AnyPublisher<Double, Error> {
         return Empty<Double, Error>().eraseToAnyPublisher()
     }
     
-    func fetchMusic(with isrc: String) async -> Result<Music, any Error> {
+    func fetchMusic(with isrc: String) async -> Result<Music, Error> {
         .success(MockDataBuilder.music)
     }
     
-    func searchMusic(term: String, searchOffset: Int) async -> [Music] {
-        []
+    func searchMusic(term: String, searchOffset: Int) async -> Result<[Music], Error> {
+        .success([])
     }
 }
