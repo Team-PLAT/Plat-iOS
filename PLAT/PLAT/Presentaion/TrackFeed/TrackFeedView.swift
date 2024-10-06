@@ -355,7 +355,8 @@ private struct FeedPlayer: View {
             Rectangle()
                 .foregroundColor(.platBlack)
                 .cornerRadius(8)
-                .frame(width: 311, height: 56)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
             
             HStack(spacing: 0) {
                 Rectangle()
@@ -368,18 +369,18 @@ private struct FeedPlayer: View {
                     .padding(.trailing, 8)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    
                     Text(track.music.title)
                         .font(.Body.body2)
                         .foregroundStyle(.white)
-                        .frame(width: 145, alignment: .leading)
+                        .lineLimit(1)
                     
                     Text(track.music.artist)
                         .font(.Body.body4)
                         .foregroundStyle(.gray7)
-                        .frame(width: 87, alignment: .leading)
+                        .lineLimit(1)
                 }
-                .padding(.trailing, 70)
+                
+                Spacer()
                 
                 Button {
                     playButtonTapped()
@@ -392,11 +393,11 @@ private struct FeedPlayer: View {
                             transaction.animation = nil
                         }
                 }
-                .buttonStyle(.plain)
             }
             // TODO: 사이즈 조정
-            .frame(width: 311, height: 56)
+            // .frame(width: 311, height: 56)
         }
+        .padding(.trailing, 18)
     }
 }
 
@@ -431,26 +432,32 @@ private struct FeedAlbumImage: View {
 private struct FeedContentImage: View {
     let track: Track
     
-    private var contentImageUrl: URL? {
-        URL(string: track.imageUrl ?? "")
-    }
-    
     var body: some View {
-        if contentImageUrl != nil {
-            AsyncImage(url: contentImageUrl) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fill)
-                        .clipShape(Rectangle())
-                        .cornerRadius(14)
-                        .padding(.trailing, 18)
-                } else {
-                    EmptyView()
+        if let imageUrl = track.imageUrl {
+            if !imageUrl.isEmpty {
+                AsyncImage(url: URL(string: imageUrl)) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipShape(Rectangle())
+                            .cornerRadius(14)
+                            .padding(.trailing, 18)
+                    } else {
+                        Rectangle()
+                            .foregroundStyle(.gray9)
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipShape(Rectangle())
+                            .cornerRadius(14)
+                            .padding(.trailing, 18)
+                            .overlay(
+                                PlatProgressView()
+                            )
+                    }
                 }
+            } else {
+                EmptyView()
             }
-        } else {
-            EmptyView()
         }
     }
 }
