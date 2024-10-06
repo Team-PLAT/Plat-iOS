@@ -8,7 +8,8 @@
 import Foundation
 
 enum SystemImage {
-    static let like = "heart"
+    static let unLike = "suit.heart"
+    static let like = "heart.fill"
     static let addToPlaylist = "text.badge.plus"
     static let postWithThisMusic = "repeat"
     static let seeMore = "ellipsis.circle"

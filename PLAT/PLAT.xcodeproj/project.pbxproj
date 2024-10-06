@@ -127,7 +127,6 @@
 		82721EEC2C8C3D1E00CA2C9A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */; };
 		82721EEE2C8D624000CA2C9A /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82721EED2C8D624000CA2C9A /* ToastMessage.swift */; };
 		827A1DE02C2D9B3200C40046 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */; };
-		82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */; };
 		82A36ED72C6DE26E00F6E6E2 /* StubTrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */; };
 		82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */; };
 		82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDA2C6DE8E000F6E6E2 /* Place.swift */; };
@@ -143,6 +142,7 @@
 		82C06F562C6DD9B1000FEE3A /* MusicControllerInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */; };
 		82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */; };
 		82C06F5A2C6DDECF000FEE3A /* TrackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */; };
+		82C25E642CB26DDD0018B02E /* StubMusicControllerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C25E632CB26DDD0018B02E /* StubMusicControllerService.swift */; };
 		82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5282C75689E00C57916 /* TrackAppendToPlaylistSheet.swift */; };
 		82C9A52E2C75D9D400C57916 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A52D2C75D9D400C57916 /* Constant.swift */; };
 		82C9A5312C75DD0D00C57916 /* SystemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9A5302C75DD0D00C57916 /* SystemImage.swift */; };
@@ -292,7 +292,6 @@
 		82721EEB2C8C3D1E00CA2C9A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		82721EED2C8D624000CA2C9A /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		827A1DDF2C2D9B3200C40046 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicController.swift; sourceTree = "<group>"; };
 		82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackService.swift; sourceTree = "<group>"; };
 		82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataBuilder.swift; sourceTree = "<group>"; };
 		82A36EDA2C6DE8E000F6E6E2 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -308,6 +307,7 @@
 		82C06F552C6DD9B1000FEE3A /* MusicControllerInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerInterface.swift; sourceTree = "<group>"; };
 		82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackServiceInterface.swift; sourceTree = "<group>"; };
 		82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackUseCase.swift; sourceTree = "<group>"; };
+		82C25E632CB26DDD0018B02E /* StubMusicControllerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMusicControllerService.swift; sourceTree = "<group>"; };
 		82C9A5282C75689E00C57916 /* TrackAppendToPlaylistSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendToPlaylistSheet.swift; sourceTree = "<group>"; };
 		82C9A52D2C75D9D400C57916 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		82C9A5302C75DD0D00C57916 /* SystemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImage.swift; sourceTree = "<group>"; };
@@ -863,9 +863,9 @@
 				791FEF8D2C771FD6006CBDE0 /* StubMemberService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
 				796465A32C3A7CF100F6DC2D /* StubStreamAccountService.swift */,
-				82A36ED42C6DE24B00F6E6E2 /* StubMusicController.swift */,
 				82A36ED62C6DE26E00F6E6E2 /* StubTrackService.swift */,
 				82204EB92C96CA4100546A5C /* StubImageService.swift */,
+				82C25E632CB26DDD0018B02E /* StubMusicControllerService.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -1054,7 +1054,6 @@
 				7946B9862C917FFB009B915D /* UploadImageAPI.swift in Sources */,
 				82B2F0F32CABC88B00BCFD70 /* AlertActionButton.swift in Sources */,
 				82588AB12CA3ECA300AD8132 /* UpdatePlaylistAPI.swift in Sources */,
-				82A36ED52C6DE24B00F6E6E2 /* StubMusicController.swift in Sources */,
 				796465A42C3A7CF100F6DC2D /* StubStreamAccountService.swift in Sources */,
 				826933452C71FF5B0004E0B5 /* AppDelegate.swift in Sources */,
 				820836952C34050000F6D0CF /* UserUseCase.swift in Sources */,
@@ -1102,6 +1101,7 @@
 				8235A4582C9D6FB400063E27 /* SelectStreamAccountView.swift in Sources */,
 				826933472C71FFE20004E0B5 /* SceneDelegate.swift in Sources */,
 				DFE27A142C71D5B6002BAD11 /* NetworkClient.swift in Sources */,
+				82C25E642CB26DDD0018B02E /* StubMusicControllerService.swift in Sources */,
 				79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */,
 				79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */,
 				79B0F7112C8DC3D0009140AF /* UpdateProfileNicknameAPI.swift in Sources */,
@@ -1311,7 +1311,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1331,7 +1331,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1353,7 +1353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PLAT/Preview Content\"";
-				DEVELOPMENT_TEAM = MXGCKXDXUM;
+				DEVELOPMENT_TEAM = 9XG4S4XZWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PLAT/App/Info.plist;
@@ -1373,7 +1373,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.letsplat.thinkyside;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

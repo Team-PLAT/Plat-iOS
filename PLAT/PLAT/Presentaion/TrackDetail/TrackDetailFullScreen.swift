@@ -12,14 +12,13 @@ import SwiftUI
 struct TrackDetailFullScreen: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    @Environment(TrackUseCase.self) private var trackUseCase
     
     @State private var isContentAreaPresented = false
     @State private var isNonePlaylistToastPresented = false
     @State private var isPlaying: Bool = true
     
     private var music: Music? {
-        musicControlUseCase.state.music
+        musicControlUseCase.state.currentTrack?.music
     }
     
     var body: some View {
@@ -33,7 +32,7 @@ struct TrackDetailFullScreen: View {
                     .padding(.top, 24)
                 
                 MusicSeekBar(
-                    totalDuration: musicControlUseCase.state.music?.duration ?? 0
+                    totalDuration: music?.duration ?? 0
                 )
                 .padding(.top, 36)
                 .padding(.horizontal, 16)
@@ -80,7 +79,6 @@ private struct Background: View {
     
     var body: some View {
         Group {
-            // TODO: 만약 Track에 이미지가 있다면 다른 이미지로 처리하기
             if let imageString = trackUseCase.currentTrack.imageUrl,
                let imageURL = URL(string: imageString) {
                 AsyncImage(url: imageURL) { phase in
@@ -108,6 +106,25 @@ private struct HeaderView: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
+    /// Feed를 업데이트합니다.
+    private func updateFeed() {
+        Task {
+            await trackUseCase.fetchFeedTrackList(page: 0)
+            let trackList = trackUseCase.feedTrackList
+            
+            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+            switch fetchMusicListResult {
+            case .success(let musicList):
+                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+                pathModel.dismissFullScreenCover()
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
     var body: some View {
         HStack {
             Image(.imgMarker)
@@ -121,7 +138,7 @@ private struct HeaderView: View {
             Spacer()
             
             DismissButton {
-                pathModel.dismissFullScreenCover()
+                updateFeed()
             }
         }
     }
@@ -198,14 +215,36 @@ private struct MusicControllerView: View {
     
     @Binding private(set) var isNonePlaylistToastPresented: Bool
     
+    private var isLiked: Bool {
+        trackUseCase.currentTrack.isLike
+    }
+    
+    /// 트랙의 좋아요를 업데이트합니다.
+    private func likeTrack() {
+        var track = trackUseCase.currentTrack
+        
+        Task {
+            let result = await trackUseCase.likeTrack(
+                trackId: Int(track.id),
+                isLike: track.isLike
+            )
+            
+            switch result {
+            case .success(let isLike):
+                track.isLike = isLike
+                trackUseCase.updateCurrentTrack(to: track)
+                
+            case .failure(let error): print(error) // TODO: 에러 처리
+            }
+        }
+    }
+    
     var body: some View {
         HStack(spacing: 52) {
             MusicControllerCell(
-                systemImage: SystemImage.like,
+                systemImage: isLiked ? SystemImage.like : SystemImage.unLike,
                 tapAction: {
-                    
-                    // TODO: 실제 데이터 넣기
-                    trackUseCase.effect(.likeTrack(trackId: 0, isLike: true))
+                    likeTrack()
                 }
             )
             

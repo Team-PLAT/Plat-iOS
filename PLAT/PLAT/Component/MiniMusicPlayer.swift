@@ -21,7 +21,8 @@ struct MiniMusicPlayer: View {
     let totalDuration: Double
     
     private var progress: Double {
-        currentDuration / totalDuration
+        let progress = (currentDuration / totalDuration) * 1000
+        return progress
     }
     
     var body: some View {
@@ -40,9 +41,6 @@ struct MiniMusicPlayer: View {
         }
         .padding(.top, 12)
         .background(.platBlack)
-        .onTapGesture {
-            pathModel.presentFullScreenCover(.trackDetail)
-        }
     }
 }
 
@@ -93,16 +91,19 @@ private struct Content: View {
             HStack(spacing: 4) {
                 Text(track?.music.title ?? "")
                     .font(.Body.body2)
+                    .lineLimit(1)
                 
                 Circle()
                     .frame(width: 2, height: 2)
                 
                 Text(track?.music.artist ?? "")
                     .font(.Body.body5)
+                    .lineLimit(1)
             }
             
             Text(userOfTrack)
-                .font(.Body.body2)
+                .font(.Caption.caption1)
+                .lineLimit(1)
         }
         .foregroundStyle(.gray3)
     }

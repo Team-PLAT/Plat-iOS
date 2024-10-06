@@ -13,7 +13,7 @@ struct TrackFeedView: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var selectedTrackId: Int64?
+    @State private var isLoading = false
     
     /// 트랙 리스트를 반환합니다.
     private var trackList: [Track] {
@@ -23,7 +23,53 @@ struct TrackFeedView: View {
         }
     }
     
+    /// Feed를 업데이트합니다.
+    private func updateFeed() {
+        Task {
+            await trackUseCase.fetchFeedTrackList(page: 0)
+            let trackList = trackUseCase.feedTrackList
+            
+            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+            switch fetchMusicListResult {
+            case .success(let musicList):
+                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
+    /// MiniMusicPlayer를 탭합니다.
+    private func miniMusicPlayerTapped(with trackId: Int) {
+        Task {
+            let updateCurrentTrackResult = await trackUseCase.fetchCurrentTrack(from: trackId)
+            switch updateCurrentTrackResult {
+            case .success(let fetchTrack):
+                
+                let musicResult = await musicControlUseCase.fetchMusic(from: fetchTrack)
+                switch musicResult {
+                case .success(let music):
+                    trackUseCase.updateCurrentTrackMusicInfo(from: music)
+                    let currentTrack = trackUseCase.currentTrack
+                    musicControlUseCase.updateCurrentTrack(to: currentTrack)
+                    pathModel.presentFullScreenCover(.trackDetail)
+                    
+                case .failure(let error):
+                    // TODO: 에러 처리
+                    print(error)
+                }
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
     var body: some View {
+        @Bindable var musicControlUseCase = musicControlUseCase
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
@@ -36,37 +82,40 @@ struct TrackFeedView: View {
                 }
                 
                 ScrollView {
-                    LazyVStack {
+                    VStack {
                         ForEach(trackList) { track in
                             FeedRowView(
+                                currentTrack: $musicControlUseCase.state.currentTrack,
+                                isLoading: $isLoading,
                                 track: track,
-                                trackIndex: Int64(track.id),
-                                playlistId: "",
-                                selectedTrackId: $selectedTrackId
+                                playlistId: ""
                             )
                         }
                     }
                 }
                 
                 if musicControlUseCase.state.isStreaming {
-                    @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
                         track: $musicControlUseCase.state.currentTrack,
                         currentDuration: musicControlUseCase.state.currentDuration,
-                        totalDuration: musicControlUseCase.state.music?.duration ?? 0
+                        totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
                     )
+                    .onTapGesture {
+                        if let selectedTrackId = musicControlUseCase.state.currentTrack?.id {
+                            miniMusicPlayerTapped(with: Int(selectedTrackId))
+                        }
+                    }
                 }
             }
             .background(.platBackground)
         }
+        .overlay(
+            PlatProgressView()
+                .opacity(isLoading ? 1 : 0)
+        )
         .onAppear {
-            Task {
-                // TODO: 페이지네이션
-                await trackUseCase.fetchFeedTrackList(page: 0)
-                let musicList = await musicControlUseCase.fetchMusicList(from: trackList)
-                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
-            }
+            updateFeed()
         }
         .refreshable {
             // TODO: fetch 한 값 불러오기
@@ -83,14 +132,14 @@ private struct FeedRowView: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(PathModel.self) private var pathModel
     
-    let track: Track
-    let trackIndex: Int64
-    let playlistId: String
-    
-    @State private var feedMusic: Music?
+    @State private var isPaused = true
     @State private var fetchMusicTask: Task<Void, Never>?
     
-    @Binding private(set) var selectedTrackId: Int64?
+    @Binding private(set) var currentTrack: Track?
+    @Binding private(set) var isLoading: Bool
+    
+    let track: Track
+    let playlistId: String
     
     var body: some View {
         VStack(spacing: 0) {
@@ -133,11 +182,9 @@ private struct FeedRowView: View {
                     
                     @Bindable var musicControlUseCase = musicControlUseCase
                     FeedPlayer(
-                        trackIndex: Int64(trackIndex),
-                        track: track,
                         isPaused: $musicControlUseCase.state.isPaused,
-                        selectedTrackId: $selectedTrackId,
-                        feedMusic: $feedMusic
+                        currentTrack: $musicControlUseCase.state.currentTrack,
+                        track: track
                     )
                     .padding(.bottom, 6)
                     
@@ -147,8 +194,12 @@ private struct FeedRowView: View {
                     FeedContentView(track: track)
                         .padding(.bottom, 8)
                     
-                    FeedActionView(trackIndex: Int(trackIndex), playlistId: playlistId)
-                        .padding(.bottom, 18)
+                    FeedActionView(
+                        track: track,
+                        currentTrack: $musicControlUseCase.state.currentTrack,
+                        isLoading: $isLoading
+                    )
+                    .padding(.bottom, 18)
                 }
             }
             .padding(.top, 18)
@@ -158,7 +209,7 @@ private struct FeedRowView: View {
                 .frame(width: UIScreen.main.bounds.width, height: 1)
         }
         .onAppear {
-            handleFetchMusic()
+            // handleFetchMusic()
         }
         .onDisappear {
             fetchMusicTask?.cancel()
@@ -166,14 +217,15 @@ private struct FeedRowView: View {
         }
     }
     
-    /// 음악 Fetch에 딜레이를 부여합니다.
-    private func handleFetchMusic() {
-        fetchMusicTask = Task {
-            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
-            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-            // feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
-        }
-    }
+    //    /// 음악 Fetch에 딜레이를 부여합니다.
+    //    private func handleFetchMusic() {
+    //        fetchMusicTask = Task {
+    //            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
+    //            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
+    //            feedMusic =
+    //            // feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+    //        }
+    //    }
 }
 
 // MARK: - FeedProfileImage
@@ -181,10 +233,6 @@ private struct FeedRowView: View {
 private struct FeedProfileImage: View {
     
     let track: Track
-    
-    private var user: User {
-        track.user
-    }
     
     private var profileImageUrl: URL? {
         URL(string: track.user.profileImageUrl)
@@ -213,13 +261,9 @@ private struct FeedHeaderView: View {
     
     let track: Track
     
-    private var user: User {
-        track.user
-    }
-    
     var body: some View {
         HStack(spacing: 8) {
-            Text(user.nickname)
+            Text(track.user.nickname)
                 .font(.Body.body2)
                 .foregroundStyle(.white)
             
@@ -245,6 +289,21 @@ private struct FeedLocationView: View {
     
     let track: Track
     
+    /// 역지오코딩을 이용해 주소를 업데이트합니다.
+    private func updateAddress() {
+        Task {
+            let result = await mapUseCase.fetchReverGeocode(
+                latitude: track.location.latitude,
+                longitude: track.location.longitude
+            )
+            
+            switch result {
+            case .success(let place): address = place.address
+            case .failure(let error): print(error) // TODO: 에러처리
+            }
+        }
+    }
+    
     var body: some View {
         HStack(spacing: 4) {
             Image(.imgFeedloacation)
@@ -257,17 +316,7 @@ private struct FeedLocationView: View {
                 .foregroundStyle(.white)
         }
         .onAppear {
-            Task {
-                let result = await mapUseCase.fetchReverGeocode(
-                    latitude: track.location.latitude,
-                    longitude: track.location.longitude
-                )
-                
-                switch result {
-                case .success(let place): address = place.address
-                case .failure: break
-                }
-            }
+            updateAddress()
         }
     }
 }
@@ -276,23 +325,38 @@ private struct FeedLocationView: View {
 
 private struct FeedPlayer: View {
     
-    var trackIndex: Int64?
-    
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State var track: Track
     @Binding private(set) var isPaused: Bool
-    @Binding private(set) var selectedTrackId: Int64?
-    @Binding private(set) var feedMusic: Music?
+    @Binding private(set) var currentTrack: Track?
     
-    private var music: Music {
-        feedMusic ?? Music(
-            isrc: "",
-            title: "",
-            artist: "",
-            albumImageUrl: "",
-            duration: 0.0
-        )
+    let track: Track
+    
+    /// 재생 버튼을 탭했을 때 액션입니다.
+    private func playButtonTapped() {
+        print("현재 선택된 음악: \(track.music.title)")
+        if currentTrack?.id == track.id {
+            togglePlayBack()
+        } else {
+            startMusic()
+            musicControlUseCase.updateCurrentTrack(to: track)
+        }
+    }
+    
+    /// 음악을 재생 / 일시정지 토글합니다.
+    private func togglePlayBack() {
+        musicControlUseCase.effect(.togglePlayback)
+    }
+    
+    /// 음악을 처음 재생할 때입니다.
+    private func startMusic() {
+        Task {
+            let result = await musicControlUseCase.startMusic(with: track.music.isrc)
+            switch result {
+            case .success: currentTrack?.id = track.id
+            case .failure(let error): print(error) // TODO: 에러 처리
+            }
+        }
     }
     
     var body: some View {
@@ -300,64 +364,47 @@ private struct FeedPlayer: View {
             Rectangle()
                 .foregroundColor(.platBlack)
                 .cornerRadius(8)
-                .frame(width: 311, height: 56)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
             
             HStack(spacing: 0) {
                 Rectangle()
                     .frame(width: 56, height: 56)
                     .foregroundColor(.clear)
                     .background(
-                        FeedAlbumImage(
-                            track: track,
-                            feedMusic: $feedMusic
-                        )
+                        FeedAlbumImage(track: track)
                     )
                     .cornerRadius(8, corners: [.topLeft, .bottomLeft])
                     .padding(.trailing, 8)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    
-                    Text(music.title)
+                    Text(track.music.title)
                         .font(.Body.body2)
                         .foregroundStyle(.white)
-                        .frame(width: 145, alignment: .leading)
+                        .lineLimit(1)
                     
-                    Text(music.artist)
+                    Text(track.music.artist)
                         .font(.Body.body4)
                         .foregroundStyle(.gray7)
-                        .frame(width: 87, alignment: .leading)
+                        .lineLimit(1)
                 }
-                .padding(.trailing, 70)
+                
+                Spacer()
                 
                 Button {
-                    /// 재생 정지 반복 토글
-                    if selectedTrackId == trackIndex {
-                        if let feedMusic {
-                            track.music = feedMusic
-                        }
-                        musicControlUseCase.updateCurrentTrack(to: track)
-                        musicControlUseCase.effect(.togglePlayback)
-                    } else {
-                        /// 처음 재생할 때
-                        if let feedMusic {
-                            track.music = feedMusic
-                        }
-                        musicControlUseCase.updateCurrentTrack(to: track)
-                        // musicControlUseCase.effect(.setup(music: track.music))
-                        selectedTrackId = trackIndex
-                    }
+                    playButtonTapped()
                 } label: {
-                    Image(systemName: (selectedTrackId == trackIndex && !isPaused) ? "pause.fill" : "play.fill")
+                    Image(systemName: (currentTrack?.id == track.id && !isPaused) ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
-                        .frame(width: 20, height: 20)
+                        .frame(width: 24, height: 24)
                         .padding(.trailing, 12)
                         .transaction { transaction in
                             transaction.animation = nil
                         }
                 }
             }
-            .frame(width: 311, height: 56)
         }
+        .padding(.trailing, 18)
     }
 }
 
@@ -367,20 +414,8 @@ private struct FeedAlbumImage: View {
     
     let track: Track
     
-    @Binding private(set) var feedMusic: Music?
-    
-    private var music: Music {
-        feedMusic ?? Music(
-            isrc: "",
-            title: "",
-            artist: "",
-            albumImageUrl: "",
-            duration: 0.0
-        )
-    }
-    
     private var albumImageUrl: URL? {
-        URL(string: feedMusic?.albumImageUrl ?? "")
+        URL(string: track.music.albumImageUrl)
     }
     
     var body: some View {
@@ -404,26 +439,32 @@ private struct FeedAlbumImage: View {
 private struct FeedContentImage: View {
     let track: Track
     
-    private var contentImageUrl: URL? {
-        URL(string: track.imageUrl ?? "")
-    }
-    
     var body: some View {
-        if contentImageUrl != nil {
-            AsyncImage(url: contentImageUrl) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 311, height: 311)
-                        .clipShape(Rectangle())
-                        .cornerRadius(14)
-                } else {
-                    EmptyView()
+        if let imageUrl = track.imageUrl {
+            if !imageUrl.isEmpty {
+                AsyncImage(url: URL(string: imageUrl)) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipShape(Rectangle())
+                            .cornerRadius(14)
+                            .padding(.trailing, 18)
+                    } else {
+                        Rectangle()
+                            .foregroundStyle(.gray9)
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipShape(Rectangle())
+                            .cornerRadius(14)
+                            .padding(.trailing, 18)
+                            .overlay(
+                                PlatProgressView()
+                            )
+                    }
                 }
+            } else {
+                EmptyView()
             }
-        } else {
-            EmptyView()
         }
     }
 }
@@ -500,23 +541,54 @@ private struct FeedContentView: View {
 
 private struct FeedActionView: View {
     
-    let trackIndex: Int
-    let playlistId: String
-    
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var isLiked: Bool = false
+    let track: Track
+    
+    @Binding private(set) var currentTrack: Track?
+    @Binding private(set) var isLoading: Bool
+    
+    /// Feed를 업데이트합니다.
+    private func updateFeed() {
+        Task {
+            await trackUseCase.fetchFeedTrackList(page: 0)
+            let trackList = trackUseCase.feedTrackList
+            
+            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+            switch fetchMusicListResult {
+            case .success(let musicList):
+                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
+    /// 트랙의 좋아요를 업데이트합니다.
+    private func likeTrack() {
+        Task {
+            isLoading = true
+            let result = await trackUseCase.likeTrack(trackId: Int(track.id), isLike: track.isLike)
+            switch result {
+                
+                // TODO: track을 눈속임 하는 것처럼 State로 관리해서 계속 Fetch 안할 수 있게 만들기
+            case .success: updateFeed()
+            case .failure(let error): print(error)
+            }
+            isLoading = false
+        }
+    }
     
     var body: some View {
         HStack(spacing: 0) {
             Button {
-                isLiked.toggle()
-                
-                // TODO: 실제 데이터 넣기
-                trackUseCase.effect(.likeTrack(trackId: 0, isLike: true))
+                likeTrack()
             } label: {
-                Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
+                Image(systemName: track.isLike ? SystemImage.like : SystemImage.unLike)
                     .foregroundColor(.white)
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 31)

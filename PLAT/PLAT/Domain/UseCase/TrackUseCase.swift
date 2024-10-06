@@ -48,6 +48,16 @@ extension TrackUseCase {
         }
     }
     
+    /// CurrentTrack을 업데이트합니다.
+    func updateCurrentTrack(to track: Track) {
+        currentTrack = track
+    }
+    
+    /// CurrentTrack의 음악 정보를 업데이트합니다.
+    func updateCurrentTrackMusicInfo(from music: Music) {
+        currentTrack.music = music
+    }
+    
     /// TrackMap의 음악 정보를 업데이트합니다.
     func updateMapTrackListMusicInfo(from musicList: [Music]) {
         var copyMapTrackList = mapTrackList
@@ -71,6 +81,28 @@ extension TrackUseCase {
         
         feedTrackList = copyFeedTrackList
     }
+    
+    /// 현재 선택된 트랙을 업데이트합니다.
+    func fetchCurrentTrack(from trackId: Int) async -> Result<Track, Error> {
+        let result = await trackService.fetchCurrent(trackId: trackId)
+        switch result {
+        case .success(let trackResult):
+            currentTrack = trackResult
+            return .success(trackResult)
+            
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    /// 선택한 트랙의 좋아요를 업데이트합니다.
+    func likeTrack(trackId: Int, isLike: Bool) async -> Result<Bool, Error> {
+        let result = await trackService.like(trackId: trackId, isLike: !isLike)
+        switch result {
+        case .success: return .success(!isLike)
+        case .failure(let error): return .failure(error)
+        }
+    }
 }
 
 // MARK: - Effect
@@ -80,7 +112,6 @@ extension TrackUseCase {
     enum Effect {
         case fetchCurrentTrack(id: Int)
         case uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location)
-        case likeTrack(trackId: Int, isLike: Bool)
         case reportTrack(trackId: Int)
         case deleteTrack(trackId: Int)
     }
@@ -105,15 +136,6 @@ extension TrackUseCase {
                     location: location
                 )
                 switch uploadTrackResult {
-                case .success: break
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
-            
-        case .likeTrack(let trackId, let isLike):
-            Task {
-                let result = await trackService.like(trackId: trackId, isLike: isLike)
-                switch result {
                 case .success: break
                 case .failure(let error): print(error) // TODO: 에러 처리
                 }
