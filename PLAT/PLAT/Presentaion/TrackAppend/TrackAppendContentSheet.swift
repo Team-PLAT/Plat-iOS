@@ -19,7 +19,6 @@ enum ContentState {
 struct TrackAppendContentSheet: View {
     
     @Environment(PathModel.self) private var pathModel
-    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
@@ -60,7 +59,7 @@ struct TrackAppendContentSheet: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    trackUseCase.effect(.uploadTrack(isrc: trackAppendUseCase.state.selectedMusic.isrc, imageData: selectedImage?.pngData(), content: contentText, location: currentLocation))
+                    trackUseCase.effect(.uploadTrack(isrc: trackUseCase.selectedTrackAppendMusic.isrc, imageData: selectedImage?.pngData(), content: contentText, location: currentLocation))
                     pathModel.dismissSheet()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
@@ -80,7 +79,7 @@ struct TrackAppendContentSheet: View {
 // MARK: - TrackAppendContentMainSheet
 
 struct TrackAppendContentMainSheet: View {
-    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     @State private var isPhotoAlbumSheet = false
     @Binding var selectedImage: UIImage?
@@ -89,7 +88,7 @@ struct TrackAppendContentMainSheet: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: trackAppendUseCase.state.selectedMusic.albumImageUrl)) { image in
+            AsyncImage(url: URL(string: trackUseCase.selectedTrackAppendMusic.albumImageUrl)) { image in
                 if let img = image.image {
                     img
                         .resizable()
@@ -105,12 +104,12 @@ struct TrackAppendContentMainSheet: View {
             }
             VStack(alignment: .leading) {
                 
-                Text("\(trackAppendUseCase.state.selectedMusic.title)")
+                Text("\(trackUseCase.selectedTrackAppendMusic.title)")
                     .foregroundStyle(.white)
                     .font(.Head.head2)
                     .lineLimit(1)
                 
-                Text("\(trackAppendUseCase.state.selectedMusic.artist)")
+                Text("\(trackUseCase.selectedTrackAppendMusic.artist)")
                     .foregroundStyle(.gray7)
                     .font(.Body.body3)
                     .lineLimit(1)

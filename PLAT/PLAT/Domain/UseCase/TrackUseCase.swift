@@ -15,12 +15,14 @@ final class TrackUseCase {
     private(set) var currentTrack: Track
     private(set) var mapTrackList: [Track]
     private(set) var feedTrackList: [Track]
+    private(set) var selectedTrackAppendMusic: Music
     
     init(trackService: TrackServiceInterface) {
         self.mapTrackList = []
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
         self.trackService = trackService
+        self.selectedTrackAppendMusic = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
     }
 }
 
@@ -108,5 +110,15 @@ extension TrackUseCase {
                 }
             }
         }
+    }
+}
+
+// MARK: - TrackAppendSheet Method
+
+extension TrackUseCase {
+    
+    /// 음악 선택
+    func selectTrackAppendMusic(music: Music) {
+        self.selectedTrackAppendMusic = music
     }
 }

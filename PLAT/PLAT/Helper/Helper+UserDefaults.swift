@@ -10,6 +10,7 @@ import Foundation
 extension UserDefaults {
     private enum Keys {
         static let reportedTrackIds = "reportedTrackIds"
+        static let recentSearchTermList = "recentSearchTermList"
     }
     
     var reportedTrackIdList: [Int64] {
@@ -18,6 +19,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: Keys.reportedTrackIds)
+        }
+    }
+    
+    var recentSearchTermList: [String] {
+        get {
+            return array(forKey: Keys.recentSearchTermList) as? [String] ?? []
+        }
+        set {
+            set(newValue, forKey: Keys.recentSearchTermList)
         }
     }
 }
