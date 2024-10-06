@@ -8,5 +8,5 @@
 import Foundation
 
 struct DeleteTrackFromPlaylistResponse: Decodable {
-    let playlistID: Int64
+    let playlistId: Int64
 }
