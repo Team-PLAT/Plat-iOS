@@ -56,7 +56,13 @@ struct TrackAppendSearchSheet: View {
                 self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
                     Task {
                         @MainActor in
-                        musicList = await musicControlUseCase.searchMusic(term: searchTerm)
+                        let result = await musicControlUseCase.searchMusic(term: searchTerm)
+                        switch result {
+                        case .success(let musicList):
+                            self.musicList = musicList
+                        case .failure:
+                            break
+                        }
                     }
                 }
             }
@@ -219,7 +225,13 @@ private struct TrackAppendMusicList: View {
             .onAppear {
                 if $musicList.count == (index + 1) {
                     Task {
-                        await musicList.append(contentsOf: musicControlUseCase.searchMusic(term: searchTerm, isPagination: true))
+                        let result = await musicControlUseCase.searchMusic(term: searchTerm, isPagination: true)
+                        switch result {
+                        case .success(let musicList):
+                            self.musicList.append(contentsOf: musicList)
+                        case .failure:
+                            break
+                        }
                     }
                 }
             }

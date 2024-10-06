@@ -217,12 +217,18 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     /// 음원 검색하기
-    func searchMusic(term: String, isPagination: Bool = false) async -> [Music] {
+    func searchMusic(term: String, isPagination: Bool = false) async -> Result<[Music], Error> {
         if isPagination {
             self.state.searchOffset += 25
         } else {
             self.state.searchOffset = 0
         }
-        return await musicController.searchMusic(term: term, searchOffset: self.state.searchOffset)
+        let result = await musicController.searchMusic(term: term, searchOffset: self.state.searchOffset)
+        switch result {
+        case .success(let musicList):
+            return .success(musicList)
+        case .failure(let failure):
+            return .failure(failure)
+        }
     }
 }

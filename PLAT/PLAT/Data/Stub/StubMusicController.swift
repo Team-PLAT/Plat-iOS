@@ -10,8 +10,6 @@ import Combine
 
 struct StubMusicController: MusicControllerInterface {
     
-    
-    
     func setup() async -> Result<Bool, any Error> {
         return .success(true)
     }
@@ -60,7 +58,7 @@ struct StubMusicController: MusicControllerInterface {
         return (durationInMillis: nil, url: nil, name: nil, artistName: nil)
     }
     
-    func searchMusic(term: String, searchOffset: Int) async -> [Music] {
-        return []
+    func searchMusic(term: String, searchOffset: Int) async -> Result<[Music], Error> {
+        return .success([])
     }
 }

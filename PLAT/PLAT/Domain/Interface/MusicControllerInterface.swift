@@ -19,5 +19,5 @@ protocol MusicControllerInterface {
     func updateMusicPlayer(with duration: Double)
     func currentDuration() -> AnyPublisher<Double, Error>
     func fetchMusic(with isrc: String) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)?
-    func searchMusic(term: String, searchOffset: Int) async -> [Music]
+    func searchMusic(term: String, searchOffset: Int) async -> Result<[Music], Error>
 }
