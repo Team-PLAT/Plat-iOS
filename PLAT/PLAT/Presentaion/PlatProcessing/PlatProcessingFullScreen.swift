@@ -169,7 +169,7 @@ private struct PlatProcessingPlaylistInfo: View {
                     switch result {
                     case .success(let success):
                         addressName = success.address
-                    case .failure(let failure):
+                    case .failure:
                         break
                     }
                 } else {
@@ -183,11 +183,15 @@ private struct PlatProcessingPlaylistInfo: View {
 // MARK: - PlatProcessingPlaylistButton
 
 private struct PlatProcessingPlaylistButton: View {
-    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(MapUseCase.self) private var mapUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
     @State private var isrcs: [String] = []
+    @State private var addressName: String = ""
     
     var body: some View {
         HStack(spacing: 27) {
@@ -214,7 +218,9 @@ private struct PlatProcessingPlaylistButton: View {
             }
             
             Button {
-                // TODO: 저장 기능 구현(API 미구현)
+                Task {
+                    await playlistUseCase.uploadPlaylist(title: addressName, imageData: nil, tracks: trackUseCase.mapTrackList)
+                }
                 pathModel.dismissFullScreenCover()
             } label: {
                 RoundedRectangle(cornerRadius: 12)
@@ -237,6 +243,21 @@ private struct PlatProcessingPlaylistButton: View {
         .onAppear {
             isrcs = trackUseCase.mapTrackList.map { track in
                 return track.music.isrc
+            }
+        }
+        .onAppear {
+            Task {
+                if let coordinate = locationManager.location?.coordinate {
+                    let result = await mapUseCase.fetchReverGeocode(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    switch result {
+                    case .success(let success):
+                        addressName = success.address
+                    case .failure:
+                        break
+                    }
+                } else {
+                    print("PlatProcessing 주소 데이터 오류")
+                }
             }
         }
     }
