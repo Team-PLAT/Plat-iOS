@@ -37,7 +37,7 @@ final class TrackServiceImpl: TrackServiceInterface {
     
     /// 지정된 페이지의 TrackList를 반환합니다.
     func fetchTrackList(page: Int) async -> Result<[Track], Error> {
-        let request = FetchTrackFeedRequest(page: Int32(page), size: 20)
+        let request = FetchTrackFeedRequest(page: Int32(page), size: 5)
         let result = await trackRepository.fetchTrackFeedList(request: request)
         switch result {
         case .success(let fetchTrackFeedResponse):

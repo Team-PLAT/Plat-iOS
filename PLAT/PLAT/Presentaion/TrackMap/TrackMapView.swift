@@ -51,9 +51,6 @@ struct TrackMapView: View {
 //                longitude: MockDataBuilder.currentLocation.longitude
 //            )
             
-            print("실제 위도: \(location.coordinate.latitude)")
-            print("실제 경도: \(location.coordinate.longitude)\n")
-            
             // 1. 역지오코딩 API 호출
             mapUseCase.updateReverseGeocode(
                 latitude: location.coordinate.latitude,

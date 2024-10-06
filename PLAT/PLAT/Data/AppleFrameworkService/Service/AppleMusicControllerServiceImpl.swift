@@ -222,9 +222,8 @@ extension AppleMusicControllerServiceImpl {
                 }
                 
                 self.firstSong = firstSong
-                // print("🎵🎵songId입니다용🎵🎵", firstSong.id)
             } else {
-                print("첫 번째 노래 정보가 없습니다.")
+                print("ISRC: \(isrc) - 첫 번째 노래 정보가 없습니다.")
             }
             
         } catch {
