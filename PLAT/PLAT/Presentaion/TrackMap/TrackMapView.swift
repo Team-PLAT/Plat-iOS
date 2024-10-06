@@ -13,10 +13,12 @@ import MapKit
 struct TrackMapView: View {
     
     @Environment(MapUseCase.self) private var mapUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var hasNotifications = false
     @State private var playlist: Playlist?
+    @State private var hasNotifications = false
     @State private var isShowToastMessage: Bool = false
     
     var body: some View {
@@ -24,7 +26,7 @@ struct TrackMapView: View {
             ZStack(alignment: .topLeading) {
                 if #available(iOS 18.0, *) {
                     MapView()
-                    .toolbarVisibility(.hidden, for: .navigationBar)
+                        .toolbarVisibility(.hidden, for: .navigationBar)
                 } else {
                     MapView()
                 }
@@ -35,19 +37,36 @@ struct TrackMapView: View {
                     isShowToastMessage: $isShowToastMessage
                 )
             }
-            .onReceive(locationManager.locationPublisher) { location in
-                
-                // 1. 역지오코딩
-                mapUseCase.updateReverseGeocode(
-                    latitude: location.coordinate.latitude,
-                    longitude: location.coordinate.longitude
-                )
-                
-                // TODO: 트랙 리스트 업데이트
-                // TODO: 플레이리스트 생성
+            
+            ToastMessage(
+                message: "플레이리스트를 생성할 트랙이 없어요",
+                isToastPresented: $isShowToastMessage
+            )
+        }
+        .onReceive(locationManager.locationPublisher) { location in
+            
+            // TODO: 테스트용 C5 위치
+//            let location = CLLocation(
+//                latitude: MockDataBuilder.currentLocation.latitude,
+//                longitude: MockDataBuilder.currentLocation.longitude
+//            )
+            
+            // 1. 역지오코딩 API 호출
+            mapUseCase.updateReverseGeocode(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+            
+            // 2. 현재 좌표에 기반한 Track 받아오기
+            Task {
+                let rectLocation = locationManager.calculateRectCoordinates(from: location)
+                await trackUseCase.fetchMapTrackLst(rectLocation: rectLocation)
+                let trackList = trackUseCase.mapTrackList
+                let musicList = await musicControlUseCase.fetchMusicList(from: trackList)
+                trackUseCase.updateMapTrackListMusicInfo(from: musicList)
             }
             
-            ToastMessage(message: "플레이리스트를 생성할 트랙이 없어요", isToastPresented: $isShowToastMessage)
+            // TODO: 플레이리스트 생성
         }
     }
 }
@@ -57,38 +76,66 @@ struct TrackMapView: View {
 private struct MapView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
+    
+    @State private var fetchMusicTask: Task<Void, Never>?
+    
+    /// 신고된 트랙 리스트를 필터 후 반환합니다.
+    private var trackList: [Track] {
+        trackUseCase.mapTrackList.filter {
+            let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+            return !reportedTrackIdList.contains($0.id)
+        }
+    }
+    
+    /// 트랙 좌표를 반환합니다.
+    private func coordinate(_ location: Location) -> CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+    }
     
     var body: some View {
         @Bindable var locationManager = locationManager
         
-        Map(
-            position: $locationManager.position,
-            interactionModes: []
-        ) {
+        Map(position: $locationManager.position, interactionModes: []) {
             UserAnnotation()
             
-            // TODO: 실제 데이터로 변경
-            ForEach(MockDataBuilder.trackList.filter { track in
-                
-                let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
-                
-                return !reportedTrackIdList.contains(track.id)
-            }) { track in
-                Annotation("", coordinate: CLLocationCoordinate2D(latitude: track.location.latitude, longitude: track.location.longitude)) {
+            ForEach(trackList) { track in
+                Annotation("", coordinate: coordinate(track.location)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
-                            musicControlUseCase.state.isPlayingTrack = track
-                            musicControlUseCase.effect(.setup(music: track.music))
+                            musicControlUseCase.updateCurrentTrack(to: track)
+                            musicControlUseCase.effect(.start(music: track.music))
                             pathModel.presentFullScreenCover(.trackDetail)
                         }
                 }
             }
             
             if let location = locationManager.location {
-                MapCircle(center: location.coordinate, radius: CLLocationDistance(500))
-                    .foregroundStyle(.platDarkpurple.opacity(0.5))
+                MapCircle(
+                    center: location.coordinate,
+                    radius: CLLocationDistance(500)
+                )
+                .foregroundStyle(.platDarkpurple.opacity(0.5))
+            }
+        }
+        .onAppear {
+            handleFetchMusic()
+        }
+        .onDisappear {
+            fetchMusicTask?.cancel()
+            fetchMusicTask = nil
+        }
+    }
+    
+    /// 음악 Fetch에 딜레이를 부여합니다.
+    private func handleFetchMusic() {
+        fetchMusicTask = Task {
+            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
+            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
+            if let music = musicControlUseCase.state.currentTrack?.music {
+                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: music)
             }
         }
     }
@@ -98,11 +145,6 @@ private struct MapView: View {
 
 private struct CustomMarkerView: View {
     
-    @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    
-    @State private var playlistMusic: Music?
-    @State private var fetchMusicTask: Task<Void, Never>?
-    
     let track: Track
     
     var body: some View {
@@ -110,42 +152,21 @@ private struct CustomMarkerView: View {
             .frame(width: 40, height: 40)
             .foregroundStyle(.gray3)
             .overlay {
-                if let albumImageUrl = playlistMusic?.albumImageUrl {
-                    AsyncImage(url: URL(string: albumImageUrl)) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 34, height: 34)
-                                .clipShape(Circle())
-                        } else {
-                            Circle()
-                                .frame(width: 40, height: 40)
-                                .foregroundStyle(.gray3)
-                        }
+                AsyncImage(url: URL(string: track.music.albumImageUrl)) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 34, height: 34)
+                            .clipShape(Circle())
+                    } else {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(.gray3)
                     }
-                } else {
-                    Circle()
-                        .frame(width: 40, height: 40)
-                        .foregroundStyle(.gray3)
                 }
+                
             }
-            .onAppear {
-                handleFetchMusic()
-            }
-            .onDisappear {
-                fetchMusicTask?.cancel()
-                fetchMusicTask = nil
-            }
-    }
-    
-    /// 음악 Fetch에 딜레이를 부여합니다.
-    private func handleFetchMusic() {
-        fetchMusicTask = Task {
-            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
-            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-            playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
-        }
     }
 }
 
@@ -166,7 +187,8 @@ private struct MapComponentsView: View {
                 MapAddressView()
                 Spacer()
                 MapButtonsView(
-                    isShowToastMessage: $isShowToastMessage, hasNotifications: $hasNotifications,
+                    isShowToastMessage: $isShowToastMessage,
+                    hasNotifications: $hasNotifications,
                     playlist: $playlist
                 )
                 .padding(.bottom, 22)
@@ -177,7 +199,7 @@ private struct MapComponentsView: View {
                 @Bindable var musicControlUseCase = musicControlUseCase
                 MiniMusicPlayer(
                     isPaused: $musicControlUseCase.state.isPaused,
-                    track: $musicControlUseCase.state.isPlayingTrack,
+                    track: $musicControlUseCase.state.currentTrack,
                     currentDuration: musicControlUseCase.state.currentDuration,
                     totalDuration: musicControlUseCase.state.music?.duration ?? 0
                 )
@@ -292,6 +314,5 @@ private struct MapButtonsView: View {
 
 #Preview {
     TrackMapView()
-        .environment(PreviewHelper.mockMusicControlUseCase)
         .injectDIContainer()
 }

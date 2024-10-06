@@ -36,7 +36,7 @@ extension MapUseCase {
     /// 좌표값에 따라 역지오코딩 값을 반환합니다.
     func fetchReverGeocode(latitude: Double, longitude: Double) async -> Result<Place, Error> {
         let result = await addressService.fetchReverseGeocode(
-            latitude: longitude,
+            latitude: latitude,
             longitude: longitude
         )
         
@@ -50,7 +50,7 @@ extension MapUseCase {
     func updateReverseGeocode(latitude: Double, longitude: Double) {
         Task {
             let result = await addressService.fetchReverseGeocode(
-                latitude: longitude,
+                latitude: latitude,
                 longitude: longitude
             )
             

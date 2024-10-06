@@ -11,7 +11,6 @@ import Combine
 @Observable
 final class MusicControlUseCase {
     
-    /// Apple Music or Spotify를 넣기 위한 인터페이스
     private var musicController: MusicControllerInterface
     
     var state: State
@@ -20,13 +19,7 @@ final class MusicControlUseCase {
     
     init(musicController: MusicControllerInterface) {
         self.musicController = musicController
-        self.state = State(
-            isStreaming: false,
-            isPaused: true,
-            currentDuration: 0,
-            isPlayingTrack: nil,
-            status: false
-        )
+        self.state = State()
     }
 }
 
@@ -36,12 +29,77 @@ extension MusicControlUseCase {
     
     struct State {
         var music: Music?
-        var isStreaming: Bool
-        var isPaused: Bool
-        var currentDuration: Double
-        var isPlayingTrack: Track?
-        var status: Bool
+        var isAuthorized: Bool = false
+        var isStreaming: Bool = false
+        var isPaused: Bool = true
+        var isLoading: Bool = false
+        var currentTrack: Track?
+        var currentDuration: Double = 0
         var searchOffset: Int = 0
+    }
+}
+
+// MARK: - UseCase Method
+
+extension MusicControlUseCase {
+    
+    /// 스트리밍 계정 구독 여부를 요청합니다.
+    func requestSubscription() async throws {
+        startLoading()
+        let result = await musicController.setup()
+        // try await Task.sleep(nanoseconds: 1_000_000_000) // UX를 고려한 대기
+        
+        switch result {
+        case let .success(isAuthorized):
+            state.isAuthorized = isAuthorized
+            
+        case let .failure(error):
+            throw error
+        }
+        
+        stopLoading()
+    }
+    
+    /// 현재 Track을 업데이트합니다.
+    func updateCurrentTrack(to track: Track) {
+        state.currentTrack = track
+    }
+    
+    /// TrackList의 음악 정보로 MusicList를 반환합니다.
+    func fetchMusicList(from trackList: [Track]) async -> [Music] {
+        
+        var musicList: [Music] = []
+        
+        for track in trackList {
+            if let musicInfo = await musicController.fetchMusic(with: track.music.isrc) {
+                let music = Music(
+                    isrc: track.music.isrc,
+                    title: musicInfo.name ?? "",
+                    artist: musicInfo.artistName ?? "",
+                    albumImageUrl: musicInfo.url ?? "",
+                    duration: Double(musicInfo.durationInMillis ?? 0)
+                )
+                
+                musicList.append(music)
+            }
+        }
+        
+        return musicList
+    }
+}
+
+// MARK: - Helper
+
+extension MusicControlUseCase {
+    
+    /// 로딩을 시작합니다.
+    private func startLoading() {
+        state.isLoading = true
+    }
+    
+    /// 로딩을 종료합니다.
+    private func stopLoading() {
+        state.isLoading = false
     }
 }
 
@@ -50,28 +108,19 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
-        case request
-        case setup(music: Music)
+        case start(music: Music)
         case play(music: Music)
         case playPlaylist(isrcs: [String])
         case playRandomPlaylist(isrcs: [String])
         case togglePlayback
         case updatePlayer(duration: Double)
-        case updatePlayingTrack(track: Track)
     }
     
     func effect(_ effect: Effect) {
         switch effect {
-        case .request:
+        case .start(music: let music):
             Task {
-                state.status = await musicController.setup()
-                print("🎀", state.status )
-            }
-            
-        case let .setup(music):
-            Task {
-                state.status = await musicController.setup()
-                await fetchCurrentMusicInfo(music: music)
+                // await fetchCurrentMusicInfo(music: music)
                 musicController.play(music)
             }
             state.isStreaming = true
@@ -104,9 +153,6 @@ extension MusicControlUseCase {
             
         case .updatePlayer(duration: let duration):
             musicController.updateMusicPlayer(with: duration)
-            
-        case .updatePlayingTrack(track: let track):
-            state.isPlayingTrack = track
         }
     }
 }
@@ -135,35 +181,35 @@ extension MusicControlUseCase {
 
 extension MusicControlUseCase {
     
-    private func fetchCurrentMusicInfo(music: Music) async {
-        if let musicInfo = await fetchMusicInfoApi(music: music) {
-            state.music = musicInfo
-            
-            if var playingTrack = state.isPlayingTrack {
-                playingTrack.music = state.music ?? Music(
-                    isrc: " ",
-                    title: " ",
-                    artist: " ",
-                    albumImageUrl: " ",
-                    duration: 0.0
-                )
-                state.isPlayingTrack = playingTrack
-            }
-        }
-    }
+//    private func fetchCurrentMusicInfo(music: Music) async {
+//        if let musicInfo = await fetchMusicInfoApi(music: music) {
+//            state.music = musicInfo
+//            
+//            if var playingTrack = state.currentTrack {
+//                playingTrack.music = state.music ?? Music(
+//                    isrc: "",
+//                    title: "",
+//                    artist: "",
+//                    albumImageUrl: "",
+//                    duration: 0.0
+//                )
+//                state.currentTrack = playingTrack
+//            }
+//        }
+//    }
     
-    func fetchMusicInfoApi(music: Music) async -> Music? {
-        if let musicInfo = await musicController.fetchMusic(music) {
-            return Music(
-                isrc: music.isrc,
-                title: musicInfo.name ?? music.title,
-                artist: musicInfo.artistName ?? music.artist,
-                albumImageUrl: musicInfo.url ?? music.albumImageUrl,
-                duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
-            )
-        }
-        return nil
-    }
+//    func fetchMusicInfoApi(music: Music) async -> Music? {
+//        if let musicInfo = await musicController.fetchMusic(music) {
+//            return Music(
+//                isrc: music.isrc,
+//                title: musicInfo.name ?? music.title,
+//                artist: musicInfo.artistName ?? music.artist,
+//                albumImageUrl: musicInfo.url ?? music.albumImageUrl,
+//                duration: (musicInfo.durationInMillis.map { Double($0) / 1000.0 }) ?? music.duration
+//            )
+//        }
+//        return nil
+//    }
 }
 
 // MARK: - Music Search

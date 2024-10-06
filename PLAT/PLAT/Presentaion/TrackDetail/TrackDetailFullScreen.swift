@@ -134,7 +134,7 @@ private struct MusicView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var music: Music? {
-        musicControlUseCase.state.isPlayingTrack?.music
+        musicControlUseCase.state.currentTrack?.music
     }
     
     var body: some View {
@@ -164,7 +164,7 @@ private struct AlbumImage: View {
     private let cornerRaduis: CGFloat = 12
     
     private var albumImageUrl: URL? {
-        URL(string: musicControlUseCase.state.isPlayingTrack?.music.albumImageUrl ?? "")
+        URL(string: musicControlUseCase.state.currentTrack?.music.albumImageUrl ?? "")
     }
     
     var body: some View {

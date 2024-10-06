@@ -20,31 +20,40 @@ struct SelectStreamAccountView: View {
     @Environment(AuthUseCase.self) private var authUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State var selectedState: SelectedState = .none
-    @State private var isShowingOffer: Bool = false
+    @State private var selectedState: SelectedState = .none
+    @State private var isShowingOffer = false
+    @State private var isConnectFailedAlertPresented = false
+    
+    /// 애플 뮤직 셀을 탭했을 때 액션입니다.
+    private func appleMusicTapAction() {
+        Task {
+            do {
+                try await musicControlUseCase.requestSubscription()
+                if musicControlUseCase.state.isAuthorized {
+                    selectedState = .appleMusic
+                } else {
+                    isShowingOffer.toggle()
+                }
+            } catch {
+                isConnectFailedAlertPresented.toggle()
+            }
+        }
+    }
     
     var body: some View {
-        VStack {
-            Text("사용하는 음악 플랫폼을\n선택해주세요")
-                .font(.Head.head2)
-                .padding(.trailing, 144)
-                .padding(.top, 32)
-                .padding(.bottom, 32)
+        VStack(alignment: .center, spacing: 0) {
+            PlatTitle(title: "사용하는 음악 플랫폼을\n선택해주세요")
+                .padding(.horizontal, 24)
+                .padding(.vertical, 32)
             
-            Group {
-                ListRadioButton(
-                    state: .none,
-                    title: "\(StreamAccount.appleMusic.title) 연결하기",
-                    content: "선택하면 \(StreamAccount.appleMusic.title)과 연결돼요",
-                    icon: .icnAppleMusic,
-                    isSelected: selectedState == .appleMusic,
-                    tapAction: {
-                        isShowingOffer = true
-                        selectedState = .appleMusic
-                        musicControlUseCase.effect(.request)
-                    }
-                )
-            }
+            ListRadioButton(
+                state: .none,
+                title: "\(StreamAccount.appleMusic.title) 연결하기",
+                content: "선택하면 \(StreamAccount.appleMusic.title)과 연결돼요",
+                icon: .icnAppleMusic,
+                isSelected: selectedState == .appleMusic,
+                tapAction: { appleMusicTapAction() }
+            )
             .musicSubscriptionOffer(isPresented: $isShowingOffer)
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
@@ -63,20 +72,28 @@ struct SelectStreamAccountView: View {
                     .font(.Body.body4)
                     .underline()
             }
-            .padding(.horizontal, 108)
             .padding(.bottom, 24)
             
-            ActionButton(state: musicControlUseCase.state.status ? .enabled : .disabled, title: "시작하기") {
+            ActionButton(state: musicControlUseCase.state.isAuthorized ? .enabled : .disabled, title: "시작하기") {
                 pathModel.popToRoot()
                 authUseCase.updateIsLoginComplete(true)
             }
-            .disabled(!musicControlUseCase.state.status)
+            .disabled(!musicControlUseCase.state.isAuthorized)
             .padding(.horizontal, 18)
             .padding(.bottom, 30)
         }
         .foregroundStyle(.white)
         .background(.platBackground)
         .navigationTitle("스트리밍 계정 선택하기")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .overlay(
+            musicControlUseCase.state.isLoading
+            ? AnyView(PlatProgressView()) : AnyView(EmptyView())
+        )
+        .alert("일시적인 오류로 계정 연결에 실패했습니다. 다시 시도해주세요.", isPresented: $isConnectFailedAlertPresented) {
+            AlertActionButton(variant: .confim)
+        }
     }
 }
 

@@ -10,45 +10,63 @@ import SwiftUI
 struct TrackFeedView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var selectedTrackId: Int64?
     
+    /// 트랙 리스트를 반환합니다.
+    private var trackList: [Track] {
+        trackUseCase.feedTrackList.filter {
+            let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+            return !reportedTrackIdList.contains($0.id)
+        }
+    }
+    
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
-                Image(.imgFeedlogo)
-                    .padding(.leading, 18)
-                    .padding(.bottom, 20)
+                HStack {
+                    Spacer()
+                    
+                    Image(.imgFeedlogo)
+                        .padding(.bottom, 20)
+                    
+                    Spacer()
+                }
                 
                 ScrollView {
-                    ForEach(MockDataBuilder.trackList.filter { track in
-                        
-                        let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
-                        
-                        return !reportedTrackIdList.contains(track.id)
-                    }) { track in
-                        FeedRowView(
-                            track: track,
-                            trackIndex: Int64(track.id),
-                            playlistId: "",
-                            selectedTrackId: $selectedTrackId
-                        )
+                    LazyVStack {
+                        ForEach(trackList) { track in
+                            FeedRowView(
+                                track: track,
+                                trackIndex: Int64(track.id),
+                                playlistId: "",
+                                selectedTrackId: $selectedTrackId
+                            )
+                        }
                     }
                 }
                 
                 if musicControlUseCase.state.isStreaming {
-                    // TODO: 더미데이터 변경
                     @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        track: $musicControlUseCase.state.isPlayingTrack,
+                        track: $musicControlUseCase.state.currentTrack,
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.music?.duration ?? 0
                     )
                 }
             }
             .background(.platBackground)
+        }
+        .onAppear {
+            Task {
+                // TODO: 페이지네이션
+                await trackUseCase.fetchFeedTrackList(page: 0)
+                let musicList = await musicControlUseCase.fetchMusicList(from: trackList)
+                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+            }
         }
         .refreshable {
             // TODO: fetch 한 값 불러오기
@@ -153,7 +171,7 @@ private struct FeedRowView: View {
         fetchMusicTask = Task {
             try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
             if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-            feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+            // feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
         }
     }
 }
@@ -289,8 +307,10 @@ private struct FeedPlayer: View {
                     .frame(width: 56, height: 56)
                     .foregroundColor(.clear)
                     .background(
-                        FeedAlbumImage(track: track,
-                                       feedMusic: $feedMusic)
+                        FeedAlbumImage(
+                            track: track,
+                            feedMusic: $feedMusic
+                        )
                     )
                     .cornerRadius(8, corners: [.topLeft, .bottomLeft])
                     .padding(.trailing, 8)
@@ -315,15 +335,15 @@ private struct FeedPlayer: View {
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
+                        musicControlUseCase.updateCurrentTrack(to: track)
                         musicControlUseCase.effect(.togglePlayback)
                     } else {
                         /// 처음 재생할 때
                         if let feedMusic {
                             track.music = feedMusic
                         }
-                        musicControlUseCase.effect(.updatePlayingTrack(track: track))
-                        musicControlUseCase.effect(.setup(music: track.music))
+                        musicControlUseCase.updateCurrentTrack(to: track)
+                        // musicControlUseCase.effect(.setup(music: track.music))
                         selectedTrackId = trackIndex
                     }
                 } label: {

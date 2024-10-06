@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol MusicControllerInterface {
-    func setup() async -> Bool
+    func setup() async -> Result<Bool, Error>
     func play(_ music: Music)
     func playPlaylist(with isrcs: [String])
     func playRandomPlaylist(with isrcs: [String])
@@ -18,6 +18,6 @@ protocol MusicControllerInterface {
     func repeatPlayback()
     func updateMusicPlayer(with duration: Double)
     func currentDuration() -> AnyPublisher<Double, Error>
-    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)?
+    func fetchMusic(with isrc: String) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)?
     func searchMusic(term: String, searchOffset: Int) async -> [Music]
 }

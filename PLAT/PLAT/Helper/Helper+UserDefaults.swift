@@ -12,6 +12,7 @@ extension UserDefaults {
         static let reportedTrackIds = "reportedTrackIds"
     }
     
+    /// 신고된 Track ID 리스트를 조회합니다.
     var reportedTrackIdList: [Int64] {
         get {
             return array(forKey: Keys.reportedTrackIds) as? [Int64] ?? []

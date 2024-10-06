@@ -24,13 +24,58 @@ final class TrackUseCase {
     }
 }
 
+// MARK: - UseCase Method
+
+extension TrackUseCase {
+    
+    /// 사각형 좌표에 기반한 TrackMap의 TrackList를 반환합니다.
+    func fetchMapTrackLst(rectLocation: RectLocation) async {
+        let result = await trackService.fetchTrackList(rectLocation: rectLocation)
+        switch result {
+        case .success(let trackList): self.mapTrackList = trackList
+        case .failure(let error): print(error) // TODO: 에러 처리
+        }
+    }
+    
+    /// TrackFeed의 TrackList를 반환합니다.
+    func fetchFeedTrackList(page: Int) async {
+        let result = await trackService.fetchTrackList(page: page)
+        switch result {
+        case .success(let trackList): self.feedTrackList = trackList
+        case .failure(let error): print(error) // TODO: 에러 처리
+        }
+    }
+    
+    /// TrackMap의 음악 정보를 업데이트합니다.
+    func updateMapTrackListMusicInfo(from musicList: [Music]) {
+        var copyMapTrackList = mapTrackList
+        for (index, track) in copyMapTrackList.enumerated() {
+            if let music = musicList.first(where: { $0.isrc == track.music.isrc }) {
+                copyMapTrackList[index].music = music
+            }
+        }
+        
+        mapTrackList = copyMapTrackList
+    }
+    
+    /// TrackFeed의 음악 정보를 업데이트합니다.
+    func updateFeedTrackListMusicInfo(from musicList: [Music]) {
+        var copyFeedTrackList = feedTrackList
+        for (index, track) in copyFeedTrackList.enumerated() {
+            if let music = musicList.first(where: { $0.isrc == track.music.isrc }) {
+                copyFeedTrackList[index].music = music
+            }
+        }
+        
+        feedTrackList = copyFeedTrackList
+    }
+}
+
 // MARK: - Effect
 
 extension TrackUseCase {
     
     enum Effect {
-        case fetchMapTrackList(rectLocation: RectLocation)
-        case fetchFeedTrackList(page: Int)
         case fetchCurrentTrack(id: Int)
         case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
         case likeTrack(trackId: Int, isLike: Bool)
@@ -40,24 +85,6 @@ extension TrackUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
-        case .fetchMapTrackList(let rectLocation):
-            Task {
-                let result = await trackService.fetchTrackList(rectLocation: rectLocation)
-                switch result {
-                case .success(let trackList): self.mapTrackList = trackList
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
-            
-        case .fetchFeedTrackList(let page):
-            Task {
-                let result = await trackService.fetchTrackList(page: page)
-                switch result {
-                case .success(let trackList): self.feedTrackList = trackList
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
-            
         case .fetchCurrentTrack(let id):
             Task {
                 let result = await trackService.fetchCurrent(trackId: id)

@@ -14,9 +14,12 @@ import MediaPlayer
 
 final class AppleMusicControllerServiceImpl: NSObject, MusicControllerInterface {
     
-    private var firstSong: ResponseSong?
+    enum AppleMusicError: Error {
+        case invalidAuthorization
+    }
     
-    var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
+    private var firstSong: ResponseSong?
+    private var musicPlayer = MPMusicPlayerController.applicationQueuePlayer
 }
 
 // MARK: - Interface Method
@@ -24,17 +27,16 @@ final class AppleMusicControllerServiceImpl: NSObject, MusicControllerInterface 
 extension AppleMusicControllerServiceImpl {
     
     /// 권한 요청
-    func setup() async -> Bool {
+    func setup() async -> Result<Bool, Error> {
         let isAuthorized = await requestAuthorization()
         if isAuthorized {
             if await checkMusicSubscription() {
-                return true
+                return .success(true)
             } else {
-                return false
+                return .success(false)
             }
         } else {
-            print("권한 없엉")
-            return false
+            return .failure(AppleMusicError.invalidAuthorization)
         }
     }
     
@@ -115,8 +117,8 @@ extension AppleMusicControllerServiceImpl {
     }
     
     /// Music 정보 받아오는 함수
-    func fetchMusic(_ music: Music) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
-        await requestSongId(for: music.isrc)
+    func fetchMusic(with isrc: String) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+        await requestSongId(for: isrc)
         
         if let song = firstSong {
             return (song.attributes.durationInMillis, song.attributes.artwork?.url, song.attributes.name, song.attributes.artistName)
@@ -210,7 +212,6 @@ extension AppleMusicControllerServiceImpl {
             let result = try decoder.decode(MusicCatalogSearchResponse.self, from: data)
             
             if var firstSong = result.data.first {
-                
                 if var artwork = firstSong.attributes.artwork {
                     if let originalUrl = artwork.url {
                         let cleanedUrl = originalUrl
@@ -221,9 +222,8 @@ extension AppleMusicControllerServiceImpl {
                 }
                 
                 self.firstSong = firstSong
-                // print("🎵🎵songId입니다용🎵🎵", firstSong.id)
             } else {
-                print("첫 번째 노래 정보가 없습니다.")
+                print("ISRC: \(isrc) - 첫 번째 노래 정보가 없습니다.")
             }
             
         } catch {
