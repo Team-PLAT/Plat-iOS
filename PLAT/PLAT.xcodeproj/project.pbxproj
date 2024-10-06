@@ -104,7 +104,7 @@
 		8235A45E2C9D83C500063E27 /* PathModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45D2C9D83C500063E27 /* PathModelProtocol.swift */; };
 		8235A4602C9D84B100063E27 /* PathModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A45F2C9D84B100063E27 /* PathModel.swift */; };
 		8235A4622C9D850B00063E27 /* PathModel+ViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4612C9D850B00063E27 /* PathModel+ViewBuilder.swift */; };
-		8235A4642C9D883300063E27 /* AppendPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4632C9D883300063E27 /* AppendPlaylistView.swift */; };
+		8235A4642C9D883300063E27 /* AppendPlaylistSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8235A4632C9D883300063E27 /* AppendPlaylistSheet.swift */; };
 		8238E7C72C97B8AF00DCC503 /* UserSecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */; };
 		823CA1162C9D6C670084A90B /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CA1152C9D6C670084A90B /* Screen.swift */; };
 		82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */; };
@@ -269,7 +269,7 @@
 		8235A45D2C9D83C500063E27 /* PathModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModelProtocol.swift; sourceTree = "<group>"; };
 		8235A45F2C9D84B100063E27 /* PathModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModel.swift; sourceTree = "<group>"; };
 		8235A4612C9D850B00063E27 /* PathModel+ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PathModel+ViewBuilder.swift"; sourceTree = "<group>"; };
-		8235A4632C9D883300063E27 /* AppendPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistView.swift; sourceTree = "<group>"; };
+		8235A4632C9D883300063E27 /* AppendPlaylistSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppendPlaylistSheet.swift; sourceTree = "<group>"; };
 		8238E7C62C97B8AF00DCC503 /* UserSecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSecurityManager.swift; sourceTree = "<group>"; };
 		823CA1152C9D6C670084A90B /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		82588A9C2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodeAPI.swift; sourceTree = "<group>"; };
@@ -361,7 +361,7 @@
 			children = (
 				791905A72C905762005571DE /* PlaylistView.swift */,
 				512DE28B2C988066002B4622 /* PlaylistDetailView.swift */,
-				8235A4632C9D883300063E27 /* AppendPlaylistView.swift */,
+				8235A4632C9D883300063E27 /* AppendPlaylistSheet.swift */,
 				82E332942C9BF51500D06A8D /* PlaylistDetailsEditView.swift */,
 			);
 			path = Playlist;
@@ -1024,7 +1024,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8235A4642C9D883300063E27 /* AppendPlaylistView.swift in Sources */,
+				8235A4642C9D883300063E27 /* AppendPlaylistSheet.swift in Sources */,
 				82588AAB2CA3EA7D00AD8132 /* SearchPlaylistAPI.swift in Sources */,
 				82204E5D2C9071BC00546A5C /* RectLocation.swift in Sources */,
 				82C9A5342C777F1000C57916 /* User.swift in Sources */,

@@ -97,13 +97,11 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트를 업로드합니다.
-    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) {
-        Task {
-            let result = await playlistService.uploadPlaylist(title: title, imageData: imageData, tracks: tracks)
-            switch result {
-            case .success: break
-            case .failure(let error): print(error) // TODO: 에러 처리
-            }
+    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Int64, Error> {
+        let result = await playlistService.uploadPlaylist(title: title, imageData: imageData, tracks: tracks)
+        switch result {
+        case .success(let playlistId): return .success(playlistId)
+        case .failure(let error): return .failure(error)
         }
     }
     

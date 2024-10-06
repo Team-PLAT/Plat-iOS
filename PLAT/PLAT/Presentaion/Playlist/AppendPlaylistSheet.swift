@@ -1,5 +1,5 @@
 //
-//  AppendPlaylistView.swift
+//  AppendPlaylistSheet.swift
 //  PLAT
 //
 //  Created by 박준우 on 9/16/24.
@@ -7,55 +7,66 @@
 
 import SwiftUI
 
-struct AppendPlaylistView: View {
+struct AppendPlaylistSheet: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @State private var isPhotoAlbumSheet = false
     @State private var playlistImage: UIImage?
     @State private var playlistTitle: String = ""
     
     var body: some View {
-        VStack {
-            AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
-                .sheet(isPresented: $isPhotoAlbumSheet) {
-                    PhotoPicker(selectedImage: $playlistImage)
+        NavigationStack {
+            VStack {
+                AppendPlaylistButton(isPhotoAlbumSheet: $isPhotoAlbumSheet, playlistImage: $playlistImage)
+                    .sheet(isPresented: $isPhotoAlbumSheet) {
+                        PhotoPicker(selectedImage: $playlistImage)
+                    }
+                
+                AppendPlaylistTitle(playlistTitle: $playlistTitle)
+                
+                AppendPlaylistDate()
+                
+                Spacer()
+            }
+            .navigationTitle("새로운 플레이리스트")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        pathModel.dismissSheet()
+                    } label: {
+                        HStack(spacing: 3) {
+                            Image(systemName: "chevron.backward")
+                            Text("취소")
+                                .font(.Body.body2)
+                        }
+                        .foregroundStyle(.platPurple)
+                    }
+                    
                 }
-            
-            AppendPlaylistTitle(playlistTitle: $playlistTitle)
-            
-            AppendPlaylistDate()
-            
-            Spacer()
-        }
-        .navigationTitle("새로운 플레이리스트")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button {
-                    pathModel.pop()
-                } label: {
-                    HStack(spacing: 3) {
-                        Image(systemName: "chevron.backward")
-                        Text("취소")
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        Task {
+                            let result = await playlistUseCase.uploadPlaylist(title: playlistTitle, imageData: nil, tracks: [])
+                            switch result {
+                            case .success(let playlistId): playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistId))
+                            case .failure: break
+                            }
+                        }
+                        pathModel.dismissSheet()
+                        pathModel.push(.playlistDetail)
+                    } label: {
+                        Text("생성")
+                            .foregroundStyle(.platPurple)
                             .font(.Body.body2)
                     }
-                    .foregroundStyle(.platPurple)
-                }
-                
-            }
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    // TODO: 플레이 생성하기 기능 추가
-                } label: {
-                    Text("생성")
-                        .foregroundStyle(.platPurple)
-                        .font(.Body.body2)
                 }
             }
+            .presentationDragIndicator(.visible)
         }
-        .presentationDragIndicator(.visible)
     }
 }
 
@@ -125,8 +136,7 @@ private struct AppendPlaylistDate: View {
         HStack {
             Text("생성일자")
             Spacer()
-            // TODO: 생성일자 서버 기준으로 표시하기
-            Text("2024.08.17")
+            Text(Date().yearMonthDayFormat)
         }
         .foregroundStyle(.gray7)
         .font(.Body.body1)
@@ -135,6 +145,6 @@ private struct AppendPlaylistDate: View {
 }
 
 #Preview {
-    AppendPlaylistView()
+    AppendPlaylistSheet()
         .injectDIContainer()
 }

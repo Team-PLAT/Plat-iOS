@@ -114,7 +114,7 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
     }
     
     /// 플레이리스트를 업로드합니다.
-    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Void, Error> {
+    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Int64, Error> {
         
         var imageUrl = ""
         
@@ -139,8 +139,9 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
         
         let response = await playlistRepository.uploadPlaylist(request: request)
         switch response {
-        case .success:
-            return .success(())
+        case .success(let response):
+            let playlistId = response.playlistId
+            return .success(playlistId)
         case .failure(let error):
             return .failure(error)
         }
