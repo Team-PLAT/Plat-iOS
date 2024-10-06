@@ -21,6 +21,34 @@ struct TrackMapView: View {
     @State private var hasNotifications = false
     @State private var isShowToastMessage: Bool = false
     
+    private func updateMap(with location: CLLocation) {
+        
+        // 1. 역지오코딩 API 호출
+        mapUseCase.updateReverseGeocode(
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude
+        )
+        
+        // 2. 현재 좌표에 기반한 Track 받아오기
+        Task {
+            let rectLocation = locationManager.calculateRectCoordinates(from: location)
+            await trackUseCase.fetchMapTrackLst(rectLocation: rectLocation)
+            let trackList = trackUseCase.mapTrackList
+            
+            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+            switch fetchMusicListResult {
+            case .success(let musicList):
+                trackUseCase.updateMapTrackListMusicInfo(from: musicList)
+                
+                // TODO: 플레이리스트 생성
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             ZStack(alignment: .topLeading) {
@@ -44,37 +72,7 @@ struct TrackMapView: View {
             )
         }
         .onReceive(locationManager.locationPublisher) { location in
-            
-//            // TODO: 테스트용 C5 위치
-//            let location = CLLocation(
-//                latitude: MockDataBuilder.currentLocation.latitude,
-//                longitude: MockDataBuilder.currentLocation.longitude
-//            )
-            
-            // 1. 역지오코딩 API 호출
-            mapUseCase.updateReverseGeocode(
-                latitude: location.coordinate.latitude,
-                longitude: location.coordinate.longitude
-            )
-            
-            // 2. 현재 좌표에 기반한 Track 받아오기
-            Task {
-                let rectLocation = locationManager.calculateRectCoordinates(from: location)
-                await trackUseCase.fetchMapTrackLst(rectLocation: rectLocation)
-                let trackList = trackUseCase.mapTrackList
-                
-                let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
-                switch fetchMusicListResult {
-                case .success(let musicList):
-                    trackUseCase.updateMapTrackListMusicInfo(from: musicList)
-                    
-                    // TODO: 플레이리스트 생성
-                    
-                case .failure(let error):
-                    // TODO: 에러 처리
-                    print(error)
-                }
-            }
+            updateMap(with: location)
         }
     }
 }
