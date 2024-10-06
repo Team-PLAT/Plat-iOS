@@ -41,9 +41,6 @@ struct MiniMusicPlayer: View {
         }
         .padding(.top, 12)
         .background(.platBlack)
-        .onTapGesture {
-            pathModel.presentFullScreenCover(.trackDetail)
-        }
     }
 }
 

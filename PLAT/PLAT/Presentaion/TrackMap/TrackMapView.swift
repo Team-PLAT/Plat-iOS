@@ -102,9 +102,9 @@ private struct MapView: View {
     }
     
     /// 마커를 탭합니다.
-    private func customMarkerTapped(with track: Track) {
+    private func customMarkerTapped(with trackId: Int) {
         Task {
-            let updateCurrentTrackResult = await trackUseCase.updateCurrentTrack(from: track)
+            let updateCurrentTrackResult = await trackUseCase.updateCurrentTrack(from: trackId)
             switch updateCurrentTrackResult {
             case .success(let fetchTrack):
                 musicControlUseCase.updateCurrentTrack(to: fetchTrack)
@@ -137,7 +137,7 @@ private struct MapView: View {
                 Annotation("", coordinate: coordinate(track.location)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
-                            customMarkerTapped(with: track)
+                            customMarkerTapped(with: Int(track.id))
                         }
                 }
             }

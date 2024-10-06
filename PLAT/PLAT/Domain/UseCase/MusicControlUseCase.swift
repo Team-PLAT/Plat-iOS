@@ -86,6 +86,18 @@ extension MusicControlUseCase {
         state.currentTrack = track
     }
     
+    /// Track의 음악정보로 Music을 반환합니다.
+    func fetchMusic(from track: Track) async -> Result<Music, Error> {
+        let result = await musicController.fetchMusic(with: track.music.isrc)
+        switch result {
+        case .success(let music):
+            return.success(music)
+            
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     /// TrackList의 음악 정보로 MusicList를 반환합니다.
     func fetchMusicList(from trackList: [Track]) async -> Result<[Music], Error> {
         var musicList: [Music] = []

@@ -46,6 +46,11 @@ extension TrackUseCase {
         }
     }
     
+    /// CurrentTrack의 음악 정보를 업데이트합니다.
+    func updateCurrentTrackMusicInfo(from music: Music) {
+        currentTrack.music = music
+    }
+    
     /// TrackMap의 음악 정보를 업데이트합니다.
     func updateMapTrackListMusicInfo(from musicList: [Music]) {
         var copyMapTrackList = mapTrackList
@@ -71,8 +76,8 @@ extension TrackUseCase {
     }
     
     /// 현재 선택된 트랙을 업데이트합니다.
-    func updateCurrentTrack(from track: Track) async -> Result<Track, Error> {
-        let result = await trackService.fetchCurrent(trackId: Int(track.id))
+    func updateCurrentTrack(from trackId: Int) async -> Result<Track, Error> {
+        let result = await trackService.fetchCurrent(trackId: trackId)
         switch result {
         case .success(let trackResult):
             currentTrack = trackResult

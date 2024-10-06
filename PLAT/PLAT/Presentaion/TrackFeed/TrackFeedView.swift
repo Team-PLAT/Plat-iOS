@@ -41,6 +41,33 @@ struct TrackFeedView: View {
         }
     }
     
+    /// MiniMusicPlayer를 탭합니다.
+    private func miniMusicPlayerTapped(with trackId: Int) {
+        Task {
+            let updateCurrentTrackResult = await trackUseCase.updateCurrentTrack(from: trackId)
+            switch updateCurrentTrackResult {
+            case .success(let fetchTrack):
+                
+                let musicResult = await musicControlUseCase.fetchMusic(from: fetchTrack)
+                switch musicResult {
+                case .success(let music):
+                    trackUseCase.updateCurrentTrackMusicInfo(from: music)
+                    let currentTrack = trackUseCase.currentTrack
+                    musicControlUseCase.updateCurrentTrack(to: currentTrack)
+                    pathModel.presentFullScreenCover(.trackDetail)
+                    
+                case .failure(let error):
+                    // TODO: 에러 처리
+                    print(error)
+                }
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
@@ -73,12 +100,18 @@ struct TrackFeedView: View {
                         currentDuration: musicControlUseCase.state.currentDuration,
                         totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
                     )
+                    .onTapGesture {
+                        miniMusicPlayerTapped(with: Int(selectedTrackId ?? 0))
+                    }
                 }
             }
             .background(.platBackground)
         }
         .onAppear {
             updateFeed()
+        }
+        .onDisappear {
+            selectedTrackId = nil
         }
         .refreshable {
             // TODO: fetch 한 값 불러오기
