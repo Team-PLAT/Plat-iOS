@@ -125,7 +125,6 @@ extension MusicControlUseCase {
 extension MusicControlUseCase {
     
     enum Effect {
-        case play(music: Music)
         case playPlaylist(isrcs: [String])
         case playRandomPlaylist(isrcs: [String])
         case togglePlayback
@@ -134,13 +133,6 @@ extension MusicControlUseCase {
     
     func effect(_ effect: Effect) {
         switch effect {
-        case let .play(music):
-            cancelPublisher()
-            state.isStreaming = true
-            state.isPaused = false
-            musicController.play(with: "")
-            fetchCurrentPlaybackPosition()
-            
         case .playPlaylist(let isrcs):
             musicController.playPlaylist(with: isrcs)
             
@@ -175,6 +167,7 @@ extension MusicControlUseCase {
                 self?.cancelPublisher()
             } receiveValue: {
                 self.state.currentDuration = $0
+                print("UseCase 현재 Duration: \(self.state.currentDuration)")
             }
             .store(in: &cancellables)
     }

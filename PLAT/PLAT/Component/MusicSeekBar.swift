@@ -16,10 +16,12 @@ struct MusicSeekBar: View {
     @State private var isEditing = false
     @State private var sliderValue: Double = 0.0
     
+    private let millisecondsUnit: Double = 1000
+    
     let totalDuration: Double
     
     private var leftDuration: Double {
-        (totalDuration / 1000) - musicControlUseCase.state.currentDuration
+        (totalDuration / millisecondsUnit) - musicControlUseCase.state.currentDuration
     }
     
     var body: some View {
@@ -29,7 +31,7 @@ struct MusicSeekBar: View {
                 in: 0...totalDuration,
                 onEditingChanged: { editing in
                     if !editing {
-                        musicControlUseCase.effect(.updatePlayer(duration: sliderValue))
+                        musicControlUseCase.effect(.updatePlayer(duration: sliderValue / millisecondsUnit))
                     }
                 }
             )
@@ -43,7 +45,7 @@ struct MusicSeekBar: View {
         }
         .onChange(of: musicControlUseCase.state.currentDuration) {
             if !isEditing {
-                sliderValue = musicControlUseCase.state.currentDuration
+                sliderValue = musicControlUseCase.state.currentDuration * millisecondsUnit
             }
         }
         .onAppear {

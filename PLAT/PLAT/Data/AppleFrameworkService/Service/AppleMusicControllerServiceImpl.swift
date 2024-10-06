@@ -111,6 +111,7 @@ extension AppleMusicControllerServiceImpl {
             .flatMap { [weak self] _ -> Future<Double, Error> in
                 return Future { promise in
                     let playbackPosition = self?.musicPlayer.currentPlaybackTime ?? 0.0
+                    print("구현체 DuationL \(playbackPosition)")
                     promise(.success(playbackPosition))
                 }
             }
