@@ -19,7 +19,7 @@ struct MusicSeekBar: View {
     let totalDuration: Double
     
     private var leftDuration: Double {
-        totalDuration - musicControlUseCase.state.currentDuration
+        (totalDuration / 1000) - musicControlUseCase.state.currentDuration
     }
     
     var body: some View {
