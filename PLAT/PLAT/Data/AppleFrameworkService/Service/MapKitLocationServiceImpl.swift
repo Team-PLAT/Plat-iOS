@@ -112,6 +112,12 @@ extension MapKitLocationServiceImpl: CLLocationManagerDelegate {
             self.locationPublisher.send(location)
         }
         
+//        // TODO: 테스트 C5
+//        let testLocation = CLLocation(
+//            latitude: MockDataBuilder.currentLocation.latitude,
+//            longitude: MockDataBuilder.currentLocation.longitude
+//        )
+        
         // 위치 정보 업데이트
         self.location = location
         self.position = MapCameraPosition.region(

@@ -13,9 +13,10 @@ import MediaPlayer
 // MARK: - AppleMusicController
 
 final class AppleMusicControllerServiceImpl: NSObject, MusicControllerInterface {
-    
+
     enum AppleMusicError: Error {
         case invalidAuthorization
+        case fetchFailed
     }
     
     private var firstSong: ResponseSong?
@@ -41,7 +42,7 @@ extension AppleMusicControllerServiceImpl {
     }
     
     /// 음악 첫 재생
-    func play(_ music: Music) {
+    func play(with isrc: String) {
         if let songId = firstSong?.id {
             let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [songId])
             musicPlayer.setQueue(with: descriptor)
@@ -117,14 +118,26 @@ extension AppleMusicControllerServiceImpl {
     }
     
     /// Music 정보 받아오는 함수
-    func fetchMusic(with isrc: String) async -> (durationInMillis: Int?, url: String?, name: String?, artistName: String?)? {
+    func fetchMusic(with isrc: String) async -> Result<Music, Error> {
         await requestSongId(for: isrc)
         
-        if let song = firstSong {
-            return (song.attributes.durationInMillis, song.attributes.artwork?.url, song.attributes.name, song.attributes.artistName)
+        if let song = firstSong,
+           let title = song.attributes.name,
+           let artist = song.attributes.artistName,
+           let albumImageUrl = song.attributes.artwork?.url,
+           let duration = song.attributes.durationInMillis {
+            
+            let music = Music(
+                isrc: isrc,
+                title: title,
+                artist: artist,
+                albumImageUrl: albumImageUrl,
+                duration: Double(duration)
+            )
+            
+            return .success(music)
         } else {
-            print("첫 번째 노래 정보가 없습니다.")
-            return nil
+            return .failure(AppleMusicError.fetchFailed)
         }
     }
     

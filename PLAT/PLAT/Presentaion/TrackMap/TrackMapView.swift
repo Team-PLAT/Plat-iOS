@@ -45,7 +45,7 @@ struct TrackMapView: View {
         }
         .onReceive(locationManager.locationPublisher) { location in
             
-            // TODO: 테스트용 C5 위치
+//            // TODO: 테스트용 C5 위치
 //            let location = CLLocation(
 //                latitude: MockDataBuilder.currentLocation.latitude,
 //                longitude: MockDataBuilder.currentLocation.longitude
@@ -62,11 +62,19 @@ struct TrackMapView: View {
                 let rectLocation = locationManager.calculateRectCoordinates(from: location)
                 await trackUseCase.fetchMapTrackLst(rectLocation: rectLocation)
                 let trackList = trackUseCase.mapTrackList
-                let musicList = await musicControlUseCase.fetchMusicList(from: trackList)
-                trackUseCase.updateMapTrackListMusicInfo(from: musicList)
+                
+                let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+                switch fetchMusicListResult {
+                case .success(let musicList):
+                    trackUseCase.updateMapTrackListMusicInfo(from: musicList)
+                    
+                    // TODO: 플레이리스트 생성
+                    
+                case .failure(let error):
+                    // TODO: 에러 처리
+                    print(error)
+                }
             }
-            
-            // TODO: 플레이리스트 생성
         }
     }
 }
@@ -95,6 +103,32 @@ private struct MapView: View {
         CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
     }
     
+    /// 마커를 탭합니다.
+    private func customMarkerTapped(with track: Track) {
+        Task {
+            let updateCurrentTrackResult = await trackUseCase.updateCurrentTrack(from: track)
+            switch updateCurrentTrackResult {
+            case .success(let fetchTrack):
+                musicControlUseCase.updateCurrentTrack(to: fetchTrack)
+                
+                let startMusicResult = await musicControlUseCase.startMusic(with: fetchTrack.music.isrc)
+                
+                switch startMusicResult {
+                case .success:
+                    pathModel.presentFullScreenCover(.trackDetail)
+                    
+                case .failure(let error):
+                    // TODO: 에러 처리
+                    print(error)
+                }
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
     var body: some View {
         @Bindable var locationManager = locationManager
         
@@ -105,9 +139,7 @@ private struct MapView: View {
                 Annotation("", coordinate: coordinate(track.location)) {
                     CustomMarkerView(track: track)
                         .onTapGesture {
-                            musicControlUseCase.updateCurrentTrack(to: track)
-                            musicControlUseCase.effect(.start(music: track.music))
-                            pathModel.presentFullScreenCover(.trackDetail)
+                            customMarkerTapped(with: track)
                         }
                 }
             }
@@ -201,7 +233,7 @@ private struct MapComponentsView: View {
                     isPaused: $musicControlUseCase.state.isPaused,
                     track: $musicControlUseCase.state.currentTrack,
                     currentDuration: musicControlUseCase.state.currentDuration,
-                    totalDuration: musicControlUseCase.state.music?.duration ?? 0
+                    totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
                 )
                 .onTapGesture {
                     pathModel.presentFullScreenCover(.trackDetail)

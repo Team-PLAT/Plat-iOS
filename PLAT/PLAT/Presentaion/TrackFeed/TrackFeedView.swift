@@ -54,7 +54,7 @@ struct TrackFeedView: View {
                         isPaused: $musicControlUseCase.state.isPaused,
                         track: $musicControlUseCase.state.currentTrack,
                         currentDuration: musicControlUseCase.state.currentDuration,
-                        totalDuration: musicControlUseCase.state.music?.duration ?? 0
+                        totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
                     )
                 }
             }
@@ -64,8 +64,15 @@ struct TrackFeedView: View {
             Task {
                 // TODO: 페이지네이션
                 await trackUseCase.fetchFeedTrackList(page: 0)
-                let musicList = await musicControlUseCase.fetchMusicList(from: trackList)
-                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+                let result = await musicControlUseCase.fetchMusicList(from: trackList)
+                switch result {
+                case .success(let fetchMusicList):
+                    trackUseCase.updateFeedTrackListMusicInfo(from: fetchMusicList)
+                    
+                case .failure(let error):
+                    // TODO: 에러 처리
+                    print(error)
+                }
             }
         }
         .refreshable {

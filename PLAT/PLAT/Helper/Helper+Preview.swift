@@ -31,7 +31,7 @@ enum PreviewHelper {
     static let mockTrackDetailUseCase = TrackUseCase(trackService: StubTrackService())
     
     static let mockMusicControlUseCase = MusicControlUseCase(
-        musicController: StubMusicController()
+        musicController: StubMusicControllerService()
     )
 }
 #endif

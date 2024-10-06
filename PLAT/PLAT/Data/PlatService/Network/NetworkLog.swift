@@ -10,7 +10,7 @@ import Foundation
 #if DEBUG
 enum NetworkLog {
     
-    private static let isPrint = true
+    private static let isPrint = false
     
     /// 네트워크 성공시 출력합니다.
     static func success<T: Decodable>(

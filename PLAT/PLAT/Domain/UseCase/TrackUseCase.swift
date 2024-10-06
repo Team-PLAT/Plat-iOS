@@ -69,6 +69,19 @@ extension TrackUseCase {
         
         feedTrackList = copyFeedTrackList
     }
+    
+    /// 현재 선택된 트랙을 업데이트합니다.
+    func updateCurrentTrack(from track: Track) async -> Result<Track, Error> {
+        let result = await trackService.fetchCurrent(trackId: Int(track.id))
+        switch result {
+        case .success(let trackResult):
+            currentTrack = trackResult
+            return .success(trackResult)
+            
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }
 
 // MARK: - Effect
