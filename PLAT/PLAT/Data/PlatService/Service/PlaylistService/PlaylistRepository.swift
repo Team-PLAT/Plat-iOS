@@ -94,6 +94,26 @@ final class PlaylistRepository {
         }
     }
     
+    func updateTrackOrder(request: UpdateTrackOrderRequest, playlistId: Int64) async -> Result<UpdateTrackOrderResponse, Error> {
+        let url = APIs.Plat.Playlists.updateTrackOrder(playlistId: playlistId).url
+        let response: Result<BaseResponse<UpdateTrackOrderResponse>, Error> = await client.patch(url: url, body: request)
+        do {
+            return try .success(response.get().result)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func deleteTrackFromPlaylist(playlistId: Int64, trackId: Int64) async -> Result<DeleteTrackFromPlaylistResponse, Error> {
+        let url = APIs.Plat.Playlists.deleteTrackFromPlaylist(playlistId: playlistId, trackId: trackId).url
+        let response: Result<BaseResponse<DeleteTrackFromPlaylistResponse>, Error> = await client.delete(url: url)
+        do {
+            return try .success(response.get().result)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
     func deletePlaylist(playlistId: Int64) async -> Result<DeletePlaylistResponse, Error> {
         let url = APIs.Plat.Playlists.delete(playlistId: playlistId).url
         let response: Result<BaseResponse<DeletePlaylistResponse>, Error> = await client.delete(url: url)

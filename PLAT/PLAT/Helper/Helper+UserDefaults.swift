@@ -10,6 +10,7 @@ import Foundation
 extension UserDefaults {
     private enum Keys {
         static let reportedTrackIds = "reportedTrackIds"
+        static let recentSearchTermList = "recentSearchTermList"
     }
     
     /// 신고된 Track ID 리스트를 조회합니다.
@@ -19,6 +20,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: Keys.reportedTrackIds)
+        }
+    }
+    
+    var recentSearchTermList: [String] {
+        get {
+            return array(forKey: Keys.recentSearchTermList) as? [String] ?? []
+        }
+        set {
+            set(newValue, forKey: Keys.recentSearchTermList)
         }
     }
 }

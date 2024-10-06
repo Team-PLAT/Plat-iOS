@@ -142,7 +142,7 @@ extension AppleMusicControllerServiceImpl {
     }
     
     /// 음악 검색
-    func searchMusic(term: String, searchOffset: Int) async -> [Music] {
+    func searchMusic(term: String, searchOffset: Int) async -> Result<[Music], Error> {
         if !term.isEmpty {
             var reqeust = MusicCatalogSearchRequest(term: term, types: [Song.self])
             reqeust.offset = searchOffset
@@ -165,13 +165,13 @@ extension AppleMusicControllerServiceImpl {
                     
                     return Music(isrc: musicIsrc, title: song.title, artist: song.artistName, albumImageUrl: musicArtworkURL.absoluteString, duration: musicDuration)
                 })
-                return musicList
+                return .success(musicList)
             } catch {
                 print(error)
-                return []
+                return .failure(error)
             }
         } else {
-            return []
+            return .success([])
         }
     }
 }
