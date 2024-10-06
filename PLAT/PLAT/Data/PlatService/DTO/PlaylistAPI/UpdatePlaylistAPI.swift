@@ -10,12 +10,6 @@ import Foundation
 struct UpdatePlaylistRequest: Encodable {
     let title: String
     let playlistImageUrl: String
-    let tracks: [TracksRequest]
-    
-    struct TracksRequest: Encodable {
-        let trackId: Int64
-        let orderIndex: Int
-    }
 }
 
 struct UpdatePlaylistResponse: Decodable {

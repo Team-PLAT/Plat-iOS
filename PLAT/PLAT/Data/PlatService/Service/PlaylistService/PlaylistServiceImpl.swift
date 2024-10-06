@@ -166,7 +166,7 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
     }
     
     /// 플레이리스트를 업데이트합니다.
-    func updatePlaylist(playlistId: Int, title: String, imageData: Data?, tracks: [Track]) async -> Result<Void, Error> {
+    func updatePlaylist(playlistId: Int, title: String, imageData: Data?) async -> Result<Void, Error> {
         
         var imageUrl = ""
         
@@ -178,13 +178,40 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
             }
         }
         
-        var trackRequest: [UpdatePlaylistRequest.TracksRequest] = []
+        let request = UpdatePlaylistRequest(title: title, playlistImageUrl: imageUrl)
+        let response = await playlistRepository.updatePlaylist(request: request, playlistId: Int64(playlistId))
+        switch response {
+        case .success:
+            return .success(())
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    /// 플레이리스트의 트랙 순서를 변경합니다.
+    func updateTrackOrder(playlistId: Int, tracks: [Track]) async -> Result<Void, Error> {
+        
+        var trackRequest: [UpdateTrackOrderRequest.TracksRequest] = []
         for (index, track) in tracks.enumerated() {
             trackRequest.append(.init(trackId: track.id, orderIndex: index))
         }
         
-        let request = UpdatePlaylistRequest(title: title, playlistImageUrl: imageUrl, tracks: trackRequest)
-        let response = await playlistRepository.updatePlaylist(request: request, playlistId: Int64(playlistId))
+        let request = UpdateTrackOrderRequest(
+            tracks: trackRequest
+        )
+        
+        let response = await playlistRepository.updateTrackOrder(request: request, playlistId: Int64(playlistId))
+        switch response {
+        case .success:
+            return .success(())
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    /// 플레이리스트에서 트랙을 삭제합니다.
+    func deleteTrackFromPlaylist(playlistId: Int, trackId: Int) async -> Result<Void, Error> {
+        let response = await playlistRepository.deleteTrackFromPlaylist(playlistId: Int64(playlistId), trackId: Int64(trackId))
         switch response {
         case .success:
             return .success(())
