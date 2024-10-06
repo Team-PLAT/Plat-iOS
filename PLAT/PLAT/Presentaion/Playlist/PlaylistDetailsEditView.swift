@@ -32,17 +32,18 @@ struct PlaylistDetailsEditView: View {
                 .frame(height: 1)
                 .foregroundColor(.gray9)
             
-            ScrollView {
-                VStack(spacing: 0) {
-                    ForEach(selectedPlaylist.trackList) { track in
-                        PlayListRowView(
-                            track: track,
-                            onDelete: { trackToDelete in
-                                deleteTrack(trackToDelete)
-                            })
-                    }
+            List {
+                ForEach(selectedPlaylist.trackList) { track in
+                    PlayListRowView(
+                        track: track,
+                        onDelete: { trackToDelete in
+                            deleteTrack(trackToDelete)
+                        })
+                    .listRowInsets(EdgeInsets(top: 0, leading: 18, bottom: 0, trailing: 18))
                 }
+                .onMove(perform: moveTrack)
             }
+            .listStyle(.plain)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -73,6 +74,11 @@ struct PlaylistDetailsEditView: View {
             )
             self.playlistTitle = selectedPlaylist.title
         }
+    }
+    
+    private func moveTrack(from source: IndexSet, to destination: Int) {
+        selectedPlaylist.trackList.move(fromOffsets: source, toOffset: destination)
+        // TODO: UpdateTrackOrderAPI 호출
     }
     
     private func deleteTrack(_ track: Track) {
@@ -244,7 +250,6 @@ private struct PlayListRowView: View {
                                 .foregroundColor(.white)
                         }
                 }
-                .padding(.leading, 18)
                 
                 AlbumImageEdit(playlistMusic: $playlistMusic)
                     .padding(.horizontal, 10)
@@ -254,13 +259,8 @@ private struct PlayListRowView: View {
                 
                 Spacer()
                 
-                Button {
-                    // TODO: 트랙 이동
-                } label: {
-                    Image(systemName: SystemImage.trackDetail)
-                        .foregroundColor(.gray9)
-                }
-                .padding(.trailing, 18)
+                Image(systemName: SystemImage.trackDetail)
+                    .foregroundColor(.gray9)
             }
         }
         .onAppear {
@@ -269,11 +269,6 @@ private struct PlayListRowView: View {
             }
         }
         .padding(.vertical, 10)
-        
-        Rectangle()
-            .frame(height: 1)
-            .foregroundColor(.gray9)
-            .padding(.leading, 46)
     }
 }
 
