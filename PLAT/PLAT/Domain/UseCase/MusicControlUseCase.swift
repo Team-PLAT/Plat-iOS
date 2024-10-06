@@ -167,7 +167,6 @@ extension MusicControlUseCase {
                 self?.cancelPublisher()
             } receiveValue: {
                 self.state.currentDuration = $0
-                print("UseCase 현재 Duration: \(self.state.currentDuration)")
             }
             .store(in: &cancellables)
     }
