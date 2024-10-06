@@ -111,12 +111,7 @@ extension TrackUseCase {
     
     enum Effect {
         case fetchCurrentTrack(id: Int)
-<<<<<<< HEAD
-        case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
-=======
         case uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location)
-        case likeTrack(trackId: Int, isLike: Bool)
->>>>>>> develop
         case reportTrack(trackId: Int)
         case deleteTrack(trackId: Int)
     }
