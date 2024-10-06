@@ -72,7 +72,7 @@ struct TrackMapView: View {
             )
         }
         .onReceive(locationManager.locationPublisher) { location in
-            updateMap(with: location)
+            // updateMap(with: location)
         }
     }
 }
@@ -104,7 +104,7 @@ private struct MapView: View {
     /// 마커를 탭합니다.
     private func customMarkerTapped(with trackId: Int) {
         Task {
-            let updateCurrentTrackResult = await trackUseCase.updateCurrentTrack(from: trackId)
+            let updateCurrentTrackResult = await trackUseCase.fetchCurrentTrack(from: trackId)
             switch updateCurrentTrackResult {
             case .success(let fetchTrack):
                 musicControlUseCase.updateCurrentTrack(to: fetchTrack)

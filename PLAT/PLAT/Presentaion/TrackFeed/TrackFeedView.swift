@@ -13,7 +13,7 @@ struct TrackFeedView: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var selectedTrackId: Int64?
+    @State private var isLoading = false
     
     /// 트랙 리스트를 반환합니다.
     private var trackList: [Track] {
@@ -44,7 +44,7 @@ struct TrackFeedView: View {
     /// MiniMusicPlayer를 탭합니다.
     private func miniMusicPlayerTapped(with trackId: Int) {
         Task {
-            let updateCurrentTrackResult = await trackUseCase.updateCurrentTrack(from: trackId)
+            let updateCurrentTrackResult = await trackUseCase.fetchCurrentTrack(from: trackId)
             switch updateCurrentTrackResult {
             case .success(let fetchTrack):
                 
@@ -69,6 +69,7 @@ struct TrackFeedView: View {
     }
     
     var body: some View {
+        @Bindable var musicControlUseCase = musicControlUseCase
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
@@ -84,7 +85,8 @@ struct TrackFeedView: View {
                     VStack {
                         ForEach(trackList) { track in
                             FeedRowView(
-                                selectedTrackId: $selectedTrackId,
+                                currentTrack: $musicControlUseCase.state.currentTrack,
+                                isLoading: $isLoading,
                                 track: track,
                                 playlistId: ""
                             )
@@ -93,7 +95,6 @@ struct TrackFeedView: View {
                 }
                 
                 if musicControlUseCase.state.isStreaming {
-                    @Bindable var musicControlUseCase = musicControlUseCase
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
                         track: $musicControlUseCase.state.currentTrack,
@@ -101,17 +102,20 @@ struct TrackFeedView: View {
                         totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
                     )
                     .onTapGesture {
-                        miniMusicPlayerTapped(with: Int(selectedTrackId ?? 0))
+                        if let selectedTrackId = musicControlUseCase.state.currentTrack?.id {
+                            miniMusicPlayerTapped(with: Int(selectedTrackId))
+                        }
                     }
                 }
             }
             .background(.platBackground)
         }
+        .overlay(
+            PlatProgressView()
+                .opacity(isLoading ? 1 : 0)
+        )
         .onAppear {
             updateFeed()
-        }
-        .onDisappear {
-            selectedTrackId = nil
         }
         .refreshable {
             // TODO: fetch 한 값 불러오기
@@ -131,7 +135,8 @@ private struct FeedRowView: View {
     @State private var isPaused = true
     @State private var fetchMusicTask: Task<Void, Never>?
     
-    @Binding private(set) var selectedTrackId: Int64?
+    @Binding private(set) var currentTrack: Track?
+    @Binding private(set) var isLoading: Bool
     
     let track: Track
     let playlistId: String
@@ -178,7 +183,7 @@ private struct FeedRowView: View {
                     @Bindable var musicControlUseCase = musicControlUseCase
                     FeedPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
-                        selectedTrackId: $selectedTrackId,
+                        currentTrack: $musicControlUseCase.state.currentTrack,
                         track: track
                     )
                     .padding(.bottom, 6)
@@ -189,8 +194,12 @@ private struct FeedRowView: View {
                     FeedContentView(track: track)
                         .padding(.bottom, 8)
                     
-                    FeedActionView(selectedTrackId: $selectedTrackId, track: track)
-                        .padding(.bottom, 18)
+                    FeedActionView(
+                        track: track,
+                        currentTrack: $musicControlUseCase.state.currentTrack,
+                        isLoading: $isLoading
+                    )
+                    .padding(.bottom, 18)
                 }
             }
             .padding(.top, 18)
@@ -319,18 +328,18 @@ private struct FeedPlayer: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding private(set) var isPaused: Bool
-    @Binding private(set) var selectedTrackId: Int64?
+    @Binding private(set) var currentTrack: Track?
     
     let track: Track
     
     /// 재생 버튼을 탭했을 때 액션입니다.
     private func playButtonTapped() {
         print("현재 선택된 음악: \(track.music.title)")
-        musicControlUseCase.updateCurrentTrack(to: track)
-        if selectedTrackId == track.id {
+        if currentTrack?.id == track.id {
             togglePlayBack()
         } else {
             startMusic()
+            musicControlUseCase.updateCurrentTrack(to: track)
         }
     }
     
@@ -344,7 +353,7 @@ private struct FeedPlayer: View {
         Task {
             let result = await musicControlUseCase.startMusic(with: track.music.isrc)
             switch result {
-            case .success: selectedTrackId = track.id
+            case .success: currentTrack?.id = track.id
             case .failure(let error): print(error) // TODO: 에러 처리
             }
         }
@@ -385,7 +394,7 @@ private struct FeedPlayer: View {
                 Button {
                     playButtonTapped()
                 } label: {
-                    Image(systemName: (selectedTrackId == track.id && !isPaused) ? "pause.fill" : "play.fill")
+                    Image(systemName: (currentTrack?.id == track.id && !isPaused) ? "pause.fill" : "play.fill")
                         .foregroundColor(.gray6)
                         .frame(width: 24, height: 24)
                         .padding(.trailing, 12)
@@ -394,8 +403,6 @@ private struct FeedPlayer: View {
                         }
                 }
             }
-            // TODO: 사이즈 조정
-            // .frame(width: 311, height: 56)
         }
         .padding(.trailing, 18)
     }
@@ -538,19 +545,50 @@ private struct FeedActionView: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    @State private var isLiked: Bool = false
-    
-    @Binding private(set) var selectedTrackId: Int64?
-    
     let track: Track
+    
+    @Binding private(set) var currentTrack: Track?
+    @Binding private(set) var isLoading: Bool
+    
+    /// Feed를 업데이트합니다.
+    private func updateFeed() {
+        Task {
+            await trackUseCase.fetchFeedTrackList(page: 0)
+            let trackList = trackUseCase.feedTrackList
+            
+            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+            switch fetchMusicListResult {
+            case .success(let musicList):
+                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+                
+            case .failure(let error):
+                // TODO: 에러 처리
+                print(error)
+            }
+        }
+    }
+    
+    /// 트랙의 좋아요를 업데이트합니다.
+    private func likeTrack() {
+        Task {
+            isLoading = true
+            let result = await trackUseCase.likeTrack(trackId: Int(track.id), isLike: track.isLike)
+            switch result {
+                
+                // TODO: track을 눈속임 하는 것처럼 State로 관리해서 계속 Fetch 안할 수 있게 만들기
+            case .success: updateFeed()
+            case .failure(let error): print(error)
+            }
+            isLoading = false
+        }
+    }
     
     var body: some View {
         HStack(spacing: 0) {
             Button {
-                isLiked.toggle()
-                trackUseCase.effect(.likeTrack(trackId: 0, isLike: true))
+                likeTrack()
             } label: {
-                Image(systemName: isLiked ? "heart.fill" :  "suit.heart")
+                Image(systemName: track.isLike ? SystemImage.like : SystemImage.unLike)
                     .foregroundColor(.white)
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 31)

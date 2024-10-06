@@ -8,7 +8,7 @@
 import Foundation
 
 struct Track: Identifiable {
-    let id: Int64
+    var id: Int64
     var music: Music
     var location: Location
     var user: User

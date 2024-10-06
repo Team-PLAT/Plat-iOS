@@ -46,6 +46,11 @@ extension TrackUseCase {
         }
     }
     
+    /// CurrentTrack을 업데이트합니다.
+    func updateCurrentTrack(to track: Track) {
+        currentTrack = track
+    }
+    
     /// CurrentTrack의 음악 정보를 업데이트합니다.
     func updateCurrentTrackMusicInfo(from music: Music) {
         currentTrack.music = music
@@ -76,7 +81,7 @@ extension TrackUseCase {
     }
     
     /// 현재 선택된 트랙을 업데이트합니다.
-    func updateCurrentTrack(from trackId: Int) async -> Result<Track, Error> {
+    func fetchCurrentTrack(from trackId: Int) async -> Result<Track, Error> {
         let result = await trackService.fetchCurrent(trackId: trackId)
         switch result {
         case .success(let trackResult):
@@ -85,6 +90,15 @@ extension TrackUseCase {
             
         case .failure(let error):
             return .failure(error)
+        }
+    }
+    
+    /// 선택한 트랙의 좋아요를 업데이트합니다.
+    func likeTrack(trackId: Int, isLike: Bool) async -> Result<Bool, Error> {
+        let result = await trackService.like(trackId: trackId, isLike: !isLike)
+        switch result {
+        case .success: return .success(!isLike)
+        case .failure(let error): return .failure(error)
         }
     }
 }
@@ -96,7 +110,6 @@ extension TrackUseCase {
     enum Effect {
         case fetchCurrentTrack(id: Int)
         case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
-        case likeTrack(trackId: Int, isLike: Bool)
         case reportTrack(trackId: Int)
         case deleteTrack(trackId: Int)
     }
@@ -121,15 +134,6 @@ extension TrackUseCase {
                     location: location
                 )
                 switch uploadTrackResult {
-                case .success: break
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
-            
-        case .likeTrack(let trackId, let isLike):
-            Task {
-                let result = await trackService.like(trackId: trackId, isLike: isLike)
-                switch result {
                 case .success: break
                 case .failure(let error): print(error) // TODO: 에러 처리
                 }
