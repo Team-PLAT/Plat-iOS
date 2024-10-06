@@ -15,12 +15,14 @@ final class TrackUseCase {
     private(set) var currentTrack: Track
     private(set) var mapTrackList: [Track]
     private(set) var feedTrackList: [Track]
+    private(set) var selectedTrackAppendMusic: Music
     
     init(trackService: TrackServiceInterface) {
         self.mapTrackList = []
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
         self.trackService = trackService
+        self.selectedTrackAppendMusic = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
     }
 }
 
@@ -77,7 +79,7 @@ extension TrackUseCase {
     
     enum Effect {
         case fetchCurrentTrack(id: Int)
-        case uploadTrack(isrc: String, imageData: Data, content: String?, location: Location)
+        case uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location)
         case likeTrack(trackId: Int, isLike: Bool)
         case reportTrack(trackId: Int)
         case deleteTrack(trackId: Int)
@@ -135,5 +137,15 @@ extension TrackUseCase {
                 }
             }
         }
+    }
+}
+
+// MARK: - TrackAppendSheet Method
+
+extension TrackUseCase {
+    
+    /// 음악 선택
+    func selectTrackAppendMusic(music: Music) {
+        self.selectedTrackAppendMusic = music
     }
 }

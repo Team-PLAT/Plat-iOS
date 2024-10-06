@@ -14,9 +14,6 @@
 		513DAC9C2C439EA80050DB4F /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */; };
 		513DCBDF2C95FC66007CA813 /* Helper+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513DCBDE2C95FC66007CA813 /* Helper+View.swift */; };
 		5151BEAB2C71EB73001DA80F /* PlatProcessingFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAA2C71EB73001DA80F /* PlatProcessingFullScreen.swift */; };
-		5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */; };
-		5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */; };
-		5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */; };
 		5151BEB82C742119001DA80F /* TrackAppendContentSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */; };
 		5151BEBE2C74D6F3001DA80F /* TrackAppendSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */; };
 		518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 518B4EEF2C3EE27F005FF553 /* Lottie */; };
@@ -178,9 +175,6 @@
 		513DAC9B2C439EA80050DB4F /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		513DCBDE2C95FC66007CA813 /* Helper+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+View.swift"; sourceTree = "<group>"; };
 		5151BEAA2C71EB73001DA80F /* PlatProcessingFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatProcessingFullScreen.swift; sourceTree = "<group>"; };
-		5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendUseCase.swift; sourceTree = "<group>"; };
-		5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendServiceInterface.swift; sourceTree = "<group>"; };
-		5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTrackAppendService.swift; sourceTree = "<group>"; };
 		5151BEB72C742119001DA80F /* TrackAppendContentSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendContentSheet.swift; sourceTree = "<group>"; };
 		5151BEBD2C74D6F3001DA80F /* TrackAppendSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAppendSearchSheet.swift; sourceTree = "<group>"; };
 		51B4784F2C4379E00008EB37 /* Helper+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Text.swift"; sourceTree = "<group>"; };
@@ -631,7 +625,6 @@
 				8208369A2C34084B00F6D0CF /* InfoUseCase.swift */,
 				8269333A2C71D1810004E0B5 /* MusicControlUseCase.swift */,
 				82C06F592C6DDECF000FEE3A /* TrackUseCase.swift */,
-				5151BEAF2C72D31B001DA80F /* TrackAppendUseCase.swift */,
 				79501FD12C93185F00FB8143 /* PlaylistUseCase.swift */,
 				79FC51432C6DD63200489507 /* MapUseCase.swift */,
 			);
@@ -647,7 +640,6 @@
 				8208369C2C34086300F6D0CF /* InfoServiceInterface.swift */,
 				82C06F572C6DDC3E000FEE3A /* TrackServiceInterface.swift */,
 				79501FD32C9318C500FB8143 /* PlaylistServiceInterface.swift */,
-				5151BEB12C72DA2D001DA80F /* TrackAppendServiceInterface.swift */,
 				82204EAF2C96A71500546A5C /* ImageServiceInterface.swift */,
 				82588AA32CA2EFA500AD8132 /* AddressServiceInterface.swift */,
 				820836962C3405B000F6D0CF /* UserProfileServiceInterface.swift */,
@@ -861,7 +853,6 @@
 			isa = PBXGroup;
 			children = (
 				82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */,
-				5151BEB32C72DAA5001DA80F /* StubTrackAppendService.swift */,
 				791FEF8B2C771E7B006CBDE0 /* StubUserProfileService.swift */,
 				791FEF8D2C771FD6006CBDE0 /* StubMemberService.swift */,
 				7964659B2C3A5F1800F6DC2D /* StubInfoService.swift */,
@@ -1044,7 +1035,6 @@
 				82C06F542C6DD977000FEE3A /* TrackDetailFullScreen.swift in Sources */,
 				8208369D2C34086300F6D0CF /* InfoServiceInterface.swift in Sources */,
 				82C06F582C6DDC3E000FEE3A /* TrackServiceInterface.swift in Sources */,
-				5151BEB02C72D31B001DA80F /* TrackAppendUseCase.swift in Sources */,
 				79B0F7132C8DC3EC009140AF /* UpdateProfileAvatarAPI.swift in Sources */,
 				82C9A53E2C8725B100C57916 /* Helper+RawRepresentable.swift in Sources */,
 				82204EA82C95B00500546A5C /* MemberServiceInterface.swift in Sources */,
@@ -1113,7 +1103,6 @@
 				823CA1162C9D6C670084A90B /* Screen.swift in Sources */,
 				82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */,
 				82588AB92CA3EDE700AD8132 /* PlaylistRepository.swift in Sources */,
-				5151BEB22C72DA2D001DA80F /* TrackAppendServiceInterface.swift in Sources */,
 				82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */,
 				82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */,
 				DFDF9DD22C6C989200D5252B /* Track.swift in Sources */,
@@ -1131,7 +1120,6 @@
 				79FC51442C6DD63200489507 /* MapUseCase.swift in Sources */,
 				82588AA92CA3E8F500AD8132 /* FetchPlaylistDetailAPI.swift in Sources */,
 				510E363C2C76BFB6009AD4AC /* PhotoAlbumPicker.swift in Sources */,
-				5151BEB42C72DAA5001DA80F /* StubTrackAppendService.swift in Sources */,
 				82C9A5292C75689E00C57916 /* TrackAppendToPlaylistSheet.swift in Sources */,
 				82204E5B2C90695400546A5C /* TrackRepository.swift in Sources */,
 				7964659A2C3A5C2400F6DC2D /* Helper+Preview.swift in Sources */,

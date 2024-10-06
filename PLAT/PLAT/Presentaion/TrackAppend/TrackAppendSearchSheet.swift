@@ -12,7 +12,6 @@ import MusicKit
 
 struct TrackAppendSearchSheet: View {
     @Environment(PathModel.self) private var pathModel
-    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
 
     @State private var searchTimer: Timer?
@@ -44,7 +43,7 @@ struct TrackAppendSearchSheet: View {
             .onAppear {
                 pathModel.sheetDetent = .large
                 searchTerm = ""
-                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+                recentSearchTermList = UserDefaults.standard.recentSearchTermList
             }
             .onDisappear {
                 searchTerm = ""
@@ -62,8 +61,8 @@ struct TrackAppendSearchSheet: View {
                 }
             }
             .onSubmit {
-                trackAppendUseCase.updateRecentSearchTermList(searchTerm: searchTerm)
-                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+                recentSearchTermList.append(searchTerm)
+                UserDefaults.standard.recentSearchTermList = recentSearchTermList
             }
             .scrollDismissesKeyboard(.immediately)
             .tapDismissesKeyboard()
@@ -118,8 +117,6 @@ private struct TrackAppendSearchbar: View {
 // MARK: - TrackAppendRecentTerm
 
 private struct TrackAppendRecentTerm: View {
-    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
-    
     @Binding private(set) var searchTerm: String
     @Binding private(set) var recentSearchTermList: [String]
     
@@ -149,8 +146,8 @@ private struct TrackAppendRecentTerm: View {
                             }
                             
                             Button {
-                                trackAppendUseCase.removeRecentSearchTerm(index: index)
-                                recentSearchTermList = trackAppendUseCase.fetchRecentSearchTermList()
+                                recentSearchTermList.remove(at: index)
+                                UserDefaults.standard.recentSearchTermList = recentSearchTermList
                             } label: {
                                 Image(systemName: "xmark")
                                     .resizable()
@@ -178,8 +175,8 @@ private struct TrackAppendRecentTerm: View {
 
 private struct TrackAppendMusicList: View {
     @Environment(PathModel.self) private var pathModel
-    @Environment(TrackAppendUseCase.self) private var trackAppendUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     @Binding var musicList: [Music]
     @Binding var searchTerm: String
@@ -212,7 +209,7 @@ private struct TrackAppendMusicList: View {
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
-                        trackAppendUseCase.selectMusic(music: music.wrappedValue)
+                        trackUseCase.selectTrackAppendMusic(music: music.wrappedValue)
                         pathModel.pushSheet(.trackAppendContent)
                     }
             }
