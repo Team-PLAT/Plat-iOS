@@ -67,6 +67,8 @@
 		79B0F7152C8DC403009140AF /* FetchProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */; };
 		79B0F7172C8DC44A009140AF /* ResignAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B0F7162C8DC44A009140AF /* ResignAPI.swift */; };
 		79B7F27B2CA3EFAD00C78D51 /* Helper+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B7F27A2CA3EFAD00C78D51 /* Helper+UserDefaults.swift */; };
+		79F6FC562CB267BD00F60787 /* UpdateTrackOrderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F6FC552CB267BD00F60787 /* UpdateTrackOrderAPI.swift */; };
+		79F6FC582CB2684B00F60787 /* DeleteTrackFromPlaylistAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F6FC572CB2684B00F60787 /* DeleteTrackFromPlaylistAPI.swift */; };
 		79FC51442C6DD63200489507 /* MapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FC51432C6DD63200489507 /* MapUseCase.swift */; };
 		820836772C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820836762C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift */; };
 		8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208367B2C34005400F6D0CF /* AuthUseCase.swift */; };
@@ -229,6 +231,8 @@
 		79B0F7142C8DC403009140AF /* FetchProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchProfileAPI.swift; sourceTree = "<group>"; };
 		79B0F7162C8DC44A009140AF /* ResignAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignAPI.swift; sourceTree = "<group>"; };
 		79B7F27A2CA3EFAD00C78D51 /* Helper+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+UserDefaults.swift"; sourceTree = "<group>"; };
+		79F6FC552CB267BD00F60787 /* UpdateTrackOrderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTrackOrderAPI.swift; sourceTree = "<group>"; };
+		79F6FC572CB2684B00F60787 /* DeleteTrackFromPlaylistAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTrackFromPlaylistAPI.swift; sourceTree = "<group>"; };
 		79FC51432C6DD63200489507 /* MapUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUseCase.swift; sourceTree = "<group>"; };
 		820836762C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSocialLoginServiceImpl.swift; sourceTree = "<group>"; };
 		820836782C34002D00F6D0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -750,6 +754,8 @@
 				82588AAC2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift */,
 				82588AAE2CA3EC1000AD8132 /* AppendTrackToPlaylistAPI.swift */,
 				82588AB02CA3ECA300AD8132 /* UpdatePlaylistAPI.swift */,
+				79F6FC552CB267BD00F60787 /* UpdateTrackOrderAPI.swift */,
+				79F6FC572CB2684B00F60787 /* DeleteTrackFromPlaylistAPI.swift */,
 				82588AB22CA3ED2600AD8132 /* DeletePlaylistAPI.swift */,
 			);
 			path = PlaylistAPI;
@@ -1114,6 +1120,7 @@
 				796465A02C3A6F2E00F6DC2D /* ActionButton.swift in Sources */,
 				82588A9D2CA2EC7800AD8132 /* ReverseGeocodeAPI.swift in Sources */,
 				8235A45C2C9D726900063E27 /* FullScreenCover.swift in Sources */,
+				79F6FC562CB267BD00F60787 /* UpdateTrackOrderAPI.swift in Sources */,
 				8269333B2C71D1810004E0B5 /* MusicControlUseCase.swift in Sources */,
 				82588AAD2CA3EB4A00AD8132 /* UploadPlaylistAPI.swift in Sources */,
 				820836932C3404C700F6D0CF /* StreamAccountServiceInterface.swift in Sources */,
@@ -1128,6 +1135,7 @@
 				820836772C34001D00F6D0CF /* AppleSocialLoginServiceImpl.swift in Sources */,
 				79501FD42C9318C500FB8143 /* PlaylistServiceInterface.swift in Sources */,
 				82588AA42CA2EFA500AD8132 /* AddressServiceInterface.swift in Sources */,
+				79F6FC582CB2684B00F60787 /* DeleteTrackFromPlaylistAPI.swift in Sources */,
 				79842E8C2C7225FD0062F825 /* MapKitLocationServiceImpl.swift in Sources */,
 				8208367C2C34005400F6D0CF /* AuthUseCase.swift in Sources */,
 				79B0F6F42C8C4111009140AF /* FetchTrackFeedAPI.swift in Sources */,
