@@ -72,7 +72,7 @@ struct TrackMapView: View {
             )
         }
         .onReceive(locationManager.locationPublisher) { location in
-            // updateMap(with: location)
+            updateMap(with: location)
         }
     }
 }
