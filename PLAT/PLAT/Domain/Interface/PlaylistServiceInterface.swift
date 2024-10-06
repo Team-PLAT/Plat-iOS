@@ -13,6 +13,8 @@ protocol PlaylistServiceInterface {
     func searchPlaylist(title: String, page: Int, size: Int) async -> Result<[Playlist], Error>
     func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Int64, Error>
     func appendTrackToPlaylist(playlistId: Int, trackId: Int) async -> Result<Void, Error>
-    func updatePlaylist(playlistId: Int, title: String, imageData: Data?, tracks: [Track]) async -> Result<Void, Error>
+    func updatePlaylist(playlistId: Int, title: String, imageData: Data?) async -> Result<Void, Error>
+    func updateTrackOrder(playlistId: Int, tracks: [Track]) async -> Result<Void, Error>
+    func deleteTrackFromPlaylist(playlistId: Int, trackId: Int) async -> Result<Void, Error>
     func deletePlaylist(playlistId: Int) async -> Result<Void, Error>
 }
