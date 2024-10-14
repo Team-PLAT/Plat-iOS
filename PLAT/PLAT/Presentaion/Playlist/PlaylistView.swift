@@ -50,6 +50,9 @@ struct PlaylistView: View {
         .background(.platBackground)
         .tint(.white)
         .navigationTitle("플레이리스트")
+        .onAppear {
+            playlistUseCase.fetchPlaylists()
+        }
     }
 }
 
