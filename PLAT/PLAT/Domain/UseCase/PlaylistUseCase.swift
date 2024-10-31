@@ -82,7 +82,9 @@ extension PlaylistUseCase {
         Task {
             let result = await playlistService.fetchPlaylistDetail(playlistId: playlistId)
             switch result {
-            case .success(let playlist): state.selectedPlaylist = playlist
+            case .success(let playlist):
+                state.selectedPlaylistId = playlist.id
+                state.selectedPlaylist = playlist
             case .failure(let error): print(error) // TODO: 에러 처리
             }
         }
