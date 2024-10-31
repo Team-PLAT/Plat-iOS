@@ -64,13 +64,16 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트를 불러옵니다.
-    func fetchPlaylists() {
+    func fetchPlaylists(completion: @escaping () -> Void) {
         Task {
             let result = await playlistService.fetchPlaylists(page: 0, size: 20)
             switch result {
-            case .success(let playlists): state.playlists = playlists
-            case .failure(let error): print(error) // TODO: 에러 처리
+            case .success(let playlists):
+                self.state.playlists = playlists
+            case .failure(let error):
+                print(error) // TODO: 에러 처리
             }
+            completion()
         }
     }
     
@@ -86,13 +89,14 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트를 검색합니다.
-    func searchPlaylist(title: String) {
+    func searchPlaylist(title: String, completion: @escaping () -> Void) {
         Task {
             let result = await playlistService.searchPlaylist(title: title, page: 0, size: 20)
             switch result {
             case .success(let playlists): state.searchPlaylists = playlists
             case .failure(let error): print(error) // TODO: 에러 처리
             }
+            completion()
         }
     }
     

@@ -16,13 +16,8 @@ struct PlaylistView: View {
     
     @State private var selectedPlaylistId: Playlist.ID?
     @State private var searchText: String = ""
-    var filteredPlaylists: [Playlist] {
-        if searchText.isEmpty {
-            return playlistUseCase.state.playlists
-        } else {
-            return playlistUseCase.state.playlists.filter { $0.title.localizedStandardContains(searchText.lowercased()) }
-        }
-    }
+    @State private var searchTimer: Timer?
+    @State private var filteredPlaylists: [Playlist] = []
     
     var body: some View {
         VStack {
@@ -51,7 +46,25 @@ struct PlaylistView: View {
         .tint(.white)
         .navigationTitle("플레이리스트")
         .onAppear {
-            playlistUseCase.fetchPlaylists()
+            playlistUseCase.fetchPlaylists {
+                filteredPlaylists = playlistUseCase.state.playlists
+            }
+        }
+        .onChange(of: searchText) {
+            searchTimer?.invalidate()
+            searchTimer = nil
+            
+            self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+                if searchText == "" {
+                    playlistUseCase.fetchPlaylists {
+                        filteredPlaylists = playlistUseCase.state.playlists
+                    }
+                } else {
+                    playlistUseCase.searchPlaylist(title: searchText) {
+                        filteredPlaylists = playlistUseCase.state.searchPlaylists
+                    }
+                }
+            }
         }
     }
 }
