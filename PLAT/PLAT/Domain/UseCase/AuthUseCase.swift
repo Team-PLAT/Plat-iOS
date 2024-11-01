@@ -83,6 +83,7 @@ extension AuthUseCase {
             
         case .signOut:
             memberService.signOut()
+            state.isLoginComplete = false
             
         case .resign:
             Task {
