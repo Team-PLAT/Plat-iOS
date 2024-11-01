@@ -82,14 +82,14 @@ extension AuthUseCase {
             state.authType = authType
             
         case .signOut:
-            memberService.signOut()
-            state.isLoginComplete = false
+            removeTokens()
             
         case .resign:
             Task {
                 let result = await memberService.resign()
                 switch result {
-                case .success: break
+                case .success:
+                    removeTokens()
                 case .failure(let error): print(error) // TODO: 에러 처리
                 }
             }
@@ -169,6 +169,12 @@ extension AuthUseCase {
     /// 소셜 로그인 결과 처리하기
     func handleSocialLogin(authResult: Result<ASAuthorization, Error>) -> Result<Bool, Error> {
         return socialLoginService.handleLogin(authResult)
+    }
+    
+    /// 로그아웃 or 탈퇴 시 토큰 제거
+    private func removeTokens() {
+        memberService.signOut()
+        state.isLoginComplete = false
     }
 }
 
