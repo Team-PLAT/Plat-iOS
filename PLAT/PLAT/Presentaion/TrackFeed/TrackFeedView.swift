@@ -14,6 +14,7 @@ struct TrackFeedView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isLoading = false
+    @State private var isNonePlaylistToastPresented = false
     
     /// 트랙 리스트를 반환합니다.
     private var trackList: [Track] {
@@ -87,13 +88,14 @@ struct TrackFeedView: View {
                             FeedRowView(
                                 currentTrack: $musicControlUseCase.state.currentTrack,
                                 isLoading: $isLoading,
+                                isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
                                 track: track,
                                 playlistId: ""
                             )
                         }
                     }
                 }
-                
+                            
                 if musicControlUseCase.state.isStreaming {
                     MiniMusicPlayer(
                         isPaused: $musicControlUseCase.state.isPaused,
@@ -109,6 +111,16 @@ struct TrackFeedView: View {
                 }
             }
             .background(.platBackground)
+            
+            VStack {
+                Spacer()
+                
+                ToastMessage(
+                    message: "트랙을 추가할 플레이리스트가 없어요.",
+                    isToastPresented: $isNonePlaylistToastPresented
+                )
+                .padding(.bottom, 30)
+            }
         }
         .overlay(
             PlatProgressView()
@@ -138,6 +150,7 @@ private struct FeedRowView: View {
     
     @Binding private(set) var currentTrack: Track?
     @Binding private(set) var isLoading: Bool
+    @Binding private(set) var isNonePlaylistToastPresented: Bool
     
     let track: Track
     let playlistId: String
@@ -197,6 +210,7 @@ private struct FeedRowView: View {
                     
                     FeedActionView(
                         track: track,
+                        isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
                         currentTrack: $musicControlUseCase.state.currentTrack,
                         isLoading: $isLoading
                     )
@@ -545,9 +559,11 @@ private struct FeedActionView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     let track: Track
     
+    @Binding private(set) var isNonePlaylistToastPresented: Bool
     @Binding private(set) var currentTrack: Track?
     @Binding private(set) var isLoading: Bool
     
@@ -596,7 +612,14 @@ private struct FeedActionView: View {
             }
             
             Button {
-                pathModel.presentSheet(.trackAppendToPlaylist)
+                playlistUseCase.fetchPlaylists()
+                
+                if playlistUseCase.state.playlists.isEmpty {
+                    isNonePlaylistToastPresented.toggle()
+                } else {
+                    playlistUseCase.updateAppendTrackID(trackId: Int(track.id))
+                    pathModel.presentSheet(.trackAppendToPlaylist)
+                }
             } label: {
                 Image(systemName: "text.badge.plus")
                     .foregroundColor(.white)

@@ -254,7 +254,7 @@ private struct MapButtonsView: View {
             radiusRange: 500
         )
         
-        print("500M 반경 안의 TrackList: \(targetTrackList)")
+//        print("500M 반경 안의 TrackList: \(targetTrackList)")
         
         return targetTrackList.filter {
             let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList

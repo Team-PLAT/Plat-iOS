@@ -255,6 +255,7 @@ private struct MusicControllerView: View {
                     if playlistUseCase.state.playlists.isEmpty {
                         isNonePlaylistToastPresented.toggle()
                     } else {
+                        playlistUseCase.updateAppendTrackID(trackId: Int(trackUseCase.currentTrack.id))
                         isTrackAppendToPlaylistSheetPresented.toggle()
                     }
                 }
