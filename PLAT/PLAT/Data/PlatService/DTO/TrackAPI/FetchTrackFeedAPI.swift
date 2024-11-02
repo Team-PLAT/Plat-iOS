@@ -14,6 +14,7 @@ struct FetchTrackFeedRequest: Encodable {
 
 struct FetchTrackFeedResponse: Decodable {
     let trackDetails: [TrackDetails]
+    let hasNext: Bool
     
     struct TrackDetails: Decodable {
         let trackId: Int64

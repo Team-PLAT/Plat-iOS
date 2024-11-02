@@ -17,12 +17,24 @@ final class TrackUseCase {
     private(set) var feedTrackList: [Track]
     private(set) var selectedTrackAppendMusic: Music
     
+    private(set) var feedListPage: Int
+    private(set) var feedListHasNext: Bool
+    
     init(trackService: TrackServiceInterface) {
         self.mapTrackList = []
         self.feedTrackList = []
         self.currentTrack = MockDataBuilder.track
         self.trackService = trackService
-        self.selectedTrackAppendMusic = Music(isrc: "", title: "", artist: "", albumImageUrl: "", duration: 0)
+        self.selectedTrackAppendMusic = Music(
+            isrc: "",
+            title: "",
+            artist: "",
+            albumImageUrl: "",
+            duration: 0
+        )
+        
+        self.feedListPage = 0
+        self.feedListHasNext = false
     }
 }
 
@@ -40,16 +52,31 @@ extension TrackUseCase {
     }
     
     /// TrackFeed의 TrackList를 반환합니다.
-    func fetchFeedTrackList(page: Int) async -> [Track] {
-        let result = await trackService.fetchTrackList(page: page)
+    func fetchFeedTrackList() async -> [Track] {
+        let result = await trackService.fetchTrackList(page: feedListPage)
         switch result {
         case .success(let trackList):
-            self.feedTrackList += trackList
-            return trackList
+            self.feedTrackList += trackList.list
+            self.feedListPage += 1
+            self.feedListHasNext = trackList.hasNext
+            return trackList.list
         case .failure(let error):
             print(error) // TODO: 에러 처리
             return []
         }
+    }
+    
+    /// TrackFeed를 페이지네이션 합니다.
+    func paginationFeedTrackList() async -> [Track] {
+        guard feedListHasNext else { return [] }
+        return await fetchFeedTrackList()
+    }
+    
+    /// Feed를 초기화합니다.
+    func resetFeed() {
+        feedTrackList.removeAll()
+        feedListPage = 0
+        feedListHasNext = false
     }
     
     /// CurrentTrack을 업데이트합니다.

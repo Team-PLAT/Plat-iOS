@@ -32,7 +32,7 @@ struct TrackFeedView: View {
     private func updateFeed() async throws {
         
         // 1. 트랙 리스트 업데이트
-        let trackList = await trackUseCase.fetchFeedTrackList(page: 0)
+        let trackList = await trackUseCase.fetchFeedTrackList()
         
         await withThrowingTaskGroup(of: Void.self) { group in
             
@@ -51,14 +51,13 @@ struct TrackFeedView: View {
             
             // 2-2. 역지오코딩 API 호출
             group.addTask {
-                try await updateFeedAddress()
+                try await updateFeedAddress(from: trackList)
             }
         }
     }
     
     /// 피드 목록의 주소를 모두 업데이트합니다.
-    private func updateFeedAddress() async throws {
-        let trackList = trackUseCase.feedTrackList
+    private func updateFeedAddress(from trackList: [Track]) async throws {
         try await withThrowingTaskGroup(of: (Int, String).self) { group in
             for track in trackList {
                 group.addTask {
@@ -127,7 +126,7 @@ struct TrackFeedView: View {
                 
                 ScrollView {
                     LazyVStack {
-                        ForEach(trackList) { track in
+                        ForEach(Array(trackList.enumerated()), id: \.offset) { index, track in
                             FeedRowView(
                                 currentTrack: $musicControlUseCase.state.currentTrack,
                                 isLoading: $isLoading,
@@ -135,6 +134,16 @@ struct TrackFeedView: View {
                                 playlistId: "",
                                 address: addressList[Int(track.id)]?.address
                             )
+                            .onAppear {
+                                print("현재 피드 ID: \(track.id)")
+                                if index == trackList.count - 1
+                                    && trackUseCase.feedListHasNext {
+                                    print("답변 페이지네이션!")
+                                    Task {
+                                        await trackUseCase.paginationFeedTrackList()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -165,7 +174,13 @@ struct TrackFeedView: View {
             }
         }
         .refreshable {
-            // TODO: fetch 한 값 불러오기
+            trackUseCase.resetFeed()
+            Task {
+                try await updateFeed()
+            }
+        }
+        .onDisappear {
+            trackUseCase.resetFeed()
         }
     }
 }
@@ -319,21 +334,6 @@ private struct FeedLocationView: View {
     let address: String
     
     let track: Track
-    
-    /// 역지오코딩을 이용해 주소를 업데이트합니다.
-    //    private func updateAddress() {
-    //        Task {
-    //            let result = await mapUseCase.fetchReverGeocode(
-    //                latitude: track.location.latitude,
-    //                longitude: track.location.longitude
-    //            )
-    //
-    //            switch result {
-    //            case .success(let place): address = place.address
-    //            case .failure(let error): print(error) // TODO: 에러처리
-    //            }
-    //        }
-    //    }
     
     var body: some View {
         HStack(spacing: 4) {
@@ -574,8 +574,7 @@ private struct FeedActionView: View {
     /// Feed를 업데이트합니다.
     private func updateFeed() {
         Task {
-            await trackUseCase.fetchFeedTrackList(page: 0)
-            let trackList = trackUseCase.feedTrackList
+            let trackList = await trackUseCase.fetchFeedTrackList()
             
             let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
             switch fetchMusicListResult {

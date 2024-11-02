@@ -13,8 +13,12 @@ struct StubTrackService: TrackServiceInterface {
         .success(MockDataBuilder.trackList)
     }
     
-    func fetchTrackList(page: Int) async -> Result<[Track], any Error> {
-        return .success(MockDataBuilder.trackList)
+    func fetchTrackList(page: Int) async -> Result<TrackList, any Error> {
+        let trackList = TrackList(
+            list: MockDataBuilder.trackList,
+            hasNext: false
+        )
+        return .success(trackList)
     }
     
     func fetchCurrent(trackId: Int) async -> Result<Track, any Error> {

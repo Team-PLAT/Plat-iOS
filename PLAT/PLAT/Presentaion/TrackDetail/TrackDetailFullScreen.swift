@@ -106,7 +106,7 @@ private struct HeaderView: View {
     /// Feed를 업데이트합니다.
     private func updateFeed() {
         Task {
-            await trackUseCase.fetchFeedTrackList(page: 0)
+            await trackUseCase.fetchFeedTrackList()
             let trackList = trackUseCase.feedTrackList
             
             let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)

@@ -9,7 +9,7 @@ import UIKit
 
 protocol TrackServiceInterface {
     func fetchTrackList(rectLocation: RectLocation) async -> Result<[Track], Error>
-    func fetchTrackList(page: Int) async -> Result<[Track], Error>
+    func fetchTrackList(page: Int) async -> Result<TrackList, Error>
     func fetchCurrent(trackId: Int) async -> Result<Track, Error>
     func uploadTrack(isrc: String, image: UIImage?, content: String?, location: Location) async -> Result<Void, Error>
     func like(trackId: Int, isLike: Bool) async -> Result<Void, Error>
