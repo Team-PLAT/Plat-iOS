@@ -11,7 +11,7 @@ final class MemberServiceImpl: MemberServiceInterface {
     
     enum MemberServiceError: Error {
         case streamAccountError
-        case imageUploadError(image: UIImage?)
+        case noImageError
     }
     
     private let userSecurityManager = UserSecurityManager.shared
@@ -88,11 +88,11 @@ final class MemberServiceImpl: MemberServiceInterface {
     /// 프로필 아바타를 업데이트합니다.
     func updateProfileAvatar(to image: UIImage?) async -> Result<Void, any Error> {
         
-        guard let imageData = image?.jpegData(compressionQuality: 0.1) else {
-            return .failure(MemberServiceError.imageUploadError(image: image))
+        guard let image else {
+            return .failure(MemberServiceError.noImageError)
         }
         
-        let imageResult = await imageService.uploadImage(imageData: imageData)
+        let imageResult = await imageService.uploadImage(image: image)
         switch imageResult {
         case .success(let platImage):
             let request = UpdateProfileAvatarRequest(avatar: platImage.imageUrl)

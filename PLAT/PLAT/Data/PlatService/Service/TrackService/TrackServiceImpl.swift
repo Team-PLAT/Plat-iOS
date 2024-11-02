@@ -66,8 +66,8 @@ final class TrackServiceImpl: TrackServiceInterface {
         
         var imageUrl = ""
         
-        if let imageData = image?.jpegData(compressionQuality: 0.1) {
-            let imageResult = await imageService.uploadImage(imageData: imageData)
+        if let image {
+            let imageResult = await imageService.uploadImage(image: image)
             switch imageResult {
             case .success(let platImage): imageUrl = platImage.imageUrl
             case .failure(let imageError): return .failure(imageError)

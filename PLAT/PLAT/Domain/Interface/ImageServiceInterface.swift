@@ -5,8 +5,8 @@
 //  Created by 김민준 on 9/15/24.
 //
 
-import Foundation
+import UIKit
 
 protocol ImageServiceInterface {
-    func uploadImage(imageData: Data) async -> Result<PlatImage, Error>
+    func uploadImage(image: UIImage) async -> Result<PlatImage, Error>
 }

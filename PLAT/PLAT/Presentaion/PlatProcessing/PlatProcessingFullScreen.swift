@@ -222,7 +222,7 @@ private struct PlatProcessingPlaylistButton: View {
             
             Button {
                 Task {
-                    await playlistUseCase.uploadPlaylist(title: addressName, imageData: nil, tracks: trackUseCase.mapTrackList)
+                    await playlistUseCase.uploadPlaylist(title: addressName, image: nil, tracks: trackUseCase.mapTrackList)
                 }
                 pathModel.dismissFullScreenCover()
             } label: {

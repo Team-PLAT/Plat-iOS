@@ -5,7 +5,7 @@
 //  Created by 김민준 on 9/25/24.
 //
 
-import Foundation
+import UIKit
 
 final class PlaylistServiceImpl: PlaylistServiceInterface {
     
@@ -114,12 +114,12 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
     }
     
     /// 플레이리스트를 업로드합니다.
-    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Int64, Error> {
+    func uploadPlaylist(title: String, image: UIImage?, tracks: [Track]) async -> Result<Int64, Error> {
         
         var imageUrl = ""
         
-        if let imageData = imageData {
-            let imageResult = await imageService.uploadImage(imageData: imageData)
+        if let image {
+            let imageResult = await imageService.uploadImage(image: image)
             switch imageResult {
             case .success(let platImage): imageUrl = platImage.imageUrl
             case .failure(let imageError): return .failure(imageError)
@@ -166,12 +166,12 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
     }
     
     /// 플레이리스트를 업데이트합니다.
-    func updatePlaylist(playlistId: Int, title: String, imageData: Data?) async -> Result<Void, Error> {
+    func updatePlaylist(playlistId: Int, title: String, image: UIImage?) async -> Result<Void, Error> {
         
         var imageUrl = ""
         
-        if let imageData = imageData {
-            let imageResult = await imageService.uploadImage(imageData: imageData)
+        if let image {
+            let imageResult = await imageService.uploadImage(image: image)
             switch imageResult {
             case .success(let platImage): imageUrl = platImage.imageUrl
             case .failure(let imageError): return .failure(imageError)

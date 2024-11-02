@@ -5,7 +5,7 @@
 //  Created by 조우현 on 9/12/24.
 //
 
-import Foundation
+import UIKit
 
 @Observable
 final class PlaylistUseCase {
@@ -97,8 +97,8 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트를 업로드합니다.
-    func uploadPlaylist(title: String, imageData: Data?, tracks: [Track]) async -> Result<Int64, Error> {
-        let result = await playlistService.uploadPlaylist(title: title, imageData: imageData, tracks: tracks)
+    func uploadPlaylist(title: String, image: UIImage?, tracks: [Track]) async -> Result<Int64, Error> {
+        let result = await playlistService.uploadPlaylist(title: title, image: image, tracks: tracks)
         switch result {
         case .success(let playlistId): return .success(playlistId)
         case .failure(let error): return .failure(error)
@@ -117,12 +117,12 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트를 업데이트합니다.
-    func updatePlaylist(playlistId: Int, title: String, imageData: Data?) {
+    func updatePlaylist(playlistId: Int, title: String, image: UIImage?) {
         Task {
             let result = await playlistService.updatePlaylist(
                 playlistId: playlistId,
                 title: title,
-                imageData: imageData
+                image: image
             )
             
             switch result {
