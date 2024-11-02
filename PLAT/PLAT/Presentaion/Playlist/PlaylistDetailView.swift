@@ -13,19 +13,6 @@ struct PlaylistDetailView: View {
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
-    private var selectedPlaylist: Playlist {
-        if let playlist = playlistUseCase.selectedPlaylist {
-            return playlist
-        } else {
-            return Playlist(
-                id: 0001,
-                title: "플레이리스트 가져오기 실패",
-                imageUrl: "",
-                trackList: []
-            )
-        }
-    }
-    
     @State private var showTrackDetail = false
     @State private var isrcs: [String] = []
     
@@ -33,13 +20,13 @@ struct PlaylistDetailView: View {
         ScrollView {
             VStack(spacing: 0) {
                 
-                PlayListInfo(playlist: selectedPlaylist)
+                PlayListInfo()
                     .padding(.bottom, 10)
                 
                 PlayListPlayButton(isrcs: $isrcs)
                     .padding(.bottom, 10)
                 
-                PlayListDetailView(playlist: selectedPlaylist)
+                PlayListDetailView()
                 
                 Rectangle()
                     .frame(height: 1)
@@ -54,9 +41,10 @@ struct PlaylistDetailView: View {
                     .padding(.leading, 46)
                 
                 VStack(spacing: 0) {
-                    ForEach(selectedPlaylist.trackList) { track in
+                    ForEach(playlistUseCase.state.selectedPlaylist?.trackList ?? []) { track in
                         PlayListRowView(isrcs: $isrcs, track: track)
                             .onTapGesture {
+                                // TODO: iOS 18 버전 미만에서 터짐💣
                                 musicControlUseCase.state.currentTrack = track
 //                                musicControlUseCase.effect(.setup(music: track.music))
                                 pathModel.presentFullScreenCover(.trackDetail)
@@ -96,7 +84,13 @@ struct PlaylistDetailView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 플리 안의 트랙 삭제 -> 플리 수정 api 연결
+                    Task {
+                        await playlistUseCase.deletePlaylist(playlistId: Int(playlistUseCase.selectedPlaylist?.id ?? 0001))
+                        
+                        playlistUseCase.fetchPlaylists {
+                            pathModel.pop()
+                        }
+                    }
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)
@@ -119,12 +113,10 @@ private struct PlayListInfo: View {
     
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
-    let playlist: Playlist
-    
     var body: some View {
-        VStack( alignment: .center, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             
-            AsyncImage(url: URL(string: playlist.imageUrl)) { phase in
+            AsyncImage(url: URL(string: playlistUseCase.state.selectedPlaylist?.imageUrl ?? "")) { phase in
                 if let image = phase.image {
                     image
                         .resizable()
@@ -139,13 +131,13 @@ private struct PlayListInfo: View {
             }
             .padding(.bottom, 16)
             
-            Text(playlist.title)
+            Text(playlistUseCase.state.selectedPlaylist?.title ?? "플레이리스트 가져오기 실패")
                 .font(.Head.head2)
                 .foregroundStyle(.white)
                 .frame(width: 213, height: 44, alignment: .center)
                 .padding(.bottom, -12)
             
-            Text(playlist.createdDate.yearMonthDayFormat)
+            Text(playlistUseCase.state.selectedPlaylist?.createdDate.yearMonthDayFormat ?? Date().yearMonthDayFormat)
                 .font(.Body.body1)
                 .foregroundStyle(.gray7)
                 .frame(width: 160, height: 44, alignment: .center)
@@ -212,11 +204,12 @@ private struct PlayListPlayButton: View {
 
 private struct PlayListDetailView: View {
     
-    let playlist: Playlist
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
+    // TODO: 항상 0분으로 표시되는 오류
     var totalDurationInMinutes: Int {
-        let totalDurationInSeconds = playlist.trackList.reduce(0) { $0 + $1.music.duration / 1000 }
-        return Int(totalDurationInSeconds) / 60
+        let totalDurationInSeconds = playlistUseCase.state.selectedPlaylist?.trackList.reduce(0) { $0 + $1.music.duration / 1000 }
+        return Int(totalDurationInSeconds ?? 0) / 60
     }
     
     var body: some View {
@@ -224,7 +217,7 @@ private struct PlayListDetailView: View {
             HStack(spacing: 6) {
                 Spacer()
                 
-                Text("\(playlist.trackList.count)곡")
+                Text("\(playlistUseCase.state.selectedPlaylist?.trackList.count ?? 0)곡")
                     .font(.Body.body5)
                     .foregroundStyle(.white)
                 
@@ -279,6 +272,7 @@ private struct PlayListRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(PathModel.self) private var pathModel
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @State private var playlistMusic: Music?
     @Binding var isrcs: [String]
@@ -310,7 +304,10 @@ private struct PlayListRowView: View {
                         }
                         
                         Button(role: .destructive) {
-                            // TODO: 플리에서 제거
+                            Task {
+                                await playlistUseCase.deleteTrackFromPlaylist(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001), trackId: Int(track.id))
+                                playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001))
+                            }
                         } label: {
                             Label("플레이리스트에서 제거", systemImage: SystemImage.delete)
                                 .symbolRenderingMode(.palette)
@@ -335,7 +332,13 @@ private struct PlayListRowView: View {
         }
         .onAppear {
             Task {
-                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                let result = await musicControlUseCase.fetchMusic(from: track)
+                switch result {
+                case .success(let success):
+                    playlistMusic = success
+                case .failure(let failure):
+                    print(failure)
+                }
                 
                 if let currentIsrc = playlistMusic?.isrc {
                     isrcs.append(currentIsrc)

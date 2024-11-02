@@ -16,13 +16,8 @@ struct PlaylistView: View {
     
     @State private var selectedPlaylistId: Playlist.ID?
     @State private var searchText: String = ""
-    var filteredPlaylists: [Playlist] {
-        if searchText.isEmpty {
-            return playlistUseCase.state.playlists
-        } else {
-            return playlistUseCase.state.playlists.filter { $0.title.localizedStandardContains(searchText.lowercased()) }
-        }
-    }
+    @State private var searchTimer: Timer?
+    @State private var filteredPlaylists: [Playlist] = []
     
     var body: some View {
         VStack {
@@ -35,10 +30,11 @@ struct PlaylistView: View {
                     Button {
                         selectedPlaylistId = playlist.id
                         playlistUseCase.effect(.updateSelectedPlaylistId(selectedPlaylistId ?? 0))
+                        playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylistId ?? 0))
                         pathModel.push(.playlistDetail)
                     } label: {
                         VStack {
-                            PlaylistSectionView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+                            PlaylistSectionView(selectedPlaylistId: $selectedPlaylistId, filteredPlaylists: $filteredPlaylists, playlist: playlist)
                             DividerView()
                         }
                     }
@@ -50,6 +46,27 @@ struct PlaylistView: View {
         .background(.platBackground)
         .tint(.white)
         .navigationTitle("플레이리스트")
+        .onAppear {
+            playlistUseCase.fetchPlaylists {
+                filteredPlaylists = playlistUseCase.state.playlists
+            }
+        }
+        .onChange(of: searchText) {
+            searchTimer?.invalidate()
+            searchTimer = nil
+            
+            self.searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+                if searchText == "" {
+                    playlistUseCase.fetchPlaylists {
+                        filteredPlaylists = playlistUseCase.state.playlists
+                    }
+                } else {
+                    playlistUseCase.searchPlaylist(title: searchText) {
+                        filteredPlaylists = playlistUseCase.state.searchPlaylists
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -109,7 +126,8 @@ private struct HeaderView: View {
 private struct PlaylistSectionView: View {
     
     @State private var isShowDetailSheet: Bool = false
-    @Binding var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var filteredPlaylists: [Playlist]
     
     let playlist: Playlist
     
@@ -131,7 +149,7 @@ private struct PlaylistSectionView: View {
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isShowDetailSheet) {
-            DetailSheetView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            DetailSheetView(selectedPlaylistId: $selectedPlaylistId, filteredPlaylists: $filteredPlaylists, playlist: playlist)
         }
     }
 }
@@ -210,7 +228,8 @@ private struct CreatePlaylistView: View {
 
 private struct DetailSheetView: View {
     
-    @Binding var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var filteredPlaylists: [Playlist]
     
     let playlist: Playlist
     
@@ -220,7 +239,7 @@ private struct DetailSheetView: View {
             
             DetailInfoView()
             
-            DetailButtonsView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            DetailButtonsView(filteredPlaylists: $filteredPlaylists, selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
             
             Spacer()
             
@@ -300,7 +319,8 @@ private struct DetailButtonsView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var filteredPlaylists: [Playlist]
+    @Binding private(set) var selectedPlaylistId: Playlist.ID?
     @State private var currentIsrcs: [String] = []
     
     let playlist: Playlist
@@ -335,8 +355,13 @@ private struct DetailButtonsView: View {
             }
             
             Button {
-                playlistUseCase.deletePlaylist(playlistId: Int(playlist.id))
-                // TODO: 플리 삭제 api 연결
+                Task {
+                    await playlistUseCase.deletePlaylist(playlistId: Int(playlist.id))
+                    
+                    playlistUseCase.fetchPlaylists {
+                        filteredPlaylists = playlistUseCase.state.playlists
+                    }
+                }
             } label: {
                 HStack {
                     Image(systemName: "trash")

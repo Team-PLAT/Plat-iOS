@@ -11,6 +11,7 @@ struct PlaylistDetailsEditView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
+    @State private var selectedImage: UIImage?
     @State private var selectedPlaylist: Playlist = Playlist(
         id: 0001,
         title: "플레이리스트 가져오기 실패",
@@ -18,12 +19,10 @@ struct PlaylistDetailsEditView: View {
         trackList: []
     )
     
-    @State private var playlistTitle: String = ""
-    
     var body: some View {
         VStack(spacing: 0) {
             
-            PlayListEditInfo(playlistTitle: $playlistTitle, playlist: selectedPlaylist)
+            PlayListEditInfo(selectedImage: $selectedImage, selectedPlaylist: $selectedPlaylist)
                 .padding(.bottom, 17)
             
             NewTrackAdd()
@@ -49,6 +48,7 @@ struct PlaylistDetailsEditView: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
+                    playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                     pathModel.pop()
                 } label: {
                     Text("취소")
@@ -58,7 +58,12 @@ struct PlaylistDetailsEditView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 수정 완료
+                    // TODO: 이미지 업로드 오류 수정
+                    Task {
+                        await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageData: selectedImage?.pngData())
+                        playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
+                        pathModel.pop()
+                    }
                 } label: {
                     Text("완료")
                         .foregroundStyle(.platPurple)
@@ -66,19 +71,18 @@ struct PlaylistDetailsEditView: View {
             }
         }
         .onAppear {
-            selectedPlaylist = playlistUseCase.selectedPlaylist ?? Playlist(
+            selectedPlaylist = playlistUseCase.state.selectedPlaylist ?? Playlist(
                 id: 0001,
                 title: "플레이리스트 가져오기 실패",
                 imageUrl: "",
                 trackList: []
             )
-            self.playlistTitle = selectedPlaylist.title
         }
     }
     
     private func moveTrack(from source: IndexSet, to destination: Int) {
         selectedPlaylist.trackList.move(fromOffsets: source, toOffset: destination)
-        // TODO: UpdateTrackOrderAPI 호출
+        playlistUseCase.updateTrackOrder(playlistId: Int(selectedPlaylist.id), tracks: selectedPlaylist.trackList)
     }
     
     private func deleteTrack(_ track: Track) {
@@ -93,10 +97,8 @@ private struct PlayListEditInfo: View {
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @State private var isPhotoAlbumSheet = false
-    @State private var selectedImage: UIImage?
-    @Binding var playlistTitle: String
-    
-    let playlist: Playlist
+    @Binding private(set) var selectedImage: UIImage?
+    @Binding private(set) var selectedPlaylist: Playlist
     
     var body: some View {
         VStack( alignment: .center, spacing: 0) {
@@ -118,7 +120,7 @@ private struct PlayListEditInfo: View {
                                 .foregroundStyle(.white)
                         }
                 } else {
-                    AsyncImage(url: URL(string: playlist.imageUrl)) { phase in
+                    AsyncImage(url: URL(string: selectedPlaylist.imageUrl)) { phase in
                         if let image = phase.image {
                             image
                                 .resizable()
@@ -152,7 +154,7 @@ private struct PlayListEditInfo: View {
                     }
             }
             
-            TextField(" ", text: $playlistTitle)
+            TextField(" ", text: $selectedPlaylist.title)
                 .font(.Head.head2)
                 .frame(height: 44, alignment: .center)
                 .multilineTextAlignment(.center)
@@ -172,7 +174,7 @@ private struct PlayListEditInfo: View {
                 
                 Spacer()
                 
-                Text(playlist.createdDate.yearMonthDayFormat)
+                Text(selectedPlaylist.createdDate.yearMonthDayFormat)
                     .font(.Body.body1)
                     .foregroundStyle(.gray7)
                     .padding(.trailing, 18)
@@ -228,6 +230,7 @@ private struct NewTrackAdd: View {
 
 private struct PlayListRowView: View {
     
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var playlistMusic: Music?
@@ -240,6 +243,10 @@ private struct PlayListRowView: View {
             HStack(spacing: 0) {
                 
                 Button {
+                    Task {
+                        await playlistUseCase.deleteTrackFromPlaylist(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001), trackId: Int(track.id))
+                        playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001))
+                    }
                     onDelete(track)
                 } label: {
                     Circle()
@@ -265,7 +272,13 @@ private struct PlayListRowView: View {
         }
         .onAppear {
             Task {
-                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                let result = await musicControlUseCase.fetchMusic(from: track)
+                switch result {
+                case .success(let success):
+                    playlistMusic = success
+                case .failure(let failure):
+                    print(failure)
+                }
             }
         }
         .padding(.vertical, 10)

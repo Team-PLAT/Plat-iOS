@@ -59,6 +59,7 @@ struct TrackAppendContentSheet: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    // TODO: 플레이리스트에서 트랙 추가 시 분기 처리(PathModel 이용? 쨌든 이 sheet가 어디서 올라왔냐에 따라)
                     trackUseCase.effect(.uploadTrack(isrc: trackUseCase.selectedTrackAppendMusic.isrc, imageData: selectedImage?.pngData(), content: contentText, location: currentLocation))
                     pathModel.dismissSheet()
                 } label: {
