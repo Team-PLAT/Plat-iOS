@@ -82,7 +82,7 @@ private struct ProfileImageView: View {
         .sheet(isPresented: $isPhotoAlbumSheet) {
             PhotoPicker(selectedImage: $selectedImage)
                 .onChange(of: selectedImage) {
-                    authUsecase.effect(.updateProfileAvatar(image: selectedImage))
+                    authUseCase.effect(.updateProfileAvatar(image: selectedImage))
                 }
         }
         .onAppear {

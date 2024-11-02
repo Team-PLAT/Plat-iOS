@@ -59,9 +59,13 @@ struct PlaylistDetailsEditView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 이미지 업로드 오류 수정
                     Task {
-                        await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageData: selectedImage?.pngData())
+                        await playlistUseCase.updatePlaylist(
+                            playlistId: Int(selectedPlaylist.id),
+                            title: selectedPlaylist.title,
+                            image: selectedImage
+                        )
+                        
                         playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                         pathModel.pop()
                     }

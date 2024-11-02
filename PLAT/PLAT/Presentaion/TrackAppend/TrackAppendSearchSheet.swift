@@ -14,7 +14,7 @@ import Kingfisher
 struct TrackAppendSearchSheet: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-
+    
     @State private var searchTimer: Timer?
     @State private var searchTerm = ""
     @State private var musicList: [Music] = []
@@ -227,10 +227,9 @@ private struct TrackAppendMusicList: View {
                     Text("\(music.artist.wrappedValue)")
                         .font(.Caption.caption1)
                 }
-                    
+                
                 Spacer()
-                    
-                // TODO: Button으로 했더니 Row 전체가 터치 영역이 돼서 onTapGesture로 변경
+                
                 Image(systemName: "plus.circle")
                     .foregroundStyle(.gray8)
                     .onTapGesture {
@@ -238,26 +237,26 @@ private struct TrackAppendMusicList: View {
                         pathModel.pushSheet(.trackAppendContent)
                     }
             }
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-                .onAppear {
-                    if $musicList.count == (index + 1) {
-                        Task {
-                            let result = await musicControlUseCase.searchMusic(term: searchTerm, isPagination: true)
-                            switch result {
-                            case .success(let musicList):
-                                self.musicList.append(contentsOf: musicList)
-                            case .failure:
-                                break
-                            }
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            .onAppear {
+                if $musicList.count == (index + 1) {
+                    Task {
+                        let result = await musicControlUseCase.searchMusic(term: searchTerm, isPagination: true)
+                        switch result {
+                        case .success(let musicList):
+                            self.musicList.append(contentsOf: musicList)
+                        case .failure:
+                            break
                         }
                     }
                 }
             }
-            .contentMargins(.top, 0, for: .scrollContent)
         }
+        .contentMargins(.top, 0, for: .scrollContent)
     }
+}
 
 #Preview {
     TrackAppendSearchSheet()

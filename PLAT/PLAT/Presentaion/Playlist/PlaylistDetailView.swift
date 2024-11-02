@@ -114,9 +114,13 @@ private struct PlayListInfo: View {
     
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
+    private var playlistImageUrl: URL? {
+        return URL(string: playlistUseCase.state.selectedPlaylist?.imageUrl ?? "")
+    }
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            KFImage(URL(string: playlistUseCase.state.selectedPlaylist?.imageUrl))
+            KFImage(playlistImageUrl)
                 .placeholder {
                     RoundedRectangle(cornerRadius: 24)
                         .frame(width: 220, height: 220)
