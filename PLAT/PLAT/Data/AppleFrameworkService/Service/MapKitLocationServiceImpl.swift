@@ -96,6 +96,22 @@ final class MapKitLocationServiceImpl: NSObject {
 
         return rectLocation
     }
+    
+    /// 중심 좌표를 기준으로 반경 안에 있는지 확인 하는 함수
+    func filterTrackListLocationWithRadius(
+        centerLocation: CLLocation?,
+        targetTrackList: [Track],
+        radiusRange: Double
+    ) -> [Track] {
+        guard let centerLocation else { return [] }
+        
+        let filterTrackList = targetTrackList.filter { track in
+            let point = track.location.toCLLocation
+            return centerLocation.distance(from: point) <= radiusRange
+        }
+        
+        return filterTrackList
+    }
 }
 
 // MARK: - CLLocationManagerDelegate

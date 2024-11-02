@@ -82,8 +82,6 @@ private struct MapView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var fetchMusicTask: Task<Void, Never>?
-    
     /// 신고된 트랙 리스트를 필터 후 반환합니다.
     private var trackList: [Track] {
         trackUseCase.mapTrackList.filter {
@@ -144,24 +142,6 @@ private struct MapView: View {
                     radius: CLLocationDistance(500)
                 )
                 .foregroundStyle(.platDarkpurple.opacity(0.5))
-            }
-        }
-        .onAppear {
-            handleFetchMusic()
-        }
-        .onDisappear {
-            fetchMusicTask?.cancel()
-            fetchMusicTask = nil
-        }
-    }
-    
-    /// 음악 Fetch에 딜레이를 부여합니다.
-    private func handleFetchMusic() {
-        fetchMusicTask = Task {
-            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
-            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-            if let music = musicControlUseCase.state.currentTrack?.music {
-                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: music)
             }
         }
     }
@@ -261,12 +241,25 @@ private struct MapButtonsView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
     @Binding var isShowToastMessage: Bool
     @Binding var hasNotifications: Bool
     
-    var trackList: [Track] {
-        trackUseCase.mapTrackList
+    /// 신고된 트랙 및 원 범위에 맞춰 트랙 리스트를 반환합니다.
+    private var trackList: [Track] {
+        let targetTrackList = locationManager.filterTrackListLocationWithRadius(
+            centerLocation: locationManager.location,
+            targetTrackList: trackUseCase.mapTrackList,
+            radiusRange: 500
+        )
+        
+        print("500M 반경 안의 TrackList: \(targetTrackList)")
+        
+        return targetTrackList.filter {
+            let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+            return !reportedTrackIdList.contains($0.id)
+        }
     }
     
     var body: some View {
