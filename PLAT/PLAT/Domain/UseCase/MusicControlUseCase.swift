@@ -46,6 +46,16 @@ extension MusicControlUseCase {
         case fetchError
     }
     
+    func deleteAllState() {
+        state.isAuthorized = false
+        state.isStreaming = false
+        state.isPaused = true
+        state.isLoading = false
+        state.currentTrack = nil
+        state.currentDuration = 0
+        state.searchOffset = 0
+    }
+    
     /// 스트리밍 계정 구독 여부를 요청합니다.
     func requestSubscription() async throws {
         startLoading()

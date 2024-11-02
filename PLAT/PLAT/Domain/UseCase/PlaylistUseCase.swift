@@ -29,6 +29,7 @@ extension PlaylistUseCase {
         var searchPlaylists: [Playlist] = []
         var selectedPlaylist: Playlist?
         var selectedPlaylistId: Playlist.ID?
+        var appendTrackId: Int64?
     }
 }
 
@@ -171,5 +172,10 @@ extension PlaylistUseCase {
         case .success: break
         case .failure(let error): print(error) // TODO: 에러 처리
         }
+    }
+    
+    /// 피드 뷰에서 트랙을 플리에 추가할 때를 위한 함수입니다.
+    func updateAppendTrackID(trackId: Int) {
+        state.appendTrackId = Int64(trackId)
     }
 }

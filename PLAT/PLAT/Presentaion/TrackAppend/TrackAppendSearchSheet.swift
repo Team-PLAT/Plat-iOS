@@ -18,6 +18,7 @@ struct TrackAppendSearchSheet: View {
     @State private var searchTerm = ""
     @State private var musicList: [Music] = []
     @State private var recentSearchTermList: [String] = []
+    @State private var isLoading = false
     
     @FocusState private var isTextFieldFocused: Bool
     
@@ -26,13 +27,24 @@ struct TrackAppendSearchSheet: View {
         
         NavigationStack(path: $pathModel.sheetPath) {
             VStack {
-                TrackAppendSearchbar(searchTerm: $searchTerm, isTextEditorFocused: $isTextFieldFocused)
+                TrackAppendSearchbar(
+                    searchTerm: $searchTerm,
+                    isLoading: $isLoading,
+                    isTextEditorFocused: $isTextFieldFocused
+                )
                 
-                TrackAppendRecentTerm(searchTerm: $searchTerm, recentSearchTermList: $recentSearchTermList, isTextEditorFocused: $isTextFieldFocused)
+                TrackAppendRecentTerm(
+                    searchTerm: $searchTerm,
+                    recentSearchTermList: $recentSearchTermList,
+                    isTextEditorFocused: $isTextFieldFocused
+                )
                 
                 Spacer()
                 
-                TrackAppendMusicList(musicList: $musicList, searchTerm: $searchTerm)
+                TrackAppendMusicList(
+                    musicList: $musicList,
+                    searchTerm: $searchTerm
+                )
             }
             .tint(.white)
             // TODO: ContentSheet로 넘어갔을 때, back button title 변경되도록 하는 로직(뒤로 가기 했을 때 버퍼링 있음)
@@ -50,6 +62,7 @@ struct TrackAppendSearchSheet: View {
                 musicList = []
             }
             .onChange(of: searchTerm) {
+                isLoading = true
                 searchTimer?.invalidate()
                 searchTimer = nil
                 
@@ -60,12 +73,17 @@ struct TrackAppendSearchSheet: View {
                         switch result {
                         case .success(let musicList):
                             self.musicList = musicList
+                            isLoading = false
                         case .failure:
                             break
                         }
                     }
                 }
             }
+            .overlay(
+                PlatProgressView()
+                    .opacity(isLoading ? 1 : 0)
+            )
             .onSubmit {
                 recentSearchTermList.append(searchTerm)
                 UserDefaults.standard.recentSearchTermList = recentSearchTermList
@@ -82,6 +100,7 @@ struct TrackAppendSearchSheet: View {
 
 private struct TrackAppendSearchbar: View {
     @Binding var searchTerm: String
+    @Binding var isLoading: Bool
     private(set) var isTextEditorFocused: FocusState<Bool>.Binding
     
     var body: some View {
@@ -102,6 +121,7 @@ private struct TrackAppendSearchbar: View {
             if !searchTerm.isEmpty {
                 Button {
                     searchTerm = ""
+                    isLoading = false
                 } label: {
                     Image(systemName: "x.circle.fill")
                         .resizable()
@@ -188,57 +208,57 @@ private struct TrackAppendMusicList: View {
     @Binding var searchTerm: String
     
     var body: some View {
-        List(Array($musicList.enumerated()), id: \.self.offset) { index, music in
-            HStack {
-                // TODO: 이미지 캐싱 구현
-                AsyncImage(url: URL(string: music.albumImageUrl.wrappedValue)) { image in
-                    if let img = image.image {
-                        img
-                            .resizable()
-                    } else {
-                        LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom)
+            List(Array($musicList.enumerated()), id: \.self.offset) { index, music in
+                HStack {
+                    // TODO: 이미지 캐싱 구현
+                    AsyncImage(url: URL(string: music.albumImageUrl.wrappedValue)) { image in
+                        if let img = image.image {
+                            img
+                                .resizable()
+                        } else {
+                            LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom)
+                        }
                     }
-                }
-                .frame(width: 72, height: 72)
-                .cornerRadius(4, corners: .allCorners)
-                
-                VStack(alignment: .leading) {
-                    Text("\(music.title.wrappedValue)")
-                        .font(.Body.body3)
-                    Text("\(music.artist.wrappedValue)")
-                        .font(.Caption.caption1)
-                }
-                
-                Spacer()
-                
-                // TODO: Button으로 했더니 Row 전체가 터치 영역이 돼서 onTapGesture로 변경
-                Image(systemName: "plus.circle")
-                    .foregroundStyle(.gray8)
-                    .onTapGesture {
-                        trackUseCase.selectTrackAppendMusic(music: music.wrappedValue)
-                        pathModel.pushSheet(.trackAppendContent)
+                    .frame(width: 72, height: 72)
+                    .cornerRadius(4, corners: .allCorners)
+                    
+                    VStack(alignment: .leading) {
+                        Text("\(music.title.wrappedValue)")
+                            .font(.Body.body3)
+                        Text("\(music.artist.wrappedValue)")
+                            .font(.Caption.caption1)
                     }
-            }
-            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-            .onAppear {
-                if $musicList.count == (index + 1) {
-                    Task {
-                        let result = await musicControlUseCase.searchMusic(term: searchTerm, isPagination: true)
-                        switch result {
-                        case .success(let musicList):
-                            self.musicList.append(contentsOf: musicList)
-                        case .failure:
-                            break
+                    
+                    Spacer()
+                    
+                    // TODO: Button으로 했더니 Row 전체가 터치 영역이 돼서 onTapGesture로 변경
+                    Image(systemName: "plus.circle")
+                        .foregroundStyle(.gray8)
+                        .onTapGesture {
+                            trackUseCase.selectTrackAppendMusic(music: music.wrappedValue)
+                            pathModel.pushSheet(.trackAppendContent)
+                        }
+                }
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                .onAppear {
+                    if $musicList.count == (index + 1) {
+                        Task {
+                            let result = await musicControlUseCase.searchMusic(term: searchTerm, isPagination: true)
+                            switch result {
+                            case .success(let musicList):
+                                self.musicList.append(contentsOf: musicList)
+                            case .failure:
+                                break
+                            }
                         }
                     }
                 }
             }
+            .contentMargins(.top, 0, for: .scrollContent)
         }
-        .contentMargins(.top, 0, for: .scrollContent)
     }
-}
 
 #Preview {
     TrackAppendSearchSheet()

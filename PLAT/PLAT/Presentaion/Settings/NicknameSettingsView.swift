@@ -11,10 +11,11 @@ import SwiftUI
 
 struct NicknameSettingsView: View {
     
+    @Environment(PathModel.self) private var pathModel
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(AuthUseCase.self) private var authUseCase
     @State private var nicknameText: String = ""
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("새로운 닉네임을 입력해주세요")
@@ -38,6 +39,7 @@ struct NicknameSettingsView: View {
             
             ActionButton(state: .enabled, title: "변경완료") {
                 authUseCase.effect(.updateProfileNickname(nickname: nicknameText))
+                pathModel.pop()
             }
             .padding(.horizontal, 18)
             .padding(.bottom, 48)
@@ -45,9 +47,13 @@ struct NicknameSettingsView: View {
         .navigationTitle("닉네임 변경")
         .navigationBarTitleDisplayMode(.inline)
         .background(.platBackground)
+        .onAppear {
+            nicknameText = authUseCase.state.user?.nickname ?? ""
+        }
         .onChange(of: nicknameText) { _, text in
             nicknameText = userUseCase.validateNickname(text: text)
         }
+        .tapDismissesKeyboard()
     }
 }
 
