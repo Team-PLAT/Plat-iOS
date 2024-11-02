@@ -38,9 +38,6 @@ struct TrackAppendToPlaylistSheet: View {
                 .padding(.bottom, 16)
             }
         }
-        .onAppear {
-            print("🍮", playlists)
-        }
         .presentationDragIndicator(.visible)
         .presentationDetents([.height(286)])
     }
