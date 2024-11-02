@@ -131,6 +131,7 @@
 		82A36ED92C6DE31500F6E6E2 /* MockDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36ED82C6DE31500F6E6E2 /* MockDataBuilder.swift */; };
 		82A36EDB2C6DE8E000F6E6E2 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDA2C6DE8E000F6E6E2 /* Place.swift */; };
 		82A36EDD2C6DF50D00F6E6E2 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A36EDC2C6DF50D00F6E6E2 /* DismissButton.swift */; };
+		82A486252CD6165F007842FE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 82A486242CD6165F007842FE /* Kingfisher */; };
 		82A825122C6E1D400084D7E8 /* MusicSeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825112C6E1D400084D7E8 /* MusicSeekBar.swift */; };
 		82A825142C6E2A400084D7E8 /* Helper+StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825132C6E2A400084D7E8 /* Helper+StringFormatter.swift */; };
 		82A825162C6E30D00084D7E8 /* MusicIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A825152C6E30D00084D7E8 /* MusicIndicator.swift */; };
@@ -340,6 +341,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82A486252CD6165F007842FE /* Kingfisher in Frameworks */,
 				518B4EF02C3EE27F005FF553 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -951,6 +953,7 @@
 			name = PLAT;
 			packageProductDependencies = (
 				518B4EEF2C3EE27F005FF553 /* Lottie */,
+				82A486242CD6165F007842FE /* Kingfisher */,
 			);
 			productName = PLAT;
 			productReference = 793278052C2D014500F433F5 /* PLAT.app */;
@@ -983,6 +986,7 @@
 			packageReferences = (
 				827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				518B4EEE2C3EE27F005FF553 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				82A486232CD6165F007842FE /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 793278062C2D014500F433F5 /* Products */;
 			projectDirPath = "";
@@ -1425,6 +1429,14 @@
 				minimumVersion = 0.55.1;
 			};
 		};
+		82A486232CD6165F007842FE /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1437,6 +1449,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 827A1DDC2C2D9AE700C40046 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		82A486242CD6165F007842FE /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82A486232CD6165F007842FE /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
