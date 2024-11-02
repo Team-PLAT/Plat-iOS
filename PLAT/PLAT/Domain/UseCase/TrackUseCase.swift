@@ -40,11 +40,15 @@ extension TrackUseCase {
     }
     
     /// TrackFeed의 TrackList를 반환합니다.
-    func fetchFeedTrackList(page: Int) async {
+    func fetchFeedTrackList(page: Int) async -> [Track] {
         let result = await trackService.fetchTrackList(page: page)
         switch result {
-        case .success(let trackList): self.feedTrackList = trackList
-        case .failure(let error): print(error) // TODO: 에러 처리
+        case .success(let trackList):
+            self.feedTrackList += trackList
+            return trackList
+        case .failure(let error):
+            print(error) // TODO: 에러 처리
+            return []
         }
     }
     
