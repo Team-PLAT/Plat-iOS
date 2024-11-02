@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - PlatProcessingFullScreen
 
@@ -70,17 +71,20 @@ private struct PlatProcessingLoading: View {
             
             Group {
                 if let imgUrl = trackUseCase.mapTrackList[trackRandomIndex].imageUrl {
-                    AsyncImage(url: URL(string: imgUrl)) { img in
-                        if let image = img.image {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .clipShape(Circle())
-                        } else {
+                    KFImage(URL(string: imgUrl))
+                        .placeholder {
                             Circle()
-                                .fill(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                                .fill(
+                                    .linearGradient(
+                                        colors: [.orange, .indigo],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
                         }
-                    }
+                        .resizable()
+                        .scaledToFill()
+                        .clipShape(Circle())
                 } else {
                     Circle()
                         .fill(.linearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
@@ -299,19 +303,16 @@ private struct PlatProcessingPlaylistRowImage: View {
     private(set) var music: Music
     
     var body: some View {
-        AsyncImage(url: URL(string: music.albumImageUrl)) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-            } else {
+        KFImage(URL(string: music.albumImageUrl))
+            .placeholder {
                 RoundedRectangle(cornerRadius: 4)
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
 
