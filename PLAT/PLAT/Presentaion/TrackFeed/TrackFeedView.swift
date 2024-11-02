@@ -27,18 +27,14 @@ struct TrackFeedView: View {
     
     /// Feed를 업데이트합니다.
     private func updateFeed(from trackList: [Track]) async throws {
-        await withThrowingTaskGroup(of: Void.self) { group in
-            group.addTask {
-                let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
-                
-                switch fetchMusicListResult {
-                case .success(let musicList):
-                    await trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
-                    
-                case .failure(let error):
-                    throw error
-                }
-            }
+        let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+        
+        switch fetchMusicListResult {
+        case .success(let musicList):
+            trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
+            
+        case .failure(let error):
+            throw error
         }
     }
     
