@@ -18,7 +18,7 @@ final class UserSecurityManager {
     
     /// Encrypted User Identifier을 업데이트합니다.
     func updateEncryptedUserIdentifier(_ value: String) {
-        self.accessToken = value
+        self.encryptedUserIdentifier = value
     }
     
     /// AccessToken을 업데이트합니다.
