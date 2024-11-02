@@ -60,6 +60,7 @@ struct AccountSettingsView: View {
             Button("돌아가기", role: .cancel) { }
             Button("로그아웃", role: .destructive) {
                 authUseCase.effect(.signOut)
+                pathModel.popToRoot()
             }
         }
     }

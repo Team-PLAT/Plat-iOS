@@ -30,4 +30,14 @@ final class UserSecurityManager {
     func updateRefreshToken(_ value: String) {
         self.refreshToken = value
     }
+    
+    /// 로그아웃 시에 AccessToken을 제거합니다.
+    func clearAccessToken() {
+        self.accessToken = ""
+    }
+    
+    /// 로그아웃 시에 RefreshToken을 제거합니다.
+    func clearRefreshToken() {
+        self.refreshToken = ""
+    }
 }

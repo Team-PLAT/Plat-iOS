@@ -33,16 +33,6 @@ extension UserUseCase {
 
 extension UserUseCase {
     
-    /// 프로필 이미지 변경하기
-    func updateProfileImage() {
-        userProfileService.updateProfileImage()
-    }
-    
-    /// 닉네임 변경하기
-    func updateNickname() {
-        userProfileService.updateNickname()
-    }
-    
     /// 닉네임 유효성 확인하기
     func validateNickname(text: String) -> String {
         return userProfileService.validateNickname(text: text)
