@@ -91,7 +91,6 @@ struct PlaylistDetailView: View {
                             pathModel.pop()
                         }
                     }
-                    
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)
@@ -305,7 +304,6 @@ private struct PlayListRowView: View {
                         }
                         
                         Button(role: .destructive) {
-                            // TODO: 플리에서 제거
                             Task {
                                 await playlistUseCase.deleteTrackFromPlaylist(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001), trackId: Int(track.id))
                                 playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001))

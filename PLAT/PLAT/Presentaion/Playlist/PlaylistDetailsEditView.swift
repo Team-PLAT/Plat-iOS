@@ -48,6 +48,7 @@ struct PlaylistDetailsEditView: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button {
+                    playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                     pathModel.pop()
                 } label: {
                     Text("취소")
@@ -60,7 +61,6 @@ struct PlaylistDetailsEditView: View {
                     // TODO: 이미지 업로드 오류 수정
                     Task {
                         await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageData: selectedImage?.pngData())
-                        await playlistUseCase.updateTrackOrder(playlistId: Int(selectedPlaylist.id), tracks: selectedPlaylist.trackList)
                         playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                         pathModel.pop()
                     }
@@ -82,6 +82,7 @@ struct PlaylistDetailsEditView: View {
     
     private func moveTrack(from source: IndexSet, to destination: Int) {
         selectedPlaylist.trackList.move(fromOffsets: source, toOffset: destination)
+        playlistUseCase.updateTrackOrder(playlistId: Int(selectedPlaylist.id), tracks: selectedPlaylist.trackList)
     }
     
     private func deleteTrack(_ track: Track) {
