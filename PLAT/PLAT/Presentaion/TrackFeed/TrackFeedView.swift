@@ -612,7 +612,7 @@ private struct FeedActionView: View {
             }
             
             Button {
-                playlistUseCase.fetchPlaylists()
+                playlistUseCase.fetchPlaylists(completion: {})
                 
                 if playlistUseCase.state.playlists.isEmpty {
                     isNonePlaylistToastPresented.toggle()
