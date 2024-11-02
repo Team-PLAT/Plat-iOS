@@ -5,7 +5,7 @@
 //  Created by 조우현 on 8/22/24.
 //
 
-import Foundation
+import UIKit
 
 struct StubMemberService: MemberServiceInterface {
     
@@ -33,7 +33,7 @@ struct StubMemberService: MemberServiceInterface {
         return .success(Void())
     }
     
-    func updateProfileAvatar(to imageData: Data) async -> Result<Void, any Error> {
+    func updateProfileAvatar(to image: UIImage?) async -> Result<Void, any Error> {
         print(#function)
         return .success(())
     }

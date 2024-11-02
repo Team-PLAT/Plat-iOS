@@ -84,16 +84,12 @@ private struct ProfileImageView: View {
         .sheet(isPresented: $isPhotoAlbumSheet) {
             PhotoPicker(selectedImage: $selectedImage)
                 .onChange(of: selectedImage) {
-                    if let imageData = selectedImage?.jpegData(compressionQuality: 0.1) {
-                        authUsecase.effect(.updateProfileAvatar(imageData: imageData))
-                    }
-                    
+                    authUsecase.effect(.updateProfileAvatar(image: selectedImage))
                 }
         }
         .onAppear {
             authUsecase.effect(.fetchProfile)
         }
-        
     }
     
     private struct CameraButton: View {
