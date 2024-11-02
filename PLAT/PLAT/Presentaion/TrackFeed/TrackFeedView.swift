@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TrackFeedView: View {
     
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MapUseCase.self) private var mapUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isLoading = false
@@ -24,20 +26,15 @@ struct TrackFeedView: View {
     }
     
     /// Feed를 업데이트합니다.
-    private func updateFeed() {
-        Task {
-            await trackUseCase.fetchFeedTrackList(page: 0)
-            let trackList = trackUseCase.feedTrackList
+    private func updateFeed(from trackList: [Track]) async throws {
+        let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
+        
+        switch fetchMusicListResult {
+        case .success(let musicList):
+            trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
             
-            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
-            switch fetchMusicListResult {
-            case .success(let musicList):
-                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
-                
-            case .failure(let error):
-                // TODO: 에러 처리
-                print(error)
-            }
+        case .failure(let error):
+            throw error
         }
     }
     
@@ -82,14 +79,26 @@ struct TrackFeedView: View {
                 }
                 
                 ScrollView {
-                    VStack {
-                        ForEach(trackList) { track in
+                    LazyVStack {
+                        ForEach(Array(trackList.enumerated()), id: \.offset) { index, track in
                             FeedRowView(
                                 currentTrack: $musicControlUseCase.state.currentTrack,
                                 isLoading: $isLoading,
                                 track: track,
-                                playlistId: ""
+                                playlistId: "",
+                                address: track.location.place?.address ?? ""
                             )
+                            .onAppear {
+                                print("현재 피드 ID: \(track.id)")
+                                if index == trackList.count - 1
+                                    && trackUseCase.feedListHasNext {
+                                    print("답변 페이지네이션!")
+                                    Task {
+                                        let trackList = await trackUseCase.paginationFeedTrackList()
+                                        try await updateFeed(from: trackList)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -115,10 +124,20 @@ struct TrackFeedView: View {
                 .opacity(isLoading ? 1 : 0)
         )
         .onAppear {
-            updateFeed()
+            Task {
+                let trackList = await trackUseCase.fetchFeedTrackList()
+                try await updateFeed(from: trackList)
+            }
         }
         .refreshable {
-            // TODO: fetch 한 값 불러오기
+            trackUseCase.resetFeed()
+            Task {
+                let trackList = await trackUseCase.fetchFeedTrackList()
+                try await updateFeed(from: trackList)
+            }
+        }
+        .onDisappear {
+            trackUseCase.resetFeed()
         }
     }
 }
@@ -140,6 +159,7 @@ private struct FeedRowView: View {
     
     let track: Track
     let playlistId: String
+    let address: String?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -151,7 +171,7 @@ private struct FeedRowView: View {
                     HStack(spacing: 0) {
                         VStack(alignment: . leading, spacing: 2) {
                             FeedHeaderView(track: track)
-                            FeedLocationView(track: track)
+                            FeedLocationView(address: address ?? "", track: track)
                         }
                         
                         Spacer()
@@ -208,24 +228,11 @@ private struct FeedRowView: View {
                 .foregroundColor(.gray9)
                 .frame(width: UIScreen.main.bounds.width, height: 1)
         }
-        .onAppear {
-            // handleFetchMusic()
-        }
         .onDisappear {
             fetchMusicTask?.cancel()
             fetchMusicTask = nil
         }
     }
-    
-    //    /// 음악 Fetch에 딜레이를 부여합니다.
-    //    private func handleFetchMusic() {
-    //        fetchMusicTask = Task {
-    //            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
-    //            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-    //            feedMusic =
-    //            // feedMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
-    //        }
-    //    }
 }
 
 // MARK: - FeedProfileImage
@@ -239,19 +246,16 @@ private struct FeedProfileImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: profileImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-            } else {
+        KFImage(profileImageUrl)
+            .placeholder {
                 Circle()
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
     }
 }
 
@@ -282,27 +286,11 @@ private struct FeedHeaderView: View {
 
 private struct FeedLocationView: View {
     
-    @Environment(MapUseCase.self) private var mapUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     
-    @State private var address = ""
+    let address: String
     
     let track: Track
-    
-    /// 역지오코딩을 이용해 주소를 업데이트합니다.
-    private func updateAddress() {
-        Task {
-            let result = await mapUseCase.fetchReverGeocode(
-                latitude: track.location.latitude,
-                longitude: track.location.longitude
-            )
-            
-            switch result {
-            case .success(let place): address = place.address
-            case .failure(let error): print(error) // TODO: 에러처리
-            }
-        }
-    }
     
     var body: some View {
         HStack(spacing: 4) {
@@ -314,9 +302,6 @@ private struct FeedLocationView: View {
             Text(address)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
-        }
-        .onAppear {
-            updateAddress()
         }
     }
 }
@@ -419,18 +404,15 @@ private struct FeedAlbumImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: albumImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 56, height: 56)
-            } else {
+        KFImage(albumImageUrl)
+            .placeholder {
                 Rectangle()
                     .frame(width: 56, height: 56)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 56, height: 56)
     }
 }
 
@@ -442,29 +424,23 @@ private struct FeedContentImage: View {
     var body: some View {
         if let imageUrl = track.imageUrl {
             if !imageUrl.isEmpty {
-                AsyncImage(url: URL(string: imageUrl)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fill)
-                            .clipShape(Rectangle())
-                            .cornerRadius(14)
-                            .padding(.trailing, 18)
-                    } else {
-                        Rectangle()
-                            .foregroundStyle(.gray9)
-                            .aspectRatio(1, contentMode: .fill)
-                            .clipShape(Rectangle())
-                            .cornerRadius(14)
-                            .padding(.trailing, 18)
-                            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundStyle(.gray9)
+                    .aspectRatio(1, contentMode: .fill)
+                    .overlay {
+                        KFImage(URL(string: imageUrl))
+                            .placeholder {
                                 PlatProgressView()
-                            )
+                            }
+                            .cancelOnDisappear(true)
+                            .resizable()
+                            .scaledToFill()
                     }
-                }
-            } else {
-                EmptyView()
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .padding(.trailing, 18)
             }
+        } else {
+            EmptyView()
         }
     }
 }
@@ -553,8 +529,7 @@ private struct FeedActionView: View {
     /// Feed를 업데이트합니다.
     private func updateFeed() {
         Task {
-            await trackUseCase.fetchFeedTrackList(page: 0)
-            let trackList = trackUseCase.feedTrackList
+            let trackList = await trackUseCase.fetchFeedTrackList()
             
             let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
             switch fetchMusicListResult {

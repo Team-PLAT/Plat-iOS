@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MusicKit
+import Kingfisher
 
 // MARK: - TrackAppendSearchSheet
 
@@ -190,17 +191,15 @@ private struct TrackAppendMusicList: View {
     var body: some View {
         List(Array($musicList.enumerated()), id: \.self.offset) { index, music in
             HStack {
-                // TODO: 이미지 캐싱 구현
-                AsyncImage(url: URL(string: music.albumImageUrl.wrappedValue)) { image in
-                    if let img = image.image {
-                        img
-                            .resizable()
-                    } else {
+                KFImage(URL(string: music.albumImageUrl.wrappedValue))
+                    .placeholder {
                         LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom)
+                            .frame(width: 72, height: 72)
+                            .cornerRadius(4, corners: .allCorners)
                     }
-                }
-                .frame(width: 72, height: 72)
-                .cornerRadius(4, corners: .allCorners)
+                    .resizable()
+                    .frame(width: 72, height: 72)
+                    .cornerRadius(4, corners: .allCorners)
                 
                 VStack(alignment: .leading) {
                     Text("\(music.title.wrappedValue)")

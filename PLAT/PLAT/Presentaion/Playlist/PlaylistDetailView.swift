@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PlaylistDetailView: View {
     
@@ -123,21 +124,23 @@ private struct PlayListInfo: View {
     
     var body: some View {
         VStack( alignment: .center, spacing: 0) {
-            
-            AsyncImage(url: URL(string: playlist.imageUrl)) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 220, height: 220)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                } else {
+            KFImage(URL(string: playlist.imageUrl))
+                .placeholder {
                     RoundedRectangle(cornerRadius: 24)
                         .frame(width: 220, height: 220)
-                        .foregroundStyle(LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.orange, .indigo],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
                 }
-            }
-            .padding(.bottom, 16)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 220, height: 220)
+                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .padding(.bottom, 16)
             
             Text(playlist.title)
                 .font(.Head.head2)
@@ -357,19 +360,16 @@ private struct AlbumImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: albumImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-            } else {
+        KFImage(albumImageUrl)
+            .placeholder {
                 RoundedRectangle(cornerRadius: 4)
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
 

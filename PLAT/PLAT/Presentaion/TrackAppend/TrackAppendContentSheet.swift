@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 enum ContentState {
     case none
@@ -86,6 +87,7 @@ struct TrackAppendContentSheet: View {
 // MARK: - TrackAppendContentMainSheet
 
 struct TrackAppendContentMainSheet: View {
+    
     @Environment(TrackUseCase.self) private var trackUseCase
     
     @State private var isPhotoAlbumSheet = false
@@ -93,22 +95,24 @@ struct TrackAppendContentMainSheet: View {
     @Binding var isAddWriting: Bool
     @Binding var state: ContentState
     
+    private var albumImageUrl: URL? {
+        URL(string: trackUseCase.selectedTrackAppendMusic.albumImageUrl)
+    }
+    
     var body: some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: trackUseCase.selectedTrackAppendMusic.albumImageUrl)) { image in
-                if let img = image.image {
-                    img
-                        .resizable()
-                        .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
-                        .cornerRadius(12, corners: .allCorners)
-                        .padding(.leading, 18)
-                } else {
+            KFImage(albumImageUrl)
+                .placeholder {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(.red)
                         .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
                         .padding(.leading, 18)
                 }
-            }
+                .resizable()
+                .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
+                .cornerRadius(12, corners: .allCorners)
+                .padding(.leading, 18)
+            
             VStack(alignment: .leading) {
                 
                 Text("\(trackUseCase.selectedTrackAppendMusic.title)")
