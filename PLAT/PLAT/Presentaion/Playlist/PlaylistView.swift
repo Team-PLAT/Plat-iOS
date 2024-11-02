@@ -30,6 +30,7 @@ struct PlaylistView: View {
                     Button {
                         selectedPlaylistId = playlist.id
                         playlistUseCase.effect(.updateSelectedPlaylistId(selectedPlaylistId ?? 0))
+                        playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylistId ?? 0))
                         pathModel.push(.playlistDetail)
                     } label: {
                         VStack {

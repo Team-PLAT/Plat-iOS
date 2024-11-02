@@ -14,7 +14,7 @@ struct PlaylistDetailView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     private var selectedPlaylist: Playlist {
-        if let playlist = playlistUseCase.selectedPlaylist {
+        if let playlist = playlistUseCase.state.selectedPlaylist {
             return playlist
         } else {
             return Playlist(

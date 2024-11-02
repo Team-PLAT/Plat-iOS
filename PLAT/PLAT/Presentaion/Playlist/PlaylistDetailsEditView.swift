@@ -11,6 +11,7 @@ struct PlaylistDetailsEditView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
+    @State private var selectedImage: UIImage?
     @State private var selectedPlaylist: Playlist = Playlist(
         id: 0001,
         title: "플레이리스트 가져오기 실패",
@@ -18,12 +19,10 @@ struct PlaylistDetailsEditView: View {
         trackList: []
     )
     
-    @State private var playlistTitle: String = ""
-    
     var body: some View {
         VStack(spacing: 0) {
             
-            PlayListEditInfo(playlistTitle: $playlistTitle, playlist: selectedPlaylist)
+            PlayListEditInfo(selectedImage: $selectedImage, selectedPlaylist: $selectedPlaylist)
                 .padding(.bottom, 17)
             
             NewTrackAdd()
@@ -58,7 +57,12 @@ struct PlaylistDetailsEditView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 수정 완료
+                    // TODO: 이미지 업로드 오류 수정
+                    Task {
+                        await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageData: selectedImage?.pngData())
+                        playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
+                        pathModel.pop()
+                    }
                 } label: {
                     Text("완료")
                         .foregroundStyle(.platPurple)
@@ -66,13 +70,12 @@ struct PlaylistDetailsEditView: View {
             }
         }
         .onAppear {
-            selectedPlaylist = playlistUseCase.selectedPlaylist ?? Playlist(
+            selectedPlaylist = playlistUseCase.state.selectedPlaylist ?? Playlist(
                 id: 0001,
                 title: "플레이리스트 가져오기 실패",
                 imageUrl: "",
                 trackList: []
             )
-            self.playlistTitle = selectedPlaylist.title
         }
     }
     
@@ -93,10 +96,8 @@ private struct PlayListEditInfo: View {
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @State private var isPhotoAlbumSheet = false
-    @State private var selectedImage: UIImage?
-    @Binding var playlistTitle: String
-    
-    let playlist: Playlist
+    @Binding private(set) var selectedImage: UIImage?
+    @Binding private(set) var selectedPlaylist: Playlist
     
     var body: some View {
         VStack( alignment: .center, spacing: 0) {
@@ -118,7 +119,7 @@ private struct PlayListEditInfo: View {
                                 .foregroundStyle(.white)
                         }
                 } else {
-                    AsyncImage(url: URL(string: playlist.imageUrl)) { phase in
+                    AsyncImage(url: URL(string: selectedPlaylist.imageUrl)) { phase in
                         if let image = phase.image {
                             image
                                 .resizable()
@@ -152,7 +153,7 @@ private struct PlayListEditInfo: View {
                     }
             }
             
-            TextField(" ", text: $playlistTitle)
+            TextField(" ", text: $selectedPlaylist.title)
                 .font(.Head.head2)
                 .frame(height: 44, alignment: .center)
                 .multilineTextAlignment(.center)
@@ -172,7 +173,7 @@ private struct PlayListEditInfo: View {
                 
                 Spacer()
                 
-                Text(playlist.createdDate.yearMonthDayFormat)
+                Text(selectedPlaylist.createdDate.yearMonthDayFormat)
                     .font(.Body.body1)
                     .foregroundStyle(.gray7)
                     .padding(.trailing, 18)
