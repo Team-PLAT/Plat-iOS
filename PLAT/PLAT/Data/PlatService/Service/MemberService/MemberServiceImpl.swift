@@ -40,7 +40,8 @@ final class MemberServiceImpl: MemberServiceInterface {
     
     /// 로그아웃을 진행합니다.
     func signOut() {
-        // TODO: 로그아웃 기능 구현
+        userSecurityManager.clearAccessToken()
+        userSecurityManager.clearRefreshToken()
     }
     
     /// 회원 탈퇴를 진행합니다.

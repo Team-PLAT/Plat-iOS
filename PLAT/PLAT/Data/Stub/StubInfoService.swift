@@ -6,17 +6,27 @@
 //
 
 import Foundation
+import UIKit
 
 struct StubInfoService: InfoServiceInterface {
     func checkPrivacyPolicy() {
-        print(#function)
+        // TODO: 링크 교체
+        if let url = URL(string: "https://github.com/Team-PLAT/Plat-iOS") {
+            UIApplication.shared.open(url)
+        }
     }
     
     func checkTermsOfService() {
-        print(#function)
+        // TODO: 링크 교체
+        if let url = URL(string: "https://github.com/Team-PLAT/Plat-iOS") {
+            UIApplication.shared.open(url)
+        }
     }
     
     func checkSupport() {
-        print(#function)
+        // TODO: 링크 교체
+        if let url = URL(string: "https://github.com/Team-PLAT/Plat-iOS") {
+            UIApplication.shared.open(url)
+        }
     }
 }

@@ -18,7 +18,7 @@ final class UserSecurityManager {
     
     /// Encrypted User Identifier을 업데이트합니다.
     func updateEncryptedUserIdentifier(_ value: String) {
-        self.accessToken = value
+        self.encryptedUserIdentifier = value
     }
     
     /// AccessToken을 업데이트합니다.
@@ -29,5 +29,15 @@ final class UserSecurityManager {
     /// RefreshToken을 업데이트합니다.
     func updateRefreshToken(_ value: String) {
         self.refreshToken = value
+    }
+    
+    /// 로그아웃 시에 AccessToken을 제거합니다.
+    func clearAccessToken() {
+        self.accessToken = ""
+    }
+    
+    /// 로그아웃 시에 RefreshToken을 제거합니다.
+    func clearRefreshToken() {
+        self.refreshToken = ""
     }
 }

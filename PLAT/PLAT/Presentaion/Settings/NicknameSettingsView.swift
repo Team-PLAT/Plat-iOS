@@ -12,6 +12,7 @@ import SwiftUI
 struct NicknameSettingsView: View {
     
     @Environment(UserUseCase.self) private var userUseCase
+    @Environment(AuthUseCase.self) private var authUseCase
     @State private var nicknameText: String = ""
     
     var body: some View {
@@ -36,7 +37,7 @@ struct NicknameSettingsView: View {
             Spacer()
             
             ActionButton(state: .enabled, title: "변경완료") {
-                userUseCase.updateNickname()
+                authUseCase.effect(.updateProfileNickname(nickname: nicknameText))
             }
             .padding(.horizontal, 18)
             .padding(.bottom, 48)

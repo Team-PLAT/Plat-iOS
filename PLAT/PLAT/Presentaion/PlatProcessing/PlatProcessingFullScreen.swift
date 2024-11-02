@@ -10,7 +10,8 @@ import SwiftUI
 // MARK: - PlatProcessingFullScreen
 
 struct PlatProcessingFullScreen: View {
-    @State var isCompleteLoading = false
+    
+    @State private var isCompleteLoading = false
     
     var body: some View {
         VStack {
@@ -26,9 +27,9 @@ struct PlatProcessingFullScreen: View {
         }
         .presentationBackground(.black.opacity(0.8))
         
-        // TODO: 로딩뷰에서 플레이리스트뷰로 넘어가는 로직 기획 나오면 구현하기
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            Task {
+                try await Task.sleep(for: .seconds(1))
                 isCompleteLoading = true
             }
         }
@@ -38,6 +39,7 @@ struct PlatProcessingFullScreen: View {
 // MARK: - PlatProcessingDismissButton
 
 private struct PlatProcessingDismissButton: View {
+    
     @Environment(PathModel.self) private var pathModel
     
     var body: some View {
@@ -54,6 +56,7 @@ private struct PlatProcessingDismissButton: View {
 // MARK: - PlatProcessingLoading
 
 private struct PlatProcessingLoading: View {
+    
     @Environment(TrackUseCase.self) private var trackUseCase
     
     @State private var timer: Timer?
