@@ -17,7 +17,6 @@ struct TrackMapView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var playlist: Playlist?
     @State private var hasNotifications = false
     @State private var isShowToastMessage: Bool = false
     
@@ -40,8 +39,6 @@ struct TrackMapView: View {
             case .success(let musicList):
                 trackUseCase.updateMapTrackListMusicInfo(from: musicList)
                 
-                // TODO: 플레이리스트 생성
-                
             case .failure(let error):
                 // TODO: 에러 처리
                 print(error)
@@ -61,7 +58,6 @@ struct TrackMapView: View {
                 
                 MapComponentsView(
                     hasNotifications: $hasNotifications,
-                    playlist: $playlist,
                     isShowToastMessage: $isShowToastMessage
                 )
             }
@@ -208,7 +204,6 @@ private struct MapComponentsView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding var hasNotifications: Bool
-    @Binding var playlist: Playlist?
     @Binding var isShowToastMessage: Bool
     
     var body: some View {
@@ -218,8 +213,7 @@ private struct MapComponentsView: View {
                 Spacer()
                 MapButtonsView(
                     isShowToastMessage: $isShowToastMessage,
-                    hasNotifications: $hasNotifications,
-                    playlist: $playlist
+                    hasNotifications: $hasNotifications
                 )
                 .padding(.bottom, 22)
             }
@@ -266,13 +260,13 @@ private struct MapAddressView: View {
 private struct MapButtonsView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
     
     @Binding var isShowToastMessage: Bool
     @Binding var hasNotifications: Bool
-    @Binding var playlist: Playlist?
     
-    var isTrackListEmpty: Bool {
-        playlist?.trackList.isEmpty ?? true
+    var trackList: [Track] {
+        trackUseCase.mapTrackList
     }
     
     var body: some View {
@@ -316,7 +310,7 @@ private struct MapButtonsView: View {
             .padding(.bottom, 22)
             
             Button {
-                if isTrackListEmpty {
+                if trackList.isEmpty {
                     isShowToastMessage = true
                 } else {
                     pathModel.presentFullScreenCover(.platProcessing)
@@ -326,12 +320,12 @@ private struct MapButtonsView: View {
                     .frame(width: 48, height: 48)
                     .foregroundStyle(.platBackground)
                     .overlay {
-                        Image(isTrackListEmpty ? .imgLetsplatDis : .imgLetsplat)
+                        Image(trackList.isEmpty ? .imgLetsplatDis : .imgLetsplat)
                             .frame(width: 22, height: 30)
                             .padding(.bottom, 4)
                             .overlay {
-                                Text("\(playlist?.trackList.count ?? 0)")
-                                    .foregroundStyle(isTrackListEmpty ? .gray7 : .platPurple)
+                                Text("\(trackList.count)")
+                                    .foregroundStyle(trackList.isEmpty ? .gray7 : .platPurple)
                                     .font(.Body.body4)
                             }
                     }
