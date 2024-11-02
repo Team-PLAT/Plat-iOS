@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - PlaylistView
 
@@ -143,17 +144,14 @@ private struct PlaylistImageView: View {
     let imageUrl: String
     
     var body: some View {
-        AsyncImage(url: URL(string: imageUrl)) { img in
-            if let image = img.image {
-                image
-                    .resizable()
-                    .frame(width: 68, height: 68)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            } else {
+        KFImage(URL(string: imageUrl))
+            .placeholder {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 68, height: 68)
             }
-        }
+            .resizable()
+            .frame(width: 68, height: 68)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
