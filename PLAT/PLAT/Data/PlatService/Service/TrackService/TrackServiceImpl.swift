@@ -5,7 +5,7 @@
 //  Created by 조우현 on 9/7/24.
 //
 
-import Foundation
+import UIKit
 
 final class TrackServiceImpl: TrackServiceInterface {
     
@@ -36,13 +36,16 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 지정된 페이지의 TrackList를 반환합니다.
-    func fetchTrackList(page: Int) async -> Result<[Track], Error> {
+    func fetchTrackList(page: Int) async -> Result<TrackList, Error> {
         let request = FetchTrackFeedRequest(page: Int32(page), size: 20)
         let result = await trackRepository.fetchTrackFeedList(request: request)
         switch result {
         case .success(let fetchTrackFeedResponse):
-            let trackList = fetchTrackFeedResponse
-            return .success(trackList.toTrackList())
+            let trackList = TrackList(
+                list: fetchTrackFeedResponse.toTrackList(),
+                hasNext: fetchTrackFeedResponse.hasNext
+            )
+            return .success(trackList)
         case .failure(let error):
             return .failure(error)
         }
@@ -62,12 +65,12 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 트랙을 게시합니다.
-    func uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location) async -> Result<Void, Error> {
+    func uploadTrack(isrc: String, image: UIImage?, content: String?, location: Location) async -> Result<Void, Error> {
         
         var imageUrl = ""
         
-        if let imageData = imageData {
-            let imageResult = await imageService.uploadImage(imageData: imageData)
+        if let image {
+            let imageResult = await imageService.uploadImage(image: image)
             switch imageResult {
             case .success(let platImage): imageUrl = platImage.imageUrl
             case .failure(let imageError): return .failure(imageError)

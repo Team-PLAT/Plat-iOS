@@ -40,3 +40,10 @@ struct Track: Identifiable {
         self.isReported = isReported
     }
 }
+
+// MARK: - TrackList
+
+struct TrackList {
+    let list: [Track]
+    let hasNext: Bool
+}

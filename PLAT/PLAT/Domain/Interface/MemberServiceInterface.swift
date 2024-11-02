@@ -5,7 +5,7 @@
 //  Created by 김민준 on 9/14/24.
 //
 
-import Foundation
+import UIKit
 
 protocol MemberServiceInterface {
     func signIn(socialAccount: SocialAccount) async -> Result<Void, Error>
@@ -14,7 +14,7 @@ protocol MemberServiceInterface {
     
     func fetchProfile() async -> Result<User, Error>
     func updateProfileNickname(to nickname: String) async -> Result<Void, Error>
-    func updateProfileAvatar(to imageData: Data) async -> Result<Void, Error>
+    func updateProfileAvatar(to image: UIImage?) async -> Result<Void, Error>
     
     func fetchStreamAccount() async -> Result<StreamAccount, Error>
     func updateStreamAccount(to streamAccount: StreamAccount) async -> Result<Void, Error>

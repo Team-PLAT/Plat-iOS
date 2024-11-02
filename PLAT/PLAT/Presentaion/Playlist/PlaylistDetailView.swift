@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PlaylistDetailView: View {
     
@@ -113,23 +114,29 @@ private struct PlayListInfo: View {
     
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
+    private var playlistImageUrl: URL? {
+        return URL(string: playlistUseCase.state.selectedPlaylist?.imageUrl ?? "")
+    }
+    
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            
-            AsyncImage(url: URL(string: playlistUseCase.state.selectedPlaylist?.imageUrl ?? "")) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 220, height: 220)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                } else {
+            KFImage(playlistImageUrl)
+                .placeholder {
                     RoundedRectangle(cornerRadius: 24)
                         .frame(width: 220, height: 220)
-                        .foregroundStyle(LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.orange, .indigo],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
                 }
-            }
-            .padding(.bottom, 16)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 220, height: 220)
+                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .padding(.bottom, 16)
             
             Text(playlistUseCase.state.selectedPlaylist?.title ?? "플레이리스트 가져오기 실패")
                 .font(.Head.head2)
@@ -141,7 +148,6 @@ private struct PlayListInfo: View {
                 .font(.Body.body1)
                 .foregroundStyle(.gray7)
                 .frame(width: 160, height: 44, alignment: .center)
-            
         }
     }
 }
@@ -360,19 +366,16 @@ private struct AlbumImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: albumImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-            } else {
+        KFImage(albumImageUrl)
+            .placeholder {
                 RoundedRectangle(cornerRadius: 4)
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
 

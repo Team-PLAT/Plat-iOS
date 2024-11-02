@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import Kingfisher
 
 // MARK: - TrackMapView
 
@@ -154,25 +155,26 @@ private struct CustomMarkerView: View {
     
     let track: Track
     
+    /// 앨범 이미지 URL
+    private var albumImageUrl: URL? {
+        URL(string: track.music.albumImageUrl)
+    }
+    
     var body: some View {
         Circle()
             .frame(width: 40, height: 40)
             .foregroundStyle(.gray3)
             .overlay {
-                AsyncImage(url: URL(string: track.music.albumImageUrl)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 34, height: 34)
-                            .clipShape(Circle())
-                    } else {
+                KFImage(albumImageUrl)
+                    .placeholder {
                         Circle()
                             .frame(width: 40, height: 40)
                             .foregroundStyle(.gray3)
                     }
-                }
-                
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 34, height: 34)
+                    .clipShape(Circle())
             }
     }
 }
@@ -254,8 +256,6 @@ private struct MapButtonsView: View {
             targetTrackList: trackUseCase.mapTrackList,
             radiusRange: 500
         )
-        
-        print("500M 반경 안의 TrackList: \(targetTrackList)")
         
         return targetTrackList.filter {
             let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList

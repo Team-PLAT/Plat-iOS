@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - TrackAppendToPlaylistSheet
 
@@ -88,20 +89,17 @@ private struct ListCell: View {
     }
     
     var body: some View {
-        AsyncImage(url: imageURL) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 136, height: 136)
-                    .clipShape(RoundedRectangle(cornerRadius: 18))
-            } else {
+        KFImage(imageURL)
+            .placeholder {
                 RoundedRectangle(cornerRadius: 18)
                     .frame(width: 136, height: 136)
                     .foregroundStyle(.gray9)
             }
-        }
-        .shadow(color: .black.opacity(0.6), radius: 5, x: 0, y: 2)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 136, height: 136)
+            .clipShape(RoundedRectangle(cornerRadius: 18))
+            .shadow(color: .black.opacity(0.6), radius: 5, x: 0, y: 2)
     }
 }
 

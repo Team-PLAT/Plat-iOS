@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - MiniMusicPlayer
 
@@ -56,19 +57,16 @@ private struct AlbumImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: muiscImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-            } else {
+        KFImage(muiscImageUrl)
+            .placeholder {
                 RoundedRectangle(cornerRadius: 4)
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
 

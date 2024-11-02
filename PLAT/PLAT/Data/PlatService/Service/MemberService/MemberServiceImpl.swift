@@ -5,12 +5,13 @@
 //  Created by 김민준 on 9/15/24.
 //
 
-import Foundation
+import UIKit
 
 final class MemberServiceImpl: MemberServiceInterface {
     
     enum MemberServiceError: Error {
         case streamAccountError
+        case noImageError
     }
     
     private let userSecurityManager = UserSecurityManager.shared
@@ -85,9 +86,13 @@ final class MemberServiceImpl: MemberServiceInterface {
     }
     
     /// 프로필 아바타를 업데이트합니다.
-    func updateProfileAvatar(to imageData: Data) async -> Result<Void, any Error> {
+    func updateProfileAvatar(to image: UIImage?) async -> Result<Void, any Error> {
         
-        let imageResult = await imageService.uploadImage(imageData: imageData)
+        guard let image else {
+            return .failure(MemberServiceError.noImageError)
+        }
+        
+        let imageResult = await imageService.uploadImage(image: image)
         switch imageResult {
         case .success(let platImage):
             let request = UpdateProfileAvatarRequest(avatar: platImage.imageUrl)

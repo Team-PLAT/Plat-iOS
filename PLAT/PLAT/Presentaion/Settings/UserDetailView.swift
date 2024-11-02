@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - UserDetailView
 
@@ -59,21 +60,18 @@ private struct ProfileImageView: View {
                         .frame(width: 160, height: 160)
                         .clipShape(Circle())
                 } else {
-                    AsyncImage(url: profileImageUrl) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 160, height: 160)
-                                .clipShape(Circle())
-                        } else {
+                    KFImage(profileImageUrl)
+                        .placeholder {
                             Image(systemName: "")
                                 .resizable()
                                 .frame(width: 160, height: 160)
                                 .background(.gray4)
                                 .clipShape(Circle())
                         }
-                    }
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 160, height: 160)
+                        .clipShape(Circle())
                 }
                 
                 CameraButton()
@@ -84,16 +82,12 @@ private struct ProfileImageView: View {
         .sheet(isPresented: $isPhotoAlbumSheet) {
             PhotoPicker(selectedImage: $selectedImage)
                 .onChange(of: selectedImage) {
-                    if let imageData = selectedImage?.jpegData(compressionQuality: 0.1) {
-                        authUseCase.effect(.updateProfileAvatar(imageData: imageData))
-                    }
-                    
+                    authUseCase.effect(.updateProfileAvatar(image: selectedImage))
                 }
         }
         .onAppear {
             authUseCase.effect(.fetchProfile)
         }
-        
     }
     
     private struct CameraButton: View {

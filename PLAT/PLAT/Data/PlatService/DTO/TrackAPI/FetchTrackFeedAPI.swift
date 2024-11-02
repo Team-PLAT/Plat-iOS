@@ -14,6 +14,7 @@ struct FetchTrackFeedRequest: Encodable {
 
 struct FetchTrackFeedResponse: Decodable {
     let trackDetails: [TrackDetails]
+    let hasNext: Bool
     
     struct TrackDetails: Decodable {
         let trackId: Int64
@@ -48,7 +49,8 @@ struct FetchTrackFeedResponse: Decodable {
             
             let location = Location(
                 latitude: $0.latitude,
-                longitude: $0.longitude
+                longitude: $0.longitude,
+                place: Place(address: $0.address)
             )
             
             let user = User(

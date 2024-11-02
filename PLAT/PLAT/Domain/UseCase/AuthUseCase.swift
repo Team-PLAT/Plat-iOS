@@ -79,7 +79,7 @@ extension AuthUseCase {
         
         case fetchProfile
         case updateProfileNickname(nickname: String)
-        case updateProfileAvatar(imageData: Data)
+        case updateProfileAvatar(image: UIImage?)
         
         case fetchStreamAccount
         case updateStreamAccount(streamAccount: StreamAccount)
@@ -127,9 +127,9 @@ extension AuthUseCase {
                 }
             }
             
-        case .updateProfileAvatar(let imageData):
+        case .updateProfileAvatar(let image):
             Task {
-                let result = await memberService.updateProfileAvatar(to: imageData)
+                let result = await memberService.updateProfileAvatar(to: image)
                 switch result {
                 case .success:
                     break

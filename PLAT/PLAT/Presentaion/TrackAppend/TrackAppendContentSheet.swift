@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 enum ContentState {
     case none
@@ -59,8 +60,15 @@ struct TrackAppendContentSheet: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    // TODO: 플레이리스트에서 트랙 추가 시 분기 처리(PathModel 이용? 쨌든 이 sheet가 어디서 올라왔냐에 따라)
-                    trackUseCase.effect(.uploadTrack(isrc: trackUseCase.selectedTrackAppendMusic.isrc, imageData: selectedImage?.pngData(), content: contentText, location: currentLocation))
+                    trackUseCase.effect(
+                        .uploadTrack(
+                            isrc: trackUseCase.selectedTrackAppendMusic.isrc,
+                            image: selectedImage,
+                            content: contentText,
+                            location: currentLocation
+                        )
+                    )
+                  
                     pathModel.dismissSheet()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
@@ -80,6 +88,7 @@ struct TrackAppendContentSheet: View {
 // MARK: - TrackAppendContentMainSheet
 
 struct TrackAppendContentMainSheet: View {
+    
     @Environment(TrackUseCase.self) private var trackUseCase
     
     @State private var isPhotoAlbumSheet = false
@@ -87,22 +96,24 @@ struct TrackAppendContentMainSheet: View {
     @Binding var isAddWriting: Bool
     @Binding var state: ContentState
     
+    private var albumImageUrl: URL? {
+        URL(string: trackUseCase.selectedTrackAppendMusic.albumImageUrl)
+    }
+    
     var body: some View {
         HStack(alignment: .top) {
-            AsyncImage(url: URL(string: trackUseCase.selectedTrackAppendMusic.albumImageUrl)) { image in
-                if let img = image.image {
-                    img
-                        .resizable()
-                        .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
-                        .cornerRadius(12, corners: .allCorners)
-                        .padding(.leading, 18)
-                } else {
+            KFImage(albumImageUrl)
+                .placeholder {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(.red)
                         .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
                         .padding(.leading, 18)
                 }
-            }
+                .resizable()
+                .frame(width: (selectedImage != nil && isAddWriting) ? 72 : 128, height: (selectedImage != nil && isAddWriting) ? 72 : 128)
+                .cornerRadius(12, corners: .allCorners)
+                .padding(.leading, 18)
+            
             VStack(alignment: .leading) {
                 
                 Text("\(trackUseCase.selectedTrackAppendMusic.title)")

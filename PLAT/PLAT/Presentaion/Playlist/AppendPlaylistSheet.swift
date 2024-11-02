@@ -50,7 +50,7 @@ struct AppendPlaylistSheet: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         Task {
-                            let result = await playlistUseCase.uploadPlaylist(title: playlistTitle, imageData: playlistImage?.pngData(), tracks: [])
+                            let result = await playlistUseCase.uploadPlaylist(title: playlistTitle, image: playlistImage, tracks: [])
                             switch result {
                             case .success(let playlistId):
                                 playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistId))

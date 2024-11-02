@@ -5,7 +5,7 @@
 //  Created by 김민준 on 8/15/24.
 //
 
-import Foundation
+import UIKit
 
 struct StubTrackService: TrackServiceInterface {
     
@@ -13,15 +13,19 @@ struct StubTrackService: TrackServiceInterface {
         .success(MockDataBuilder.trackList)
     }
     
-    func fetchTrackList(page: Int) async -> Result<[Track], any Error> {
-        return .success(MockDataBuilder.trackList)
+    func fetchTrackList(page: Int) async -> Result<TrackList, any Error> {
+        let trackList = TrackList(
+            list: MockDataBuilder.trackList,
+            hasNext: false
+        )
+        return .success(trackList)
     }
     
     func fetchCurrent(trackId: Int) async -> Result<Track, any Error> {
         return .success(MockDataBuilder.track)
     }
     
-    func uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location) async -> Result<Void, Error> {
+    func uploadTrack(isrc: String, image: UIImage?, content: String?, location: Location) async -> Result<Void, Error> {
         return .success(Void())
     }
     

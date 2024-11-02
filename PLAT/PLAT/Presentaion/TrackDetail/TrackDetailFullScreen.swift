@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: - TrackDetailFullScreen
 
@@ -81,14 +82,10 @@ private struct Background: View {
         Group {
             if let imageString = trackUseCase.currentTrack.imageUrl,
                let imageURL = URL(string: imageString) {
-                AsyncImage(url: imageURL) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 0)
-                    }
-                }
+                KFImage(imageURL)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 0)
             }
             
             Color.black.opacity(0.6)
@@ -109,7 +106,7 @@ private struct HeaderView: View {
     /// Feed를 업데이트합니다.
     private func updateFeed() {
         Task {
-            await trackUseCase.fetchFeedTrackList(page: 0)
+            await trackUseCase.fetchFeedTrackList()
             let trackList = trackUseCase.feedTrackList
             
             let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
@@ -185,19 +182,16 @@ private struct AlbumImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: albumImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: imageSize, height: imageSize)
-                    .clipShape(RoundedRectangle(cornerRadius: cornerRaduis))
-            } else {
+        KFImage(albumImageUrl)
+            .placeholder {
                 RoundedRectangle(cornerRadius: cornerRaduis)
                     .frame(width: imageSize, height: imageSize)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: imageSize, height: imageSize)
+            .clipShape(RoundedRectangle(cornerRadius: cornerRaduis))
     }
 }
 
@@ -392,18 +386,15 @@ private struct ProfileHeader: View {
     
     var body: some View {
         HStack(spacing: 6) {
-            AsyncImage(url: profileImageUrl) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .clipShape(Circle())
-                } else {
+            KFImage(profileImageUrl)
+                .placeholder {
                     Circle()
                         .foregroundStyle(.gray9)
                 }
-            }
-            .frame(width: profileImageSize, height: profileImageSize)
+                .resizable()
+                .scaledToFill()
+                .clipShape(Circle())
+                .frame(width: profileImageSize, height: profileImageSize)
             
             VStack(alignment: .leading, spacing: 0) {
                 Text(user.nickname)

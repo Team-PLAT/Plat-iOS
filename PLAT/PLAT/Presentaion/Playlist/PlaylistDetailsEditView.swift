@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PlaylistDetailsEditView: View {
     @Environment(PathModel.self) private var pathModel
@@ -58,9 +59,13 @@ struct PlaylistDetailsEditView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 이미지 업로드 오류 수정
                     Task {
-                        await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageData: selectedImage?.pngData())
+                        await playlistUseCase.updatePlaylist(
+                            playlistId: Int(selectedPlaylist.id),
+                            title: selectedPlaylist.title,
+                            image: selectedImage
+                        )
+                        
                         playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                         pathModel.pop()
                     }
@@ -120,29 +125,31 @@ private struct PlayListEditInfo: View {
                                 .foregroundStyle(.white)
                         }
                 } else {
-                    AsyncImage(url: URL(string: selectedPlaylist.imageUrl)) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 220, height: 220)
-                                .clipShape(RoundedRectangle(cornerRadius: 24))
-                        } else {
+                    KFImage(URL(string: selectedPlaylist.imageUrl))
+                        .placeholder {
                             RoundedRectangle(cornerRadius: 24)
                                 .frame(width: 220, height: 220)
-                                .foregroundStyle(LinearGradient(colors: [.orange, .indigo], startPoint: .top, endPoint: .bottom))
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [.orange, .indigo],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
                         }
-                    }
-                    .overlay {
-                        Circle()
-                            .frame(width: 61, height: 61)
-                            .foregroundStyle(.platPurple)
-                        
-                        Image(systemName: SystemImage.camera)
-                            .foregroundStyle(.white)
-                    }
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 220, height: 220)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .overlay {
+                            Circle()
+                                .frame(width: 61, height: 61)
+                                .foregroundStyle(.platPurple)
+                            
+                            Image(systemName: SystemImage.camera)
+                                .foregroundStyle(.white)
+                        }
                 }
-                
             }
             .padding(.bottom, 16)
             .sheet(isPresented: $isPhotoAlbumSheet) {
@@ -296,19 +303,16 @@ private struct AlbumImageEdit: View {
     }
     
     var body: some View {
-        AsyncImage(url: albumImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-            } else {
+        KFImage(albumImageUrl)
+            .placeholder {
                 RoundedRectangle(cornerRadius: 4)
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }
 
