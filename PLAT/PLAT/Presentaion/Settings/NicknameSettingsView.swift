@@ -53,6 +53,7 @@ struct NicknameSettingsView: View {
         .onChange(of: nicknameText) { _, text in
             nicknameText = userUseCase.validateNickname(text: text)
         }
+        .tapDismissesKeyboard()
     }
 }
 
