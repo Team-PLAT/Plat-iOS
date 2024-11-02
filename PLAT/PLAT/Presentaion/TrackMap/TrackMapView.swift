@@ -17,7 +17,6 @@ struct TrackMapView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
-    @State private var playlist: Playlist?
     @State private var hasNotifications = false
     @State private var isShowToastMessage: Bool = false
     
@@ -40,8 +39,6 @@ struct TrackMapView: View {
             case .success(let musicList):
                 trackUseCase.updateMapTrackListMusicInfo(from: musicList)
                 
-                // TODO: 플레이리스트 생성
-                
             case .failure(let error):
                 // TODO: 에러 처리
                 print(error)
@@ -61,7 +58,6 @@ struct TrackMapView: View {
                 
                 MapComponentsView(
                     hasNotifications: $hasNotifications,
-                    playlist: $playlist,
                     isShowToastMessage: $isShowToastMessage
                 )
             }
@@ -85,8 +81,6 @@ private struct MapView: View {
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(MapKitLocationServiceImpl.self) private var locationManager
-    
-    @State private var fetchMusicTask: Task<Void, Never>?
     
     /// 신고된 트랙 리스트를 필터 후 반환합니다.
     private var trackList: [Track] {
@@ -150,24 +144,6 @@ private struct MapView: View {
                 .foregroundStyle(.platDarkpurple.opacity(0.5))
             }
         }
-        .onAppear {
-            handleFetchMusic()
-        }
-        .onDisappear {
-            fetchMusicTask?.cancel()
-            fetchMusicTask = nil
-        }
-    }
-    
-    /// 음악 Fetch에 딜레이를 부여합니다.
-    private func handleFetchMusic() {
-        fetchMusicTask = Task {
-            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5초 딜레이
-            if Task.isCancelled { return } // 만약 취소되었다면, Task 중단
-            if let music = musicControlUseCase.state.currentTrack?.music {
-                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: music)
-            }
-        }
     }
 }
 
@@ -208,7 +184,6 @@ private struct MapComponentsView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @Binding var hasNotifications: Bool
-    @Binding var playlist: Playlist?
     @Binding var isShowToastMessage: Bool
     
     var body: some View {
@@ -218,8 +193,7 @@ private struct MapComponentsView: View {
                 Spacer()
                 MapButtonsView(
                     isShowToastMessage: $isShowToastMessage,
-                    hasNotifications: $hasNotifications,
-                    playlist: $playlist
+                    hasNotifications: $hasNotifications
                 )
                 .padding(.bottom, 22)
             }
@@ -266,13 +240,26 @@ private struct MapAddressView: View {
 private struct MapButtonsView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MapKitLocationServiceImpl.self) private var locationManager
     
     @Binding var isShowToastMessage: Bool
     @Binding var hasNotifications: Bool
-    @Binding var playlist: Playlist?
     
-    var isTrackListEmpty: Bool {
-        playlist?.trackList.isEmpty ?? true
+    /// 신고된 트랙 및 원 범위에 맞춰 트랙 리스트를 반환합니다.
+    private var trackList: [Track] {
+        let targetTrackList = locationManager.filterTrackListLocationWithRadius(
+            centerLocation: locationManager.location,
+            targetTrackList: trackUseCase.mapTrackList,
+            radiusRange: 500
+        )
+        
+        print("500M 반경 안의 TrackList: \(targetTrackList)")
+        
+        return targetTrackList.filter {
+            let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
+            return !reportedTrackIdList.contains($0.id)
+        }
     }
     
     var body: some View {
@@ -316,7 +303,7 @@ private struct MapButtonsView: View {
             .padding(.bottom, 22)
             
             Button {
-                if isTrackListEmpty {
+                if trackList.isEmpty {
                     isShowToastMessage = true
                 } else {
                     pathModel.presentFullScreenCover(.platProcessing)
@@ -326,12 +313,12 @@ private struct MapButtonsView: View {
                     .frame(width: 48, height: 48)
                     .foregroundStyle(.platBackground)
                     .overlay {
-                        Image(isTrackListEmpty ? .imgLetsplatDis : .imgLetsplat)
+                        Image(trackList.isEmpty ? .imgLetsplatDis : .imgLetsplat)
                             .frame(width: 22, height: 30)
                             .padding(.bottom, 4)
                             .overlay {
-                                Text("\(playlist?.trackList.count ?? 0)")
-                                    .foregroundStyle(isTrackListEmpty ? .gray7 : .platPurple)
+                                Text("\(trackList.count)")
+                                    .foregroundStyle(trackList.isEmpty ? .gray7 : .platPurple)
                                     .font(.Body.body4)
                             }
                     }

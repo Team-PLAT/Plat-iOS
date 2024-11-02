@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Location {
     var latitude: Double
@@ -17,5 +18,13 @@ struct Location {
     ) {
         self.latitude = latitude
         self.longitude = longitude
+    }
+    
+    /// CLLocation 타입으로 변환합니다.
+    var toCLLocation: CLLocation {
+        CLLocation(
+            latitude: latitude,
+            longitude: longitude
+        )
     }
 }
