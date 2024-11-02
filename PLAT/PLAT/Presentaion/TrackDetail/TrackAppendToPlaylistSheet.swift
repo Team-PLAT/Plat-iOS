@@ -13,14 +13,18 @@ import Kingfisher
 struct TrackAppendToPlaylistSheet: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     
     @State private var scrollPosition: Int? = 0
     
-    let playlists: [Playlist] = Array(repeating: MockDataBuilder.playlist, count: 20)
+    private var playlists: [Playlist] {
+        playlistUseCase.state.playlists
+    }
     
     var body: some View {
         ZStack {
             Color.platBlack.ignoresSafeArea()
+            
             VStack(spacing: 0) {
                 Spacer()
                 
@@ -29,7 +33,7 @@ struct TrackAppendToPlaylistSheet: View {
                     .padding(.bottom, 32)
                 
                 AddButton(title: "\(playlists[scrollPosition ?? 0].title)") {
-                    // TODO: 플레이리스트에 추가
+                    playlistUseCase.appendTrackToPlaylist(trackId: Int(playlistUseCase.state.appendTrackId ?? 0), to: Int(playlists[scrollPosition ?? 0].id))
                     dismiss()
                 }
                 .padding(.bottom, 16)

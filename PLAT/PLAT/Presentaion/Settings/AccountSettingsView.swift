@@ -14,6 +14,7 @@ struct AccountSettingsView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(AuthUseCase.self) private var authUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isLogoutAlertPresented = false
     @State private var isAccountDeletionAlertPresented = false
@@ -51,6 +52,7 @@ struct AccountSettingsView: View {
             Button("돌아가기", role: .cancel) { }
             Button("삭제하기", role: .destructive) {
                 authUseCase.effect(.resign)
+                musicControlUseCase.deleteAllState()
                 pathModel.popToRoot()
             }
         } message: {
@@ -60,6 +62,7 @@ struct AccountSettingsView: View {
             Button("돌아가기", role: .cancel) { }
             Button("로그아웃", role: .destructive) {
                 authUseCase.effect(.signOut)
+                musicControlUseCase.deleteAllState()
                 pathModel.popToRoot()
             }
         }

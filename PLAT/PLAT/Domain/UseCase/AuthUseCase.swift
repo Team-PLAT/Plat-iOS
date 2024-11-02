@@ -57,6 +57,15 @@ extension AuthUseCase {
         case .failure(let error): return .failure(error)
         }
     }
+    
+    /// 내가 게시한 트랙인지 확인하기
+    func checkMyTrack(currentTrack: Track) -> Bool {
+        if state.user?.id == currentTrack.user.id {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 // MARK: - Effect Method

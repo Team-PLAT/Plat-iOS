@@ -200,6 +200,7 @@ private struct AlbumImage: View {
 private struct MusicControllerView: View {
     
     @Environment(PathModel.self) private var pathModel
+    @Environment(AuthUseCase.self) private var authUseCase
     @Environment(UserUseCase.self) private var userUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(PlaylistUseCase.self) private var playlistUseCase
@@ -248,13 +249,14 @@ private struct MusicControllerView: View {
                     if playlistUseCase.state.playlists.isEmpty {
                         isNonePlaylistToastPresented.toggle()
                     } else {
+                        playlistUseCase.updateAppendTrackID(trackId: Int(trackUseCase.currentTrack.id))
                         isTrackAppendToPlaylistSheetPresented.toggle()
                     }
                 }
             )
             
             Menu {
-                if userUseCase.checkMyTrack(currentTrack: trackUseCase.currentTrack) {
+                if authUseCase.checkMyTrack(currentTrack: trackUseCase.currentTrack) {
                     Button(role: .destructive) {
                         trackUseCase.effect(.deleteTrack(trackId: Int(trackUseCase.currentTrack.id)))
                     } label: {
@@ -284,6 +286,9 @@ private struct MusicControllerView: View {
         }
         .sheet(isPresented: $isTrackAppendToPlaylistSheetPresented) {
             TrackAppendToPlaylistSheet()
+        }
+        .onAppear {
+            authUseCase.effect(.fetchProfile)
         }
     }
 }

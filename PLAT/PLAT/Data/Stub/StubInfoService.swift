@@ -10,15 +10,13 @@ import UIKit
 
 struct StubInfoService: InfoServiceInterface {
     func checkPrivacyPolicy() {
-        // TODO: 링크 교체
-        if let url = URL(string: "https://github.com/Team-PLAT/Plat-iOS") {
+        if let url = URL(string: "https://sites.google.com/view/plat-privacy/%ED%99%88") {
             UIApplication.shared.open(url)
         }
     }
     
     func checkTermsOfService() {
-        // TODO: 링크 교체
-        if let url = URL(string: "https://github.com/Team-PLAT/Plat-iOS") {
+        if let url = URL(string: "https://sites.google.com/view/plat-service-policy/%ED%99%88") {
             UIApplication.shared.open(url)
         }
     }

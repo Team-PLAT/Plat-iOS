@@ -68,6 +68,7 @@ struct TrackAppendContentSheet: View {
                             location: currentLocation
                         )
                     )
+                  
                     pathModel.dismissSheet()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
