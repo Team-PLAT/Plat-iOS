@@ -59,7 +59,14 @@ struct TrackAppendContentSheet: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    trackUseCase.effect(.uploadTrack(isrc: trackUseCase.selectedTrackAppendMusic.isrc, imageData: selectedImage?.pngData(), content: contentText, location: currentLocation))
+                    trackUseCase.effect(
+                        .uploadTrack(
+                            isrc: trackUseCase.selectedTrackAppendMusic.isrc,
+                            image: selectedImage,
+                            content: contentText,
+                            location: currentLocation
+                        )
+                    )
                     pathModel.dismissSheet()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)

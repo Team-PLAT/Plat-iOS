@@ -5,7 +5,7 @@
 //  Created by 조우현 on 9/7/24.
 //
 
-import Foundation
+import UIKit
 
 final class TrackServiceImpl: TrackServiceInterface {
     
@@ -62,11 +62,11 @@ final class TrackServiceImpl: TrackServiceInterface {
     }
     
     /// 트랙을 게시합니다.
-    func uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location) async -> Result<Void, Error> {
+    func uploadTrack(isrc: String, image: UIImage?, content: String?, location: Location) async -> Result<Void, Error> {
         
         var imageUrl = ""
         
-        if let imageData = imageData {
+        if let imageData = image?.jpegData(compressionQuality: 0.1) {
             let imageResult = await imageService.uploadImage(imageData: imageData)
             switch imageResult {
             case .success(let platImage): imageUrl = platImage.imageUrl

@@ -5,7 +5,7 @@
 //  Created by 김민준 on 8/15/24.
 //
 
-import Foundation
+import UIKit
 
 @Observable
 final class TrackUseCase {
@@ -111,7 +111,7 @@ extension TrackUseCase {
     
     enum Effect {
         case fetchCurrentTrack(id: Int)
-        case uploadTrack(isrc: String, imageData: Data?, content: String?, location: Location)
+        case uploadTrack(isrc: String, image: UIImage?, content: String?, location: Location)
         case reportTrack(trackId: Int)
         case deleteTrack(trackId: Int)
     }
@@ -127,11 +127,11 @@ extension TrackUseCase {
                 }
             }
             
-        case .uploadTrack(let isrc, let imageData, let content, let location):
+        case .uploadTrack(let isrc, let image, let content, let location):
             Task {
                 let uploadTrackResult = await trackService.uploadTrack(
                     isrc: isrc,
-                    imageData: imageData,
+                    image: image,
                     content: content,
                     location: location
                 )
