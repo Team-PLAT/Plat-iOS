@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TrackFeedView: View {
     
@@ -239,19 +240,16 @@ private struct FeedProfileImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: profileImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-            } else {
+        KFImage(profileImageUrl)
+            .placeholder {
                 Circle()
                     .frame(width: 40, height: 40)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
     }
 }
 
@@ -419,18 +417,15 @@ private struct FeedAlbumImage: View {
     }
     
     var body: some View {
-        AsyncImage(url: albumImageUrl) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 56, height: 56)
-            } else {
+        KFImage(albumImageUrl)
+            .placeholder {
                 Rectangle()
                     .frame(width: 56, height: 56)
                     .foregroundStyle(.gray9)
             }
-        }
+            .resizable()
+            .scaledToFill()
+            .frame(width: 56, height: 56)
     }
 }
 
@@ -442,26 +437,21 @@ private struct FeedContentImage: View {
     var body: some View {
         if let imageUrl = track.imageUrl {
             if !imageUrl.isEmpty {
-                AsyncImage(url: URL(string: imageUrl)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fill)
-                            .clipShape(Rectangle())
-                            .cornerRadius(14)
-                            .padding(.trailing, 18)
-                    } else {
+                KFImage(URL(string: imageUrl))
+                    .placeholder {
                         Rectangle()
                             .foregroundStyle(.gray9)
                             .aspectRatio(1, contentMode: .fill)
                             .clipShape(Rectangle())
                             .cornerRadius(14)
                             .padding(.trailing, 18)
-                            .overlay(
-                                PlatProgressView()
-                            )
+                            .overlay(PlatProgressView())
                     }
-                }
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fill)
+                    .clipShape(Rectangle())
+                    .cornerRadius(14)
+                    .padding(.trailing, 18)
             } else {
                 EmptyView()
             }
