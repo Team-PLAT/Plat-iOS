@@ -150,17 +150,15 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트에서 트랙을 삭제합니다.
-    func deleteTrackFromPlaylist(playlistId: Int, trackId: Int) {
-        Task {
-            let result = await playlistService.deleteTrackFromPlaylist(
-                playlistId: playlistId,
-                trackId: trackId
-            )
-            
-            switch result {
-            case .success: break
-            case .failure(let error): print(error) // TODO: 에러 처리
-            }
+    func deleteTrackFromPlaylist(playlistId: Int, trackId: Int) async {
+        let result = await playlistService.deleteTrackFromPlaylist(
+            playlistId: playlistId,
+            trackId: trackId
+        )
+        
+        switch result {
+        case .success: break
+        case .failure(let error): print(error) // TODO: 에러 처리
         }
     }
     

@@ -229,6 +229,7 @@ private struct NewTrackAdd: View {
 
 private struct PlayListRowView: View {
     
+    @Environment(PlaylistUseCase.self) private var playlistUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var playlistMusic: Music?
@@ -241,6 +242,10 @@ private struct PlayListRowView: View {
             HStack(spacing: 0) {
                 
                 Button {
+                    Task {
+                        await playlistUseCase.deleteTrackFromPlaylist(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001), trackId: Int(track.id))
+                        playlistUseCase.fetchPlaylistDetail(playlistId: Int(playlistUseCase.state.selectedPlaylistId ?? 0001))
+                    }
                     onDelete(track)
                 } label: {
                     Circle()
