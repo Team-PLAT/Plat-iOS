@@ -424,25 +424,23 @@ private struct FeedContentImage: View {
     var body: some View {
         if let imageUrl = track.imageUrl {
             if !imageUrl.isEmpty {
-                KFImage(URL(string: imageUrl))
-                    .placeholder {
-                        Rectangle()
-                            .foregroundStyle(.gray9)
-                            .aspectRatio(1, contentMode: .fill)
-                            .clipShape(Rectangle())
-                            .cornerRadius(14)
-                            .padding(.trailing, 18)
-                            .overlay(PlatProgressView())
-                    }
-                    .cancelOnDisappear(true)
-                    .resizable()
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundStyle(.gray9)
                     .aspectRatio(1, contentMode: .fill)
-                    .clipShape(Rectangle())
-                    .cornerRadius(14)
+                    .overlay {
+                        KFImage(URL(string: imageUrl))
+                            .placeholder {
+                                PlatProgressView()
+                            }
+                            .cancelOnDisappear(true)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
                     .padding(.trailing, 18)
-            } else {
-                EmptyView()
             }
+        } else {
+            EmptyView()
         }
     }
 }
