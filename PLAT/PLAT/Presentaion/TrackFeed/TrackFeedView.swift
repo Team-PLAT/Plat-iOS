@@ -129,6 +129,7 @@ private struct FeedRowView: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(UserUseCase.self) private var userUseCase
+    @Environment(AuthUseCase.self) private var authUseCase
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(PathModel.self) private var pathModel
     
@@ -157,7 +158,7 @@ private struct FeedRowView: View {
                         Spacer()
                         
                         Menu {
-                            if userUseCase.checkMyTrack(currentTrack: track) {
+                            if authUseCase.checkMyTrack(currentTrack: track) {
                                 Button(role: .destructive) {
                                     trackUseCase.effect(.deleteTrack(trackId: Int(track.id)))
                                 } label: {
@@ -209,7 +210,7 @@ private struct FeedRowView: View {
                 .frame(width: UIScreen.main.bounds.width, height: 1)
         }
         .onAppear {
-            // handleFetchMusic()
+            authUseCase.effect(.fetchProfile)
         }
         .onDisappear {
             fetchMusicTask?.cancel()

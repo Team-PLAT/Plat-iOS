@@ -37,14 +37,14 @@ struct UserDetailView: View {
 
 private struct ProfileImageView: View {
     
-    @Environment(AuthUseCase.self) private var authUsecase
+    @Environment(AuthUseCase.self) private var authUseCase
     
     @State private var isPhotoAlbumSheet = false
     @State private var selectedImage: UIImage?
     
     // TODO: 기본 이미지 추가
     private var profileImageUrl: URL? {
-        URL(string: authUsecase.state.user?.profileImageUrl ?? "")
+        URL(string: authUseCase.state.user?.profileImageUrl ?? "")
     }
     
     var body: some View {
@@ -85,13 +85,13 @@ private struct ProfileImageView: View {
             PhotoPicker(selectedImage: $selectedImage)
                 .onChange(of: selectedImage) {
                     if let imageData = selectedImage?.jpegData(compressionQuality: 0.1) {
-                        authUsecase.effect(.updateProfileAvatar(imageData: imageData))
+                        authUseCase.effect(.updateProfileAvatar(imageData: imageData))
                     }
                     
                 }
         }
         .onAppear {
-            authUsecase.effect(.fetchProfile)
+            authUseCase.effect(.fetchProfile)
         }
         
     }
