@@ -49,7 +49,8 @@ struct FetchTrackFeedResponse: Decodable {
             
             let location = Location(
                 latitude: $0.latitude,
-                longitude: $0.longitude
+                longitude: $0.longitude,
+                place: Place(address: $0.address)
             )
             
             let user = User(

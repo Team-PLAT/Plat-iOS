@@ -10,15 +10,12 @@ import Kingfisher
 
 struct TrackFeedView: View {
     
-    typealias Address = [Int: Place]
-    
     @Environment(PathModel.self) private var pathModel
     @Environment(TrackUseCase.self) private var trackUseCase
     @Environment(MapUseCase.self) private var mapUseCase
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     
     @State private var isLoading = false
-    @State private var addressList: Address = [:]
     
     /// 트랙 리스트를 반환합니다.
     private var trackList: [Track] {
@@ -29,14 +26,8 @@ struct TrackFeedView: View {
     }
     
     /// Feed를 업데이트합니다.
-    private func updateFeed() async throws {
-        
-        // 1. 트랙 리스트 업데이트
-        let trackList = await trackUseCase.fetchFeedTrackList()
-        
+    private func updateFeed(from trackList: [Track]) async throws {
         await withThrowingTaskGroup(of: Void.self) { group in
-            
-            // 2-1. 음악 정보 리스트 업데이트
             group.addTask {
                 let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
                 
@@ -46,39 +37,6 @@ struct TrackFeedView: View {
                     
                 case .failure(let error):
                     throw error
-                }
-            }
-            
-            // 2-2. 역지오코딩 API 호출
-            group.addTask {
-                try await updateFeedAddress(from: trackList)
-            }
-        }
-    }
-    
-    /// 피드 목록의 주소를 모두 업데이트합니다.
-    private func updateFeedAddress(from trackList: [Track]) async throws {
-        try await withThrowingTaskGroup(of: (Int, String).self) { group in
-            for track in trackList {
-                group.addTask {
-                    let result = await mapUseCase.fetchReverGeocode(
-                        latitude: track.location.latitude,
-                        longitude: track.location.longitude
-                    )
-                    
-                    switch result {
-                    case .success(let place):
-                        let trackId = Int(track.id)
-                        return (trackId, place.address)
-                        
-                    case .failure(let error):
-                        throw error
-                    }
-                }
-                
-                for try await (id, address) in group {
-                    print("역지오코딩: \(id) / \(address)")
-                    self.addressList.updateValue(Place(address: address), forKey: id)
                 }
             }
         }
@@ -132,7 +90,7 @@ struct TrackFeedView: View {
                                 isLoading: $isLoading,
                                 track: track,
                                 playlistId: "",
-                                address: addressList[Int(track.id)]?.address
+                                address: track.location.place?.address ?? ""
                             )
                             .onAppear {
                                 print("현재 피드 ID: \(track.id)")
@@ -140,7 +98,8 @@ struct TrackFeedView: View {
                                     && trackUseCase.feedListHasNext {
                                     print("답변 페이지네이션!")
                                     Task {
-                                        await trackUseCase.paginationFeedTrackList()
+                                        let trackList = await trackUseCase.paginationFeedTrackList()
+                                        try await updateFeed(from: trackList)
                                     }
                                 }
                             }
@@ -170,13 +129,15 @@ struct TrackFeedView: View {
         )
         .onAppear {
             Task {
-                try await updateFeed()
+                let trackList = await trackUseCase.fetchFeedTrackList()
+                try await updateFeed(from: trackList)
             }
         }
         .refreshable {
             trackUseCase.resetFeed()
             Task {
-                try await updateFeed()
+                let trackList = await trackUseCase.fetchFeedTrackList()
+                try await updateFeed(from: trackList)
             }
         }
         .onDisappear {

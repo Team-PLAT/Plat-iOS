@@ -11,13 +11,16 @@ import CoreLocation
 struct Location {
     var latitude: Double
     var longitude: Double
+    var place: Place?
     
     init(
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        place: Place? = nil
     ) {
         self.latitude = latitude
         self.longitude = longitude
+        self.place = place
     }
     
     /// CLLocation 타입으로 변환합니다.
