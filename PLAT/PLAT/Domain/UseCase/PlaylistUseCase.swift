@@ -137,17 +137,15 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트의 트랙 순서를 변경합니다.
-    func updateTrackOrder(playlistId: Int, tracks: [Track]) {
-        Task {
-            let result = await playlistService.updateTrackOrder(
-                playlistId: playlistId,
-                tracks: tracks
-            )
-            
-            switch result {
-            case .success: break
-            case .failure(let error): print(error) // TODO: 에러 처리
-            }
+    func updateTrackOrder(playlistId: Int, tracks: [Track]) async {
+        let result = await playlistService.updateTrackOrder(
+            playlistId: playlistId,
+            tracks: tracks
+        )
+        
+        switch result {
+        case .success: break
+        case .failure(let error): print(error) // TODO: 에러 처리
         }
     }
     

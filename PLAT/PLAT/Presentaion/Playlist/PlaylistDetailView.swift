@@ -57,6 +57,7 @@ struct PlaylistDetailView: View {
                     ForEach(selectedPlaylist.trackList) { track in
                         PlayListRowView(isrcs: $isrcs, track: track)
                             .onTapGesture {
+                                // TODO: iOS 18 버전 미만에서 터짐💣
                                 musicControlUseCase.state.currentTrack = track
 //                                musicControlUseCase.effect(.setup(music: track.music))
                                 pathModel.presentFullScreenCover(.trackDetail)
@@ -335,7 +336,13 @@ private struct PlayListRowView: View {
         }
         .onAppear {
             Task {
-                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                let result = await musicControlUseCase.fetchMusic(from: track)
+                switch result {
+                case .success(let success):
+                    playlistMusic = success
+                case .failure(let failure):
+                    print(failure)
+                }
                 
                 if let currentIsrc = playlistMusic?.isrc {
                     isrcs.append(currentIsrc)

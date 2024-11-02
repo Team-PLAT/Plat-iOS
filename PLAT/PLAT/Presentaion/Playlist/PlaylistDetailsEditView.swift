@@ -60,6 +60,7 @@ struct PlaylistDetailsEditView: View {
                     // TODO: 이미지 업로드 오류 수정
                     Task {
                         await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageData: selectedImage?.pngData())
+                        await playlistUseCase.updateTrackOrder(playlistId: Int(selectedPlaylist.id), tracks: selectedPlaylist.trackList)
                         playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                         pathModel.pop()
                     }
@@ -81,7 +82,6 @@ struct PlaylistDetailsEditView: View {
     
     private func moveTrack(from source: IndexSet, to destination: Int) {
         selectedPlaylist.trackList.move(fromOffsets: source, toOffset: destination)
-        // TODO: UpdateTrackOrderAPI 호출
     }
     
     private func deleteTrack(_ track: Track) {
@@ -266,7 +266,13 @@ private struct PlayListRowView: View {
         }
         .onAppear {
             Task {
-                // playlistMusic = await musicControlUseCase.fetchMusicInfoApi(music: track.music)
+                let result = await musicControlUseCase.fetchMusic(from: track)
+                switch result {
+                case .success(let success):
+                    playlistMusic = success
+                case .failure(let failure):
+                    print(failure)
+                }
             }
         }
         .padding(.vertical, 10)

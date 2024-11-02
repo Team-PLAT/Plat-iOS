@@ -107,6 +107,7 @@ private struct MapView: View {
                 
                 switch startMusicResult {
                 case .success:
+                    // TODO: iOS 18 버전 미만에서 터짐💣
                     pathModel.presentFullScreenCover(.trackDetail)
                     
                 case .failure(let error):
