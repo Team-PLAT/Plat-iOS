@@ -163,13 +163,11 @@ extension PlaylistUseCase {
     }
     
     /// 플레이리스트를 삭제합니다.
-    func deletePlaylist(playlistId: Int) {
-        Task {
-            let result = await playlistService.deletePlaylist(playlistId: playlistId)
-            switch result {
-            case .success: break
-            case .failure(let error): print(error) // TODO: 에러 처리
-            }
+    func deletePlaylist(playlistId: Int) async {
+        let result = await playlistService.deletePlaylist(playlistId: playlistId)
+        switch result {
+        case .success: break
+        case .failure(let error): print(error) // TODO: 에러 처리
         }
     }
 }

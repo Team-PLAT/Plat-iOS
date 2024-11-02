@@ -84,7 +84,14 @@ struct PlaylistDetailView: View {
             
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    // TODO: 플리 안의 트랙 삭제 -> 플리 수정 api 연결
+                    Task {
+                        await playlistUseCase.deletePlaylist(playlistId: Int(playlistUseCase.selectedPlaylist?.id ?? 0001))
+                        
+                        playlistUseCase.fetchPlaylists {
+                            pathModel.pop()
+                        }
+                    }
+                    
                 } label: {
                     Circle()
                         .frame(width: 24, height: 24)

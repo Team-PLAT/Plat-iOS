@@ -34,7 +34,7 @@ struct PlaylistView: View {
                         pathModel.push(.playlistDetail)
                     } label: {
                         VStack {
-                            PlaylistSectionView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+                            PlaylistSectionView(selectedPlaylistId: $selectedPlaylistId, filteredPlaylists: $filteredPlaylists, playlist: playlist)
                             DividerView()
                         }
                     }
@@ -126,7 +126,8 @@ private struct HeaderView: View {
 private struct PlaylistSectionView: View {
     
     @State private var isShowDetailSheet: Bool = false
-    @Binding var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var filteredPlaylists: [Playlist]
     
     let playlist: Playlist
     
@@ -148,7 +149,7 @@ private struct PlaylistSectionView: View {
         }
         .frame(maxWidth: .infinity)
         .sheet(isPresented: $isShowDetailSheet) {
-            DetailSheetView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            DetailSheetView(selectedPlaylistId: $selectedPlaylistId, filteredPlaylists: $filteredPlaylists, playlist: playlist)
         }
     }
 }
@@ -227,7 +228,8 @@ private struct CreatePlaylistView: View {
 
 private struct DetailSheetView: View {
     
-    @Binding var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var filteredPlaylists: [Playlist]
     
     let playlist: Playlist
     
@@ -237,7 +239,7 @@ private struct DetailSheetView: View {
             
             DetailInfoView()
             
-            DetailButtonsView(selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
+            DetailButtonsView(filteredPlaylists: $filteredPlaylists, selectedPlaylistId: $selectedPlaylistId, playlist: playlist)
             
             Spacer()
             
@@ -317,7 +319,8 @@ private struct DetailButtonsView: View {
     @Environment(PathModel.self) private var pathModel
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var selectedPlaylistId: Playlist.ID?
+    @Binding private(set) var filteredPlaylists: [Playlist]
+    @Binding private(set) var selectedPlaylistId: Playlist.ID?
     @State private var currentIsrcs: [String] = []
     
     let playlist: Playlist
@@ -352,8 +355,13 @@ private struct DetailButtonsView: View {
             }
             
             Button {
-                playlistUseCase.deletePlaylist(playlistId: Int(playlist.id))
-                // TODO: 플리 삭제 api 연결
+                Task {
+                    await playlistUseCase.deletePlaylist(playlistId: Int(playlist.id))
+                    
+                    playlistUseCase.fetchPlaylists {
+                        filteredPlaylists = playlistUseCase.state.playlists
+                    }
+                }
             } label: {
                 HStack {
                     Image(systemName: "trash")
