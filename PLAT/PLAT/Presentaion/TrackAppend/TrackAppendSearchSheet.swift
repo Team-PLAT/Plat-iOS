@@ -161,7 +161,7 @@ private struct TrackAppendRecentTerm: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 8) {
-                    ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
+                    ForEach(Array(recentSearchTermList.enumerated()).reversed(), id: \.offset) { index, term in
                         HStack(spacing: 8) {
                             Button {
                                 searchTerm = term

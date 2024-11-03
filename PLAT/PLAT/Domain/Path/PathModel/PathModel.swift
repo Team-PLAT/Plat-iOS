@@ -47,4 +47,8 @@ final class PathModel: PathModelProtocol {
     func dismissFullScreenCover() {
         self.fullScreenCover = nil
     }
+    
+    func popSheet() {
+        sheetPath.removeLast()
+    }
 }

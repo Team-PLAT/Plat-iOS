@@ -68,8 +68,9 @@ struct TrackAppendContentSheet: View {
                             location: currentLocation
                         )
                     )
-                  
+                    
                     pathModel.dismissSheet()
+                    pathModel.popSheet()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundStyle(.platPurple)
