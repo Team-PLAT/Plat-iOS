@@ -66,6 +66,14 @@ struct TrackFeedView: View {
         }
     }
     
+    /// 다음 페이지를 Fetch합니다.
+    private func fetchNextPage() {
+        Task {
+            let trackList = await trackUseCase.paginationFeedTrackList()
+            try await updateFeed(from: trackList)
+        }
+    }
+    
     var body: some View {
         @Bindable var musicControlUseCase = musicControlUseCase
         ZStack {
@@ -91,14 +99,9 @@ struct TrackFeedView: View {
                                 address: track.location.place?.address ?? ""
                             )
                             .onAppear {
-                                print("현재 피드 ID: \(track.id)")
                                 if index == trackList.count - 1
                                     && trackUseCase.feedListHasNext {
-                                    print("답변 페이지네이션!")
-                                    Task {
-                                        let trackList = await trackUseCase.paginationFeedTrackList()
-                                        try await updateFeed(from: trackList)
-                                    }
+                                    fetchNextPage()
                                 }
                             }
                         }
@@ -165,7 +168,6 @@ private struct FeedRowView: View {
     @Environment(PathModel.self) private var pathModel
     
     @State private var isPaused = true
-    @State private var fetchMusicTask: Task<Void, Never>?
     
     @Binding private(set) var currentTrack: Track?
     @Binding private(set) var isLoading: Bool
@@ -246,10 +248,6 @@ private struct FeedRowView: View {
         }
         .onAppear {
             authUseCase.effect(.fetchProfile)
-        }
-        .onDisappear {
-            fetchMusicTask?.cancel()
-            fetchMusicTask = nil
         }
     }
 }

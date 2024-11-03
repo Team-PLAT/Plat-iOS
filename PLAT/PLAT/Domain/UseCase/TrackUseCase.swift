@@ -185,7 +185,7 @@ extension TrackUseCase {
             Task {
                 let result = await trackService.delete(trackId: trackId)
                 switch result {
-                case .success: break
+                case .success: feedTrackList.removeAll { $0.id == trackId }
                 case .failure(let error): print(error) // TODO: 에러 처리
                 }
             }
