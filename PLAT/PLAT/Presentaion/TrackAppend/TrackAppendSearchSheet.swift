@@ -231,7 +231,10 @@ private struct TrackAppendMusicList: View {
                 Spacer()
                 
                 Image(systemName: "plus.circle")
+                    .font(.system(size: 24, weight: .light))
                     .foregroundStyle(.gray8)
+                    .padding(.vertical, 16)
+                    .padding(.horizontal, 4)
                     .onTapGesture {
                         trackUseCase.selectTrackAppendMusic(music: music.wrappedValue)
                         pathModel.pushSheet(.trackAppendContent)
