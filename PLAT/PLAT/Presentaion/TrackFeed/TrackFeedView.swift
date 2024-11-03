@@ -192,27 +192,8 @@ private struct FeedRowView: View {
                         
                         Spacer()
                         
-                        Menu {
-                            if authUseCase.checkMyTrack(currentTrack: track) {
-                                Button(role: .destructive) {
-                                    trackUseCase.effect(.deleteTrack(trackId: Int(track.id)))
-                                } label: {
-                                    Text("삭제하기")
-                                }
-                            } else {
-                                Button(role: .destructive) {
-                                    pathModel.push(.report(trackId: track.id))
-                                } label: {
-                                    Text("신고하기")
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(.white)
-                                .frame(width: 20, height: 20)
-                                .padding(.bottom, 8)
-                        }
-                        .padding(.trailing, 18)
+                        MenuButton(isLoading: $isLoading, track: track)
+                            .padding(.trailing, 18)
                     }
                     .padding(.bottom, 8)
                     
@@ -248,6 +229,64 @@ private struct FeedRowView: View {
         }
         .onAppear {
             authUseCase.effect(.fetchProfile)
+        }
+    }
+}
+
+// MARK: - MenuButton
+
+private struct MenuButton: View {
+    
+    @Environment(PathModel.self) private var pathModel
+    @Environment(AuthUseCase.self) private var authUseCase
+    @Environment(TrackUseCase.self) private var trackUseCase
+    
+    @State private var isDeleteAlertPresented = false
+    @State private var isDeleteCompletionAlertPresented = false
+    @State private var deleteCompletionALertMessage = ""
+    
+    @Binding private(set) var isLoading: Bool
+    
+    let track: Track
+    
+    var body: some View {
+        Menu {
+            if authUseCase.checkMyTrack(currentTrack: track) {
+                Button(role: .destructive) {
+                    isDeleteAlertPresented.toggle()
+                } label: {
+                    Text("삭제하기")
+                }
+            } else {
+                Button(role: .destructive) {
+                    pathModel.push(.report(trackId: track.id))
+                } label: {
+                    Text("신고하기")
+                }
+            }
+        } label: {
+            Image(systemName: "ellipsis")
+                .foregroundColor(.white)
+                .frame(width: 20, height: 20)
+                .padding(.bottom, 8)
+        }
+        .alert("트랙을 삭제하시겠어요?", isPresented: $isDeleteAlertPresented) {
+            AlertActionButton(variant: .cancel)
+            AlertActionButton(variant: .confim) {
+                Task {
+                    isLoading = true
+                    let result = await trackUseCase.deleteTrack(trackId: Int(track.id))
+                    switch result {
+                    case .success: deleteCompletionALertMessage = "트랙이 삭제되었습니다"
+                    case .failure: deleteCompletionALertMessage = "일시적인 오류로 트랙 삭제에 실패했습니다"
+                    }
+                    isDeleteCompletionAlertPresented.toggle()
+                    isLoading = false
+                }
+            }
+        }
+        .alert(deleteCompletionALertMessage, isPresented: $isDeleteCompletionAlertPresented) {
+            AlertActionButton(variant: .confim)
         }
     }
 }

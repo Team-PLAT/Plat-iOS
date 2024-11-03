@@ -134,6 +134,19 @@ extension TrackUseCase {
         case .failure(let error): return .failure(error)
         }
     }
+    
+    /// 선택한 트랙을 삭제합니다.
+    func deleteTrack(trackId: Int) async -> Result<Void, Error> {
+        let result = await trackService.delete(trackId: trackId)
+        switch result {
+        case .success:
+            feedTrackList.removeAll { $0.id == trackId }
+            return .success(())
+            
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }
 
 // MARK: - Effect
@@ -144,7 +157,6 @@ extension TrackUseCase {
         case fetchCurrentTrack(id: Int)
         case uploadTrack(isrc: String, image: UIImage?, content: String?, location: Location)
         case reportTrack(trackId: Int)
-        case deleteTrack(trackId: Int)
     }
     
     func effect(_ effect: Effect) {
@@ -177,15 +189,6 @@ extension TrackUseCase {
                 let result = await trackService.report(trackId: trackId)
                 switch result {
                 case .success: break
-                case .failure(let error): print(error) // TODO: 에러 처리
-                }
-            }
-            
-        case .deleteTrack(trackId: let trackId):
-            Task {
-                let result = await trackService.delete(trackId: trackId)
-                switch result {
-                case .success: feedTrackList.removeAll { $0.id == trackId }
                 case .failure(let error): print(error) // TODO: 에러 처리
                 }
             }

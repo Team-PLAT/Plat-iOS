@@ -258,7 +258,8 @@ private struct MusicControllerView: View {
             Menu {
                 if authUseCase.checkMyTrack(currentTrack: trackUseCase.currentTrack) {
                     Button(role: .destructive) {
-                        trackUseCase.effect(.deleteTrack(trackId: Int(trackUseCase.currentTrack.id)))
+                        #warning("삭제하기 로직 수정")
+                        // trackUseCase.effect(.deleteTrack(trackId: Int(trackUseCase.currentTrack.id)))
                     } label: {
                         Text("삭제하기")
                     }
