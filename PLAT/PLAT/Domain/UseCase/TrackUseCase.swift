@@ -166,7 +166,7 @@ extension TrackUseCase {
                 let result = await trackService.fetchCurrent(trackId: id)
                 switch result {
                 case .success(let track): self.currentTrack = track
-                case .failure(let error): print(error) // TODO: 에러 처리
+                case .failure(let error): print(error)
                 }
             }
             
@@ -180,7 +180,7 @@ extension TrackUseCase {
                 )
                 switch uploadTrackResult {
                 case .success: break
-                case .failure(let error): print(error) // TODO: 에러 처리
+                case .failure(let error): print(error)
                 }
             }
             
@@ -189,7 +189,7 @@ extension TrackUseCase {
                 let result = await trackService.report(trackId: trackId)
                 switch result {
                 case .success: break
-                case .failure(let error): print(error) // TODO: 에러 처리
+                case .failure(let error): print(error)
                 }
             }
         }

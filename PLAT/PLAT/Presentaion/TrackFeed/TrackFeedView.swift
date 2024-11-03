@@ -104,8 +104,7 @@ private struct FeedList: View {
         ScrollView {
             LazyVStack {
                 ForEach(Array(trackList.enumerated()), id: \.offset) { index, track in
-                    FeedRowView(
-                        currentTrack: $musicControlUseCase.state.currentTrack,
+                    FeedRow(
                         isLoading: $isLoading,
                         isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
                         track: track,
@@ -156,24 +155,18 @@ private struct FeedList: View {
     }
 }
 
-// MARK: - FeedRowView
+// MARK: - FeedRow
 
-private struct FeedRowView: View {
+private struct FeedRow: View {
     
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
-    @Environment(UserUseCase.self) private var userUseCase
     @Environment(AuthUseCase.self) private var authUseCase
-    @Environment(TrackUseCase.self) private var trackUseCase
-    @Environment(PathModel.self) private var pathModel
     
-    @State private var isPaused = true
-    
-    @Binding private(set) var currentTrack: Track?
     @Binding private(set) var isLoading: Bool
     @Binding private(set) var isNonePlaylistToastPresented: Bool
     
     let track: Track
-    let address: String?
+    let address: String
     
     var body: some View {
         VStack(spacing: 0) {
@@ -185,7 +178,7 @@ private struct FeedRowView: View {
                     HStack(spacing: 0) {
                         VStack(alignment: . leading, spacing: 2) {
                             FeedHeaderView(track: track)
-                            FeedLocationView(address: address ?? "", track: track)
+                            FeedLocationView(address: address, track: track)
                         }
                         
                         Spacer()
@@ -223,10 +216,8 @@ private struct FeedRowView: View {
             
             Rectangle()
                 .foregroundColor(.gray9)
-                .frame(width: UIScreen.main.bounds.width, height: 1)
-        }
-        .onAppear {
-            authUseCase.effect(.fetchProfile)
+                .frame(maxWidth: .infinity)
+                .frame(height: 1)
         }
     }
 }

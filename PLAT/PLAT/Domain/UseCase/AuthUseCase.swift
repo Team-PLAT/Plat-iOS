@@ -107,11 +107,8 @@ extension AuthUseCase {
             Task {
                 let result = await memberService.fetchProfile()
                 switch result {
-                case .success(let user):
-                    state.user = user
-                    
-                case .failure(let error):
-                    print(error) // TODO: 에러 처리
+                case .success(let user): state.user = user
+                case .failure(let error): print(error)
                 }
             }
             
