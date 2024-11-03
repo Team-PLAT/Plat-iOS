@@ -78,14 +78,9 @@ struct TrackFeedView: View {
         @Bindable var musicControlUseCase = musicControlUseCase
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
-                HStack {
-                    Spacer()
-                    
-                    Image(.imgFeedlogo)
-                        .padding(.bottom, 20)
-                    
-                    Spacer()
-                }
+                Image(.imgFeedlogo)
+                    .padding(.leading, 20)
+                    .padding(.vertical, 8)
                 
                 ScrollView {
                     LazyVStack {
