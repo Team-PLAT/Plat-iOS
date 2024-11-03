@@ -166,8 +166,16 @@ private struct PlaylistImageView: View {
             .placeholder {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(width: 68, height: 68)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.orange, .indigo],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
             }
             .resizable()
+            .scaledToFill()
             .frame(width: 68, height: 68)
             .clipShape(RoundedRectangle(cornerRadius: 12))
     }
