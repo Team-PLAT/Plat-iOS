@@ -204,16 +204,21 @@ private struct FeedRow: View {
                         .padding(.bottom, 8)
                     
                     FeedActionView(
-                        track: track,
                         isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
-                        currentTrack: $musicControlUseCase.state.currentTrack,
-                        isLoading: $isLoading
+                        isLoading: $isLoading,
+                        track: track
                     )
                     .padding(.bottom, 18)
                 }
             }
             .padding(.top, 18)
             
+            Sepeartor()
+        }
+    }
+    
+    private struct Sepeartor: View {
+        var body: some View {
             Rectangle()
                 .foregroundColor(.gray9)
                 .frame(maxWidth: .infinity)
@@ -564,41 +569,21 @@ private struct FeedActionView: View {
     @Environment(MusicControlUseCase.self) private var musicControlUseCase
     @Environment(PlaylistUseCase.self) private var playlistUseCase
     
-    let track: Track
+    @State private var isLike = false
     
     @Binding private(set) var isNonePlaylistToastPresented: Bool
-    @Binding private(set) var currentTrack: Track?
     @Binding private(set) var isLoading: Bool
     
-    /// Feed를 업데이트합니다.
-    private func updateFeed() {
-        Task {
-            let trackList = await trackUseCase.fetchFeedTrackList()
-            
-            let fetchMusicListResult = await musicControlUseCase.fetchMusicList(from: trackList)
-            switch fetchMusicListResult {
-            case .success(let musicList):
-                trackUseCase.updateFeedTrackListMusicInfo(from: musicList)
-                
-            case .failure(let error):
-                // TODO: 에러 처리
-                print(error)
-            }
-        }
-    }
+    let track: Track
     
     /// 트랙의 좋아요를 업데이트합니다.
     private func likeTrack() {
         Task {
-            isLoading = true
             let result = await trackUseCase.likeTrack(trackId: Int(track.id), isLike: track.isLike)
             switch result {
-                
-                // TODO: track을 눈속임 하는 것처럼 State로 관리해서 계속 Fetch 안할 수 있게 만들기
-            case .success: updateFeed()
-            case .failure(let error): print(error)
+            case let .success(bool): isLike = bool
+            case let .failure(error): print(error)
             }
-            isLoading = false
         }
     }
     
@@ -607,7 +592,7 @@ private struct FeedActionView: View {
             Button {
                 likeTrack()
             } label: {
-                Image(systemName: track.isLike ? SystemImage.like : SystemImage.unLike)
+                Image(systemName: isLike ? SystemImage.like : SystemImage.unLike)
                     .foregroundColor(.white)
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 31)
@@ -628,6 +613,9 @@ private struct FeedActionView: View {
                     .frame(width: 20, height: 20)
                     .padding(.trailing, 220)
             }
+        }
+        .task {
+            isLike = track.isLike
         }
     }
 }
