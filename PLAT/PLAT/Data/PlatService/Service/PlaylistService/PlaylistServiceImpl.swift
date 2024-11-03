@@ -188,6 +188,19 @@ final class PlaylistServiceImpl: PlaylistServiceInterface {
         }
     }
     
+    /// 플레이리스트를 업데이트합니다. 이미지URL을 받습니다.
+    func updatePlaylist(playlistId: Int, title: String, imageUrl: String?) async -> Result<Void, any Error> {
+
+        let request = UpdatePlaylistRequest(title: title, playlistImageUrl: imageUrl ?? "")
+        let response = await playlistRepository.updatePlaylist(request: request, playlistId: Int64(playlistId))
+        switch response {
+        case .success:
+            return .success(())
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     /// 플레이리스트의 트랙 순서를 변경합니다.
     func updateTrackOrder(playlistId: Int, tracks: [Track]) async -> Result<Void, Error> {
         

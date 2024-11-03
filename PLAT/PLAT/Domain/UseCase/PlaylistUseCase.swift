@@ -137,6 +137,20 @@ extension PlaylistUseCase {
         }
     }
     
+    /// 플레이리스트를 업데이트합니다. ImageUrl을 받습니다.
+    func updatePlaylist(playlistId: Int, title: String, imageUrl: String?) async {
+        let result = await playlistService.updatePlaylist(
+            playlistId: playlistId,
+            title: title,
+            imageUrl: imageUrl
+        )
+        
+        switch result {
+        case .success: break
+        case .failure(let error): print(error) // TODO: 에러 처리
+        }
+    }
+    
     /// 플레이리스트의 트랙 순서를 변경합니다.
     func updateTrackOrder(playlistId: Int, tracks: [Track]) {
         Task {

@@ -60,11 +60,15 @@ struct PlaylistDetailsEditView: View {
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     Task {
-                        await playlistUseCase.updatePlaylist(
-                            playlistId: Int(selectedPlaylist.id),
-                            title: selectedPlaylist.title,
-                            image: selectedImage
-                        )
+                        if let selectedImg = selectedImage {
+                            await playlistUseCase.updatePlaylist(
+                                playlistId: Int(selectedPlaylist.id),
+                                title: selectedPlaylist.title,
+                                image: selectedImage
+                            )
+                        } else {
+                            await playlistUseCase.updatePlaylist(playlistId: Int(selectedPlaylist.id), title: selectedPlaylist.title, imageUrl: selectedPlaylist.imageUrl)
+                        }
                         
                         playlistUseCase.fetchPlaylistDetail(playlistId: Int(selectedPlaylist.id))
                         pathModel.pop()
