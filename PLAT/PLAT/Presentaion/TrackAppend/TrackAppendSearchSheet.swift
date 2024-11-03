@@ -161,7 +161,7 @@ private struct TrackAppendRecentTerm: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 8) {
-                    ForEach(Array(recentSearchTermList.enumerated()), id: \.offset) { index, term in
+                    ForEach(Array(recentSearchTermList.enumerated()).reversed(), id: \.offset) { index, term in
                         HStack(spacing: 8) {
                             Button {
                                 searchTerm = term
@@ -231,7 +231,10 @@ private struct TrackAppendMusicList: View {
                 Spacer()
                 
                 Image(systemName: "plus.circle")
+                    .font(.system(size: 24, weight: .light))
                     .foregroundStyle(.gray8)
+                    .padding(.vertical, 16)
+                    .padding(.horizontal, 4)
                     .onTapGesture {
                         trackUseCase.selectTrackAppendMusic(music: music.wrappedValue)
                         pathModel.pushSheet(.trackAppendContent)

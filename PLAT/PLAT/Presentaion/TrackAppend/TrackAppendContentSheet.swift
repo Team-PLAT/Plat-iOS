@@ -68,8 +68,9 @@ struct TrackAppendContentSheet: View {
                             location: currentLocation
                         )
                     )
-                  
+                    
                     pathModel.dismissSheet()
+                    pathModel.popSheet()
                 } label: {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundStyle(.platPurple)
@@ -231,16 +232,23 @@ struct TrackAppendContentAddSheet: View {
                                 state = .none
                             }
                         } label: {
-                            Image(uiImage: image)
-                                .resizable()
+                            
+                            RoundedRectangle(cornerRadius: 3)
+                                .foregroundStyle(.gray9)
                                 .frame(width: 56, height: 56)
+                                .aspectRatio(1, contentMode: .fill)
+                                .overlay {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                }
                                 .clipShape(RoundedRectangle(cornerRadius: 3))
                                 .overlay(alignment: .topTrailing) {
                                     Image(systemName: "xmark")
                                         .resizable()
                                         .frame(width: 5, height: 5)
                                         .padding(.init(top: 2, leading: 0, bottom: 0, trailing: 2))
-                                        .foregroundStyle(.gray7)
+                                        .foregroundStyle(.red)
                                 }
                         }
                         Spacer()
@@ -258,9 +266,12 @@ struct TrackAppendContentAddSheet: View {
                         .frame(height: 238)
                         .background {
                             if isTextEditorFocused {
-                                RoundedRectangle(cornerRadius: 8).fill(.platBlack).stroke(.platPurple)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.platBlack)
+                                    .stroke(.platPurple)
                             } else {
-                                RoundedRectangle(cornerRadius: 8).fill(.gray9)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.gray9)
                             }
                         }
                         .overlay(alignment: .topLeading) {
@@ -308,9 +319,14 @@ struct TrackAppendContentAddSheet: View {
                         selectedImage = nil
                         state = .none
                     } label: {
-                        Image(uiImage: image)
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
+                        RoundedRectangle(cornerRadius: 6)
+                            .foregroundStyle(.gray9)
+                            .aspectRatio(1, contentMode: .fill)
+                            .overlay {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFill()
+                            }
                             .clipShape(RoundedRectangle(cornerRadius: 6))
                             .overlay(alignment: .topTrailing) {
                                 Image(systemName: "xmark")
