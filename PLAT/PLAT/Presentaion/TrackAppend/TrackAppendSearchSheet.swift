@@ -81,10 +81,7 @@ struct TrackAppendSearchSheet: View {
                     }
                 }
             }
-            .overlay(
-                PlatProgressView()
-                    .opacity(isLoading ? 1 : 0)
-            )
+            .overlay(PlatProgressView(isLoading: isLoading))
             .onSubmit {
                 recentSearchTermList.append(searchTerm)
                 UserDefaults.standard.recentSearchTermList = recentSearchTermList

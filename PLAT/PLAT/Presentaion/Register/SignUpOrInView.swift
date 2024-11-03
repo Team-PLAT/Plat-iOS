@@ -19,7 +19,7 @@ struct SignUpOrInView: View {
     @State private var isLoginFailedAlertPresented = false
     
     var body: some View {
-        ZStack {
+        Group {
             if authUseCase.state.authType == .signUp {
                 SignUpView(
                     isLoading: $isLoading,
@@ -31,11 +31,8 @@ struct SignUpOrInView: View {
                     isLoginFailedAlertPresented: $isLoginFailedAlertPresented
                 )
             }
-            
-            if isLoading {
-                PlatProgressView()
-            }
         }
+        .overlay(PlatProgressView(isLoading: isLoading))
         .tint(.white)
         .toolbarRole(.editor)
         .navigationBarTitleDisplayMode(.inline)

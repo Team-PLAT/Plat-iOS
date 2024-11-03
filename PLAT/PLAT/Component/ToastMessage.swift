@@ -15,20 +15,25 @@ struct ToastMessage: View {
     @Binding private(set) var isToastPresented: Bool
     
     var body: some View {
-        HStack(spacing: 18) {
-            Image(systemName: SystemImage.exclamationmark)
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(.platPurple)
+        VStack {
+            Spacer()
             
-            Text(message)
-                .foregroundStyle(.white)
-                .font(.Body.body1)
+            HStack(spacing: 18) {
+                Image(systemName: SystemImage.exclamationmark)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundStyle(.platPurple)
+                
+                Text(message)
+                    .foregroundStyle(.white)
+                    .font(.Body.body1)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 22)
+            .background(.platBlack)
+            .clipShape(RoundedRectangle(cornerRadius: 40))
         }
-        .padding(.horizontal, 24)
-        .padding(.vertical, 22)
-        .background(.platBlack)
-        .clipShape(RoundedRectangle(cornerRadius: 40))
+        .padding(.bottom, 30)
         .opacity(opacity)
         .onChange(of: isToastPresented) { _, flag in
             if flag { toggleToast() }

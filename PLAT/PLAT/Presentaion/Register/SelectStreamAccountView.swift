@@ -87,10 +87,7 @@ struct SelectStreamAccountView: View {
         .navigationTitle("스트리밍 계정 선택하기")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
-        .overlay(
-            musicControlUseCase.state.isLoading
-            ? AnyView(PlatProgressView()) : AnyView(EmptyView())
-        )
+        .overlay(PlatProgressView(isLoading: musicControlUseCase.state.isLoading))
         .alert("일시적인 오류로 계정 연결에 실패했습니다. 다시 시도해주세요.", isPresented: $isConnectFailedAlertPresented) {
             AlertActionButton(variant: .confim)
         }

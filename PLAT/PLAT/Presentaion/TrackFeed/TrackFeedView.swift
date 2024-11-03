@@ -18,11 +18,119 @@ struct TrackFeedView: View {
     @State private var isLoading = false
     @State private var isNonePlaylistToastPresented = false
     
+    var body: some View {
+        @Bindable var musicControlUseCase = musicControlUseCase
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                Image(.imgFeedlogo)
+                    .padding(.leading, 20)
+                    .padding(.vertical, 8)
+                
+                FeedList(
+                    isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
+                    isLoading: $isLoading
+                )
+                
+                if musicControlUseCase.state.isStreaming {
+                    MiniMusicPlayer(
+                        isPaused: $musicControlUseCase.state.isPaused,
+                        track: $musicControlUseCase.state.currentTrack,
+                        currentDuration: musicControlUseCase.state.currentDuration,
+                        totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
+                    )
+                    .onTapGesture(perform: miniMusicPlayerTapped)
+                }
+            }
+            .background(.platBackground)
+            
+            ToastMessage(
+                message: "트랙을 추가할 플레이리스트가 없어요.",
+                isToastPresented: $isNonePlaylistToastPresented
+            )
+        }
+        .overlay(PlatProgressView(isLoading: isLoading))
+        .onDisappear(perform: trackUseCase.resetFeed)
+    }
+    
+    /// MiniMusicPlayer를 탭합니다.
+    private func miniMusicPlayerTapped() {
+        if let selectedTrackId = musicControlUseCase.state.currentTrack?.id {
+            Task {
+                try await fetchSelectedTrack(with: Int(selectedTrackId))
+            }
+        }
+    }
+    
+    /// 선택한 Track 정보를 Fetch합니다.
+    private func fetchSelectedTrack(with trackId: Int) async throws {
+        let updateCurrentTrackResult = await trackUseCase.fetchCurrentTrack(from: trackId)
+        switch updateCurrentTrackResult {
+        case .success(let fetchTrack):
+            let musicResult = await musicControlUseCase.fetchMusic(from: fetchTrack)
+            switch musicResult {
+            case .success(let music):
+                trackUseCase.updateCurrentTrackMusicInfo(from: music)
+                let currentTrack = trackUseCase.currentTrack
+                musicControlUseCase.updateCurrentTrack(to: currentTrack)
+                pathModel.presentFullScreenCover(.trackDetail)
+                
+            case .failure(let error): throw error
+            }
+        case .failure(let error): throw error
+        }
+    }
+}
+
+// MARK: - FeedList
+
+private struct FeedList: View {
+    
+    @Environment(TrackUseCase.self) private var trackUseCase
+    @Environment(MusicControlUseCase.self) private var musicControlUseCase
+    
+    @Binding private(set) var isNonePlaylistToastPresented: Bool
+    @Binding private(set) var isLoading: Bool
+    
     /// 트랙 리스트를 반환합니다.
     private var trackList: [Track] {
         trackUseCase.feedTrackList.filter {
             let reportedTrackIdList = UserDefaults.standard.reportedTrackIdList
             return !reportedTrackIdList.contains($0.id)
+        }
+    }
+    
+    var body: some View {
+        @Bindable var musicControlUseCase = musicControlUseCase
+        ScrollView {
+            LazyVStack {
+                ForEach(Array(trackList.enumerated()), id: \.offset) { index, track in
+                    FeedRowView(
+                        currentTrack: $musicControlUseCase.state.currentTrack,
+                        isLoading: $isLoading,
+                        isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
+                        track: track,
+                        address: track.location.place?.address ?? ""
+                    )
+                    .onAppear {
+                        if index == trackList.count - 1 && trackUseCase.feedListHasNext {
+                            fetchNextPage()
+                        }
+                    }
+                }
+            }
+        }
+        .onAppear {
+            Task {
+                let trackList = await trackUseCase.fetchFeedTrackList()
+                try await updateFeed(from: trackList)
+            }
+        }
+        .refreshable {
+            trackUseCase.resetFeed()
+            Task {
+                let trackList = await trackUseCase.fetchFeedTrackList()
+                try await updateFeed(from: trackList)
+            }
         }
     }
     
@@ -39,115 +147,11 @@ struct TrackFeedView: View {
         }
     }
     
-    /// MiniMusicPlayer를 탭합니다.
-    private func miniMusicPlayerTapped(with trackId: Int) {
-        Task {
-            let updateCurrentTrackResult = await trackUseCase.fetchCurrentTrack(from: trackId)
-            switch updateCurrentTrackResult {
-            case .success(let fetchTrack):
-                
-                let musicResult = await musicControlUseCase.fetchMusic(from: fetchTrack)
-                switch musicResult {
-                case .success(let music):
-                    trackUseCase.updateCurrentTrackMusicInfo(from: music)
-                    let currentTrack = trackUseCase.currentTrack
-                    musicControlUseCase.updateCurrentTrack(to: currentTrack)
-                    pathModel.presentFullScreenCover(.trackDetail)
-                    
-                case .failure(let error):
-                    // TODO: 에러 처리
-                    print(error)
-                }
-                
-            case .failure(let error):
-                // TODO: 에러 처리
-                print(error)
-            }
-        }
-    }
-    
     /// 다음 페이지를 Fetch합니다.
     private func fetchNextPage() {
         Task {
             let trackList = await trackUseCase.paginationFeedTrackList()
             try await updateFeed(from: trackList)
-        }
-    }
-    
-    var body: some View {
-        @Bindable var musicControlUseCase = musicControlUseCase
-        ZStack {
-            VStack(alignment: .leading, spacing: 0) {
-                Image(.imgFeedlogo)
-                    .padding(.leading, 20)
-                    .padding(.vertical, 8)
-                
-                ScrollView {
-                    LazyVStack {
-                        ForEach(Array(trackList.enumerated()), id: \.offset) { index, track in
-                            FeedRowView(
-                                currentTrack: $musicControlUseCase.state.currentTrack,
-                                isLoading: $isLoading,
-                                isNonePlaylistToastPresented: $isNonePlaylistToastPresented,
-                                track: track,
-                                playlistId: "",
-                                address: track.location.place?.address ?? ""
-                            )
-                            .onAppear {
-                                if index == trackList.count - 1
-                                    && trackUseCase.feedListHasNext {
-                                    fetchNextPage()
-                                }
-                            }
-                        }
-                    }
-                }
-                            
-                if musicControlUseCase.state.isStreaming {
-                    MiniMusicPlayer(
-                        isPaused: $musicControlUseCase.state.isPaused,
-                        track: $musicControlUseCase.state.currentTrack,
-                        currentDuration: musicControlUseCase.state.currentDuration,
-                        totalDuration: musicControlUseCase.state.currentTrack?.music.duration ?? 0
-                    )
-                    .onTapGesture {
-                        if let selectedTrackId = musicControlUseCase.state.currentTrack?.id {
-                            miniMusicPlayerTapped(with: Int(selectedTrackId))
-                        }
-                    }
-                }
-            }
-            .background(.platBackground)
-            
-            VStack {
-                Spacer()
-                
-                ToastMessage(
-                    message: "트랙을 추가할 플레이리스트가 없어요.",
-                    isToastPresented: $isNonePlaylistToastPresented
-                )
-                .padding(.bottom, 30)
-            }
-        }
-        .overlay(
-            PlatProgressView()
-                .opacity(isLoading ? 1 : 0)
-        )
-        .onAppear {
-            Task {
-                let trackList = await trackUseCase.fetchFeedTrackList()
-                try await updateFeed(from: trackList)
-            }
-        }
-        .refreshable {
-            trackUseCase.resetFeed()
-            Task {
-                let trackList = await trackUseCase.fetchFeedTrackList()
-                try await updateFeed(from: trackList)
-            }
-        }
-        .onDisappear {
-            trackUseCase.resetFeed()
         }
     }
 }
@@ -169,7 +173,6 @@ private struct FeedRowView: View {
     @Binding private(set) var isNonePlaylistToastPresented: Bool
     
     let track: Track
-    let playlistId: String
     let address: String?
     
     var body: some View {
@@ -247,16 +250,12 @@ private struct MenuButton: View {
     var body: some View {
         Menu {
             if authUseCase.checkMyTrack(currentTrack: track) {
-                Button(role: .destructive) {
+                Button("삭제하기", role: .destructive) {
                     isDeleteAlertPresented.toggle()
-                } label: {
-                    Text("삭제하기")
                 }
             } else {
-                Button(role: .destructive) {
+                Button("신고하기", role: .destructive) {
                     pathModel.push(.report(trackId: track.id))
-                } label: {
-                    Text("신고하기")
                 }
             }
         } label: {
@@ -290,6 +289,8 @@ private struct MenuButton: View {
 
 private struct FeedProfileImage: View {
     
+    private let size: CGFloat = 40
+    
     let track: Track
     
     private var profileImageUrl: URL? {
@@ -300,12 +301,12 @@ private struct FeedProfileImage: View {
         KFImage(profileImageUrl)
             .placeholder {
                 Circle()
-                    .frame(width: 40, height: 40)
+                    .frame(width: size, height: size)
                     .foregroundStyle(.gray9)
             }
             .resizable()
             .scaledToFill()
-            .frame(width: 40, height: 40)
+            .frame(width: size, height: size)
             .clipShape(Circle())
     }
 }
@@ -328,7 +329,6 @@ private struct FeedHeaderView: View {
             Text(track.createdDate.monthDayYearFormat)
                 .font(.Body.body5)
                 .foregroundStyle(.white)
-            
         }
     }
 }
@@ -481,7 +481,7 @@ private struct FeedContentImage: View {
                     .overlay {
                         KFImage(URL(string: imageUrl))
                             .placeholder {
-                                PlatProgressView()
+                                PlatProgressView(isLoading: true)
                             }
                             .cancelOnDisappear(true)
                             .resizable()

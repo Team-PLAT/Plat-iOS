@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct PlatProgressView: View {
+    
+    let isLoading: Bool
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -21,9 +24,10 @@ struct PlatProgressView: View {
                 .tint(.primary)
         }
         .ignoresSafeArea()
+        .opacity(isLoading ? 1 : 0)
     }
 }
 
 #Preview {
-    PlatProgressView()
+    PlatProgressView(isLoading: true)
 }
