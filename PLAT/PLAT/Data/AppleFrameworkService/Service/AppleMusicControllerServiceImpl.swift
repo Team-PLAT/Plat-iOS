@@ -247,6 +247,7 @@ extension AppleMusicControllerServiceImpl {
     private func requestSongIds(for isrcs: [String]) async -> [String] {
         var songIDs: [String] = []
         
+        // TODO: 병렬 처리 필요
         for isrc in isrcs {
             await requestSongId(for: isrc)
             if let songId = self.firstSong?.id {

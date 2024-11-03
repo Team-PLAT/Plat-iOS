@@ -224,6 +224,7 @@ private struct FeedRowView: View {
                     
                     FeedContentImage(track: track)
                         .padding(.bottom, 6)
+                        .zIndex(-1)
                     
                     FeedContentView(track: track)
                         .padding(.bottom, 8)
